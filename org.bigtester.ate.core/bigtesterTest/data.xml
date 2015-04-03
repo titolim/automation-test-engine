@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+<TESTDATACONTEXTFIELDNAME IDCOLUMN="1" CONTEXTFIELDNAME="User Role" />
+<TESTDATACONTEXTFIELDNAME IDCOLUMN="2" CONTEXTFIELDNAME="Expected Result Assert Condition" />
+
+<TESTDATACONTEXT IDCOLUMN="1" contextFieldValue="Customer" contextFieldName_idColumn="1"/>
+<TESTDATACONTEXT IDCOLUMN="2" contextFieldValue="Guest" contextFieldName_idColumn="1"/>
+<TESTDATACONTEXT IDCOLUMN="3" contextFieldValue="Administrator" contextFieldName_idColumn="1"/>
+<TESTDATACONTEXT IDCOLUMN="4" contextFieldValue="Employee" contextFieldName_idColumn="1"/>
+<TESTDATACONTEXT IDCOLUMN="5" contextFieldValue="Page_Element_Existence" contextFieldName_idColumn="2"/>
+<TESTDATACONTEXT IDCOLUMN="8" contextFieldValue="Page_Property_Correctness" contextFieldName_idColumn="2"/>
+<TESTDATACONTEXT IDCOLUMN="6" contextFieldValue="Element_Property_Correctness" contextFieldName_idColumn="2"/>
+<TESTDATACONTEXT IDCOLUMN="7" contextFieldValue="Element_Value_Correctness" contextFieldName_idColumn="2"/>
+
+</dataset>

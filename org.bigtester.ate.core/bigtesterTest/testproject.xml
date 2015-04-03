@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+ 	   xmlns:ate="http://www.bigtester.org/schema/ate"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	                       http://www.springframework.org/schema/aop 
+	                       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	                       http://www.bigtester.org/schema/ate 
+	                       http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+	                       
+	<!-- this registers beans annotated with @Aspect -->
+	<aop:aspectj-autoproxy />
+
+	<import resource="classpath:META-INF/db-services.xml" />
+	
+	<ate:GenericSystemLogger id="systemlogger"/>
+	<ate:TestDatabaseInitializer id="dbInitializer"/>
+	
+	<ate:TestProject id="testproject" stepThinkTime="6" globalInitXmlFile="bigtesterTest/data.xml">
+		<ate:TestSuite id="suite01" suiteName="suite01">
+		    <ate:XmlTestCase testCaseFilePathName="bigtesterTest/testSuite01/homePageValidation.xml" />
+		    <ate:XmlTestCase testCaseFilePathName="bigtesterTest/testSuite01/loginSuccess.xml" />
+		</ate:TestSuite>
+	</ate:TestProject>
+</beans>
