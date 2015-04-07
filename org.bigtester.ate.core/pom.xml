@@ -156,11 +156,9 @@
 			<plugin>
 				<groupId>com.lazerycode.selenium</groupId>
 				<artifactId>driver-binary-downloader-maven-plugin</artifactId>
-<<<<<<< HEAD
-				<version>1.0.5</version>
-=======
+
 				<version>1.0.6</version>
->>>>>>> branch 'master' of https://github.com/bigtester/automation-test-engine.git
+
 				<configuration>
 					<!-- root directory that downloaded driver binaries will be stored in -->
 					<rootStandaloneServerDirectory>browserdriver</rootStandaloneServerDirectory>
@@ -463,11 +461,9 @@
 		<dependency>
 			<groupId>com.lazerycode.selenium</groupId>
 			<artifactId>driver-binary-downloader-maven-plugin</artifactId>
-<<<<<<< HEAD
-			<version>1.0.5</version>
-=======
+
 			<version>1.0.6</version>
->>>>>>> branch 'master' of https://github.com/bigtester/automation-test-engine.git
+
 		</dependency>
 		<dependency>
 			<groupId>com.github.javaparser</groupId>
@@ -552,7 +548,7 @@
 		    <artifactId>httpclient</artifactId>
 		    <version>4.4.1</version>
 		</dependency>
-<<<<<<< HEAD
+
 <dependency>
   <groupId>com.jcabi</groupId>
   <artifactId>jcabi-aether</artifactId>
@@ -564,14 +560,7 @@
     <artifactId>xstream</artifactId>
     <version>1.4.8</version>
 </dependency>
-=======
-		
-        <dependency>
-            <groupId>com.jcabi</groupId>
-            <artifactId>jcabi-aether</artifactId>
-            <version>0.10.1</version>
-        </dependency>
->>>>>>> branch 'master' of https://github.com/bigtester/automation-test-engine.git
+
 	</dependencies>
 
 </project>
