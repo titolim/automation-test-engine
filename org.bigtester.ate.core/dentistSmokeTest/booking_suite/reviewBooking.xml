@@ -27,7 +27,7 @@
 	<ate:operaDriver    id="MyWebDriver2" />
 	<ate:htmlUnitDriver id="MyWebDriver2" />
       -->
-	<ate:firefoxDriver  id="MyWebDriver2" profileName="dentisteasy"/>
+	<ate:firefoxDriver  id="MyWebDriver2"/>
 	
 	<ate:testCase id="testcase" testCaseName="Validate public login and logout">
 		<ate:homeStep id="openPublicHomePage" stepName="openPublicHomePage"
@@ -51,7 +51,7 @@
 			targetStep="true" elementActionDef="clickLoginButtonWE" pageObject="publicLoginDashBoard">
 			<property name="expectedResultAsserter">
 				<list>
-					<ref bean="publicLoginDashBoardPropertyAsserter" />
+<!-- 					<ref bean="publicLoginDashBoardPropertyAsserter" /> -->
 					<ref bean="publicLoginDashBoardElementExistenceAsserter" />
 				</list>
 			</property>

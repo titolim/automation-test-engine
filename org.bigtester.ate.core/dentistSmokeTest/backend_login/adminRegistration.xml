@@ -25,7 +25,7 @@
 	<ate:operaDriver    id="MyWebDriver2" />
 	<ate:htmlUnitDriver id="MyWebDriver2" />
       -->
-	<ate:firefoxDriver  id="MyWebDriver2" profileName="dentisteasy"/>
+	<ate:firefoxDriver  id="MyWebDriver2"/>
 	
 	<ate:testCase id="testcase" testCaseName="Validate public login and logout">
 		<ate:homeStep id="stepOpenAdminHomePage" stepName="openAdminHomePage"

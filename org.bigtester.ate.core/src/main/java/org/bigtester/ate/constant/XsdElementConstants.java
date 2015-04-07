@@ -290,7 +290,7 @@ public final class XsdElementConstants {
 	public static final String ATTR_TESTSTEP_OPTIONALSTEP = "optionalStep";
 	
 	/** The Constant ATTR_TESTSTEP_OPTIONALSTEPUTILINCLUSIVE. */
-	public static final String ATTR_TESTSTEP_OPTIONALSTEPUTILINCLUSIVE = "optionalStepUtilInclusive";//NOPMD
+	public static final String ATTR_TESTSTEP_CORRELATEDOPTIONALSTEPSUTILINCLUSIVE = "correlatedOptionalStepsUtilInclusive";//NOPMD
 	
 	/** The Constant ATTR_TESTSTEP_STEPNAME. */
 	public static final String ATTR_TESTSTEP_STEPNAME = "stepName";

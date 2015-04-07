@@ -90,9 +90,9 @@ public class BaseTestStepBeanDefinitionParser extends
 			optional = Boolean.parseBoolean(element
 					.getAttribute(XsdElementConstants.ATTR_TESTSTEP_OPTIONALSTEP));
 			String optionalStepUntilInclusive = element
-					.getAttribute(XsdElementConstants.ATTR_TESTSTEP_OPTIONALSTEPUTILINCLUSIVE);
+					.getAttribute(XsdElementConstants.ATTR_TESTSTEP_CORRELATEDOPTIONALSTEPSUTILINCLUSIVE);
 			bDef.getPropertyValues().addPropertyValue(
-					XsdElementConstants.ATTR_TESTSTEP_OPTIONALSTEPUTILINCLUSIVE, optionalStepUntilInclusive);
+					XsdElementConstants.ATTR_TESTSTEP_CORRELATEDOPTIONALSTEPSUTILINCLUSIVE, optionalStepUntilInclusive);
 		}
 		bDef.getPropertyValues().addPropertyValue(
 				XsdElementConstants.ATTR_TESTSTEP_OPTIONALSTEP, optional);

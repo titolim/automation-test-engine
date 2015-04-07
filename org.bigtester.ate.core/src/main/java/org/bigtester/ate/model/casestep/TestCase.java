@@ -128,11 +128,13 @@ public class TestCase {
 
 	/**
 	 * Optional step population.
+	 * return the endindex;
 	 */
-	private void optionalStepPopulation(@Nullable ITestStep currentStep) {
+	private int optionalStepPopulation(@Nullable ITestStep currentStep) {
 		if (null == currentStep)
 			throw GlobalUtils.createNotInitializedException("currentStep");
-		if (!StringUtils.isEmpty(currentStep.getOptionalStepUtilInclusive())) {
+		int retVal = -1;
+		if (!StringUtils.isEmpty(currentStep.getCorrelatedOptionalStepsUtilInclusive())) {
 			currentStep.setOptionalStep(true);
 			int startIndex = -1;
 			int endIndex = -1;
@@ -142,7 +144,7 @@ public class TestCase {
 					startIndex = index;
 				}
 				if (getTestStepList().get(index).getStepName() == currentStep
-						.getOptionalStepUtilInclusive()) {
+						.getCorrelatedOptionalStepsUtilInclusive()) {
 					endIndex = index;
 					break;
 				}
@@ -153,7 +155,10 @@ public class TestCase {
 			for (int index2 = startIndex; index2 <= endIndex; index2++) {
 				getTestStepList().get(index2).setOptionalStep(true);
 			}
+			retVal = endIndex;
 		}
+		return retVal;
+		
 	}
 
 	/**
@@ -166,11 +171,11 @@ public class TestCase {
 	public void goSteps() throws StepExecutionException2,
 			PageValidationException2, IllegalStateException,
 			RuntimeDataException {
-
+		int correlatedOptionlStepsEndIndex = -1;
 		for (int i = 0; i < getTestStepList().size(); i++) {
 
 			ITestStep currentTestStepTmp = getTestStepList().get(i);
-			optionalStepPopulation(currentTestStepTmp);
+			
 			if (null == currentTestStepTmp) {
 				throw new IllegalStateException(
 						"Test Step List was not successfully initialized by ApplicationContext at list index"
@@ -178,15 +183,21 @@ public class TestCase {
 			} else {
 				setCurrentTestStep(currentTestStepTmp);
 			}
-
+			if (correlatedOptionlStepsEndIndex == -1)
+				correlatedOptionlStepsEndIndex = optionalStepPopulation(currentTestStepTmp);
 			// setCurrentWebDriver(getCurrentTestStep().getMyWebDriver());
 			try {
 				getCurrentTestStep().doStep();// NOPMD
 				getCurrentTestStep().setStepResultStatus(StepResultStatus.PASS);
+				if (i == correlatedOptionlStepsEndIndex) correlatedOptionlStepsEndIndex = -1;
 			} catch (Exception e) { //NOPMD
 				if (getCurrentTestStep().isOptionalStep()) {
 					getCurrentTestStep().setStepResultStatus(
 							StepResultStatus.SKIP);
+					if (correlatedOptionlStepsEndIndex >= i) {
+						i = correlatedOptionlStepsEndIndex;
+						correlatedOptionlStepsEndIndex = -1;
+					}
 				} else {
 					throw GlobalUtils.createInternalError("Error not handled", e);
 				}

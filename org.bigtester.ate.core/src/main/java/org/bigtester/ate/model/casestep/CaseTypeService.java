@@ -259,7 +259,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getOptionalStepUtilInclusive() {
+	public String getCorrelatedOptionalStepsUtilInclusive() {
 		// TODO add optionalStepUtil parameter for caseTypeService
 		return "";
 	}

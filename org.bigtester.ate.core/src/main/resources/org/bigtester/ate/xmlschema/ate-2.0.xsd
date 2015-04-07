@@ -257,7 +257,7 @@
 				<xsd:attribute name="targetStep" type="xsd:boolean"
 					use="required" />
 				<xsd:attribute name="optionalStep" type="xsd:boolean"/>
-				<xsd:attribute name="optionalStepUtilInclusive" type="xsd:string"/>
+				<xsd:attribute name="correlatedOptionalStepsUtilInclusive" type="xsd:string"/>
 				<xsd:attribute name="stepName" type="xsd:string" use="required" />
 				<xsd:attribute name="stepDescription" type="xsd:string" />
 			</xsd:extension>

@@ -21,25 +21,25 @@
 	<ate:TestProject id="testproject" stepThinkTime="6"
 		globalInitXmlFile="dentistSmokeTest/data.xml">
 		
-<!-- 		<ate:TestSuite id="backend_login_suite" suiteName="admin_login"> -->
+		<ate:TestSuite id="backend_login_suite" suiteName="admin_login">
 <!-- 			<ate:XmlTestCase -->
 <!-- 				testCaseFilePathName="dentistSmokeTest/backend_login/adminLoginSuccess.xml" /> -->
 <!-- 			<ate:XmlTestCase -->
 <!-- 				testCaseFilePathName="dentistSmokeTest/backend_login/adminProfileAddDeleteService.xml" /> -->
-<!-- 			<ate:XmlTestCase -->
-<!-- 				testCaseFilePathName="dentistSmokeTest/backend_login/adminRegistration.xml" /> -->
-<!-- 		</ate:TestSuite> -->
-		<ate:TestSuite id="frontend_login_suite" suiteName="frontend_login_suite">
+			<ate:XmlTestCase
+				testCaseFilePathName="dentistSmokeTest/backend_login/adminRegistration.xml" />
+		</ate:TestSuite>
+<!-- 		<ate:TestSuite id="frontend_login_suite" suiteName="frontend_login_suite"> -->
 <!-- 			<ate:XmlTestCase -->
 <!-- 				testCaseFilePathName="dentistSmokeTest/frontend_login_suite/publicHomePageValidation.xml" /> -->
 <!-- 			<ate:XmlTestCase -->
 <!-- 				testCaseFilePathName="dentistSmokeTest/frontend_login_suite/publicRegistration.xml" /> -->
-			<ate:XmlTestCase id="publicLoginSuccess"
-				testCaseFilePathName="dentistSmokeTest/frontend_login_suite/publicLoginSuccess.xml" />
+<!-- 			<ate:XmlTestCase id="publicLoginSuccess" -->
+<!-- 				testCaseFilePathName="dentistSmokeTest/frontend_login_suite/publicLoginSuccess.xml" /> -->
 <!-- 			<ate:XmlTestCase id="publicLoginWrongPassword" -->
 <!-- 				testCaseFilePathName="dentistSmokeTest/frontend_login_suite/publicWrongPasswordLogin.xml" /> -->
 
-		</ate:TestSuite>
+<!-- 		</ate:TestSuite> -->
 <!-- 		<ate:TestSuite id="booking_suite" suiteName="booking_suite"> -->
 <!-- 			<ate:XmlTestCase id="bookingClinicC" -->
 <!-- 				testCaseFilePathName="dentistSmokeTest/booking_suite/publicClinicCBooking.xml" /> -->
