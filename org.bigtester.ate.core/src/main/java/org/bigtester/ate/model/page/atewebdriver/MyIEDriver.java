@@ -34,7 +34,16 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 public class MyIEDriver extends WebDriverBase implements IMyWebDriver{
 	
 	/** The Constant BROWSERNAME. */
-	final static private String BROWSERNAME = "webdriver.ie.driver";
+	/** The Constant BROWSERNAME. */
+	private static final String BROWSERNAME = "internetexplorer";
+	/** The Constant BROWSERDRVNAME. */
+	private static final String BROWSERDRVNAME = "webdriver.ie.driver";
+	/** The Constant BROWSERWIN32PATH. */
+	private static final String BROWSERWIN32PATH = "browserdriver/windows/internetexplorer/32bit/";
+	/** The Constant BROWSERWIN64PATH. */
+	private static final String BROWSERWIN64PATH = "browserdriver/windows/internetexplorer/64bit/";
+	/** The Constant BROWSERLINUX32PATH. */
+	private static final String BROWSERFILENAME = "/IEDriverServer.exe";
 	
 	/**
 	 * {@inheritDoc}
@@ -49,22 +58,26 @@ public class MyIEDriver extends WebDriverBase implements IMyWebDriver{
 	 */
 	@Override
 	public WebDriver createDriver() {
+		String versionNum;
 		OSinfo osinfo = new OSinfo(); 
 		EPlatform platform = osinfo.getOSname();
 //		System.setProperty("webdriver.ie.driver.loglevel", "ERROR");
 //		System.setProperty("webdriver.ie.driver.logfile", "d:/develop/IEDriver64.log");
 //		DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
 //      ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+		
 		switch (platform)
 		{
-			case Windows_32:	
-				System.setProperty(BROWSERNAME, "browserdriver/windows/internetexplorer/32bit/2.44.0/IEDriverServer.exe");
-				break;
-			case Windows_64:	
-				System.setProperty(BROWSERNAME, "browserdriver/windows/internetexplorer/64bit/2.44.0/IEDriverServer.exe");
-				break;	
+            case Windows_32:
+                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"windows",BROWSERNAME,ReadXmlFile.VERSION);
+                 System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + versionNum + BROWSERFILENAME);
+                 break;
+            case Windows_64:
+                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"windows",BROWSERNAME,ReadXmlFile.VERSION);
+                 System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + versionNum + BROWSERFILENAME);
+                 break;	
 			default:
-				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
+                 throw GlobalUtils.createNotInitializedException("operating system is not supported ");
 		}        
 		WebDriver retVal = new InternetExplorerDriver();
 		setWebDriver(retVal);

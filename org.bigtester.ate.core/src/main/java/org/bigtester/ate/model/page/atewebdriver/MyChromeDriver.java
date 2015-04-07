@@ -40,7 +40,23 @@ public class MyChromeDriver extends WebDriverBase implements IMyWebDriver{
 	final private BrowserProfile<ChromeOptions> browserProfile;
 	
 	/** The Constant BROWSERNAME. */
-	final static private String BROWSERNAME = "webdriver.chrome.driver";
+	private static final String BROWSERNAME = "googlechrome";
+	/** The Constant BROWSERDRVNAME. */
+	private static final String BROWSERDRVNAME = "webdriver.chrome.driver";
+	/** The Constant BROWSERWIN32PATH. */
+	private static final String BROWSERWIN32PATH = "browserdriver/windows/googlechrome/32bit/";
+	/** The Constant BROWSERWIN64PATH. */
+	private static final String BROWSERWIN64PATH = "browserdriver/windows/googlechrome/64bit/";
+	/** The Constant BROWSERLINUX32PATH. */
+	private static final String BROWSERLINUX32PATH = "browserdriver/linux/googlechrome/32bit/";
+	/** The Constant BROWSERLINUX64PATH. */
+	private static final String BROWSERLINUX64PATH = "browserdriver/liunx/googlechrome/64bit/";
+	/** The Constant BROWSEROSX32PATH. */	
+	private static final String BROWSEROSX32PATH = "browserdriver/osx/googlechrome/32bit/";
+	/** The Constant BROWSEROSX32PATH. */
+	private static final String BROWSEROSX64PATH = "browserdriver/osx/googlechrome/64bit/";
+	/** The Constant BROWSERFILENAME. */
+	private static final String BROWSERFILENAME = "/chromedriver.exe";
 	
 	/**
 	 * Instantiates a new my Chrome driver.
@@ -78,30 +94,38 @@ public class MyChromeDriver extends WebDriverBase implements IMyWebDriver{
 	 */
 	@Override
 	public WebDriver createDriver() {
+		String versionNum;
 		OSinfo osinfo = new OSinfo(); 
 		EPlatform platform = osinfo.getOSname();
+		
 		switch (platform)
 		{
-			case Windows_32:	
-				System.setProperty(BROWSERNAME, "browserdriver/windows/googlechrome/32bit/2.14/chromedriver.exe");
-				break;
-			case Windows_64:	
-				System.setProperty(BROWSERNAME, "browserdriver/windows/googlechrome/64bit/2.14/chromedriver.exe");
-				break;	
-			case Linux_32:	
-				System.setProperty(BROWSERNAME, "browserdriver/linux/googlechrome/32bit/2.14/chromedriver");
-				break;
-			case Linux_64:	
-				System.setProperty(BROWSERNAME, "browserdriver/linux/googlechrome/64bit/2.14/chromedriver");
-				break;	
-			case Mac_OS_X_32:	
-				System.setProperty(BROWSERNAME, "browserdriver/osx/googlechrome/32bit/2.14/chromedriver");
-				break;
-			case Mac_OS_X_64:	
-				System.setProperty(BROWSERNAME, "browserdriver/osx/googlechrome/64bit/2.14/chromedriver");
-				break;		
+            case Windows_32:
+                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"windows",BROWSERNAME,ReadXmlFile.VERSION);
+                 System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + versionNum + BROWSERFILENAME);
+                 break;
+            case Windows_64:
+                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"windows",BROWSERNAME,ReadXmlFile.VERSION);
+                 System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + versionNum + BROWSERFILENAME);
+                 break;	
+            case Linux_32:
+                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"linux",BROWSERNAME,ReadXmlFile.VERSION);
+                 System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH + versionNum + BROWSERFILENAME);
+                 break;
+            case Linux_64:	
+                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"linux",BROWSERNAME,ReadXmlFile.VERSION);
+                 System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH + versionNum + BROWSERFILENAME);
+                 break;	
+            case Mac_OS_X_32:
+                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"osx",BROWSERNAME,ReadXmlFile.VERSION);
+                 System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH + versionNum + BROWSERFILENAME);
+                 break;
+            case Mac_OS_X_64:	
+                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"osx",BROWSERNAME,ReadXmlFile.VERSION);
+                 System.setProperty(BROWSERNAME, BROWSEROSX64PATH + versionNum + BROWSERFILENAME);
+                 break;		 		
 			default:
-				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
+                 throw GlobalUtils.createNotInitializedException("operating system is not supported ");
 		}        
 		WebDriver retVal = new ChromeDriver();
 		setWebDriver(retVal);

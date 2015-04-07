@@ -2,15 +2,15 @@
 <root>
     <windows>
         <driver id="internetexplorer">
-            <version id="2.44.0">
+            <version id="2.45.0">
                 <bitrate sixtyfourbit="true">
-                    <filelocation>http://selenium-release.storage.googleapis.com/2.44/IEDriverServer_x64_2.44.0.zip</filelocation>
-                    <hash>90c9870ce7ad6168d3456ebbde7479aebad4301a</hash>
+                    <filelocation>http://selenium-release.storage.googleapis.com/2.45/IEDriverServer_x64_2.45.0.zip</filelocation>
+                    <hash>b3cdacc846d7b9c3f8fb8b70af0a9cfc5839bd83</hash>
                     <hashtype>sha1</hashtype>
                 </bitrate>
                 <bitrate thirtytwobit="true">
-                    <filelocation>http://selenium-release.storage.googleapis.com/2.44/IEDriverServer_Win32_2.44.0.zip</filelocation>
-                    <hash>ed0117c94e78593318a145c51341eacdc9df6cc8</hash>
+                    <filelocation>http://selenium-release.storage.googleapis.com/2.45/IEDriverServer_Win32_2.45.0.zip</filelocation>
+                    <hash>cc822d30efe3119b76af9265c47d42fca208f85a</hash>
                     <hashtype>sha1</hashtype>
                 </bitrate>
             </version>

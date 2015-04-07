@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:ate="http://www.bigtester.org/schema/ate" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	                       http://www.springframework.org/schema/aop 
+	                       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	                       http://www.bigtester.org/schema/ate 
+	                       http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+	                       
+	<!-- this registers beans annotated with @Aspect -->
+	<aop:aspectj-autoproxy />
+
+	<import resource="classpath:META-INF/logger-reporter.xml" />
+	<import resource="classpath:META-INF/page_base_bean.xml" />
+	
+	<ate:homePage id="homePage" homeUrl="http://www.bigtester.com" dataFile="bigtesterTest/pageObjects/homePage.data.xml"/>
+	
+    <!-- myWebElement definition -->
+    <ate:elementActionDef id="clickHomepageEnglish" elementFind="homePageEnglishLink" elementAction="homePageEnglishLinkClick" />
+	<ate:elementFindByXpath id="homePageEnglishLink" findByValue="//img[@alt='English (United Kingdom)']" />
+	<ate:clickAction id="homePageEnglishLinkClick" />
+
+    <!-- myWebElement definition -->
+	<ate:elementActionDef id="loginUserNameWE"   elementFind="loginUserNameEF" elementAction="loginUserNameEA" />
+	<ate:elementFindById id="loginUserNameEF" findByValue="modlgn_username" />
+	<ate:sendKeysAction id="loginUserNameEA" dataValue="userNameValue" />
+	<ate:stepInputDataValue id="userNameValue" dataValueID="1" />
+
+	<!-- myWebElement definition -->
+	<ate:elementActionDef id="loginPasswordWE"   elementFind="loginPasswordEF" elementAction="loginPasswordEA" />
+	<ate:elementFindByXpath id="loginPasswordEF" findByValue="modlgn_passwd" />
+	<ate:sendKeysAction id="loginPasswordEA" dataValue="passwordValue" />
+	<ate:stepInputDataValue id="passwordValue" dataValueID="3" />
+
+	<!-- myWebElement definition -->
+	<ate:elementActionDef id="loginWrongPasswordWE" elementFind="loginPasswordEF" elementAction="loginWrongPasswordEA"/>
+	<ate:sendKeysAction id="loginWrongPasswordEA" dataValue="wrongPasswordValue" />
+	<ate:stepInputDataValue id="wrongPasswordValue" dataValueID="4" />
+
+	<!-- step publicLogin_clickLoginbutton myWebElement definition -->
+	<ate:elementActionDef id="clickLoginButtonWE" elementFind="loginButtonEF" elementAction="loginButtonEA" />
+	<ate:elementFindByXpath id="loginButtonEF" findByValue="//button[@type='submit']" />
+	<ate:clickAction id="loginButtonEA" />
+
+	<ate:runTimeDataHolder id="wrongCode1" dataHolderType="PageSourceParsed" dataType="Text" pageHtmlLeftBoundry="Oops" pageHtmlRightBoundry="ong password" page="homePage"/>
+
+	<ate:pagePropertyCorrectnessAsserter
+	id="homePagePropertyAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/>
+
+	<ate:pageElementExistenceAsserter 
+	 id="homeElementExistenceAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/>
+	
+	<ate:stepExpectedResultValue id="homePageValidationValue" dataValueID="homePageVID" />
+			
+</beans>

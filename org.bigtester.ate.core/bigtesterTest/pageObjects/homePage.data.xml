@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+<STEPEXPECTEDRESULT ELEMENTFINDBY="ID" ELEMENTFINDBYVALUE="logo1" ASSERTPRIORITY="HIGH" PAGENAME="homepage" STEPERSETID="homePageVID" TESTDATACONTEXT_IDCOLUMN="5" />
+<STEPEXPECTEDRESULT ELEMENTFINDBY="ID" ELEMENTFINDBYVALUE="banner" ASSERTPRIORITY="MEDIUM" PAGENAME="homepage" STEPERSETID="homePageVID" TESTDATACONTEXT_IDCOLUMN="5" />
+<STEPEXPECTEDRESULT ELEMENTFINDBY="ID" ELEMENTFINDBYVALUE="search_phu" ASSERTPRIORITY="HIGH" PAGENAME="homepage" STEPERSETID="homePageVID" TESTDATACONTEXT_IDCOLUMN="5" />
+<STEPEXPECTEDRESULT ELEMENTFINDBY="LINKTEXT" ELEMENTFINDBYVALUE="https://ssl.req.gouv.qc.ca/slc0110_eng.html" ASSERTPRIORITY="HIGH" PAGENAME="homepage" STEPERSETID="2" TESTDATACONTEXT_IDCOLUMN="5" />
+<STEPEXPECTEDRESULT ASSERTPROPERTY="Page_Title" ASSERTVALUE="My Page Title"	PAGENAME="homepage"	STEPERSETID="1"	TESTDATACONTEXT_IDCOLUMN="8" ASSERTPRIORITY="HIGH"/>
+ 
+<ElementInputData ID="1" dataName="UserName" dataValue="peidonghu1x" testDataContext_idColumn="1" />
+<ElementInputData ID="2" dataName="UserName" dataValue="peidonghu2x" testDataContext_idColumn="1" />
+<ElementInputData ID="3" dataName="Password" dataValue="pa1x" testDataContext_idColumn="1" sunnyParentData_id="1"/>
+<ElementInputData ID="4" dataName="Password" dataValue="pa2x" testDataContext_idColumn="1" sunnyParentData_id="2"/>
+
+</dataset>
