@@ -83,7 +83,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	private boolean optionalStep;
 	
 	/** The optional step inclusive. */
-	private String correlatedOptionalStepsUtilInclusive="";
+	private String correlatedOptionalStepsUtilInclusive="";//NOPMD
 	
 	/** The page object. */
 	@Nullable
@@ -445,7 +445,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	/**
 	 * @param optionalStepUtilInclusive the optionalStepInclusive to set
 	 */
-	public void setCorrelatedOptionalStepsUtilInclusive(String correlatedOptionalStepsUtilInclusive) {
+	public void setCorrelatedOptionalStepsUtilInclusive(String correlatedOptionalStepsUtilInclusive) {//NOPMD
 		this.correlatedOptionalStepsUtilInclusive = correlatedOptionalStepsUtilInclusive;
 	}
 

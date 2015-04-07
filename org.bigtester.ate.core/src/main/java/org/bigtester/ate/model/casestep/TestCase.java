@@ -23,7 +23,6 @@ package org.bigtester.ate.model.casestep;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -32,7 +31,6 @@ import org.bigtester.ate.model.page.exception.StepExecutionException2;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.codehaus.plexus.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
-import org.springframework.aop.support.AopUtils;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -133,15 +131,15 @@ public class TestCase {
 	private int optionalStepPopulation(@Nullable ITestStep currentStep) {
 		if (null == currentStep)
 			throw GlobalUtils.createNotInitializedException("currentStep");
-		int retVal = -1;
+		int retVal = -1;//NOPMD
 		if (!StringUtils.isEmpty(currentStep.getCorrelatedOptionalStepsUtilInclusive())) {
 			currentStep.setOptionalStep(true);
-			int startIndex = -1;
-			int endIndex = -1;
+			int startIndex = -1;//NOPMD
+			int endIndex = -1;//NOPMD
 			for (int index = 0; index < getTestStepList().size(); index++) {
 				if (getTestStepList().get(index).getStepName() == currentStep
 						.getStepName()) {
-					startIndex = index;
+					startIndex = index;//NOPMD
 				}
 				if (getTestStepList().get(index).getStepName() == currentStep
 						.getCorrelatedOptionalStepsUtilInclusive()) {
@@ -171,7 +169,7 @@ public class TestCase {
 	public void goSteps() throws StepExecutionException2,
 			PageValidationException2, IllegalStateException,
 			RuntimeDataException {
-		int correlatedOptionlStepsEndIndex = -1;
+		int correlatedOptionlStepsEndIndex = -1;//NOPMD
 		for (int i = 0; i < getTestStepList().size(); i++) {
 
 			ITestStep currentTestStepTmp = getTestStepList().get(i);
@@ -189,14 +187,14 @@ public class TestCase {
 			try {
 				getCurrentTestStep().doStep();// NOPMD
 				getCurrentTestStep().setStepResultStatus(StepResultStatus.PASS);
-				if (i == correlatedOptionlStepsEndIndex) correlatedOptionlStepsEndIndex = -1;
+				if (i == correlatedOptionlStepsEndIndex) correlatedOptionlStepsEndIndex = -1;//NOPMD
 			} catch (Exception e) { //NOPMD
 				if (getCurrentTestStep().isOptionalStep()) {
 					getCurrentTestStep().setStepResultStatus(
 							StepResultStatus.SKIP);
 					if (correlatedOptionlStepsEndIndex >= i) {
-						i = correlatedOptionlStepsEndIndex;
-						correlatedOptionlStepsEndIndex = -1;
+						i = correlatedOptionlStepsEndIndex;//NOPMD
+						correlatedOptionlStepsEndIndex = -1;//NOPMD
 					}
 				} else {
 					throw e;

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.IStepERValue;
 import org.bigtester.ate.model.data.IStepInputData;
@@ -174,15 +173,15 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 	private int optionalStepPopulation(@Nullable ITestStep currentStep) {
 		if (null == currentStep)
 			throw GlobalUtils.createNotInitializedException("currentStep");
-		int retVal = -1;
+		int retVal = -1; //NOPMD
 		if (!StringUtils.isEmpty(currentStep.getCorrelatedOptionalStepsUtilInclusive())) {
 			currentStep.setOptionalStep(true);
-			int startIndex = -1;
-			int endIndex = -1;
+			int startIndex = -1;//NOPMD
+			int endIndex = -1;//NOPMD
 			for (int index = 0; index < getTestCase().getTestStepList().size(); index++) {
 				if (getTestCase().getTestStepList().get(index).getStepName() == currentStep
 						.getStepName()) {
-					startIndex = index;
+					startIndex = index;//NOPMD
 				}
 				if (getTestCase().getTestStepList().get(index).getStepName() == currentStep
 						.getCorrelatedOptionalStepsUtilInclusive()) {
@@ -229,7 +228,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 			getApplicationContext().publishEvent(
 					new RepeatDataRefreshEvent(this, getRepeatStepLogger()
 							.getCurrentRepeatStepPathNodes(), iteration));
-			int correlatedOptionlStepsEndIndex = -1;
+			int correlatedOptionlStepsEndIndex = -1;//NOPMD
 			for (int i = 0; i < getStepIndexes().size(); i++) {
 				ITestStep currentTestStepTmp = getTestCase().getTestStepList()
 						.get(getStepIndexes().get(i));
@@ -264,15 +263,15 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 					getTestCase().getCurrentTestStep().doStep();// NOPMD
 					getTestCase().getCurrentTestStep().setStepResultStatus(
 							StepResultStatus.PASS);
-					if (i == correlatedOptionlStepsEndIndex) correlatedOptionlStepsEndIndex = -1;
+					if (i == correlatedOptionlStepsEndIndex) correlatedOptionlStepsEndIndex = -1;//NOPMD
 
 				} catch (StepExecutionException2 stepE) {
 					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
 						getTestCase().getCurrentTestStep().setStepResultStatus(
 								StepResultStatus.SKIP);
 						if (correlatedOptionlStepsEndIndex >= i) {
-							i = correlatedOptionlStepsEndIndex;
-							correlatedOptionlStepsEndIndex = -1;
+							i = correlatedOptionlStepsEndIndex;//NOPMD
+							correlatedOptionlStepsEndIndex = -1;//NOPMD
 						}
 					} else {
 						throw stepE;
@@ -284,8 +283,8 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 						getTestCase().getCurrentTestStep().setStepResultStatus(
 								StepResultStatus.SKIP);
 						if (correlatedOptionlStepsEndIndex >= i) {
-							i = correlatedOptionlStepsEndIndex;
-							correlatedOptionlStepsEndIndex = -1;
+							i = correlatedOptionlStepsEndIndex;//NOPMD
+							correlatedOptionlStepsEndIndex = -1;//NOPMD
 						}
 					} else {
 						if (!this.continueOnFailure)
@@ -296,8 +295,8 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 						getTestCase().getCurrentTestStep().setStepResultStatus(
 								StepResultStatus.SKIP);
 						if (correlatedOptionlStepsEndIndex >= i) {
-							i = correlatedOptionlStepsEndIndex;
-							correlatedOptionlStepsEndIndex = -1;
+							i = correlatedOptionlStepsEndIndex;//NOPMD
+							correlatedOptionlStepsEndIndex = -1;//NOPMD
 						}
 					} else {
 						throw e;
