@@ -300,8 +300,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 							correlatedOptionlStepsEndIndex = -1;
 						}
 					} else {
-						throw GlobalUtils.createInternalError(
-								"Error not handled", e); // NOPMD
+						throw e;
 					}
 				}
 

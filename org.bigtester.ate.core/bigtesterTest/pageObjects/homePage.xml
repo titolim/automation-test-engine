@@ -27,18 +27,18 @@
 	<ate:elementActionDef id="loginUserNameWE"   elementFind="loginUserNameEF" elementAction="loginUserNameEA" />
 	<ate:elementFindById id="loginUserNameEF" findByValue="modlgn_username" />
 	<ate:sendKeysAction id="loginUserNameEA" dataValue="userNameValue" />
-	<ate:stepInputDataValue id="userNameValue" dataValueID="1" />
+	<ate:fileDataHolder id="userNameValue" dataValueID="1"/>
 
 	<!-- myWebElement definition -->
 	<ate:elementActionDef id="loginPasswordWE"   elementFind="loginPasswordEF" elementAction="loginPasswordEA" />
-	<ate:elementFindByXpath id="loginPasswordEF" findByValue="modlgn_passwd" />
-	<ate:sendKeysAction id="loginPasswordEA" dataValue="passwordValue" />
-	<ate:stepInputDataValue id="passwordValue" dataValueID="3" />
+	<ate:elementFindById id="loginPasswordEF" findByValue="modlgn_passwd" />
+	<ate:sendKeysAction id="loginPasswordEA" dataValue="loginPasswordEAValue" />
+	<ate:fileDataHolder id="loginPasswordEAValue" dataValueID="3"/>
 
 	<!-- myWebElement definition -->
 	<ate:elementActionDef id="loginWrongPasswordWE" elementFind="loginPasswordEF" elementAction="loginWrongPasswordEA"/>
-	<ate:sendKeysAction id="loginWrongPasswordEA" dataValue="wrongPasswordValue" />
-	<ate:stepInputDataValue id="wrongPasswordValue" dataValueID="4" />
+	<ate:sendKeysAction id="loginWrongPasswordEA" dataValue="loginWrongPasswordEAValue" />
+	<ate:fileDataHolder id="loginWrongPasswordEAValue" dataValueID="4"/>
 
 	<!-- step publicLogin_clickLoginbutton myWebElement definition -->
 	<ate:elementActionDef id="clickLoginButtonWE" elementFind="loginButtonEF" elementAction="loginButtonEA" />
@@ -47,12 +47,12 @@
 
 	<ate:runTimeDataHolder id="wrongCode1" dataHolderType="PageSourceParsed" dataType="Text" pageHtmlLeftBoundry="Oops" pageHtmlRightBoundry="ong password" page="homePage"/>
 
-	<ate:pagePropertyCorrectnessAsserter
-	id="homePagePropertyAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/>
+<!-- 	<ate:pagePropertyCorrectnessAsserter -->
+<!-- 	id="homePagePropertyAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/> -->
 
 	<ate:pageElementExistenceAsserter 
-	 id="homeElementExistenceAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/>
+	 id="homeElementExistenceAsserter" resultPage="homePage" stepERValue="homePageVID"/>
 	
-	<ate:stepExpectedResultValue id="homePageValidationValue" dataValueID="homePageVID" />
+<!-- 	<ate:stepExpectedResultValue id="homePageValidationValue" dataValueID="homePageVID" /> -->
 			
 </beans>

@@ -27,7 +27,7 @@
 	<ate:operaDriver    id="MyWebDriver2" />
 	<ate:htmlUnitDriver id="MyWebDriver2" />
       -->
-	<ate:firefoxDriver  id="MyWebDriver2" profileName="dentisteasy"/>
+	<ate:firefoxDriver  id="MyWebDriver2"/>
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="Bigtester home page test case">
@@ -37,7 +37,7 @@
 			<property name="expectedResultAsserter">
 				<list>
 					<ref bean="homeElementExistenceAsserter" />
-					<ref bean="homePagePropertyAsserter" />
+<!-- 					<ref bean="homePagePropertyAsserter" /> -->
 				</list>
 			</property>
 		</ate:homeStep>

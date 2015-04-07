@@ -27,19 +27,19 @@
 	<ate:operaDriver    id="MyWebDriver2" />
 	<ate:htmlUnitDriver id="MyWebDriver2" />
       -->
-	<ate:firefoxDriver  id="MyWebDriver2" profileName="dentisteasy"/>
+	<ate:firefoxDriver  id="MyWebDriver2"/>
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="Bigtester home page test case">
 	
 		<ate:homeStep id="OpenBigtesterHomePage" stepName="OpenBigtesterHomePage"
 			stepDescription="open my home step" targetStep="true" pageObject="homePage">
-			<property name="expectedResultAsserter">
-				<list>
-					<ref bean="homePagePropertyAsserter" />
-					<ref bean="homeElementExistenceAsserter" />
-				</list>
-			</property>
+<!-- 			<property name="expectedResultAsserter"> -->
+<!-- 				<list> -->
+<!-- 					<ref bean="homePagePropertyAsserter" /> -->
+<!-- 					<ref bean="homeElementExistenceAsserter" /> -->
+<!-- 				</list> -->
+<!-- 			</property> -->
 		</ate:homeStep>
 		<ate:elementStep id="stepClickHomepageEnglishLink"
 			stepDescription="Click homepage english link" stepName="clickHomepageEnglishLink" optionalStep="true"

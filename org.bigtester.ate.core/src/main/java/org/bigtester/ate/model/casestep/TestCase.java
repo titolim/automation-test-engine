@@ -199,7 +199,7 @@ public class TestCase {
 						correlatedOptionlStepsEndIndex = -1;
 					}
 				} else {
-					throw GlobalUtils.createInternalError("Error not handled", e);
+					throw e;
 				}
 			}
 			// } catch (StepExecutionException2 stepE) {
