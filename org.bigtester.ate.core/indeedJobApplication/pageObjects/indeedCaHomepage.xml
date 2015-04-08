@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:ate="http://www.bigtester.org/schema/ate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                           http://www.bigtester.org/schema/ate 
+                           http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+
+	<!-- this registers beans annotated with @Aspect -->
+	<aop:aspectj-autoproxy />
+
+	<import resource="classpath:META-INF/logger-reporter.xml" />
+	<import resource="classpath:META-INF/page_base_bean.xml" />
+
+	<ate:homePage id="indeedCaHomepage" homeUrl="http://www.indeed.ca"
+		dataFile="indeedJobApplication/pageObjects/indeedCaHomepage.data.xml" />
+
+	<ate:elementActionDef id="eadTypeInSearchKeyWordQA"
+		elementFind="efSearchKeyWordInput" elementAction="eaTypeKeyWordQA">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efSearchKeyWordInput"
+		findByValue="what" />
+	<ate:sendKeysAction id="eaTypeKeyWordQA" dataValue="dvkeyWordQA" />
+	<ate:runTimeDataHolder id="dvkeyWordQA"
+		dataHolderType="ManualAssigned" dataType="Text" dataValue="QA" />
+
+	<ate:elementActionDef id="eadClearTextInWhere"
+		elementFind="efWhere" elementAction="eaClearWhereText">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efWhere" findByValue="where" />
+	<ate:clearTextAction id="eaClearWhereText" />
+
+	<ate:elementActionDef id="eadTypeLocationInWhere"
+		elementFind="efWhere" elementAction="eaTypeInLocation">
+	</ate:elementActionDef>
+	<ate:sendKeysAction id="eaTypeInLocation" dataValue="Montreal, QC" />
+<!-- 	<ate:runTimeDataHolder id="Montreal1, QC" -->
+<!-- 		dataHolderType="ManualAssigned" dataType="Text" dataValue="Montreal, QC" /> -->
+
+	<ate:elementActionDef id="eadClickFindJobsButton"
+		elementFind="efFindJobsButton" elementAction="eaFindJobsButtonClick">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efFindJobsButton"
+		findByValue="fj" />
+	<ate:clickAction id="eaFindJobsButtonClick" />
+
+</beans>

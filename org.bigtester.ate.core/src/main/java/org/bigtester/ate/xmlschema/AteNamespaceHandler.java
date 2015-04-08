@@ -73,6 +73,7 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_PAGEPROPERTYCORRECTNESS, new PagePropertyCorrectBeanDefinitionParser());
 		
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CLICKACTION, new ClickActionBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CLEARTEXTACTION, new ClearTextActionBeanDefinitionParser());
 		
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_MOUSEMOVETOACTION, new CursorMoveActionBeanDefinitionParser());
 		

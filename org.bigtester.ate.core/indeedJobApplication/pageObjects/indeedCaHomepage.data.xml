@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+<STEPERELEMENTEXISTENCE FirstTimeExecution= "Yes"
+		ElementFindBy="xpath" ElementFindByValue="//span[contains(., 'your account is created!')]"
+		AssertPriority="high" PageName="adminhomepage" StepErSetId="adminregistersuccessvid"
+		TestDataContext_IdColumn="5" />
+	
+<!-- 	<RepeatStepErPageProperty IterationIndex="" RepeatStepBeanId="" -->
+<!-- 		AssertProperty="page_title" AssertValue="my page title" -->
+<!-- 		AssertPriority="high" PageName="adminhomepage" StepErSetId="adminregistersuccessvid" -->
+<!-- 		TestDataContext_IdColumn="5" /> -->
+
+</dataset>

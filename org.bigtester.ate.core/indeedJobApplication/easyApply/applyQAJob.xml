@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:ate="http://www.bigtester.org/schema/ate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                           http://www.bigtester.org/schema/ate 
+                           http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+
+	<!-- this registers beans annotated with @Aspect -->
+	<aop:aspectj-autoproxy />
+
+	<import resource="classpath:META-INF/logger-reporter.xml" />
+	<import resource="classpath:META-INF/case_base_bean.xml" />
+	<import resource="../pageObjects/indeedCaHomepage.xml" />
+<!-- 	<import resource="../pageObjects/qaMontrealSearchResult.xml" /> -->
+	<import resource="../pageObjects/lastPage.xml" />
+	<!-- <ate:firefoxDriver id="MyWebDriver2" profileName="dentisteasy"/> <ate:chromeDriver 
+		id="MyWebDriver2" /> <ate:IEDriver id="MyWebDriver2" /> <ate:safariDriver 
+		id="MyWebDriver2" /> <ate:operaDriver id="MyWebDriver2" /> <ate:htmlUnitDriver 
+		id="MyWebDriver2" /> -->
+	<ate:firefoxDriver id="MyWebDriver2" />
+
+	<ate:testCase id="testcase" testCaseName="apply easily-apply job.">
+
+		<ate:homeStep id="stepOpenHomePage" stepName="openHomePage"
+			stepDescription="open indeed home page" targetStep="false"
+			pageObject="indeedCaHomepage" />
+
+		<ate:elementStep id="stepTypeInSearchKeyWordQA"
+			stepDescription="type in search key word QA" stepName="typeInSearchKeyWordQA"
+			optionalStep="false" targetStep="false" elementActionDef="eadTypeInSearchKeyWordQA">
+		</ate:elementStep>
+				
+		<ate:elementStep id="stepClearWhereText"
+			stepDescription="clear where text" stepName="clearWhereText"
+			targetStep="false" elementActionDef="eadClearTextInWhere"
+			>
+		</ate:elementStep>
+
+		<ate:elementStep id="stepTypeInMontrealQC"
+			stepDescription="type in search location, Montreal QC" stepName="typeInMontrealQC"
+			targetStep="false" elementActionDef="eadTypeLocationInWhere">
+		</ate:elementStep>
+		
+		<ate:elementStep id="stepClickFindJobsButton"
+			stepDescription="stepClickFindJobsButton" stepName="clickFindJobsButton"
+			targetStep="false" elementActionDef="eadClickFindJobsButton"
+			pageObject="indeedCaHomepage">
+		</ate:elementStep>
+
+<!-- 		<ate:elementStep id="stepMoveCursorToProfileLink" -->
+<!-- 			stepDescription="move mouse to profile" stepName="moveCursortoProfile" -->
+<!-- 			targetStep="false" elementActionDef="moveCursorToProfile"> -->
+<!-- 		</ate:elementStep> -->
+
+<!-- 		<ate:elementStep id="stepClickEnglishProfile" -->
+<!-- 			stepDescription="switch to english admin" stepName="switchToEnglishProfile" -->
+<!-- 			targetStep="false" elementActionDef="clickEnglishProfile" -->
+<!-- 			optionalStep="true"> -->
+<!-- 		</ate:elementStep> -->
+
+<!-- 		<ate:elementStep id="stepMoveCursorToProfileLink2" -->
+<!-- 			stepDescription="move mouse to profile" stepName="moveCursortoProfile" -->
+<!-- 			targetStep="true" elementActionDef="moveCursorToProfile"> -->
+<!-- 			<property name="expectedResultAsserter"> -->
+<!-- 				<list> -->
+<!-- 					<ref bean="adminLoginDashBoardElementExistenceAsserter" /> -->
+<!-- 				</list> -->
+<!-- 			</property> -->
+<!-- 		</ate:elementStep> -->
+
+<!-- 		<ate:elementStep id="stepClickLogoutLink" -->
+<!-- 			stepDescription="logout admin" stepName="logoutAdmin" targetStep="false" -->
+<!-- 			elementActionDef="clickLogoutLinkEAD"> -->
+<!-- 		</ate:elementStep> -->
+
+		<ate:lastStep id="mylaststep" stepName="mylaststep"
+			stepDescription="last step close browser" targetStep="false"
+			pageObject="myLastPage">
+		</ate:lastStep>
+	</ate:testCase>
+
+</beans>

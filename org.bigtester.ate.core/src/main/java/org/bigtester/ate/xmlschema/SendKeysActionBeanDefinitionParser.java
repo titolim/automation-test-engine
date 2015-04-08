@@ -74,12 +74,15 @@ public class SendKeysActionBeanDefinitionParser extends
 //							StepInputDataValue.class, inputDataValueConstrs, null);
 //
 //					parserContext.getRegistry().registerBeanDefinition(element.getAttribute("id") + "_ELEMENTINPUTDATA_ID", inputDataValueDef);
-//					
+					bDef.setAttribute(XsdElementConstants.ATTR_SENDKEYSACTION_DATAVALUE, data);
 					bDef.getConstructorArgumentValues().addGenericArgumentValue( new RuntimeBeanReference(data));
+				} else {
+					bDef.setAttribute(XsdElementConstants.ATTR_SENDKEYSACTION_DATAVALUE, "");
 				}
 
 				bDef.setParentName(XsdElementConstants.ELEMENT_ID_BASEELEMENTACTION);
 				
+				bDef.setAttribute("id", element.getAttribute("id"));
 				parserContext.getRegistry().registerBeanDefinition(
 						element.getAttribute("id"), bDef);
 				return (AbstractBeanDefinition) bDef;

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:ate="http://www.bigtester.org/schema/ate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                           http://www.bigtester.org/schema/ate 
+                           http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+
+	<!-- this registers beans annotated with @Aspect -->
+	<aop:aspectj-autoproxy />
+
+	<import resource="classpath:META-INF/logger-reporter.xml" />
+	<import resource="classpath:META-INF/page_base_bean.xml" />
+
+	<ate:regularPage id="qaMontrealSearchResult" 
+		dataFile="indeedJobApplication/pageObjects/indeedCaHomepage.data.xml" />
+
+	<ate:elementActionDef id="eadTypeInSearchKeyWordQA"
+		elementFind="efSearchKeyWordInput" elementAction="eaTypeKeyWordQA">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efSearchKeyWordInput"
+		findByValue="what" />
+	<ate:sendKeysAction id="eaTypeKeyWordQA" dataValue="dvkeyWordQA" />
+	<ate:runTimeDataHolder id="dvkeyWordQA"
+		dataHolderType="ManualAssigned" dataType="Text" dataValue="QA" />
+
+	<ate:elementActionDef id="eadClearTextInWhere"
+		elementFind="efWhere" elementAction="eaClearWhereText">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efWhere" findByValue="where" />
+	<ate:clearTextAction id="eaClearWhereText" />
+
+	<ate:elementActionDef id="eadTypeLocationInWhere"
+		elementFind="efWhere" elementAction="eaTypeInLocation">
+	</ate:elementActionDef>
+	<ate:sendKeysAction id="eaTypeInLocation" dataValue="dvMontrealQC" />
+	<ate:runTimeDataHolder id="dvMontrealQC"
+		dataHolderType="ManualAssigned" dataType="Text" dataValue="Montréal, QC" />
+
+	<ate:elementActionDef id="eadClickFindJobsButton"
+		elementFind="efFindJobsButton" elementAction="eaFindJobsButtonClick">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efFindJobsButton"
+		findByValue="fj" />
+	<ate:clickAction id="eaFindJobsButtonClick" />
+
+	<ate:elementActionDef id="Clinic_C" elementFind="Clinic_C_EF"
+		elementAction="Clinic_C_EA">
+
+	</ate:elementActionDef>
+	<ate:elementFindByXpath id="Clinic_C_EF"
+		findByValue="//*[@title='Clinic C']/img[contains(@src,'map-marker-blue')]" />
+	<ate:clickAction id="Clinic_C_EA" />
+
+	<ate:elementActionDef id="Service_Selector"
+		elementFind="Service_Selector_EF" elementAction="Service_Selector_EA" />
+	<ate:elementFindByXpath id="Service_Selector_EF"
+		findByValue="//button[@data-id='srv_select']" />
+	<ate:clickAction id="Service_Selector_EA" />
+
+
+
+	<ate:elementActionDef id="Service_Consultation"
+		elementFind="Service_Consultation_EF" elementAction="Service_Consultation_EA">
+	</ate:elementActionDef>
+	<ate:elementFindByXpath id="Service_Consultation_EF"
+		findByValue="//*[@id='panel-body']/div[1]/div/div/ul/li[1]/a" />
+	<ate:clickAction id="Service_Consultation_EA" />
+
+
+
+	<!-- <ate:runTimeDataHolder id="bookingSmsCode" dataHolderType="ManualAssigned" -->
+	<!-- dataValue="test" dataType="Text" /> -->
+
+	<ate:elementActionDef id="Date_Selector"
+		elementFind="Date_Selector_EF" elementAction="Date_Selector_EA">
+	</ate:elementActionDef>
+	<ate:elementFindById id="Date_Selector_EF"
+		findByValue="dashboard-report-range" />
+	<ate:clickAction id="Date_Selector_EA" />
+
+	<ate:elementActionDef id="Next_Week_Selection"
+		elementFind="Next_Week_Selection_EF" elementAction="Next_Week_Selection_EA">
+	</ate:elementActionDef>
+	<ate:elementFindByXpath id="Next_Week_Selection_EF"
+		findByValue="//li[contains(., 'Next week')]" />
+	<ate:clickAction id="Next_Week_Selection_EA" />
+
+	<ate:elementActionDef id="Book_Button"
+		elementFind="Book_Button_EF" elementAction="Book_Button_EA">
+	</ate:elementActionDef>
+	<ate:elementFindByXpath id="Book_Button_EF"
+		findByValue="//a[contains(@href, '/public/practice?practiceId=')]" />
+	<ate:clickAction id="Book_Button_EA" />
+
+	<ate:elementActionDef id="clickHomepageEnglish"
+		elementFind="homePageEnglishLink" elementAction="homePageEnglishLinkClick">
+	</ate:elementActionDef>
+	<ate:elementFindByXpath id="homePageEnglishLink"
+		findByValue="//a[contains(@onclick, 'en')]" />
+	<ate:clickAction id="homePageEnglishLinkClick" />
+
+
+	<ate:elementActionDef id="LocationList"
+		elementFind="LocationList_EF" elementAction="LocationList_EA"></ate:elementActionDef>
+
+	<ate:elementFindByXpath id="LocationList_EF"
+		findByValue="//div[@class='pac-item'][1]" />
+	<ate:clickAction id="LocationList_EA" />
+
+	<ate:pagePropertyCorrectnessAsserter
+		id="publicHomePagePropertyAsserter" resultPage="publicHomePage"
+		stepERValue="publicHomePageVID" />
+
+	<ate:pageElementExistenceAsserter
+		id="publicHomePageElementExistenceAsserter" resultPage="publicHomePage"
+		stepERValue="publicHomePageVID" />
+
+
+	<!-- <ate:stepExpectedResultValue id="publicHomePageValidationValue" -->
+	<!-- dataValueID="publicHomePageVID" /> -->
+
+
+
+</beans>

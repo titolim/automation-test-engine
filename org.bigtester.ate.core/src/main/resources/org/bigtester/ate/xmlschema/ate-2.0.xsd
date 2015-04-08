@@ -443,6 +443,16 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 	
+	
+	<xsd:complexType name="ClearTextActionType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
 	<xsd:complexType name="MouseMoveToActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -701,6 +711,7 @@
 	<xsd:element name="elementFindById" type="ElementFindByIdType" />
 	<xsd:element name="elementFindByXpath" type="GenericElementFindType" />
 	<xsd:element name="clickAction" type="ClickActionType"/>
+	<xsd:element name="clearTextAction" type="ClearTextActionType"/>
 	<xsd:element name="mouseMoveToAction" type="MouseMoveToActionType"/>
 	<xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType"/>
 	<xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />

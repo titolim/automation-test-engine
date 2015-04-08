@@ -13,6 +13,8 @@
 	<import resource="classpath:META-INF/db-services.xml" />
 	
 	<bean class="org.bigtester.ate.model.data.CaseDataProcessor" />
+	<bean class="org.bigtester.ate.model.page.elementaction.SendKeysActionPostBeanProcessor" />
+	
 	<bean id="repeatStepExecutionLogger" class="org.bigtester.ate.model.casestep.RepeatStepExecutionLogger" />
 	<ate:TestDatabaseInitializer id="dbInitializer"/>
 	
