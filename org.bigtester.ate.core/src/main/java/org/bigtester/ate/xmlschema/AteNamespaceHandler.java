@@ -96,7 +96,7 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_RUNTIMEDATAHOLDER, new RunTimeDataHolderBeanDefinitionParser());
 		
-		//registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BASETESTSTEP, new BaseTestStepBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_AUTOINCREMENTALDATAHOLDSER, new AutoIncrementalDataHolderBeanDefinitionParser());
 	}
 
 }

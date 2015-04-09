@@ -157,9 +157,21 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_BASEERVALUE. */
 	public static final String ELEMENT_BASEERVALUE = "baseERValue";
+	/** The Constant ELEMENT_autoIncrementalDataHolder. */
+	public static final String ELEMENT_AUTOINCREMENTALDATAHOLDSER = "autoIncrementalDataHolder";
+	
+	/** The Constant ATTR_AUTOINCREMENTALDATAHOLDSER_STARTVALUE. */
+	public static final String ATTR_AUTOINCREMENTALDATAHOLDSER_STARTVALUE = "startValue";//NOPMD
+	
+	/** The Constant ATTR_AUTOINCREMENTALDATAHOLDSER_ENDVALUE. */
+	public static final String ATTR_AUTOINCREMENTALDATAHOLDSER_ENDVALUE = "endValue";//NOPMD
+
+	/** The Constant ATTR_AUTOINCREMENTALDATAHOLDSER_PACING. */
+	public static final String ATTR_AUTOINCREMENTALDATAHOLDSER_PACING = "pacing";//NOPMD
 	
 	/** The Constant ELEMENT_RUNTIMEDATAHOLDER. */
 	public static final String ELEMENT_RUNTIMEDATAHOLDER = "runTimeDataHolder";
+	
 	
 	/** The Constant ATTR_RUNTIMEDATAHOLDER_DATATYPE. */
 	public static final String ATTR_RUNTIMEDATAHOLDER_DATATYPE = "dataType";

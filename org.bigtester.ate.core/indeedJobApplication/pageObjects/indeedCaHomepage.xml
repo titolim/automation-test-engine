@@ -21,16 +21,18 @@
 	<ate:elementActionDef id="eadTypeInSearchKeyWordQA"
 		elementFind="efSearchKeyWordInput" elementAction="eaTypeKeyWordQA">
 	</ate:elementActionDef>
-	<ate:elementFindById id="efSearchKeyWordInput"
-		findByValue="what" />
+	<ate:elementFindByXpath id="efSearchKeyWordInput"
+		findByValue="//*[@class='input_text']" indexOfSameElements="indexOfKeyWordInput" />
 	<ate:sendKeysAction id="eaTypeKeyWordQA" dataValue="dvkeyWordQA" />
 	<ate:runTimeDataHolder id="dvkeyWordQA"
 		dataHolderType="ManualAssigned" dataType="Text" dataValue="QA" />
+	<ate:autoIncrementalDataHolder id="indexOfKeyWordInput" startValue="1" pacing="1"></ate:autoIncrementalDataHolder>
 
 	<ate:elementActionDef id="eadClearTextInWhere"
 		elementFind="efWhere" elementAction="eaClearWhereText">
 	</ate:elementActionDef>
-	<ate:elementFindById id="efWhere" findByValue="where" />
+	<ate:elementFindByXpath id="efWhere" findByValue="//*[@class='input_text']" indexOfSameElements="indexOfLocationInput"/>
+	<ate:autoIncrementalDataHolder id="indexOfLocationInput" startValue="0" pacing="1"></ate:autoIncrementalDataHolder>
 	<ate:clearTextAction id="eaClearWhereText" />
 
 	<ate:elementActionDef id="eadTypeLocationInWhere"

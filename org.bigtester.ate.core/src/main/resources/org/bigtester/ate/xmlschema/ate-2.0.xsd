@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.bigtester.org/schema/ate"
-	        xmlns:tool="http://www.springframework.org/schema/tool" 
-	        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	        xmlns:beans="http://www.springframework.org/schema/beans"
-	        targetNamespace="http://www.bigtester.org/schema/ate" 
-	        xmlns:tns="http://www.bigtester.org/schema/ate"
-	        elementFormDefault="qualified" 
-	        attributeFormDefault="unqualified">
+	xmlns:tool="http://www.springframework.org/schema/tool" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	targetNamespace="http://www.bigtester.org/schema/ate" xmlns:tns="http://www.bigtester.org/schema/ate"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
-	<xsd:import namespace="http://www.springframework.org/schema/beans" 
-	schemaLocation="http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"/>
+	<xsd:import namespace="http://www.springframework.org/schema/beans"
+		schemaLocation="http://www.springframework.org/schema/beans/spring-beans-4.0.xsd" />
 
 	<xsd:element name="TestProject">
 		<xsd:complexType>
 			<xsd:complexContent>
-                <xsd:extension base="beans:identifiedType">			
+				<xsd:extension base="beans:identifiedType">
 					<xsd:choice minOccurs="1" maxOccurs="unbounded">
 						<xsd:element ref="TestSuite" />
 					</xsd:choice>
@@ -61,18 +58,19 @@
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-<xsd:element name="CaseDependency">
+	<xsd:element name="CaseDependency">
 		<xsd:complexType>
 			<xsd:complexContent>
 				<xsd:extension base="beans:identifiedType">
-					<xsd:attribute name="dependOnTestCaseID" type="xsd:string" use="required" />
-					<xsd:attribute name="dependencyType" use="required" >
-					<xsd:simpleType>
-						<xsd:restriction base="xsd:string">
-							<xsd:enumeration value="TestCaseStepDependency" />
-							<xsd:enumeration value="TestCaseDataDependency" />
-						</xsd:restriction>
-					</xsd:simpleType>
+					<xsd:attribute name="dependOnTestCaseID" type="xsd:string"
+						use="required" />
+					<xsd:attribute name="dependencyType" use="required">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="TestCaseStepDependency" />
+								<xsd:enumeration value="TestCaseDataDependency" />
+							</xsd:restriction>
+						</xsd:simpleType>
 					</xsd:attribute>
 				</xsd:extension>
 			</xsd:complexContent>
@@ -141,46 +139,46 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-<xsd:complexType name="MyChromeDriverType">
+	<xsd:complexType name="MyChromeDriverType">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractWebDriverBaseType">
-<!-- 			<xsd:attribute name="profileName" type="xsd:string"/>  -->
+				<!-- <xsd:attribute name="profileName" type="xsd:string"/> -->
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
-    <xsd:complexType name="MyIEDriverType">
+	<xsd:complexType name="MyIEDriverType">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractWebDriverBaseType">
-<!-- 			<xsd:attribute name="profileName" type="xsd:string"/>  -->
+				<!-- <xsd:attribute name="profileName" type="xsd:string"/> -->
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
-    <xsd:complexType name="MySafariDriverType">
+	<xsd:complexType name="MySafariDriverType">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractWebDriverBaseType">
-<!-- 			<xsd:attribute name="profileName" type="xsd:string"/>  -->
+				<!-- <xsd:attribute name="profileName" type="xsd:string"/> -->
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
-	 <xsd:complexType name="MyOperaDriverType">
+
+	<xsd:complexType name="MyOperaDriverType">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractWebDriverBaseType">
-<!-- 			<xsd:attribute name="profileName" type="xsd:string"/>  -->			
+				<!-- <xsd:attribute name="profileName" type="xsd:string"/> -->
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
-	 <xsd:complexType name="MyHtmlUnitDriverType">
+
+	<xsd:complexType name="MyHtmlUnitDriverType">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractWebDriverBaseType">
-<!-- 			<xsd:attribute name="profileName" type="xsd:string"/>  -->			
+				<!-- <xsd:attribute name="profileName" type="xsd:string"/> -->
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="PageModelBaseType" abstract="false">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -256,8 +254,9 @@
 				<xsd:attributeGroup ref="beans:beanAttributes" />
 				<xsd:attribute name="targetStep" type="xsd:boolean"
 					use="required" />
-				<xsd:attribute name="optionalStep" type="xsd:boolean"/>
-				<xsd:attribute name="correlatedOptionalStepsUtilInclusive" type="xsd:string"/>
+				<xsd:attribute name="optionalStep" type="xsd:boolean" />
+				<xsd:attribute name="correlatedOptionalStepsUtilInclusive"
+					type="xsd:string" />
 				<xsd:attribute name="stepName" type="xsd:string" use="required" />
 				<xsd:attribute name="stepDescription" type="xsd:string" />
 			</xsd:extension>
@@ -313,14 +312,14 @@
 				</xsd:attribute>
 				<xsd:attribute name="stepERValue" type="xsd:string"
 					use="required">
-<!-- 					<xsd:annotation> -->
-<!-- 						<xsd:appinfo> -->
-<!-- 							<tool:annotation kind="ref"> -->
-<!-- 								<tool:expected-type -->
-<!-- 									type="org.bigtester.ate.model.data.StepExpectedResultValue" /> -->
-<!-- 							</tool:annotation> -->
-<!-- 						</xsd:appinfo> -->
-<!-- 					</xsd:annotation> -->
+					<!-- <xsd:annotation> -->
+					<!-- <xsd:appinfo> -->
+					<!-- <tool:annotation kind="ref"> -->
+					<!-- <tool:expected-type -->
+					<!-- type="org.bigtester.ate.model.data.StepExpectedResultValue" /> -->
+					<!-- </tool:annotation> -->
+					<!-- </xsd:appinfo> -->
+					<!-- </xsd:annotation> -->
 				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -385,14 +384,14 @@
 				</xsd:attribute>
 				<xsd:attribute name="stepERValue" type="xsd:string"
 					use="required">
-<!-- 					<xsd:annotation> -->
-<!-- 						<xsd:appinfo> -->
-<!-- 							<tool:annotation kind="ref"> -->
-<!-- 								<tool:expected-type -->
-<!-- 									type="org.bigtester.ate.model.data.StepExpectedResultValue" /> -->
-<!-- 							</tool:annotation> -->
-<!-- 						</xsd:appinfo> -->
-<!-- 					</xsd:annotation> -->
+					<!-- <xsd:annotation> -->
+					<!-- <xsd:appinfo> -->
+					<!-- <tool:annotation kind="ref"> -->
+					<!-- <tool:expected-type -->
+					<!-- type="org.bigtester.ate.model.data.StepExpectedResultValue" /> -->
+					<!-- </tool:annotation> -->
+					<!-- </xsd:appinfo> -->
+					<!-- </xsd:annotation> -->
 				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
@@ -402,7 +401,15 @@
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="findByValue" type="xsd:string" />
-				<xsd:attribute name="indexOfSameElements" type="xsd:int" />
+				<xsd:attribute name="indexOfSameElements" type="xsd:string">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<tool:annotation kind="ref">
+								<tool:expected-type type="org.bigtester.ate.model.data.IOnTheFlyData" />
+							</tool:annotation>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -442,8 +449,8 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
-	
+
+
 	<xsd:complexType name="ClearTextActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -452,7 +459,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="MouseMoveToActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -461,7 +468,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="TestWindowsSwitchActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -503,12 +510,12 @@
 							<xsd:enumeration value="PageSourceParsed" />
 							<xsd:enumeration value="CaseServiceParsed" />
 							<xsd:enumeration value="StepServiceParsed" />
-							
+
 							<xsd:enumeration value="RandomAlphaText" />
 							<xsd:enumeration value="RandomNumbers" />
 							<xsd:enumeration value="RandomTextNumbers" />
 							<xsd:enumeration value="RandomEmail" />
-							
+
 						</xsd:restriction>
 					</xsd:simpleType>
 				</xsd:attribute>
@@ -541,6 +548,17 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
+	<xsd:complexType name="AutoIncrementalDataHolderType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+				<xsd:attribute name="startValue" type="xsd:int" use="required"></xsd:attribute>
+				<xsd:attribute name="endValue" type="xsd:int"></xsd:attribute>
+				<xsd:attribute name="pacing" type="xsd:int" use="required"></xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 	<xsd:complexType name="ElementActionDefType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -609,7 +627,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="RepeatStepType">
 		<xsd:complexContent>
 			<xsd:extension base="BaseTestStepType">
@@ -666,7 +684,7 @@
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<!-- Here we re-use Spring elements and attributes -->
-				
+
 				<xsd:choice maxOccurs="unbounded">
 					<xsd:element ref="caseTypeService" minOccurs="0"
 						maxOccurs="unbounded" />
@@ -675,7 +693,7 @@
 					<xsd:element ref="repeatStep" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element ref="lastStep" minOccurs="1" maxOccurs="unbounded" />
 				</xsd:choice>
-				
+
 				<xsd:attribute name="testCaseName" type="xsd:string"
 					use="required" />
 			</xsd:extension>
@@ -710,10 +728,10 @@
 
 	<xsd:element name="elementFindById" type="ElementFindByIdType" />
 	<xsd:element name="elementFindByXpath" type="GenericElementFindType" />
-	<xsd:element name="clickAction" type="ClickActionType"/>
-	<xsd:element name="clearTextAction" type="ClearTextActionType"/>
-	<xsd:element name="mouseMoveToAction" type="MouseMoveToActionType"/>
-	<xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType"/>
+	<xsd:element name="clickAction" type="ClickActionType" />
+	<xsd:element name="clearTextAction" type="ClearTextActionType" />
+	<xsd:element name="mouseMoveToAction" type="MouseMoveToActionType" />
+	<xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType" />
 	<xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />
 	<xsd:element name="sendKeysAction" type="SendKeysActionType" />
 	<xsd:element name="elementActionDef" type="ElementActionDefType">
@@ -735,19 +753,20 @@
 	<xsd:element name="homeStep" type="HomeStepType" />
 	<xsd:element name="basePageObject" type="BasePageObjectType" />
 	<xsd:element name="basePageModel" type="PageModelBaseType" />
-	
+
 	<xsd:element name="firefoxDriver" type="MyFirefoxDriverType" />
 	<xsd:element name="chromeDriver" type="MyChromeDriverType" />
 	<xsd:element name="IEDriver" type="MyIEDriverType" />
 	<xsd:element name="safariDriver" type="MySafariDriverType" />
 	<xsd:element name="operaDriver" type="MyOperaDriverType" />
 	<xsd:element name="htmlUnitDriver" type="MyHtmlUnitDriverType" />
-	
+
 	<xsd:element name="lastPage" type="LastpageType" />
 	<xsd:element name="homePage" type="HomepageType" />
 	<xsd:element name="regularPage" type="RegularPageType" />
 
 	<xsd:element name="caseTypeService" type="CaseTypeServiceType" />
 	<xsd:element name="runTimeDataHolder" type="RunTimeDataHolderType" />
+	<xsd:element name="autoIncrementalDataHolder" type="AutoIncrementalDataHolderType" />
 
 </xsd:schema>

@@ -22,6 +22,8 @@ package org.bigtester.ate.model.page.elementfind;
 
 import java.util.concurrent.TimeUnit;
 
+import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.NoSuchElementException;
@@ -44,7 +46,8 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl{
 	private String findByValue;
 	
 	/** The index of same elements. */
-	private int indexOfSameElements;
+	@Nullable
+	private IOnTheFlyData<Integer> indexOfSameElements;
 	
 	/** The wait. */
 	@Nullable
@@ -155,15 +158,30 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl{
 	/**
 	 * @return the indexOfSameElements
 	 */
-	public int getIndexOfSameElements() {
-		return indexOfSameElements;
+	public  int getIndexOfSameElementsInt() {
+		final IOnTheFlyData<Integer> indexOfSameElements2 = indexOfSameElements;
+		if (null == indexOfSameElements2) {
+			return 0;//NOPMD
+		} else {
+			return indexOfSameElements2.getOnTheFlyData().intValue();
+		}
 	}
-
+	/**
+	 * @return the indexOfSameElements
+	 */
+	public  IOnTheFlyData<Integer> getIndexOfSameElements() {
+		final IOnTheFlyData<Integer> indexOfSameElements2 = indexOfSameElements;
+		if (null == indexOfSameElements2) {
+			throw GlobalUtils.createNotInitializedException("indexOfSameElements");
+		} else {
+			return indexOfSameElements2;
+		}
+	}
 
 	/**
 	 * @param indexOfSameElements the indexOfSameElements to set
 	 */
-	public void setIndexOfSameElements(int indexOfSameElements) {
+	public void setIndexOfSameElements( IOnTheFlyData<Integer> indexOfSameElements) {
 		this.indexOfSameElements = indexOfSameElements;
 	}
 

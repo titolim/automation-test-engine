@@ -26,37 +26,62 @@ import org.bigtester.ate.model.casestep.RepeatStep;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.context.ApplicationListener;
 
-
-
 // TODO: Auto-generated Javadoc
 /**
  * This class AutoIncrementalDataHolder defines ....
+ * 
  * @author Peidong Hu
  *
  */
-public class AutoIncrementalDataHolder extends AbstractOnTheFlyDataHolder<Integer> implements ApplicationListener<RepeatDataRefreshEvent>{
+public class AutoIncrementalDataHolder extends
+		AbstractOnTheFlyDataHolder<Integer> implements IOnTheFlyData<Integer>,
+		ApplicationListener<RepeatDataRefreshEvent> {
+	
+	/** The start value. */
 	final private int startValue;
+	
+	/** The pacing. */
 	final private int pacing;
+	
+	/** The end value. */
 	private int endValue = Integer.MAX_VALUE;
+
+	/**
+	 * Instantiates a new auto incremental data holder.
+	 *
+	 * @param startValue the start value
+	 * @param pacing the pacing
+	 */
 	public AutoIncrementalDataHolder(int startValue, int pacing) {
+		super();
 		this.startValue = startValue;
 		this.pacing = pacing;
 		Integer tmp = Integer.valueOf(startValue);
-		if (null == tmp) throw GlobalUtils.createInternalError("java vm integer conversion");
+		if (null == tmp)
+			throw GlobalUtils.createInternalError("java vm integer conversion");
 		else
 			setOnTheFlyData(tmp);
 	}
-	
+
+	/**
+	 * Instantiates a new auto incremental data holder.
+	 *
+	 * @param startValue the start value
+	 * @param pacing the pacing
+	 * @param endValue the end value
+	 */
 	public AutoIncrementalDataHolder(int startValue, int pacing, int endValue) {
+		super();
 		this.startValue = startValue;
 		this.pacing = pacing;
 		Integer tmp = Integer.valueOf(startValue);
-		if (null == tmp) throw GlobalUtils.createInternalError("java vm integer conversion");
+		if (null == tmp)
+			throw GlobalUtils.createInternalError("java vm integer conversion");
 		else
 			setOnTheFlyData(tmp);
 		this.endValue = endValue;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -64,17 +89,45 @@ public class AutoIncrementalDataHolder extends AbstractOnTheFlyDataHolder<Intege
 	public void onApplicationEvent(@Nullable RepeatDataRefreshEvent arg0) {
 
 		if (arg0 == null)
-			return;//NOPMD
-		if (!((RepeatStep) arg0.getSource()).getOnTheFlyDataHolders().contains(this)) return;
-				
-		if (arg0.getIteration() == 0) {
-			Integer tmp = Integer.valueOf(startValue);
-			if (null == tmp) throw GlobalUtils.createInternalError("java vm integer conversion");
-			else setOnTheFlyData(tmp);
-		} else {
-			Integer valueTmp = getOnTheFlyData();
-			setOnTheFlyData(valueTmp + pacing);
-		}
-		
+			return;// NOPMD
+		RepeatStep currentRepeatStep = ((RepeatStep) arg0.getSource());
+		if (!(currentRepeatStep).getOnTheFlyDataHolders().contains(this))
+			return;
+
+		Integer tmp = Integer
+				.valueOf(startValue + arg0.getIteration() * pacing);
+		if (null == tmp)
+			throw GlobalUtils.createInternalError("java vm integer conversion");
+		else
+			setOnTheFlyData(tmp);
+
+	}
+
+	/**
+	 * @return the endValue
+	 */
+	public int getEndValue() {
+		return endValue;
+	}
+
+	/**
+	 * @param endValue the endValue to set
+	 */
+	public void setEndValue(int endValue) {
+		this.endValue = endValue;
+	}
+
+	/**
+	 * @return the startValue
+	 */
+	public int getStartValue() {
+		return startValue;
+	}
+
+	/**
+	 * @return the pacing
+	 */
+	public int getPacing() {
+		return pacing;
 	}
 }

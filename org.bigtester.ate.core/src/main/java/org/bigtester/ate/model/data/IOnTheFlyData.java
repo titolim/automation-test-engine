@@ -27,5 +27,11 @@ package org.bigtester.ate.model.data;
  *
  */
 public interface IOnTheFlyData<T> {
+	
+	/**
+	 * Gets the on the fly data.
+	 *
+	 * @return the on the fly data
+	 */
 	T getOnTheFlyData();
 }
