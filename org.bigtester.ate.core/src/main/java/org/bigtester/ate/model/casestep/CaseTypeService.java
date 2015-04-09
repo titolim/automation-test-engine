@@ -28,6 +28,7 @@ import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.ICaseServiceParsedDataParser;
 import org.bigtester.ate.model.data.IDataParser;
+import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -63,6 +64,9 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	/** The data holders. */
 	private List<IDataParser> dataHolders = new ArrayList<IDataParser>();
 
+	/** The on the fly data holders. */
+	private List<IOnTheFlyData<?>> onTheFlyDataHolders = new ArrayList<IOnTheFlyData<?>>();
+	
 	/**
 	 * @param testCaseName
 	 */
@@ -119,7 +123,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 */
 	@Override
 	@Nullable
-	public MyWebElement getMyWebElement() {
+	public MyWebElement<?> getMyWebElement() {
 		return null;
 	}
 
@@ -271,6 +275,21 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	public void setOptionalStep(boolean optionalStep) {
 		// TODO add optionalStepUtil parameter for caseTypeService
 		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<IOnTheFlyData<?>> getOnTheFlyDataHolders() {
+		return onTheFlyDataHolders;
+	}
+
+	/**
+	 * @param onTheFlyDataHolders the onTheFlyDataHolders to set
+	 */
+	public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>> onTheFlyDataHolders) {
+		this.onTheFlyDataHolders = onTheFlyDataHolders;
 	}
 
 }

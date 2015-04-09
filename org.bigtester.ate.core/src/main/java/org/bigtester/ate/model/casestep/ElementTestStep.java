@@ -51,8 +51,8 @@ public class ElementTestStep extends BaseTestStep implements ITestStep {
 	 * @return the myWebElement
 	 */
 	@Override
-	public final MyWebElement getMyWebElement() throws IllegalStateException{
-		final MyWebElement myWebElement2 = myWebElement;
+	public final MyWebElement<?> getMyWebElement() throws IllegalStateException{
+		final MyWebElement<?> myWebElement2 = myWebElement;
 		if ( null == myWebElement2 ) {
 			throw new IllegalStateException("Element Test Step MyWebElement can't be null.");
 		} else {
@@ -63,14 +63,14 @@ public class ElementTestStep extends BaseTestStep implements ITestStep {
 	 * @param pageObject
 	 * @param myWebElement
 	 */
-	public ElementTestStep(IPageObject pageObject, MyWebElement myWebElement) {
+	public ElementTestStep(IPageObject pageObject, MyWebElement<?> myWebElement) {
 		super(pageObject, myWebElement);
 	}
 
 	/**
 	 * @param myWebElement
 	 */
-	public ElementTestStep( MyWebElement myWebElement) {
+	public ElementTestStep( MyWebElement<?> myWebElement) {
 		super( myWebElement);
 	}
 	/**

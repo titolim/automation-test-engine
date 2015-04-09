@@ -28,6 +28,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.IDataParser;
+import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.page.IPageObject;
 import org.bigtester.ate.model.page.page.MyWebElement;
@@ -65,6 +66,9 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	/** The data holders. */
 	private List<IDataParser> dataHolders = new ArrayList<IDataParser>();
 
+	/** The on the fly data holders. */
+	private List<IOnTheFlyData<?>> onTheFlyDataHolders = new ArrayList<IOnTheFlyData<?>>();
+	
 	/** The element step flag. */
 	
 	private transient boolean elementStepFlag;
@@ -77,7 +81,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 
 	/** The my web element. */
 	@Nullable
-	protected MyWebElement myWebElement;
+	protected MyWebElement<?> myWebElement;
 
 	/** The optional step. default is false*/
 	private boolean optionalStep;
@@ -123,7 +127,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	 * @param pageObject the page object
 	 * @param myWebElement the my web element
 	 */
-	public BaseTestStep( IPageObject pageObject, @Nullable MyWebElement myWebElement) {
+	public BaseTestStep( IPageObject pageObject, @Nullable MyWebElement<?> myWebElement) {
 		this.pageObject = pageObject;
 		this.myWebElement = myWebElement;
 	}
@@ -133,7 +137,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	 *
 	 * @param myWebElement the my web element
 	 */
-	public BaseTestStep( MyWebElement myWebElement) {
+	public BaseTestStep( MyWebElement<?> myWebElement) {
 		this.myWebElement = myWebElement;
 	}
 	
@@ -178,7 +182,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	 * @return the myWebElement
 	 */
 	@Nullable
-	public MyWebElement getMyWebElement() {
+	public MyWebElement<?> getMyWebElement() {
 		return myWebElement;
 	}
 
@@ -326,7 +330,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	 * @param myWebElement
 	 *            the myWebElement to set
 	 */
-	public final void setMyWebElement(final MyWebElement myWebElement) {
+	public final void setMyWebElement(final MyWebElement<?> myWebElement) {
 		this.elementStepFlag = true;
 		this.myWebElement = myWebElement;
 	}
@@ -388,6 +392,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	}
 
 	/**
+	 * Gets the current iteration.
+	 *
 	 * @return the currentIteration
 	 */
 	public int getCurrentIteration() {
@@ -395,6 +401,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	}
 
 	/**
+	 * Sets the current iteration.
+	 *
 	 * @param currentIteration the currentIteration to set
 	 */
 	public void setCurrentIteration(int currentIteration) {
@@ -402,6 +410,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	}
 
 	/**
+	 * Gets the current repeat step name.
+	 *
 	 * @return the currentRepeatStepName
 	 */
 	public String getCurrentRepeatStepName() {
@@ -409,6 +419,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	}
 
 	/**
+	 * Sets the current repeat step name.
+	 *
 	 * @param currentRepeatStepName the currentRepeatStepName to set
 	 */
 	public void setCurrentRepeatStepName(String currentRepeatStepName) {
@@ -416,6 +428,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	}
 
 	/**
+	 * Sets the element step flag.
+	 *
 	 * @param elementStepFlag the elementStepFlag to set
 	 */
 	public void setElementStepFlag(boolean elementStepFlag) {
@@ -423,6 +437,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	}
 
 	/**
+	 * Gets the repeat step logger.
+	 *
 	 * @return the stepLogger
 	 */
 	public RepeatStepExecutionLogger getRepeatStepLogger() {
@@ -435,6 +451,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	}
 
 	/**
+	 * Sets the repeat step logger.
+	 *
 	 * @param repeatStepLogger the repeatStepLogger to set
 	 */
 	public void setRepeatStepLogger(RepeatStepExecutionLogger repeatStepLogger) {
@@ -443,17 +461,39 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 
 	
 	/**
-	 * @param optionalStepUtilInclusive the optionalStepInclusive to set
+	 * Sets the correlated optional steps util inclusive.
+	 *
+	 * @param correlatedOptionalStepsUtilInclusive the new correlated optional steps util inclusive
 	 */
 	public void setCorrelatedOptionalStepsUtilInclusive(String correlatedOptionalStepsUtilInclusive) {//NOPMD
 		this.correlatedOptionalStepsUtilInclusive = correlatedOptionalStepsUtilInclusive;
 	}
 
 	/**
+	 * Gets the correlated optional steps util inclusive.
+	 *
 	 * @return the optionalStepUtilInclusive
 	 */
 	public String getCorrelatedOptionalStepsUtilInclusive() {
 		return correlatedOptionalStepsUtilInclusive;
+	}
+
+	/**
+	 * Gets the on the fly data holders.
+	 *
+	 * @return the onTheFlyDataHolders
+	 */
+	public List<IOnTheFlyData<?>> getOnTheFlyDataHolders() {
+		return onTheFlyDataHolders;
+	}
+
+	/**
+	 * Sets the on the fly data holders.
+	 *
+	 * @param onTheFlyDataHolders the onTheFlyDataHolders to set
+	 */
+	public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>> onTheFlyDataHolders) {
+		this.onTheFlyDataHolders = onTheFlyDataHolders;
 	}
 
 

@@ -95,7 +95,8 @@ public final class TestStepsXMLReporterUtils {
 		String testData;
 		String stepReportMSG;
 		if (tsr.getThisStep().isElementStepFlag()) {
-			MyWebElement<WebElement> mwe = tsr.getThisStep().getMyWebElement();
+			@SuppressWarnings("unchecked")
+			MyWebElement<WebElement> mwe = (MyWebElement<WebElement>) tsr.getThisStep().getMyWebElement();
 			if (null==mwe) throw GlobalUtils.createNotInitializedException("myWebElement in element step.");
 			IElementAction myEA = (IElementAction) mwe.getTestObjectAction();
 			if (null == myEA) {

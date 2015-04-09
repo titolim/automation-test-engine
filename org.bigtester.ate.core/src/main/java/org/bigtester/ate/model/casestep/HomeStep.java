@@ -34,6 +34,7 @@ import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.page.IHomepage;
 import org.bigtester.ate.model.page.page.MyWebElement;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class HomeStep defines ....
@@ -52,7 +53,7 @@ public class HomeStep extends BaseTestStep implements ITestStep{
 	 * @param pageObject the page object
 	 * @param myWebElement the my web element
 	 */
-	public HomeStep(IHomepage pageObject, MyWebElement myWebElement) {
+	public HomeStep(IHomepage pageObject, MyWebElement<?> myWebElement) {
 		super(pageObject, myWebElement);
 		this.homePage = pageObject;
 	}
@@ -132,5 +133,7 @@ public class HomeStep extends BaseTestStep implements ITestStep{
 		// TODO Auto-generated method stub
 		return homePage.getMyWd();
 	}
+
+	
 
 }

@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
+import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.IStepERValue;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
@@ -72,6 +73,9 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 
 	/** The refresh er values. */
 	final private List<IStepERValue> refreshERValues = new ArrayList<IStepERValue>();
+	
+	/** The refresh on the fly values. */
+	final private List<IOnTheFlyData<?>> refreshOnTheFlyValues = new ArrayList<IOnTheFlyData<?>>();
 
 	/** The external repeat node of this step. */
 	private transient @Nullable RepeatStepExecutionLoggerNode externalRepeatNodeOfThisStep;
@@ -113,6 +117,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 		stepIndexes.clear();
 		refreshERValues.clear();
 		refreshDataValues.clear();
+		refreshOnTheFlyValues.clear();
 		int startIndex = -1; // NOPMD
 		int endIndex = -1; // NOPMD
 
@@ -140,10 +145,13 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 									.getExpectedResultAsserter()
 									.get(asserterIndex).getStepERValue()));
 				}
-				MyWebElement webE = thisStep.getMyWebElement();
+				if (!thisStep.getOnTheFlyDataHolders().isEmpty()) {
+					refreshOnTheFlyValues.addAll(thisStep.getOnTheFlyDataHolders());
+				}
+				MyWebElement<?> webE = thisStep.getMyWebElement();
 				if (null != webE
 						&& webE.getTestObjectAction() instanceof IElementAction) {
-					ITestObjectAction iTOA = webE.getTestObjectAction();
+					ITestObjectAction<?> iTOA = webE.getTestObjectAction();
 					if (null != iTOA
 							&& ((IElementAction) iTOA).getDataValue() != null) {
 						refreshDataValues.add((IStepInputData) GlobalUtils
@@ -447,6 +455,13 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 	 */
 	public void setAsserterValuesRemainSame(boolean asserterValueRemainSame) {
 		this.asserterValuesRemainSame = asserterValueRemainSame;
+	}
+
+	/**
+	 * @return the refreshOnTheFlyValues
+	 */
+	public List<IOnTheFlyData<?>> getRefreshOnTheFlyValues() {
+		return refreshOnTheFlyValues;
 	}
 
 }
