@@ -33,8 +33,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  * @author Jun Yang
  */
-public class MyOperaDriver extends WebDriverBase implements IMyWebDriver{
-	
+public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver {
+
 	/** The browser profile. */
 	@Nullable
 	final private BrowserProfile<ChromeOptions> browserProfile;
@@ -50,18 +50,18 @@ public class MyOperaDriver extends WebDriverBase implements IMyWebDriver{
 	private static final String BROWSERLINUX32PATH = "browserdriver/linux/operachromium/32bit/";
 	/** The Constant BROWSERLINUX64PATH. */
 	private static final String BROWSERLINUX64PATH = "browserdriver/liunx/operachromium/64bit/";
-	/** The Constant BROWSEROSX32PATH. */	
+	/** The Constant BROWSEROSX32PATH. */
 	private static final String BROWSEROSX32PATH = "browserdriver/osx/operachromium/32bit/";
 	/** The Constant BROWSEROSX32PATH. */
 	private static final String BROWSEROSX64PATH = "browserdriver/osx/operachromium/64bit/";
 	/** The Constant BROWSERFILENAME. */
 	private static final String BROWSERFILENAME = "/operadriver.exe";
-	
+
 	/**
 	 * Instantiates a new my Opera driver.
 	 */
 	public MyOperaDriver() {
-		//TODO create Opera browsers and remote web driver handler
+		// TODO create Opera browsers and remote web driver handler
 		super();
 		browserProfile = null;
 	}
@@ -69,77 +69,89 @@ public class MyOperaDriver extends WebDriverBase implements IMyWebDriver{
 	/**
 	 * @return the browserProfile
 	 */
-	
+
 	public BrowserProfile<ChromeOptions> getBrowserProfile() {
 		final BrowserProfile<ChromeOptions> retVal = browserProfile;
 		if (null == retVal) {
-			throw new IllegalStateException("browserProfile is not correctly populated");
+			throw new IllegalStateException(
+					"browserProfile is not correctly populated");
 		} else {
 			return retVal;
 		}
 	}
-		
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public @Nullable WebDriver getWebDriver() {
+	@Nullable
+	public WebDriver getWebDriver() {
 		return super.getWebDriver();
-		
+
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public WebDriver createDriver() {
-		String versionNum;
-		OSinfo osinfo = new OSinfo(); 
-		EPlatform platform = osinfo.getOSname();
-		
-		switch (platform)
-		{
-            case Windows_32:
-                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"windows",BROWSERNAME,ReadXmlFile.VERSION);
-                 System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + versionNum + BROWSERFILENAME);
-                 break;
-            case Windows_64:
-                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"windows",BROWSERNAME,ReadXmlFile.VERSION);
-                 System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + versionNum + BROWSERFILENAME);
-                 break;	
-            case Linux_32:
-                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"linux",BROWSERNAME,ReadXmlFile.VERSION);
-                 System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH + versionNum + BROWSERFILENAME);
-                 break;
-            case Linux_64:	
-                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"linux",BROWSERNAME,ReadXmlFile.VERSION);
-                 System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH + versionNum + BROWSERFILENAME);
-                 break;	
-            case Mac_OS_X_32:
-                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"osx",BROWSERNAME,ReadXmlFile.VERSION);
-                 System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH + versionNum + BROWSERFILENAME);
-                 break;
-            case Mac_OS_X_64:	
-                 versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,"osx",BROWSERNAME,ReadXmlFile.VERSION);
-                 System.setProperty(BROWSERNAME, BROWSEROSX64PATH + versionNum + BROWSERFILENAME);
-                 break;
-            default:
-                 throw GlobalUtils.createNotInitializedException("operating system is not supported ");
-		}        
-		WebDriver retVal = new ChromeDriver();
+	public WebDriver getWebDriverInstance() {
+		WebDriver retVal = getWebDriver();
+		if (null == retVal) {
+			String versionNum;
+			OSinfo osinfo = new OSinfo();
+			EPlatform platform = osinfo.getOSname();
+
+			switch (platform) {
+			case Windows_32:
+				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
+						"windows", BROWSERNAME, ReadXmlFile.VERSION);
+				System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH
+						+ versionNum + BROWSERFILENAME);
+				break;
+			case Windows_64:
+				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
+						"windows", BROWSERNAME, ReadXmlFile.VERSION);
+				System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH
+						+ versionNum + BROWSERFILENAME);
+				break;
+			case Linux_32:
+				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
+						"linux", BROWSERNAME, ReadXmlFile.VERSION);
+				System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH
+						+ versionNum + BROWSERFILENAME);
+				break;
+			case Linux_64:
+				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
+						"linux", BROWSERNAME, ReadXmlFile.VERSION);
+				System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH
+						+ versionNum + BROWSERFILENAME);
+				break;
+			case Mac_OS_X_32:
+				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
+						"osx", BROWSERNAME, ReadXmlFile.VERSION);
+				System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH
+						+ versionNum + BROWSERFILENAME);
+				break;
+			case Mac_OS_X_64:
+				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
+						"osx", BROWSERNAME, ReadXmlFile.VERSION);
+				System.setProperty(BROWSERNAME, BROWSEROSX64PATH + versionNum
+						+ BROWSERFILENAME);
+				break;
+			default:
+				throw GlobalUtils
+						.createNotInitializedException("operating system is not supported ");
+			}
+			retVal = new ChromeDriver();
+		}
 		setWebDriver(retVal);
 		return retVal;
 		/*
-		if ( null == retVal) {
-			if (null == getBrowserProfile().getProfile()) {
-				retVal = new ChromeDriver();
-			} else {
-				retVal = new ChromeDriver(getBrowserProfile().getProfile());
-			}
-			setWebDriver(retVal);
-		}
-		return retVal;
-		*/
+		 * if ( null == retVal) { if (null == getBrowserProfile().getProfile())
+		 * { retVal = new ChromeDriver(); } else { retVal = new
+		 * ChromeDriver(getBrowserProfile().getProfile()); }
+		 * setWebDriver(retVal); } return retVal;
+		 */
 	}
-    	
+
 }

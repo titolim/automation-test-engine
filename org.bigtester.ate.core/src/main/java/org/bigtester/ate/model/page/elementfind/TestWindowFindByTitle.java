@@ -60,8 +60,8 @@ public class TestWindowFindByTitle extends BaseTestWindowFinderImpl implements I
 		if (null == webD) {
 			throw GlobalUtils.createNotInitializedException("web driver");
 		} else {
-			MultiWindowsHandler winHandler = new MultiWindowsHandler(webD);
-			String retVal = winHandler.retriveWindowHandleUsingTitle(getTitle());
+			
+			String retVal = myWebDriver.getMultiWindowsHandler().retriveWindowHandleUsingTitle(getTitle());
 			if (null == retVal) {
 				throw new NoSuchElementException("test window" + getTitle());
 			} else {

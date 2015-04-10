@@ -232,7 +232,7 @@ public class CaseRunner implements IRunTestCase {
 			context = new FileSystemXmlApplicationContext(testname);
 			IMyWebDriver myWebD = (IMyWebDriver) GlobalUtils
 					.findMyWebDriver(context);
-			mainDriver = myWebD.createDriver();
+			mainDriver = myWebD.getWebDriverInstance();
 			myTestCase = GlobalUtils.findTestCaseBean(getContext());
 			getMyTestCase().setStepThinkTime(testParams.getStepThinkTime());
 			getMyTestCase().setCurrentWebDriver(myWebD);
@@ -242,7 +242,7 @@ public class CaseRunner implements IRunTestCase {
 			if (fbe.getCause() instanceof FileNotFoundException) {
 				context = new ClassPathXmlApplicationContext(testname);
 				mainDriver = ((IMyWebDriver) GlobalUtils
-						.findMyWebDriver(context)).createDriver();
+						.findMyWebDriver(context)).getWebDriverInstance();
 				myTestCase = GlobalUtils.findTestCaseBean(getContext());
 				myTestCase.setStepThinkTime(testParams.getStepThinkTime());
 				getMyTestCase().goSteps();

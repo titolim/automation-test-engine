@@ -20,10 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementfind;
 
-import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,40 +32,33 @@ import org.openqa.selenium.WebDriver;
 public class TestWindowFindByOpenSequence extends BaseTestWindowFinderImpl implements ITestWindowFinder, ITestObjectFinderImpl{
 
 	/** The title. */
-	final private String title;
+	final private int openSequence;
 	
 	/**
 	 * Instantiates a new test window find by title.
 	 *
 	 * @param title the title
 	 */
-	public TestWindowFindByOpenSequence(String title) {
+	public TestWindowFindByOpenSequence(int openSequence) {
 		super();
-		this.title = title;
+		this.openSequence = openSequence;
 	}
 	/**
 	 * @return the title
 	 */
-	public String getTitle() {
-		return title;
+	public int getOpenSequence() {
+		return openSequence;
 	}
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String doFind(IMyWebDriver myWebDriver) throws NoSuchElementException {
-		WebDriver webD = myWebDriver.getWebDriver();
-		if (null == webD) {
-			throw GlobalUtils.createNotInitializedException("web driver");
-		} else {
-			MultiWindowsHandler winHandler = new MultiWindowsHandler(webD);
-			String retVal = winHandler.retriveWindowHandleUsingTitle(getTitle());
-			if (null == retVal) {
-				throw new NoSuchElementException("test window" + getTitle());
-			} else {
-				return retVal;
-			}
-		}
+		String retVal = myWebDriver.getMultiWindowsHandler().obtainWindowHandle(openSequence);
+		if (null == retVal) {
+			throw new NoSuchElementException("Window in open sequence of " + openSequence);
+		}  
+		return retVal;
 	}
 
 }

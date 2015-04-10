@@ -36,7 +36,7 @@ public interface IMyWebDriver {
 	 *
 	 * @return the web driver
 	 */
-	WebDriver createDriver();
+	WebDriver getWebDriverInstance();
 	
 	/**
 	 * Gets the webdriver.
@@ -44,4 +44,11 @@ public interface IMyWebDriver {
 	 * @return the webdriver
 	 */
 	@Nullable WebDriver getWebDriver();
+	
+	/**
+	 * Gets the browser windows monitor.
+	 *
+	 * @return the browser windows monitor
+	 */
+	MultiWindowsHandler getMultiWindowsHandler();
 }

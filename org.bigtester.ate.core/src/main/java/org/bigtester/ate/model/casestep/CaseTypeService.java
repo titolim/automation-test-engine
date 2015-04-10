@@ -156,7 +156,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 		context = new FileSystemXmlApplicationContext(testCaseFileName);
 		IMyWebDriver myWebD = (IMyWebDriver) GlobalUtils
 				.findMyWebDriver(context);
-		mainDriver = myWebD.createDriver();
+		mainDriver = myWebD.getWebDriverInstance();
 		try {
 			super.setCurrentWebDriver(myWebD);
 			setStepThinkTime(getParentTestCase().getStepThinkTime());

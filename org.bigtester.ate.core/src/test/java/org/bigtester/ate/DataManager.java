@@ -27,8 +27,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.data.dao.ElementInputDataDaoImpl;
@@ -53,19 +51,7 @@ import org.testng.annotations.Test;
  */
 public class DataManager {
 
-	/**
-	 * Sets the locked.
-	 * 
-	 * @param locked
-	 *            the new locked
-	 */
-	@Setter
-	/**
-	 * Gets the locked.
-	 *
-	 * @return the locked
-	 */
-	@Getter
+	
 	private String locked = ""; //NOPMD
 
 //	/**

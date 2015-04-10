@@ -33,7 +33,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
  * 
  * @author Peidong Hu
  */
-public class MyFirefoxDriver extends WebDriverBase implements IMyWebDriver{
+public class MyFirefoxDriver extends AbstractWebDriverBase implements IMyWebDriver{
 	
 	/** The browser profile. */
 	@Nullable
@@ -74,14 +74,15 @@ public class MyFirefoxDriver extends WebDriverBase implements IMyWebDriver{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public @Nullable WebDriver getWebDriver() {
+	@Nullable
+	public WebDriver getWebDriver() {
 		return super.getWebDriver();
 	}
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public WebDriver createDriver() {
+	public WebDriver getWebDriverInstance() {
 		WebDriver retVal = super.getWebDriver();
 		if ( null == retVal) {
 			BrowserProfile<FirefoxProfile> bPro = getBrowserProfile();

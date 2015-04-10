@@ -25,6 +25,7 @@ import java.net.ProxySelector;
 import org.bigtester.ate.GlobalUtils;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -32,22 +33,31 @@ import org.openqa.selenium.WebDriver;
  * 
  * @author Peidong Hu
  */
-public class WebDriverBase {
+abstract public class AbstractWebDriverBase implements IMyWebDriver{
 
 	/** The web driver. */
 	@Nullable
 	protected WebDriver webDriver;
-
+	
+	/** The browser windows monitor. */
+	@Nullable
+	private MultiWindowsHandler multiWindowsHandler;
+	
 	/**
 	 * Gets the web driver.
 	 *
 	 * @return the webDriver
 	 */
 	@Nullable
-	public WebDriver getWebDriver() {
+	public  WebDriver getWebDriver() {
 		return webDriver;
 	}
-
+	/**
+	 * Creates the driver.
+	 *
+	 * @return the web driver
+	 */
+	abstract public WebDriver getWebDriverInstance();
 	/**
 	 * Sets the web driver.
 	 *
@@ -55,13 +65,17 @@ public class WebDriverBase {
 	 *            the webDriver to set
 	 */
 	public final void setWebDriver(final WebDriver webDriver) {
-		this.webDriver = webDriver;
+		
+		EventFiringWebDriver eDriver  = new EventFiringWebDriver(webDriver);
+		multiWindowsHandler = new MultiWindowsHandler(webDriver);
+		eDriver.register(multiWindowsHandler);
+		this.webDriver = eDriver;
 	}
 
 	/**
 	 * Instantiates a new web driver base.
 	 */
-	public WebDriverBase() {
+	public AbstractWebDriverBase() {
 		// Following code is to defensively make sure that default proxySelector
 		// is not null.
 		// Selenium driver-binary-downloader-maven-plugin incorrectly set
@@ -83,4 +97,24 @@ public class WebDriverBase {
 		}
 
 	}
+
+	/**
+	 * @return the browserWindowsMonitor
+	 */
+	public MultiWindowsHandler getMultiWindowsHandler() {
+		final MultiWindowsHandler browserWindowsMonitor2 = multiWindowsHandler;
+		if (browserWindowsMonitor2 == null) {
+			throw GlobalUtils.createNotInitializedException("browser Windows monitor");
+		} else {
+			return browserWindowsMonitor2;
+		}
+	}
+
+	/**
+	 * @param browserWindowsMonitor the browserWindowsMonitor to set
+	 */
+	public void setMultiWindowsHandler(MultiWindowsHandler multiWindowsHandler) {
+		this.multiWindowsHandler = multiWindowsHandler;
+	}
+
 }

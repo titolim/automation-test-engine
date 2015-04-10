@@ -32,19 +32,20 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  * @author Jun Yang
  */
-public class MySafariDriver extends WebDriverBase implements IMyWebDriver{
+public class MySafariDriver extends AbstractWebDriverBase implements IMyWebDriver {
 
 	/** The browser profile. */
 	@Nullable
 	final private BrowserProfile<SafariOptions> browserProfile;
-//	/** The Constant BROWSERNAME. */
-//	final static private String BROWSERNAME = "webdriver.safari.driver";
-	
+
+	// /** The Constant BROWSERNAME. */
+	// final static private String BROWSERNAME = "webdriver.safari.driver";
+
 	/**
 	 * Instantiates a new my safari driver.
 	 */
 	public MySafariDriver() {
-		//TODO create Safari browsers and remote web driver handler
+		// TODO create Safari browsers and remote web driver handler
 		super();
 		browserProfile = null;
 	}
@@ -52,25 +53,27 @@ public class MySafariDriver extends WebDriverBase implements IMyWebDriver{
 	/**
 	 * Instantiates a new my Safari driver.
 	 *
-	 * @param profileName the profile name
+	 * @param profileName
+	 *            the profile name
 	 */
 	public MySafariDriver(String profileName) {
 		super();
-		browserProfile = new BrowserProfile<SafariOptions>(SafariOptions.class, profileName);
-		//setWebDriver(new SafariDriver(browserProfile.getProfile()));
+		browserProfile = new BrowserProfile<SafariOptions>(SafariOptions.class,
+				profileName);
+		// setWebDriver(new SafariDriver(browserProfile.getProfile()));
 	}
-	
-	
+
 	/**
 	 * @return the browserProfile
 	 */
-	
+
 	public BrowserProfile<SafariOptions> getBrowserProfile() {
-		
+
 		final BrowserProfile<SafariOptions> retVal = browserProfile;
 		if (null == retVal) {
-			throw new IllegalStateException("browserProfile is not correctly populated");
-			
+			throw new IllegalStateException(
+					"browserProfile is not correctly populated");
+
 		} else {
 			return retVal;
 		}
@@ -80,56 +83,31 @@ public class MySafariDriver extends WebDriverBase implements IMyWebDriver{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public @Nullable WebDriver getWebDriver() {
+	@Nullable
+	public WebDriver getWebDriver() {
 		return super.getWebDriver();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public WebDriver createDriver() {
-//		OSinfo osinfo = new OSinfo(); 
-//		EPlatform platform = osinfo.getOSname();
-//		switch (platform)
-//		{
-//			case Windows_32:	
-//				System.setProperty(BROWSERNAME, "browserdriver/windows/safari/32bit/2.12/safaridriver.exe");
-//				break;
-//			case Windows_64:	
-//				System.setProperty(BROWSERNAME, "browserdriver/windows/safari/64bit/2.12/safaridriver.exe");
-//				break;	
-//			case Linux_32:	
-//				System.setProperty(BROWSERNAME, "browserdriver/linux/safari/32bit/2.12/safaridriver.exe");
-//				break;
-//			case Linux_64:	
-//				System.setProperty(BROWSERNAME, "browserdriver/linux/safari/64bit/2.12/safaridriver.exe");
-//				break;	
-//			case Mac_OS_X_32:	
-//				System.setProperty(BROWSERNAME, "browserdriver/osx/safari/32bit/2.11/safaridriver.exe");
-//				break;
-//			case Mac_OS_X_64:	
-//				System.setProperty(BROWSERNAME, "browserdriver/osx/safari/64bit/2.11/safaridriver.exe");
-//				break;		
-//			default:
-//				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
-//		}        
-		WebDriver retVal = new SafariDriver();
+	public WebDriver getWebDriverInstance() {
+		WebDriver retVal = getWebDriver();
+
+		if (null == retVal) {
+			retVal = new SafariDriver();
+		}
 		setWebDriver(retVal);
 		return retVal;
 		/*
-		if ( null == retVal) {
-			if (null == getBrowserProfile().getProfile()) {
-				retVal = new SafariDriver();
-			} else {
-				retVal = new SafariDriver(getBrowserProfile().getProfile());
-			}
-			setWebDriver(retVal);
-			
-		}
-		return retVal;
-		*/
+		 * if ( null == retVal) { if (null == getBrowserProfile().getProfile())
+		 * { retVal = new SafariDriver(); } else { retVal = new
+		 * SafariDriver(getBrowserProfile().getProfile()); }
+		 * setWebDriver(retVal);
+		 * 
+		 * } return retVal;
+		 */
 	}
-	
-	
+
 }

@@ -103,6 +103,12 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_BROWSERWINDOWFINDBYTITLE. */
 	public static final String ELEMENT_BROWSERWINDOWFINDBYTITLE = "browserWindowFindByTitle";
 	
+	/** The Constant ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE. */
+	public static final String ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE = "browserWindowFindByOpenSequence";//NOPMD
+	
+	/** The Constant ATTR_BROWSERWINDOWFINDBYOPENSEQUENCE_OPENSEQUENCE. */
+	public static final String ATTR_BROWSERWINDOWFINDBYOPENSEQUENCE_OPENSEQUENCE = "openSequence";//NOPMD
+	
 	/** The Constant ATTR_BROWSERWINDOWFINDBYTITLE_TITLE. */
 	public static final String ATTR_BROWSERWINDOWFINDBYTITLE_TITLE = "title"; //NOPMD
 	

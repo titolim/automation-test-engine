@@ -7,13 +7,7 @@ NOTE1) Please work on your own branch when you exploring a new technology. To cr
 		f) open your browser, goto https://github.com/bigtester/automation-test-engine
 		g) click dropdown button 'branch: master' to see if your new branch's name appears in the dropdown menu.
 		h) if g) is 'yes', you can start to safely work on your own branch without break the master branch code.
-		
-NOTE2) Let Eclipse understand lombok compiling library.
-	a) download lastest version of lombok.jar
-	b) put in your eclipse startup folder
-	c) add the following parameters at the end of your eclipse.ini file under eclipse installation folder
-		-javaagent:lombok.jar
-		-Xbootclasspath/a:lombok.jar
+
 		
 NOTE3) Update the project
     a) right click on project org.bigtester.ate.core,

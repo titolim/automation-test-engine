@@ -307,11 +307,11 @@
 			<version>2.5.16</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.14.8</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.projectlombok</groupId> -->
+<!-- 			<artifactId>lombok</artifactId> -->
+<!-- 			<version>1.14.8</version> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>org.dbunit</groupId>

@@ -26,8 +26,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import lombok.Getter;
-import lombok.Setter;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,20 +42,26 @@ public class BaseDBTable { //NOPMD
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="idColumn")
 	
+
+	private long idColumn; 
+
 	/**
-	 * Gets the id Column.
+	 * Gets the id column.
 	 *
-	 * @return the id Column
+	 * @return the idColumn
 	 */
-	@Getter
-	
+	public long getIdColumn() {
+		return idColumn;
+	}
+
 	/**
-	 * Sets the id Column.
+	 * Sets the id column.
 	 *
-	 * @param cid the new id Column
+	 * @param idColumn the idColumn to set
 	 */
-	@Setter
-	private long idColumn; //NOPMD
+	public void setIdColumn(long idColumn) {
+		this.idColumn = idColumn;
+	}
 	
 	
 }

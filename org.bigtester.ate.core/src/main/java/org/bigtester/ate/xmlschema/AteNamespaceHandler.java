@@ -79,6 +79,7 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWSWITCH, new WindowSwitchActionBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYTITLE, new WindowFindByTitleBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE, new WindowFindByOpenSequenceBeanDefinitionParser());
 		
 		
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BASEELEMENTACTION, new BaseElementActionBeanDefinitionParser());

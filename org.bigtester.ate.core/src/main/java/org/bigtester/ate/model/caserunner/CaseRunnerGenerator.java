@@ -598,7 +598,7 @@ public class CaseRunnerGenerator {
 					.getDiagnostics()) {
 				System.out.format("Error on line %d in %s%n with error %s",
 						diagnostic.getLineNumber(), diagnostic.getSource()
-								.toUri(), diagnostic
+								, diagnostic
 								.getMessage(new Locale("en")));
 			}
 		}

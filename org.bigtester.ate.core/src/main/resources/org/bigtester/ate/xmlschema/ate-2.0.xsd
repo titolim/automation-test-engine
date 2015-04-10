@@ -430,7 +430,13 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-
+<xsd:complexType name="BrowserWindowFindByOpenSequence">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="openSequence" type="xsd:int" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 	<xsd:complexType name="ElementFindByXpathType">
 		<xsd:complexContent>
@@ -733,6 +739,8 @@
 	<xsd:element name="mouseMoveToAction" type="MouseMoveToActionType" />
 	<xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType" />
 	<xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />
+	<xsd:element name="browserWindowFindByOpenSequence" type="BrowserWindowFindByOpenSequence" />
+	
 	<xsd:element name="sendKeysAction" type="SendKeysActionType" />
 	<xsd:element name="elementActionDef" type="ElementActionDefType">
 	</xsd:element>

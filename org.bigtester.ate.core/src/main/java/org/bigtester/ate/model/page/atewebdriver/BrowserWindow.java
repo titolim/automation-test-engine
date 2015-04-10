@@ -1,7 +1,7 @@
 /*******************************************************************************
  * ATE, Automation Test Engine
  *
- * Copyright 2014, Montreal PROT, or individual contributors as
+ * Copyright 2015, Montreal PROT, or individual contributors as
  * indicated by the @author tags or express copyright attribution
  * statements applied by the authors.  All third-party contributions are
  * distributed under license by Montreal PROT.
@@ -20,38 +20,66 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
-import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class MyHtmlUnitDriver defines ....
- * 
- * @author Jun Yang
+ * This class BrowserWindow defines ....
+ * @author Peidong Hu
+ *
  */
-public class MyHtmlUnitDriver extends AbstractWebDriverBase implements IMyWebDriver {
-
+public class BrowserWindow {
+	
+	/** The window handle. */
+	final private String windowHandle;
+	
+	/** The my wd. */
+	final private WebDriver myWd;
+	
 	/**
-	 * {@inheritDoc}
+	 * Instantiates a new browser window.
+	 *
+	 * @param winHandle the win handle
+	 * @param myWd the my wd
 	 */
-	@Override
-	@Nullable
-	public WebDriver getWebDriver() {
-		return super.getWebDriver();
+	public BrowserWindow(String winHandle, WebDriver myWd) {
+		this.windowHandle = winHandle;
+		this.myWd = myWd;
 	}
-
+	
 	/**
-	 * {@inheritDoc}
+	 * Maximize.
 	 */
-	@Override
-	public WebDriver getWebDriverInstance() {
-		WebDriver retVal = getWebDriver();
-		if (null == retVal) {
-			retVal = new HtmlUnitDriver();
-		}
-		setWebDriver(retVal);
-		return retVal;
+	public void maximize() {
+		obtainFocus();
+		myWd.manage().window().maximize();
 	}
-
+	
+	/**
+	 * Close.
+	 */
+	public void close() {
+		obtainFocus();
+		myWd.close();
+	}
+	
+	/**
+	 * Obtain focus.
+	 */
+	public void obtainFocus() {
+		myWd.switchTo().window(getWindowHandle());
+	}
+	/**
+	 * @return the windowHandle
+	 */
+	public String getWindowHandle() {
+		return windowHandle;
+	}
+	/**
+	 * @return the myWd
+	 */
+	public WebDriver getMyWd() {
+		return myWd;
+	}
 }
