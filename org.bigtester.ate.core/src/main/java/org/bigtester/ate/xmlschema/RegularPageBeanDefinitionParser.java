@@ -29,6 +29,7 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
 
@@ -56,7 +57,8 @@ public class RegularPageBeanDefinitionParser extends
         bDef.setBeanClassName(RegularPage.class.getName());
         		
         String dataFile = element.getAttribute(XsdElementConstants.ATTR_BASEPAGEOBJECT_DATAFILE);
-        bDef.getPropertyValues().addPropertyValue(XsdElementConstants.ATTR_BASEPAGEOBJECT_DATAFILE, dataFile);
+        if (StringUtils.hasText(dataFile))
+        	bDef.getPropertyValues().addPropertyValue(XsdElementConstants.ATTR_BASEPAGEOBJECT_DATAFILE, dataFile);
         
         bDef.setParentName(XsdElementConstants.ELEMENT_ID_MYBASEPAGEOBJECT);
         

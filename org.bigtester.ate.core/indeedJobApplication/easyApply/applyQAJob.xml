@@ -71,7 +71,7 @@
 			stepDescription="stepCloseApplyWindow" stepName="stepCloseApplyWindow"
 			targetStep="false" elementActionDef="eadCloseApplyWindow">
 		</ate:elementStep>
-<!-- 		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="4" endStepName="stepCloseApplyWindow" stepName="stepRepeatApplySamePageJobs" targetStep="false"/> -->
+		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="1" endStepName="stepCloseApplyWindow" stepName="stepRepeatApplySamePageJobs" targetStep="false"/>
 <!-- 		<ate:elementStep id="stepMoveCursorToProfileLink" -->
 <!-- 			stepDescription="move mouse to profile" stepName="moveCursortoProfile" -->
 <!-- 			targetStep="false" elementActionDef="moveCursorToProfile"> -->
@@ -98,10 +98,10 @@
 <!-- 			elementActionDef="clickLogoutLinkEAD"> -->
 <!-- 		</ate:elementStep> -->
 
-<!-- 		<ate:lastStep id="mylaststep" stepName="mylaststep" -->
-<!-- 			stepDescription="last step close browser" targetStep="false" -->
-<!-- 			pageObject="myLastPage"> -->
-<!-- 		</ate:lastStep> -->
+		<ate:lastStep id="mylaststep" stepName="mylaststep"
+			stepDescription="last step close browser" targetStep="false"
+			pageObject="myLastPage">
+		</ate:lastStep>
 	</ate:testCase>
 
 </beans>

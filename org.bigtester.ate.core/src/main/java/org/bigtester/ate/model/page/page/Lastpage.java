@@ -48,7 +48,10 @@ public class Lastpage extends BasePageObject implements ILastpage{
 		if (null == webD) {
 			throw new IllegalStateException("webdriver is not correctly populated.");
 		} else {
-			webD.close();
+			if (this.getMyWd().getMultiWindowsHandler().getWindows().size()>0) {
+				webD.switchTo().window(this.getMyWd().getMultiWindowsHandler().getWindows().get(this.getMyWd().getMultiWindowsHandler().getWindows().size()-1).getWindowHandle());
+				webD.close();
+			}
 		}
 	}
 

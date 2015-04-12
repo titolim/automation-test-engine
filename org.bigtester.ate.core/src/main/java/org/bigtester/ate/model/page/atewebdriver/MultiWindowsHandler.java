@@ -21,6 +21,7 @@
 package org.bigtester.ate.model.page.atewebdriver; //NOPMD
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
+import org.springframework.util.StringUtils;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -248,17 +250,21 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 				windows.add(temp);
 			}
 		}
-		for (BrowserWindow winH2 : windows) {
+		for (Iterator<BrowserWindow> iter = windows.iterator(); iter.hasNext();) {
+			BrowserWindow winH2 = iter.next();
 			if (allWinHandles.contains(winH2.getWindowHandle())) {
 				continue;
 			} else {
-				windows.remove(winH2);
+				iter.remove();
 			}
 		}
-		String currentWinH = webD.getWindowHandle();
-		this.mainWindowHandler = windows.get(0).getWindowHandle();
-		this.mainWindowTitle = windows.get(0).getMyWd().getTitle();
-		webD.switchTo().window(currentWinH);
+		
+		if (StringUtils.isEmpty(this.mainWindowHandler)) {
+			this.mainWindowHandler = windows.get(0).getWindowHandle();
+			webD.switchTo().window(this.mainWindowHandler);
+			this.mainWindowTitle = windows.get(0).getMyWd().getTitle();
+		}
+		webD.switchTo().window(windows.get(windows.size()-1).getWindowHandle());
 	}
 
 	/**
