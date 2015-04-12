@@ -32,13 +32,13 @@ import org.openqa.selenium.WebDriver;
  * 
  * @author Peidong Hu
  */
-public class TestWindowsSwitchAction extends PageModelBase implements
+public class TestWindowsCloseAction extends PageModelBase implements
 		ITestWindowAction, ITestObjectActionImpl {
 
 	/**
 	 * @param myWd
 	 */
-	public TestWindowsSwitchAction(IMyWebDriver myWd) {
+	public TestWindowsCloseAction(IMyWebDriver myWd) {
 		super(myWd);
 	}
 
@@ -65,6 +65,7 @@ public class TestWindowsSwitchAction extends PageModelBase implements
 			throw GlobalUtils.createNotInitializedException("web driver");
 		} else {
 			webD.switchTo().window(winHandle);
+			webD.close();
 		}
 		
 	}

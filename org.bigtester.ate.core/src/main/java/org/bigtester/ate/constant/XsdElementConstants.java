@@ -100,6 +100,8 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_BROWSERWINDOWSWITCH. */
 	public static final String ELEMENT_BROWSERWINDOWSWITCH = "browserWindowSwitch";
 	
+	/** The Constant ELEMENT_BROWSERWINDOWCLOSE. */
+	public static final String ELEMENT_BROWSERWINDOWCLOSE = "browserWindowClose";
 	/** The Constant ELEMENT_BROWSERWINDOWFINDBYTITLE. */
 	public static final String ELEMENT_BROWSERWINDOWFINDBYTITLE = "browserWindowFindByTitle";
 	

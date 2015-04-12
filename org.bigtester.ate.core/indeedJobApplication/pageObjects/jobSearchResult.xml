@@ -15,8 +15,8 @@
 	<import resource="classpath:META-INF/logger-reporter.xml" />
 	<import resource="classpath:META-INF/page_base_bean.xml" />
 
-	<ate:regularPage id="qaMontrealSearchResult"
-		dataFile="indeedJobApplication/pageObjects/qaMontrealSearchResult.data.xml" />
+	<ate:regularPage id="jobSearchResult"
+		dataFile="indeedJobApplication/pageObjects/jobSearchResult.data.xml" />
 
 	<ate:elementActionDef id="eadClickNonAdsJobLink"
 		elementFind="efNonAdsJobLink" elementAction="eaNonAdsJobLinkClick">
@@ -35,12 +35,11 @@
 		id="efApplyJobWindow" openSequence="1" />
 	<ate:browserWindowSwitch id="eaSwitchToWindow2" />
 	
-	<ate:elementActionDef id="eadClickApplyNow"
-		elementFind="efApplyNowButton" elementAction="eaApplyNowClick">
-	</ate:elementActionDef>
-	<ate:elementFindByXpath id="efApplyNowButton"
-		findByValue="//span[@class='indeed-apply-button-label']" indexOfSameElements="0" />
-	<ate:clickAction id="eaApplyNowClick" />
 
+	<ate:elementActionDef id="eadCloseApplyWindow"
+		elementFind="efApplyJobWindow" elementAction="eaCloseWindow2">
+	</ate:elementActionDef>
+	
+	<ate:browserWindowClose id="eaCloseWindow2" />
 	
 </beans>

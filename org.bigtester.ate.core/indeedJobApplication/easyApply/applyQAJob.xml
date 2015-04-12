@@ -15,7 +15,8 @@
 	<import resource="classpath:META-INF/logger-reporter.xml" />
 	<import resource="classpath:META-INF/case_base_bean.xml" />
 	<import resource="../pageObjects/indeedCaHomepage.xml" />
-	<import resource="../pageObjects/qaMontrealSearchResult.xml" />
+	<import resource="../pageObjects/jobSearchResult.xml" />
+	<import resource="../pageObjects/applyNowPage.xml" />
 	<import resource="../pageObjects/lastPage.xml" />
 	<!-- <ate:firefoxDriver id="MyWebDriver2" profileName="dentisteasy"/> <ate:chromeDriver 
 		id="MyWebDriver2" /> <ate:IEDriver id="MyWebDriver2" /> <ate:safariDriver 
@@ -54,7 +55,7 @@
 		<ate:elementStep id="stepClickJobLink"
 			stepDescription="stepClickJobLink" stepName="stepClickJobLink"
 			targetStep="false" elementActionDef="eadClickNonAdsJobLink"
-			pageObject="qaMontrealSearchResult">
+			pageObject="jobSearchResult">
 		</ate:elementStep>
 		<ate:elementStep id="stepSwitchToApplyWindow"
 			stepDescription="stepSwitchToApplyWindow" stepName="stepSwitchToApplyWindow"
@@ -62,10 +63,15 @@
 		</ate:elementStep>
 		<ate:elementStep id="stepClickApplyNow"
 			stepDescription="stepClickApplyNow" stepName="stepClickApplyNow"
-			targetStep="false" elementActionDef="eadClickApplyNow">
+			targetStep="false" elementActionDef="eadClickApplyNow"
+			optionalStep="true"
+			correlatedOptionalStepsUtilInclusive="stepCloseApplyWindow">
 		</ate:elementStep>
-		
-		
+		<ate:elementStep id="stepCloseApplyWindow"
+			stepDescription="stepCloseApplyWindow" stepName="stepCloseApplyWindow"
+			targetStep="false" elementActionDef="eadCloseApplyWindow">
+		</ate:elementStep>
+<!-- 		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="4" endStepName="stepCloseApplyWindow" stepName="stepRepeatApplySamePageJobs" targetStep="false"/> -->
 <!-- 		<ate:elementStep id="stepMoveCursorToProfileLink" -->
 <!-- 			stepDescription="move mouse to profile" stepName="moveCursortoProfile" -->
 <!-- 			targetStep="false" elementActionDef="moveCursorToProfile"> -->
@@ -92,10 +98,10 @@
 <!-- 			elementActionDef="clickLogoutLinkEAD"> -->
 <!-- 		</ate:elementStep> -->
 
-		<ate:lastStep id="mylaststep" stepName="mylaststep"
-			stepDescription="last step close browser" targetStep="false"
-			pageObject="myLastPage">
-		</ate:lastStep>
+<!-- 		<ate:lastStep id="mylaststep" stepName="mylaststep" -->
+<!-- 			stepDescription="last step close browser" targetStep="false" -->
+<!-- 			pageObject="myLastPage"> -->
+<!-- 		</ate:lastStep> -->
 	</ate:testCase>
 
 </beans>

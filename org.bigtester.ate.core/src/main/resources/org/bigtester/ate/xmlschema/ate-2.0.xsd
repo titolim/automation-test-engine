@@ -483,6 +483,16 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	
+	
+	<xsd:complexType name="TestWindowsCloseActionType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 
 	<xsd:complexType name="SendKeysActionType">
@@ -738,6 +748,7 @@
 	<xsd:element name="clearTextAction" type="ClearTextActionType" />
 	<xsd:element name="mouseMoveToAction" type="MouseMoveToActionType" />
 	<xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType" />
+	<xsd:element name="browserWindowClose" type="TestWindowsCloseActionType" />
 	<xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />
 	<xsd:element name="browserWindowFindByOpenSequence" type="BrowserWindowFindByOpenSequence" />
 	

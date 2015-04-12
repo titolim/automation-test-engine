@@ -28,7 +28,7 @@ package org.bigtester.ate.model.page.elementaction;
  * @author Peidong Hu
  *
  */
-public interface ITestWindowSwitchAction extends ITestObjectAction<String>{
+public interface ITestWindowAction extends ITestObjectAction<String>{
 	/**
 	 * Do action.
 	 * 
