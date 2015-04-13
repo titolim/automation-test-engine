@@ -241,6 +241,9 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_CASETYPESERVICE. */
 	public static final String ELEMENT_CASETYPESERVICE = "caseTypeService";
+
+	/** The Constant ELEMENT_STEPTYPESERVICE. */
+	public static final String ELEMENT_STEPTYPESERVICE = "stepTypeService";
 	
 	/** The Constant ELEMENT_FIREFOXDRIVER. */
 	public static final String ELEMENT_FIREFOXDRIVER = "firefoxDriver";
