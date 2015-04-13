@@ -64,10 +64,7 @@ public class TestWindowsCloseAction extends PageModelBase implements
 		if (null == webD) {
 			throw GlobalUtils.createNotInitializedException("web driver");
 		} else {
-			webD.switchTo().window(winHandle);
-			webD.close();
-			if (this.getMyWd().getMultiWindowsHandler().getWindows().size()>0)
-				webD.switchTo().window(this.getMyWd().getMultiWindowsHandler().getWindows().get(this.getMyWd().getMultiWindowsHandler().getWindows().size()-1).getWindowHandle());
+			getMyWd().getMultiWindowsHandler().closeWindow(winHandle);
 		}
 		
 	}

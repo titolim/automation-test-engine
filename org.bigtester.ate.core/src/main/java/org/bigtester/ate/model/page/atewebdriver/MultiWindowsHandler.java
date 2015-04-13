@@ -80,6 +80,38 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	}
 
 	/**
+	 * Gets the window on focus handle.
+	 *
+	 * @return the window on focus handle
+	 */
+	@Nullable
+	public String getWindowOnFocusHandle() {
+		String retVal;
+		if (windows.isEmpty()) {
+			retVal = null;	//NOPMD
+		} else {
+			retVal = getDriver().getWindowHandle();
+		}
+		return retVal;
+	}
+	
+	/**
+	 * Close window.
+	 *
+	 * @param winHandle the win handle
+	 */
+	public void closeWindow(String winHandle) {
+		if (winHandle.equals(getWindowOnFocusHandle())) {
+			getDriver().close();
+			refreshWindowsList(getDriver());
+		} else {
+			getDriver().switchTo().window(winHandle);
+			getDriver().close();
+			refreshWindowsList(getDriver());
+			
+		}
+	}
+	/**
 	 * Close all windows except main window.
 	 */
 	public void closeAllWindowsExceptMainWindow() {
@@ -117,6 +149,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 			if (!currentWindowHandle.equals(openWindowHandle)) {
 				driver.switchTo().window(currentWindowHandle);
 				driver.close();
+				 refreshWindowsList(getDriver());
 			}
 		}
 

@@ -18,42 +18,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.page.page;
+package org.bigtester.ate.annotation;
 
-import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.openqa.selenium.WebDriver;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.ElementType;
 
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Lastpage defines ....
- * 
+ * This class StepLoggable defines ....
  * @author Peidong Hu
+ *
  */
-public class Lastpage extends BasePageObject implements ILastpage{
-
-	/**
-	 * @param myWd
-	 */
-	public Lastpage(IMyWebDriver myWd) {
-		super(myWd);
-		// TODO Auto-generated constructor stub
+@Retention(RetentionPolicy.RUNTIME)
+@Target(
+{
+    ElementType.FIELD
+})
+public @interface RepeatStepRefreshable {
+	public enum RefreshDataType {
+		ONTHEFLY, PAGEINPUTDATA, EXPECTEDRESULT
 	}
-
-	/**
-	 * Close lastpage.
-	 */
-	public void closeLastpage() {
-		WebDriver webD = super.getMyWd().getWebDriver();
-		if (null == webD) {
-			throw new IllegalStateException("webdriver is not correctly populated.");
-		} else {
-//			if (this.getMyWd().getMultiWindowsHandler().getWindows().size()>0) {
-//				webD.switchTo().window(this.getMyWd().getMultiWindowsHandler().getWindows().get(0).getWindowHandle());
-				webD.close();
-//			}
-		}
-	}
-
-	
+	RefreshDataType dataType() default RefreshDataType.ONTHEFLY;
 }

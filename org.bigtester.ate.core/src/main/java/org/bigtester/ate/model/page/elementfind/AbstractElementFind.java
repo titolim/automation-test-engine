@@ -23,6 +23,8 @@ package org.bigtester.ate.model.page.elementfind;
 import java.util.concurrent.TimeUnit;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.RepeatStepRefreshable;
+import org.bigtester.ate.annotation.RepeatStepRefreshable.RefreshDataType;
 import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.jdt.annotation.Nullable;
@@ -47,6 +49,7 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl{
 	
 	/** The index of same elements. */
 	@Nullable
+	@RepeatStepRefreshable (dataType=RefreshDataType.ONTHEFLY)
 	private IOnTheFlyData<Integer> indexOfSameElements;
 	
 	/** The wait. */
