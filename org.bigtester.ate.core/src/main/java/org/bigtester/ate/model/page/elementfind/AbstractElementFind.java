@@ -49,7 +49,7 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl{
 	
 	/** The index of same elements. */
 	@Nullable
-	@RepeatStepRefreshable (dataType=RefreshDataType.ONTHEFLY)
+	
 	private IOnTheFlyData<Integer> indexOfSameElements;
 	
 	/** The wait. */

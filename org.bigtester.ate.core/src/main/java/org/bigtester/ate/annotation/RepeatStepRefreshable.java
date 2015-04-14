@@ -34,7 +34,7 @@ import java.lang.annotation.ElementType;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(
 {
-    ElementType.FIELD
+    ElementType.METHOD
 })
 public @interface RepeatStepRefreshable {
 	public enum RefreshDataType {

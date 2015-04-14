@@ -21,6 +21,8 @@
 package org.bigtester.ate.model.data;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.RepeatStepRefreshable;
+import org.bigtester.ate.annotation.RepeatStepRefreshable.RefreshDataType;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -40,6 +42,7 @@ public abstract class AbstractOnTheFlyDataHolder<T> implements IOnTheFlyData<T>{
 	 * @return the onTheFlyData
 	 */
 	@SuppressWarnings("unchecked")
+	//@RepeatStepRefreshable (dataType=RefreshDataType.ONTHEFLY)
 	public T getOnTheFlyData() {
 		final Object onTheFlyData2 = onTheFlyData;
 		if (null == onTheFlyData2 ) {

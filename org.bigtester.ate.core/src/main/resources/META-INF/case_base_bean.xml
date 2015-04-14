@@ -15,7 +15,7 @@
 	<bean class="org.bigtester.ate.model.data.CaseDataProcessor" />
 	<bean class="org.bigtester.ate.model.page.elementaction.SendKeysActionPostBeanProcessor" />
 	<bean class="org.bigtester.ate.model.page.elementfind.ElementFinderIndexOfSameProcessor"/>
-	
+	<bean id="StepDataLogger" class="org.bigtester.ate.model.casestep.StepDataLogger" />
 	<bean id="repeatStepExecutionLogger" class="org.bigtester.ate.model.casestep.RepeatStepExecutionLogger" />
 	<ate:TestDatabaseInitializer id="dbInitializer"/>
 	

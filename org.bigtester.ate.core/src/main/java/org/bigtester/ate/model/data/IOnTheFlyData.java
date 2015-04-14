@@ -20,6 +20,9 @@
  *******************************************************************************/
 package org.bigtester.ate.model.data;
 
+import org.bigtester.ate.annotation.RepeatStepRefreshable;
+import org.bigtester.ate.annotation.RepeatStepRefreshable.RefreshDataType;
+
 // TODO: Auto-generated Javadoc
 /**
  * This class IOnTheFlyData defines ....
@@ -33,5 +36,6 @@ public interface IOnTheFlyData<T> {
 	 *
 	 * @return the on the fly data
 	 */
+	@RepeatStepRefreshable (dataType=RefreshDataType.ONTHEFLY)
 	T getOnTheFlyData();
 }
