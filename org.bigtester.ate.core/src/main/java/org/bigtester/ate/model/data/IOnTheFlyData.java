@@ -36,6 +36,6 @@ public interface IOnTheFlyData<T> {
 	 *
 	 * @return the on the fly data
 	 */
-	@RepeatStepRefreshable (dataType=RefreshDataType.ONTHEFLY)
+	//@RepeatStepRefreshable (dataType=RefreshDataType.ONTHEFLY)
 	T getOnTheFlyData();
 }

@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.casestep;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -103,8 +105,8 @@ public class StepDataLogger {
 				 GlobalUtils.createInternalError("stepresultmaker log function.");
 		currentExecutionStep = bts;
 	}
-	//@After("@annotation(org.bigtester.ate.annotation.RepeatStepRefreshable)")
-	@After("execution(public * org.bigtester.ate.annotation.RepeatStepRefreshable+.*(..))")
+	@After("@annotation(org.bigtester.ate.annotation.RepeatStepRefreshable)")
+	//@Around("execution(public * org.bigtester.ate.annotation.RepeatStepRefreshable+.*(..))")
 	public boolean processDataLog(JoinPoint jPoint) {
 		if (getDataType(jPoint) == RefreshDataType.ONTHEFLY) {
 			Object targ = jPoint.getTarget();
@@ -118,9 +120,19 @@ public class StepDataLogger {
 
 	private RefreshDataType getDataType(JoinPoint thisJoinPoint)
     {
+		
         MethodSignature methodSignature = (MethodSignature) thisJoinPoint.getSignature();
-        Method targetMethod = methodSignature.getMethod();
+        String methodName = methodSignature.getMethod().getName();
+        Class<?>[] parameterTypes = methodSignature.getMethod().getParameterTypes();
+        Method targetMethod;
+		try {
+			targetMethod = thisJoinPoint.getTarget().getClass().getMethod(methodName,parameterTypes);
+			return ((RepeatStepRefreshable) targetMethod.getAnnotation(RepeatStepRefreshable.class)).dataType();
+		} catch (NoSuchMethodException | SecurityException e) {
+			throw GlobalUtils.createInternalError("jvm class method error");
+		}
+        //targetMethod = methodSignature.getMethod();
 
-        return ((RepeatStepRefreshable) targetMethod.getAnnotation(RepeatStepRefreshable.class)).dataType();
+        
     }
 }

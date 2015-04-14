@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peidong Hu
  * @param <T> the generic type
  */
-public abstract class AbstractOnTheFlyDataHolder<T> implements IOnTheFlyData<T>{ //NOPMD
+public abstract class AbstractOnTheFlyDataHolder<T> { //NOPMD
 	
 	/** The on the fly data. */
 	@Nullable
@@ -42,7 +42,7 @@ public abstract class AbstractOnTheFlyDataHolder<T> implements IOnTheFlyData<T>{
 	 * @return the onTheFlyData
 	 */
 	@SuppressWarnings("unchecked")
-	//@RepeatStepRefreshable (dataType=RefreshDataType.ONTHEFLY)
+	@RepeatStepRefreshable (dataType=RefreshDataType.ONTHEFLY)
 	public T getOnTheFlyData() {
 		final Object onTheFlyData2 = onTheFlyData;
 		if (null == onTheFlyData2 ) {
