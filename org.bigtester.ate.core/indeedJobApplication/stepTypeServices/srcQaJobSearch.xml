@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:ate="http://www.bigtester.org/schema/ate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                           http://www.bigtester.org/schema/ate 
+                           http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+
+	<!-- this registers beans annotated with @Aspect -->
+	<aop:aspectj-autoproxy />
+
+	<import resource="classpath:META-INF/logger-reporter.xml" />
+	<import resource="classpath:META-INF/case_base_bean.xml" />
+	<import resource="../pageObjects/indeedCaHomepage.xml" />
+	<import resource="../pageObjects/jobSearchResult.xml" />
+	
+	<ate:stepTypeService id="qaJobSearchService" stepName="qaJobSearchService" targetStep="false">
+
+		<ate:elementStep id="stepTypeInSearchKeyWordQA"
+			stepDescription="type in search key word QA" stepName="typeInSearchKeyWordQA"
+			optionalStep="false" targetStep="false" elementActionDef="eadTypeInSearchKeyWordQA">
+		</ate:elementStep>
+				
+		<ate:elementStep id="stepClearWhereText"
+			stepDescription="clear where text" stepName="clearWhereText"
+			targetStep="false" elementActionDef="eadClearTextInWhere"
+			>
+		</ate:elementStep>
+
+		<ate:elementStep id="stepTypeInMontrealQC"
+			stepDescription="type in search location, Montreal QC" stepName="typeInMontrealQC"
+			targetStep="false" elementActionDef="eadTypeLocationInWhere">
+		</ate:elementStep>
+		
+		<ate:elementStep id="stepClickFindJobsButton"
+			stepDescription="stepClickFindJobsButton" stepName="clickFindJobsButton"
+			targetStep="false" elementActionDef="eadClickFindJobsButton"
+			pageObject="indeedCaHomepage">
+		</ate:elementStep>
+		
+		
+	</ate:stepTypeService>
+
+</beans>

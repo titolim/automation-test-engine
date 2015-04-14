@@ -643,7 +643,29 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-
+	
+<xsd:complexType name="StepTypeServiceType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element ref="caseTypeService" minOccurs="0"
+						maxOccurs="unbounded" />
+					<xsd:element ref="homeStep" minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element ref="elementStep" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element ref="lastStep" minOccurs="1" maxOccurs="unbounded" />
+				</xsd:choice>
+				<xsd:attribute name="targetStep" type="xsd:boolean"
+					use="required" />
+				<xsd:attribute name="optionalStep" type="xsd:boolean" />
+				<xsd:attribute name="correlatedOptionalStepsUtilInclusive"
+					type="xsd:string" />
+				<xsd:attribute name="stepName" type="xsd:string" use="required" />
+				<xsd:attribute name="stepDescription" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
 	<xsd:complexType name="RepeatStepType">
 		<xsd:complexContent>
 			<xsd:extension base="BaseTestStepType">
@@ -785,6 +807,7 @@
 	<xsd:element name="regularPage" type="RegularPageType" />
 
 	<xsd:element name="caseTypeService" type="CaseTypeServiceType" />
+	<xsd:element name="stepTypeService" type="StepTypeServiceType" />
 	<xsd:element name="runTimeDataHolder" type="RunTimeDataHolderType" />
 	<xsd:element name="autoIncrementalDataHolder" type="AutoIncrementalDataHolderType" />
 
