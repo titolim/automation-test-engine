@@ -25,8 +25,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.MySafariDriver;
 import org.eclipse.jdt.annotation.Nullable;
+import org.springframework.beans.factory.BeanDefinitionStoreException;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
+import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
 
@@ -64,5 +67,15 @@ public class SafariDriverBeanDefinitionParser extends
 //            bean.addPropertyValue("lenient", Boolean.valueOf(lenient));
 //        }
     }
+	/** (non-Javadoc)
+	 * @see org.springframework.beans.factory
+	 * .xml.AbstractBeanDefinitionParser#resolveId(org.w3c.dom.Element,
+	 *  org.springframework.beans.factory.support.AbstractBeanDefinition,
+	 *   org.springframework.beans.factory.xml.ParserContext)
+	 */
+	protected String resolveId(@Nullable Element element, @Nullable AbstractBeanDefinition definition, @Nullable ParserContext parserContext)
+			throws BeanDefinitionStoreException {
 
+		return "MyWebDriver2";
+}
 }

@@ -25,8 +25,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.MyOperaDriver;
 import org.eclipse.jdt.annotation.Nullable;
+import org.springframework.beans.factory.BeanDefinitionStoreException;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
+import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
 
@@ -64,5 +67,10 @@ public class OperaDriverBeanDefinitionParser extends
 //            bean.addPropertyValue("lenient", Boolean.valueOf(lenient));
 //        }
     }
+	protected String resolveId(@Nullable Element element, @Nullable AbstractBeanDefinition definition, @Nullable ParserContext parserContext)
+			throws BeanDefinitionStoreException {
+
+		return "MyWebDriver2";
+}
 
 }
