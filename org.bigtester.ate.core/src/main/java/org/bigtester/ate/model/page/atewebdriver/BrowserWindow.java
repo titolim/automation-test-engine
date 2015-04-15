@@ -57,6 +57,15 @@ public class BrowserWindow {
 	}
 	
 	/**
+	 * Switch to main frame.
+	 */
+	public void switchToMainFrame () {
+		if (!frames.isEmpty()) {
+			myWd.switchTo().defaultContent();
+		}
+	}
+	
+	/**
 	 * Maximize.
 	 */
 	public void maximize() {
@@ -80,14 +89,18 @@ public class BrowserWindow {
 		for (index=0; index<iframes.size(); index++) {
 			WebElement iframe = iframes.get(index);
 			if (null == iframe) throw GlobalUtils.createInternalError("web driver");
-			this.frames.add(new WindowFrame(index, this.myWd, iframe));
+			WindowFrame winF = new WindowFrame(index, this.myWd, iframe);
+			this.frames.add(winF);
+			winF.refreshChildFrames();
 		}
 		
 		List<WebElement> frames = myWd.findElements(By.tagName("frame"));
 		for (int indexj = 0; indexj<frames.size(); indexj++) {
 			WebElement frame = frames.get(indexj);
 			if (null == frame) throw GlobalUtils.createInternalError("web driver");
-			this.frames.add(new WindowFrame(indexj + index, this.myWd, frame));
+			WindowFrame winF = new WindowFrame(indexj + index, this.myWd, frame);
+			this.frames.add(winF);
+			winF.refreshChildFrames();
 		}
 	}
 	/**

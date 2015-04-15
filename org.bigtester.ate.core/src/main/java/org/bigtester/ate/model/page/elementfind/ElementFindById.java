@@ -20,6 +20,9 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementfind;
 
+import java.util.List;
+
+import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.atewebdriver.WindowFrame;
@@ -29,6 +32,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Wait;
 
 import com.google.common.base.Function;
 
@@ -47,6 +51,41 @@ public class ElementFindById extends AbstractElementFind implements
 	public ElementFindById(String findByValue) {
 		super(findByValue);
 		// TODO Auto-generated constructor stub
+	}
+
+	@Nullable
+	private WebElement findThroughFrames(WindowFrame winFrame,
+			Wait<WebDriver> wait, final String findByValue) {
+
+		winFrame.obtainFocus();
+		try {
+			WebElement retValWE = wait.until( // NOPMD
+					new Function<WebDriver, WebElement>() {
+						public @Nullable WebElement apply( // NOPMD
+								@Nullable WebDriver driver) {
+							if (null == driver) {
+								throw new IllegalStateException(
+										"webdriver is not correctly populated.");
+							} else {
+								return driver.findElement(By.id(findByValue));
+							}
+						}
+					});
+			if (null != retValWE)
+				return retValWE;
+		} catch (NoSuchElementException | TimeoutException error) {
+			List<WindowFrame> childFrames = winFrame.getChildFrames();
+			for (WindowFrame gChildF : childFrames) {
+				if (null == gChildF)
+					throw GlobalUtils.createInternalError("java arraylist");
+				WebElement retVal = findThroughFrames(gChildF, wait,
+						findByValue);
+				if (null != retVal) {
+					return retVal;
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -84,30 +123,57 @@ public class ElementFindById extends AbstractElementFind implements
 				}
 			} else {
 				for (WindowFrame _wf : winOnFocus.getFrames()) {
-					//_wf.obtainFocus();
-					webD.switchTo().frame(_wf.getFrame());
-					webD.findElement(By.id(findByValue));
+					// _wf.obtainFocus();
+					// webD.switchTo().frame(_wf.getFrame());
+					// webD.findElement(By.id(findByValue));
 					try {
-						WebElement retValWE = getWait().until( // NOPMD
-								new Function<WebDriver, WebElement>() {
-									public @Nullable WebElement apply( // NOPMD
-											@Nullable WebDriver driver) {
-										if (null == driver) {
-											throw new IllegalStateException(
-													"webdriver is not correctly populated.");
-										} else {
-											return driver.findElement(By
-													.id(findByValue));
-										}
-									}
-								});
-						if (null != retValWE) return retValWE;
+						if (null == _wf)
+							throw GlobalUtils
+									.createInternalError("arraylist error");
+						WebElement retValWE = findThroughFrames(_wf, getWait(),
+								findByValue);
+						// WebElement retValWE = getWait().until( // NOPMD
+						// new Function<WebDriver, WebElement>() {
+						// public @Nullable WebElement apply( // NOPMD
+						// @Nullable WebDriver driver) {
+						// if (null == driver) {
+						// throw new IllegalStateException(
+						// "webdriver is not correctly populated.");
+						// } else {
+						// return driver.findElement(By
+						// .id(findByValue));
+						// }
+						// }
+						// });
+						if (null != retValWE)
+							return retValWE;
 					} catch (NoSuchElementException | TimeoutException error) {
+
 						continue;
 					}
-					
+
 				}
-				throw new NoSuchElementException(findByValue);
+				// search in main frame
+				winOnFocus.switchToMainFrame();
+				WebElement retValWE = getWait().until( // NOPMD
+						new Function<WebDriver, WebElement>() {
+							public @Nullable WebElement apply( // NOPMD
+									@Nullable WebDriver driver) {
+								if (null == driver) {
+									throw new IllegalStateException(
+											"webdriver is not correctly populated.");
+								} else {
+									return driver.findElement(By
+											.id(findByValue));
+								}
+							}
+						});
+				if (null == retValWE) {
+					throw new NoSuchElementException(findByValue);
+				} else {
+					return retValWE;
+				}
+
 			}
 		}
 	}

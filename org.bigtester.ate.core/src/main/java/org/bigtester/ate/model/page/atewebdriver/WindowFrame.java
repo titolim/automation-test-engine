@@ -20,13 +20,16 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.bigtester.ate.GlobalUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 
-// TODO: Auto-generated Javadoc
+// TODO: Add wait
 /**
  * This class BrowserWindow defines ....
  * @author Peidong Hu
@@ -42,6 +45,9 @@ public class WindowFrame {
 	
 	/** The frame. */
 	final private WebElement frame;
+	
+	/** The frames. */
+	final private List<WindowFrame> childFrames = new ArrayList<WindowFrame>();
 	
 	/**
 	 * Instantiates a new browser window.
@@ -82,5 +88,38 @@ public class WindowFrame {
 	 */
 	public WebElement getFrame() {
 		return frame;
+	}
+
+
+	/**
+	 * Refresh child frames.
+	 */
+	public void refreshChildFrames() {
+		obtainFocus();
+		List<WebElement> iframes = myWd.findElements(By.tagName("iframe"));
+		int index;
+		this.childFrames.clear();
+		for (index=0; index<iframes.size(); index++) {
+			WebElement iframe = iframes.get(index);
+			if (null == iframe) throw GlobalUtils.createInternalError("web driver");
+			WindowFrame childWinF = new WindowFrame(index, this.myWd, iframe);
+			this.childFrames.add(childWinF);
+			childWinF.refreshChildFrames();
+		}
+		List<WebElement> frames = myWd.findElements(By.tagName("frame"));
+		for (int indexj = 0; indexj<frames.size(); indexj++) {
+			WebElement frame = frames.get(indexj);
+			if (null == frame) throw GlobalUtils.createInternalError("web driver");
+			WindowFrame childWinF = new WindowFrame(indexj + index, this.myWd, frame);
+			this.childFrames.add(childWinF);
+			childWinF.refreshChildFrames();
+		}
+	}
+
+	/**
+	 * @return the frames
+	 */
+	public List<WindowFrame> getChildFrames() {
+		return childFrames;
 	}
 }
