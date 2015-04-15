@@ -59,7 +59,7 @@ public class BrowserWindow {
 	/**
 	 * Switch to main frame.
 	 */
-	public void switchToMainFrame () {
+	public void switchToDefaultContent () {
 		if (!frames.isEmpty()) {
 			myWd.switchTo().defaultContent();
 		}
@@ -91,6 +91,7 @@ public class BrowserWindow {
 			if (null == iframe) throw GlobalUtils.createInternalError("web driver");
 			WindowFrame winF = new WindowFrame(index, this.myWd, iframe);
 			this.frames.add(winF);
+			myWd.switchTo().defaultContent();
 			winF.refreshChildFrames();
 		}
 		
@@ -100,8 +101,11 @@ public class BrowserWindow {
 			if (null == frame) throw GlobalUtils.createInternalError("web driver");
 			WindowFrame winF = new WindowFrame(indexj + index, this.myWd, frame);
 			this.frames.add(winF);
+			myWd.switchTo().defaultContent();
 			winF.refreshChildFrames();
 		}
+		myWd.switchTo().defaultContent();
+		obtainFocus();
 	}
 	/**
 	 * Obtain focus.

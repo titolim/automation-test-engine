@@ -24,58 +24,93 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-
 // TODO: Add wait
 /**
  * This class BrowserWindow defines ....
+ * 
  * @author Peidong Hu
  *
  */
 public class WindowFrame {
-	
+
 	/** The window handle. */
-	final private int frameIndex;
-	
+	private int frameIndex;
+
 	/** The my wd. */
 	final private WebDriver myWd;
-	
+
 	/** The frame. */
-	final private WebElement frame;
-	
+	private WebElement frame;
+
 	/** The frames. */
 	final private List<WindowFrame> childFrames = new ArrayList<WindowFrame>();
-	
+	@Nullable
+	private WindowFrame parentFrame;
+
 	/**
 	 * Instantiates a new browser window.
 	 *
-	 * @param winHandle the win handle
-	 * @param myWd the my wd
+	 * @param winHandle
+	 *            the win handle
+	 * @param myWd
+	 *            the my wd
 	 */
 	public WindowFrame(int frameIndex, WebDriver myWd, WebElement frame) {
 		this.frameIndex = frameIndex;
 		this.frame = frame;
 		this.myWd = myWd;
 	}
-	
-	
-	
+
+	/**
+	 * Instantiates a new browser window.
+	 *
+	 * @param winHandle
+	 *            the win handle
+	 * @param myWd
+	 *            the my wd
+	 */
+	public WindowFrame(int frameIndex, WebDriver myWd, WebElement frame,
+			WindowFrame parentFrame) {
+		this.frameIndex = frameIndex;
+		this.frame = frame;
+		this.myWd = myWd;
+		this.parentFrame = parentFrame;
+	}
+
 	/**
 	 * Obtain focus.
 	 */
 	public void obtainFocus() {
-		
+		// WindowFrame parentFrameTmp = getParentFrame();
+		// if (parentFrameTmp == null) {
+		// myWd.switchTo().defaultContent();
+		// } else {
+		// myWd.switchTo().frame(parentFrameTmp.getFrame());
+		// }
 		myWd.switchTo().frame(this.getFrame());
+
 	}
+
+	public void focusParent() {
+		myWd.switchTo().parentFrame();
+	}
+
+	public void focusDefautContent() {
+		myWd.switchTo().defaultContent();
+	}
+
 	/**
 	 * @return the windowHandle
 	 */
 	public int getFrameIndex() {
 		return frameIndex;
 	}
+
 	/**
 	 * @return the myWd
 	 */
@@ -90,7 +125,6 @@ public class WindowFrame {
 		return frame;
 	}
 
-
 	/**
 	 * Refresh child frames.
 	 */
@@ -99,20 +133,29 @@ public class WindowFrame {
 		List<WebElement> iframes = myWd.findElements(By.tagName("iframe"));
 		int index;
 		this.childFrames.clear();
-		for (index=0; index<iframes.size(); index++) {
+		for (index = 0; index < iframes.size(); index++) {
 			WebElement iframe = iframes.get(index);
-			if (null == iframe) throw GlobalUtils.createInternalError("web driver");
-			WindowFrame childWinF = new WindowFrame(index, this.myWd, iframe);
+			if (null == iframe)
+				throw GlobalUtils.createInternalError("web driver");
+			WindowFrame childWinF = new WindowFrame(index, this.myWd, iframe,
+					this);
 			this.childFrames.add(childWinF);
 			childWinF.refreshChildFrames();
 		}
 		List<WebElement> frames = myWd.findElements(By.tagName("frame"));
-		for (int indexj = 0; indexj<frames.size(); indexj++) {
+		for (int indexj = 0; indexj < frames.size(); indexj++) {
 			WebElement frame = frames.get(indexj);
-			if (null == frame) throw GlobalUtils.createInternalError("web driver");
-			WindowFrame childWinF = new WindowFrame(indexj + index, this.myWd, frame);
+			if (null == frame)
+				throw GlobalUtils.createInternalError("web driver");
+			WindowFrame childWinF = new WindowFrame(indexj + index, this.myWd,
+					frame, this);
 			this.childFrames.add(childWinF);
 			childWinF.refreshChildFrames();
+		}
+		if (null == parentFrame) {
+			focusDefautContent();
+		} else {
+			focusParent();
 		}
 	}
 
@@ -121,5 +164,37 @@ public class WindowFrame {
 	 */
 	public List<WindowFrame> getChildFrames() {
 		return childFrames;
+	}
+
+	/**
+	 * @return the parentFrame
+	 */
+	@Nullable
+	public WindowFrame getParentFrame() {
+		return parentFrame;
+	}
+
+	/**
+	 * @param parentFrame
+	 *            the parentFrame to set
+	 */
+	public void setParentFrame(WindowFrame parentFrame) {
+		this.parentFrame = parentFrame;
+	}
+
+	/**
+	 * @param frameIndex
+	 *            the frameIndex to set
+	 */
+	public void setFrameIndex(int frameIndex) {
+		this.frameIndex = frameIndex;
+	}
+
+	/**
+	 * @param frame
+	 *            the frame to set
+	 */
+	public void setFrame(WebElement frame) {
+		this.frame = frame;
 	}
 }

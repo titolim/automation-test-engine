@@ -71,8 +71,14 @@ public class ElementFindById extends AbstractElementFind implements
 							}
 						}
 					});
-			if (null != retValWE)
+			if (null != retValWE) {
+//				if (winFrame.getParentFrame()==null) {
+//					winFrame.focusDefautContent();
+//				} else {
+//					winFrame.focusParent();
+//				}
 				return retValWE;
+			}
 		} catch (NoSuchElementException | TimeoutException error) {
 			List<WindowFrame> childFrames = winFrame.getChildFrames();
 			for (WindowFrame gChildF : childFrames) {
@@ -81,9 +87,19 @@ public class ElementFindById extends AbstractElementFind implements
 				WebElement retVal = findThroughFrames(gChildF, wait,
 						findByValue);
 				if (null != retVal) {
+//					if (winFrame.getParentFrame()==null) {
+//						winFrame.focusDefautContent();
+//					} else {
+//						winFrame.focusParent();
+//					}
 					return retVal;
 				}
 			}
+		}
+		if (winFrame.getParentFrame()==null) {
+			winFrame.focusDefautContent();
+		} else {
+			winFrame.focusParent();
 		}
 		return null;
 	}
@@ -130,6 +146,7 @@ public class ElementFindById extends AbstractElementFind implements
 						if (null == _wf)
 							throw GlobalUtils
 									.createInternalError("arraylist error");
+						_wf.focusDefautContent();
 						WebElement retValWE = findThroughFrames(_wf, getWait(),
 								findByValue);
 						// WebElement retValWE = getWait().until( // NOPMD
@@ -154,7 +171,7 @@ public class ElementFindById extends AbstractElementFind implements
 
 				}
 				// search in main frame
-				winOnFocus.switchToMainFrame();
+				winOnFocus.switchToDefaultContent();
 				WebElement retValWE = getWait().until( // NOPMD
 						new Function<WebDriver, WebElement>() {
 							public @Nullable WebElement apply( // NOPMD

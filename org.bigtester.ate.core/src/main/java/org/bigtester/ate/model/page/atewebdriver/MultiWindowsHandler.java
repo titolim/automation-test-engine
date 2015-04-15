@@ -305,12 +305,14 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 			winH2.refreshFrames();
 		}
 		
-		if (StringUtils.isEmpty(this.mainWindowHandler)) {
+		if (StringUtils.isEmpty(this.mainWindowHandler) || StringUtils.isEmpty(this.mainWindowTitle)) {
 			this.mainWindowHandler = windows.get(0).getWindowHandle();
+			String currentWinHandle = webD.getWindowHandle(); 
 			webD.switchTo().window(this.mainWindowHandler);
 			this.mainWindowTitle = windows.get(0).getMyWd().getTitle();
-		}
-		webD.switchTo().window(windows.get(windows.size()-1).getWindowHandle());
+			webD.switchTo().window(currentWinHandle);
+		}  
+		
 	}
 
 	/**
@@ -338,7 +340,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	@Override
 	public void afterFindBy(@Nullable By arg0, @Nullable WebElement arg1,
 			@Nullable WebDriver arg2) {
-		refreshWindowsList(arg2);
+		//refreshWindowsList(arg2);
 
 	}
 
@@ -384,7 +386,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	@Override
 	public void beforeChangeValueOf(@Nullable WebElement arg0,
 			@Nullable WebDriver arg1) {
-		refreshWindowsList(arg1);
+		//refreshWindowsList(arg1);
 
 	}
 
@@ -394,7 +396,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	@Override
 	public void beforeClickOn(@Nullable WebElement arg0,
 			@Nullable WebDriver arg1) {
-		refreshWindowsList(arg1);
+		//refreshWindowsList(arg1);
 
 	}
 
@@ -404,7 +406,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	@Override
 	public void beforeFindBy(@Nullable By arg0, @Nullable WebElement arg1,
 			@Nullable WebDriver arg2) {
-		refreshWindowsList(arg2);
+		//refreshWindowsList(arg2);
 
 	}
 
@@ -413,7 +415,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	 */
 	@Override
 	public void beforeNavigateBack(@Nullable WebDriver arg0) {
-		refreshWindowsList(arg0);
+		//refreshWindowsList(arg0);
 
 	}
 
@@ -422,7 +424,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	 */
 	@Override
 	public void beforeNavigateForward(@Nullable WebDriver arg0) {
-		refreshWindowsList(arg0);
+		//refreshWindowsList(arg0);
 
 	}
 
@@ -431,7 +433,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	 */
 	@Override
 	public void beforeNavigateTo(@Nullable String arg0, @Nullable WebDriver arg1) {
-		refreshWindowsList(arg1);
+		//refreshWindowsList(arg1);
 
 	}
 
@@ -440,7 +442,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	 */
 	@Override
 	public void beforeScript(@Nullable String arg0, @Nullable WebDriver arg1) {
-		refreshWindowsList(arg1);
+		//refreshWindowsList(arg1);
 
 	}
 
