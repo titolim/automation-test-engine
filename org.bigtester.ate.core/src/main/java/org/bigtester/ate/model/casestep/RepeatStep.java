@@ -145,8 +145,10 @@ public class RepeatStep extends BaseTestStep implements ITestStep {
 									.getExpectedResultAsserter()
 									.get(asserterIndex).getStepERValue()));
 				}
-				if (!thisStep.getOnTheFlyDataHolders().isEmpty()) {
-					refreshOnTheFlyValues.addAll(thisStep.getOnTheFlyDataHolders());
+				StepDataLogger sdl = GlobalUtils.findStepDataLoggerBean(getApplicationContext());
+				
+				if (null != sdl.getOnTheFlies().get(GlobalUtils.getTargetObject(thisStep)) && !sdl.getOnTheFlies().get(GlobalUtils.getTargetObject(thisStep)).isEmpty()) {
+					refreshOnTheFlyValues.addAll(sdl.getOnTheFlies().get(GlobalUtils.getTargetObject(thisStep)));
 				}
 				MyWebElement<?> webE = thisStep.getMyWebElement();
 				if (null != webE

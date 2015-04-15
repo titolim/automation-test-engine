@@ -69,12 +69,13 @@ public class ElementFindByXpath extends AbstractElementFind implements IElementF
 								List<WebElement> allElements = driver.findElements(By.xpath(findByValue));
 								if (allElements.size() == 0) throw new NoSuchElementException(findByValue);
 								WebElement retVal;
-								if (getIndexOfSameElementsInt() < -1) {
+								int intIndex = getIndexOfSameElementsInt() ;
+								if (intIndex< -1) {
 									retVal = allElements.get(0);
-								} else if (getIndexOfSameElementsInt() == -1) {
+								} else if (intIndex == -1) {
 									retVal = allElements.get(allElements.size() - 1);
 								} else {
-									retVal = allElements.get(getIndexOfSameElementsInt());
+									retVal = allElements.get(intIndex);
 								}
 								return retVal;
 								//return driver.findElement(By.xpath(findByValue));

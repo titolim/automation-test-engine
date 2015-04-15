@@ -24,6 +24,13 @@
 	<ate:elementFindByXpath id="efApplyNowButton"
 		findByValue="//span[@class='indeed-apply-button-label']" indexOfSameElements="0" />
 	<ate:clickAction id="eaApplyNowClick" />
+	
+	<ate:elementActionDef id="eadFilloutApplicantName"
+		elementFind="efApplicantName" elementAction="eaFilloutApplicantName">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efApplicantName"
+		findByValue="applicant.name"  />
+	<ate:sendKeysAction id="eaFilloutApplicantName" dataValue="Peidong Hu"/>
 
 	
 </beans>

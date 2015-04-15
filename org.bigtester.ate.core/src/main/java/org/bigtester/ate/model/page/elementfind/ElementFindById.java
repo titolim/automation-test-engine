@@ -20,16 +20,17 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementfind;
 
+import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.atewebdriver.WindowFrame;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.google.common.base.Function;
-
-
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,8 +38,8 @@ import com.google.common.base.Function;
  * 
  * @author Peidong Hu
  */
-public class ElementFindById extends AbstractElementFind implements IElementFind, ITestObjectFinderImpl {
-
+public class ElementFindById extends AbstractElementFind implements
+		IElementFind, ITestObjectFinderImpl {
 
 	/**
 	 * @param findByValue
@@ -59,28 +60,56 @@ public class ElementFindById extends AbstractElementFind implements IElementFind
 					"web driver is not correctly populated.");
 		} else {
 			createWait(webD);
+			BrowserWindow winOnFocus = myWebDriver.getMultiWindowsHandler()
+					.getBrowserWindowOnFocus();
+			if (winOnFocus.getFrames().isEmpty()) {
 
-			WebElement retValWE = getWait().until( //NOPMD
-					new Function<WebDriver, WebElement>() {
-						public @Nullable WebElement apply( //NOPMD
-								@Nullable WebDriver driver) {
-							if (null == driver) {
-								throw new IllegalStateException(
-										"webdriver is not correctly populated.");
-							} else {
-								return driver.findElement(By.id(findByValue));
+				WebElement retValWE = getWait().until( // NOPMD
+						new Function<WebDriver, WebElement>() {
+							public @Nullable WebElement apply( // NOPMD
+									@Nullable WebDriver driver) {
+								if (null == driver) {
+									throw new IllegalStateException(
+											"webdriver is not correctly populated.");
+								} else {
+									return driver.findElement(By
+											.id(findByValue));
+								}
 							}
-						}
-					});
-			if (null == retValWE) {
-				throw new NoSuchElementException(findByValue);
+						});
+				if (null == retValWE) {
+					throw new NoSuchElementException(findByValue);
+				} else {
+					return retValWE;
+				}
 			} else {
-				return retValWE;
+				for (WindowFrame _wf : winOnFocus.getFrames()) {
+					//_wf.obtainFocus();
+					webD.switchTo().frame(_wf.getFrame());
+					webD.findElement(By.id(findByValue));
+					try {
+						WebElement retValWE = getWait().until( // NOPMD
+								new Function<WebDriver, WebElement>() {
+									public @Nullable WebElement apply( // NOPMD
+											@Nullable WebDriver driver) {
+										if (null == driver) {
+											throw new IllegalStateException(
+													"webdriver is not correctly populated.");
+										} else {
+											return driver.findElement(By
+													.id(findByValue));
+										}
+									}
+								});
+						if (null != retValWE) return retValWE;
+					} catch (NoSuchElementException | TimeoutException error) {
+						continue;
+					}
+					
+				}
+				throw new NoSuchElementException(findByValue);
 			}
 		}
 	}
-
-	
-	
 
 }

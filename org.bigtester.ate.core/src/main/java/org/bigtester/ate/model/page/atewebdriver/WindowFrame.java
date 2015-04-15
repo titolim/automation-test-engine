@@ -20,11 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.bigtester.ate.GlobalUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -35,15 +32,16 @@ import org.openqa.selenium.WebElement;
  * @author Peidong Hu
  *
  */
-public class BrowserWindow {
+public class WindowFrame {
 	
 	/** The window handle. */
-	final private String windowHandle;
-	
-	final private List<WindowFrame> frames = new ArrayList<WindowFrame>();
+	final private int frameIndex;
 	
 	/** The my wd. */
 	final private WebDriver myWd;
+	
+	/** The frame. */
+	final private WebElement frame;
 	
 	/**
 	 * Instantiates a new browser window.
@@ -51,56 +49,26 @@ public class BrowserWindow {
 	 * @param winHandle the win handle
 	 * @param myWd the my wd
 	 */
-	public BrowserWindow(String winHandle, WebDriver myWd) {
-		this.windowHandle = winHandle;
+	public WindowFrame(int frameIndex, WebDriver myWd, WebElement frame) {
+		this.frameIndex = frameIndex;
+		this.frame = frame;
 		this.myWd = myWd;
 	}
 	
-	/**
-	 * Maximize.
-	 */
-	public void maximize() {
-		obtainFocus();
-		myWd.manage().window().maximize();
-	}
 	
-	/**
-	 * Close.
-	 */
-	public void close() {
-		obtainFocus();
-		myWd.close();
-	}
 	
-	public void refreshFrames() {
-		obtainFocus();
-		List<WebElement> iframes = myWd.findElements(By.tagName("iframe"));
-		int index;
-		this.frames.clear();
-		for (index=0; index<iframes.size(); index++) {
-			WebElement iframe = iframes.get(index);
-			if (null == iframe) throw GlobalUtils.createInternalError("web driver");
-			this.frames.add(new WindowFrame(index, this.myWd, iframe));
-		}
-		
-		List<WebElement> frames = myWd.findElements(By.tagName("frame"));
-		for (int indexj = 0; indexj<frames.size(); indexj++) {
-			WebElement frame = frames.get(indexj);
-			if (null == frame) throw GlobalUtils.createInternalError("web driver");
-			this.frames.add(new WindowFrame(indexj + index, this.myWd, frame));
-		}
-	}
 	/**
 	 * Obtain focus.
 	 */
 	public void obtainFocus() {
-		myWd.switchTo().window(getWindowHandle());
+		
+		myWd.switchTo().frame(this.getFrame());
 	}
 	/**
 	 * @return the windowHandle
 	 */
-	public String getWindowHandle() {
-		return windowHandle;
+	public int getFrameIndex() {
+		return frameIndex;
 	}
 	/**
 	 * @return the myWd
@@ -110,9 +78,9 @@ public class BrowserWindow {
 	}
 
 	/**
-	 * @return the frames
+	 * @return the frame
 	 */
-	public List<WindowFrame> getFrames() {
-		return frames;
+	public WebElement getFrame() {
+		return frame;
 	}
 }

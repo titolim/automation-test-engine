@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.aop.framework.Advised;
+import org.bigtester.ate.model.casestep.StepDataLogger;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.data.AbstractRunTimeDataHolder;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
@@ -94,6 +95,29 @@ public final class GlobalUtils {
 			throw new NoSuchBeanDefinitionException(TestCase.class);
 		} else {
 			TestCase retVal = testcases.values().iterator().next();
+			if (null == retVal) {
+				throw new NoSuchBeanDefinitionException(TestCase.class);
+			} else {
+				return retVal;
+			}
+		}
+	}
+	
+	/**
+	 * Find step data logger bean.
+	 *
+	 * @param appCtx the app ctx
+	 * @return the step data logger
+	 * @throws NoSuchBeanDefinitionException the no such bean definition exception
+	 */
+	public static StepDataLogger findStepDataLoggerBean(ApplicationContext appCtx)
+			throws NoSuchBeanDefinitionException {
+		Map<String, StepDataLogger> loggers = appCtx.getBeansOfType(StepDataLogger.class);
+
+		if (loggers.isEmpty()) {
+			throw new NoSuchBeanDefinitionException(TestCase.class);
+		} else {
+			StepDataLogger retVal = loggers.values().iterator().next();
 			if (null == retVal) {
 				throw new NoSuchBeanDefinitionException(TestCase.class);
 			} else {

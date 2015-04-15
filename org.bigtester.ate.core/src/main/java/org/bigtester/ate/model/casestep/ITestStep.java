@@ -134,13 +134,13 @@ public interface ITestStep {
 	@Nullable
 	List<IDataParser> getDataHolders();
 	
-	/**
-	 * Gets the on the fly data holders.
-	 *
-	 * @return the on the fly data holders
-	 */
-	
-	List<IOnTheFlyData<?>> getOnTheFlyDataHolders();
+//	/**
+//	 * Gets the on the fly data holders.
+//	 *
+//	 * @return the on the fly data holders
+//	 */
+//	
+//	List<IOnTheFlyData<?>> getOnTheFlyDataHolders();
 	/**
 	 * Checks if is element step.
 	 *

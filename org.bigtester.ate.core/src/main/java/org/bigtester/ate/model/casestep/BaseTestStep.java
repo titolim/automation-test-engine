@@ -66,9 +66,9 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	/** The data holders. */
 	private List<IDataParser> dataHolders = new ArrayList<IDataParser>();
 
-	/** The on the fly data holders. */
-	private List<IOnTheFlyData<?>> onTheFlyDataHolders = new ArrayList<IOnTheFlyData<?>>();
-	
+//	/** The on the fly data holders. */
+//	private List<IOnTheFlyData<?>> onTheFlyDataHolders = new ArrayList<IOnTheFlyData<?>>();
+//	
 	/** The element step flag. */
 	
 	private transient boolean elementStepFlag;
@@ -478,23 +478,23 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 		return correlatedOptionalStepsUtilInclusive;
 	}
 
-	/**
-	 * Gets the on the fly data holders.
-	 *
-	 * @return the onTheFlyDataHolders
-	 */
-	public List<IOnTheFlyData<?>> getOnTheFlyDataHolders() {
-		return onTheFlyDataHolders;
-	}
+//	/**
+//	 * Gets the on the fly data holders.
+//	 *
+//	 * @return the onTheFlyDataHolders
+//	 */
+//	public List<IOnTheFlyData<?>> getOnTheFlyDataHolders() {
+//		return onTheFlyDataHolders;
+//	}
 
-	/**
-	 * Sets the on the fly data holders.
-	 *
-	 * @param onTheFlyDataHolders the onTheFlyDataHolders to set
-	 */
-	public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>> onTheFlyDataHolders) {
-		this.onTheFlyDataHolders = onTheFlyDataHolders;
-	}
+//	/**
+//	 * Sets the on the fly data holders.
+//	 *
+//	 * @param onTheFlyDataHolders the onTheFlyDataHolders to set
+//	 */
+//	public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>> onTheFlyDataHolders) {
+//		this.onTheFlyDataHolders = onTheFlyDataHolders;
+//	}
 
 
 

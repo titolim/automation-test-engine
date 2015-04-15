@@ -256,7 +256,16 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 		}
 
 	}
-
+	
+	public BrowserWindow getBrowserWindowOnFocus() {
+		String winHandle = this.getDriver().getWindowHandle(); //NOPMD
+		for (BrowserWindow bwd:windows) {
+			if (bwd.getWindowHandle().equals(winHandle)) {
+				return bwd;
+			}
+		}
+		throw GlobalUtils.createInternalError("web driver wrong state");
+	}
 	/**
 	 * Refresh windows list.
 	 *
@@ -290,6 +299,10 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 			} else {
 				iter.remove();
 			}
+		}
+		for (Iterator<BrowserWindow> iter = windows.iterator(); iter.hasNext();) {
+			BrowserWindow winH2 = iter.next();
+			winH2.refreshFrames();
 		}
 		
 		if (StringUtils.isEmpty(this.mainWindowHandler)) {
