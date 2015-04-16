@@ -40,7 +40,14 @@ public class BrowserWindow {
 	/** The window handle. */
 	final private String windowHandle;
 	
+	/** The frames. */
 	final private List<WindowFrame> frames = new ArrayList<WindowFrame>();
+	
+	/** The last success element find frame chain. */
+	final private List<WindowFrame> lastSuccessElementFindFrameChain =  new ArrayList<WindowFrame>();
+	
+	/** The current element find frame chain. */
+	final private List<WindowFrame> currentElementFindFrameChain =  new ArrayList<WindowFrame>();
 	
 	/** The my wd. */
 	final private WebDriver myWd;
@@ -60,16 +67,16 @@ public class BrowserWindow {
 	 * Switch to main frame.
 	 */
 	public void switchToDefaultContent () {
-		if (!frames.isEmpty()) {
+		//if (!frames.isEmpty()) {
 			myWd.switchTo().defaultContent();
-		}
+		//}
 	}
 	
 	/**
 	 * Maximize.
 	 */
 	public void maximize() {
-		obtainFocus();
+		obtainWindowFocus();
 		myWd.manage().window().maximize();
 	}
 	
@@ -77,12 +84,16 @@ public class BrowserWindow {
 	 * Close.
 	 */
 	public void close() {
-		obtainFocus();
+		obtainWindowFocus();
 		myWd.close();
 	}
 	
+	/**
+	 * Refresh frames.
+	 */
 	public void refreshFrames() {
-		obtainFocus();
+		obtainWindowFocus();
+		switchToDefaultContent ();
 		List<WebElement> iframes = myWd.findElements(By.tagName("iframe"));
 		int index;
 		this.frames.clear();
@@ -91,7 +102,7 @@ public class BrowserWindow {
 			if (null == iframe) throw GlobalUtils.createInternalError("web driver");
 			WindowFrame winF = new WindowFrame(index, this.myWd, iframe);
 			this.frames.add(winF);
-			myWd.switchTo().defaultContent();
+			switchToDefaultContent ();
 			winF.refreshChildFrames();
 		}
 		
@@ -101,16 +112,16 @@ public class BrowserWindow {
 			if (null == frame) throw GlobalUtils.createInternalError("web driver");
 			WindowFrame winF = new WindowFrame(indexj + index, this.myWd, frame);
 			this.frames.add(winF);
-			myWd.switchTo().defaultContent();
+			switchToDefaultContent ();
 			winF.refreshChildFrames();
 		}
-		myWd.switchTo().defaultContent();
-		obtainFocus();
+		switchToDefaultContent ();
+		//obtainFocus();
 	}
 	/**
 	 * Obtain focus.
 	 */
-	public void obtainFocus() {
+	public void obtainWindowFocus() {
 		myWd.switchTo().window(getWindowHandle());
 	}
 	/**
@@ -131,5 +142,19 @@ public class BrowserWindow {
 	 */
 	public List<WindowFrame> getFrames() {
 		return frames;
+	}
+
+	/**
+	 * @return the lastSuccessElementFindFrameChain
+	 */
+	public List<WindowFrame> getLastSuccessElementFindFrameChain() {
+		return lastSuccessElementFindFrameChain;
+	}
+
+	/**
+	 * @return the currentElementFindFrameChain
+	 */
+	public List<WindowFrame> getCurrentElementFindFrameChain() {
+		return currentElementFindFrameChain;
 	}
 }

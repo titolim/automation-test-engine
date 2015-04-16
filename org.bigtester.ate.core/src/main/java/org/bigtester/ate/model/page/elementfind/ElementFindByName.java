@@ -20,14 +20,11 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementfind;
 
+import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.google.common.base.Function;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -52,31 +49,36 @@ public class ElementFindByName extends AbstractElementFind implements IElementFi
 	 */
 	@Override
 	public WebElement doFind(IMyWebDriver myWebDriver, final String findByValue) {
-		WebDriver webD = myWebDriver.getWebDriver();
-		if (null == webD) {
-			throw new IllegalStateException(
-					"web driver is not correctly populated.");
-		} else {
-			createWait(webD);
-
-			WebElement retValWE = getWait().until( //NOPMD
-					new Function<WebDriver, WebElement>() {
-						public @Nullable WebElement apply( //NOPMD
-								@Nullable WebDriver driver) {
-							if (null == driver) {
-								throw new IllegalStateException(
-										"webdriver is not correctly populated.");
-							} else {
-								return driver.findElement(By.name(findByValue));
-							}
-						}
-					});
-			if (null == retValWE) {
-				throw new NoSuchElementException(findByValue);
-			} else {
-				return retValWE;
-			}
-		}
+		final By findBy = By.name(findByValue);
+		if (null == findBy)
+			throw GlobalUtils.createInternalError("selenium By creation");
+		return findElement(findBy, myWebDriver);
+//		
+//		WebDriver webD = myWebDriver.getWebDriver();
+//		if (null == webD) {
+//			throw new IllegalStateException(
+//					"web driver is not correctly populated.");
+//		} else {
+//			createWait(webD);
+//
+//			WebElement retValWE = getWait().until( //NOPMD
+//					new Function<WebDriver, WebElement>() {
+//						public @Nullable WebElement apply( //NOPMD
+//								@Nullable WebDriver driver) {
+//							if (null == driver) {
+//								throw new IllegalStateException(
+//										"webdriver is not correctly populated.");
+//							} else {
+//								return driver.findElement(By.name(findByValue));
+//							}
+//						}
+//					});
+//			if (null == retValWE) {
+//				throw new NoSuchElementException(findByValue);
+//			} else {
+//				return retValWE;
+//			}
+//		}
 	}
 
 

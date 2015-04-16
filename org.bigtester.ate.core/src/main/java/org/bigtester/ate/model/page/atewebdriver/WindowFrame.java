@@ -49,6 +49,8 @@ public class WindowFrame {
 
 	/** The frames. */
 	final private List<WindowFrame> childFrames = new ArrayList<WindowFrame>();
+	
+	/** The parent frame. */
 	@Nullable
 	private WindowFrame parentFrame;
 
@@ -85,7 +87,7 @@ public class WindowFrame {
 	/**
 	 * Obtain focus.
 	 */
-	public void obtainFocus() {
+	public void obtainFrameFocus() {
 		// WindowFrame parentFrameTmp = getParentFrame();
 		// if (parentFrameTmp == null) {
 		// myWd.switchTo().defaultContent();
@@ -96,10 +98,16 @@ public class WindowFrame {
 
 	}
 
-	public void focusParent() {
+	/**
+	 * Focus parent frame.
+	 */
+	public void focusParentFrame() {
 		myWd.switchTo().parentFrame();
 	}
 
+	/**
+	 * Focus defaut content.
+	 */
 	public void focusDefautContent() {
 		myWd.switchTo().defaultContent();
 	}
@@ -129,7 +137,7 @@ public class WindowFrame {
 	 * Refresh child frames.
 	 */
 	public void refreshChildFrames() {
-		obtainFocus();
+		obtainFrameFocus();
 		List<WebElement> iframes = myWd.findElements(By.tagName("iframe"));
 		int index;
 		this.childFrames.clear();
@@ -155,7 +163,7 @@ public class WindowFrame {
 		if (null == parentFrame) {
 			focusDefautContent();
 		} else {
-			focusParent();
+			focusParentFrame();
 		}
 	}
 

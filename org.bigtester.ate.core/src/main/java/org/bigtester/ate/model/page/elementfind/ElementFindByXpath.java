@@ -20,16 +20,11 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementfind;
 
-import java.util.List;
 
+import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import com.google.common.base.Function;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -51,43 +46,48 @@ public class ElementFindByXpath extends AbstractElementFind implements IElementF
 	 */
 	@Override
 	public WebElement doFind(IMyWebDriver myWebDriver, final String findByValue) {
-		WebDriver webD = myWebDriver.getWebDriver();
-		if (null == webD) {
-			throw new IllegalStateException(
-					"web driver is not correctly populated.");
-		} else {
-			createWait(webD);
-
-			WebElement retValWE = getWait().until( //NOPMD
-					new Function<WebDriver, WebElement>() {
-						public @Nullable WebElement apply( //NOPMD
-								@Nullable WebDriver driver) {
-							if (null == driver) {
-								throw new IllegalStateException(
-										"webdriver is not correctly populated.");
-							} else {
-								List<WebElement> allElements = driver.findElements(By.xpath(findByValue));
-								if (allElements.size() == 0) throw new NoSuchElementException(findByValue);
-								WebElement retVal;
-								int intIndex = getIndexOfSameElementsInt() ;
-								if (intIndex< -1) {
-									retVal = allElements.get(0);
-								} else if (intIndex == -1) {
-									retVal = allElements.get(allElements.size() - 1);
-								} else {
-									retVal = allElements.get(intIndex);
-								}
-								return retVal;
-								//return driver.findElement(By.xpath(findByValue));
-							}
-						}
-					});
-			if (null == retValWE) {
-				throw new NoSuchElementException(findByValue);
-			} else {
-				return retValWE;
-			}
-		}
+		final By findBy = By.xpath(findByValue);
+		if (null == findBy)
+			throw GlobalUtils.createInternalError("selenium By creation");
+		return findElement(findBy, myWebDriver);
+//		
+//		WebDriver webD = myWebDriver.getWebDriver();
+//		if (null == webD) {
+//			throw new IllegalStateException(
+//					"web driver is not correctly populated.");
+//		} else {
+//			createWait(webD);
+//
+//			WebElement retValWE = getWait().until( //NOPMD
+//					new Function<WebDriver, WebElement>() {
+//						public @Nullable WebElement apply( //NOPMD
+//								@Nullable WebDriver driver) {
+//							if (null == driver) {
+//								throw new IllegalStateException(
+//										"webdriver is not correctly populated.");
+//							} else {
+//								List<WebElement> allElements = driver.findElements(By.xpath(findByValue));
+//								if (allElements.size() == 0) throw new NoSuchElementException(findByValue);
+//								WebElement retVal;
+//								int intIndex = getIndexOfSameElementsInt() ;
+//								if (intIndex< -1) {
+//									retVal = allElements.get(0);
+//								} else if (intIndex == -1) {
+//									retVal = allElements.get(allElements.size() - 1);
+//								} else {
+//									retVal = allElements.get(intIndex);
+//								}
+//								return retVal;
+//								//return driver.findElement(By.xpath(findByValue));
+//							}
+//						}
+//					});
+//			if (null == retValWE) {
+//				throw new NoSuchElementException(findByValue);
+//			} else {
+//				return retValWE;
+//			}
+//		}
 	}
 
 

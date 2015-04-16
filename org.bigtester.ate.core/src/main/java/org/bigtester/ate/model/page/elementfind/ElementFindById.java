@@ -20,21 +20,12 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementfind;
 
-import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.atewebdriver.WindowFrame;
-import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Wait;
 
-import com.google.common.base.Function;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -53,146 +44,181 @@ public class ElementFindById extends AbstractElementFind implements
 		// TODO Auto-generated constructor stub
 	}
 
-	@Nullable
-	private WebElement findThroughFrames(WindowFrame winFrame,
-			Wait<WebDriver> wait, final String findByValue) {
-
-		winFrame.obtainFocus();
-		try {
-			WebElement retValWE = wait.until( // NOPMD
-					new Function<WebDriver, WebElement>() {
-						public @Nullable WebElement apply( // NOPMD
-								@Nullable WebDriver driver) {
-							if (null == driver) {
-								throw new IllegalStateException(
-										"webdriver is not correctly populated.");
-							} else {
-								return driver.findElement(By.id(findByValue));
-							}
-						}
-					});
-			if (null != retValWE) {
-//				if (winFrame.getParentFrame()==null) {
-//					winFrame.focusDefautContent();
-//				} else {
-//					winFrame.focusParent();
+//	@Nullable
+//	protected WebElement findThroughFrames(BrowserWindow win,
+//			WindowFrame winFrame, Wait<WebDriver> wait, final By findByValue) {
+//		win.getCurrentElementFindFrameChain().add(winFrame);
+//		winFrame.obtainFocus();
+//		try {
+//			WebElement retValWE = wait.until( // NOPMD
+//					new Function<WebDriver, WebElement>() {
+//						public @Nullable WebElement apply( // NOPMD
+//								@Nullable WebDriver driver) {
+//							if (null == driver) {
+//								throw new IllegalStateException(
+//										"webdriver is not correctly populated.");
+//							} else {
+//								return driver.findElement(findByValue);
+//							}
+//						}
+//					});
+//			if (null != retValWE) {
+//				if (!win.getLastSuccessElementFindFrameChain().equals(
+//						win.getCurrentElementFindFrameChain())) {
+//					win.getLastSuccessElementFindFrameChain().clear();
+//					win.getLastSuccessElementFindFrameChain().addAll(
+//							win.getCurrentElementFindFrameChain());
 //				}
-				return retValWE;
-			}
-		} catch (NoSuchElementException | TimeoutException error) {
-			List<WindowFrame> childFrames = winFrame.getChildFrames();
-			for (WindowFrame gChildF : childFrames) {
-				if (null == gChildF)
-					throw GlobalUtils.createInternalError("java arraylist");
-				WebElement retVal = findThroughFrames(gChildF, wait,
-						findByValue);
-				if (null != retVal) {
-//					if (winFrame.getParentFrame()==null) {
-//						winFrame.focusDefautContent();
-//					} else {
-//						winFrame.focusParent();
+//				return retValWE;
+//			}
+//		} catch (NoSuchElementException | TimeoutException error) {
+//			List<WindowFrame> childFrames = winFrame.getChildFrames();
+//			for (WindowFrame gChildF : childFrames) {
+//				if (null == gChildF)
+//					throw GlobalUtils.createInternalError("java arraylist");
+//				WebElement retVal = findThroughFrames(win, gChildF, wait,
+//						findByValue);
+//				if (null != retVal) {
+//
+//					return retVal;
+//				}
+//			}
+//		}
+//		if (winFrame.getParentFrame() == null) {
+//			winFrame.focusDefautContent();
+//		} else {
+//			winFrame.focusParent();
+//		}
+//		return null;
+//	}
+//
+//	protected WebElement findElement(final By findBy, IMyWebDriver myWebDriver) {
+//		WebDriver webD = myWebDriver.getWebDriver();
+//		if (null == webD) {
+//			throw new IllegalStateException(
+//					"web driver is not correctly populated.");
+//		} else {
+//			createWait(webD);
+//
+//			BrowserWindow winOnFocus = myWebDriver.getMultiWindowsHandler()
+//					.getBrowserWindowOnFocus();
+//			winOnFocus.switchToDefaultContent();
+//			if (!winOnFocus.getLastSuccessElementFindFrameChain().isEmpty()) {
+//				for (WindowFrame lastSuccessWFrame : winOnFocus
+//						.getLastSuccessElementFindFrameChain()) {
+//					lastSuccessWFrame.obtainFocus();
+//				}
+//			}
+//			try {
+//				WebElement retValWE = getWait().until( // NOPMD
+//						new Function<WebDriver, WebElement>() {
+//							public @Nullable WebElement apply( // NOPMD
+//									@Nullable WebDriver driver) {
+//								if (null == driver) {
+//									throw new IllegalStateException(
+//											"webdriver is not correctly populated.");
+//								} else {
+//									return driver.findElement(findBy);
+//								}
+//							}
+//						});
+//				if (null != retValWE) {
+//					return retValWE;
+//				}
+//			} catch (NoSuchElementException | TimeoutException error) {
+//				winOnFocus.getCurrentElementFindFrameChain().clear();
+//				for (WindowFrame winfr : winOnFocus.getFrames()) {
+//
+//					try {
+//						if (null == winfr)
+//							throw GlobalUtils
+//									.createInternalError("arraylist error");
+//						winfr.focusDefautContent();
+//						WebElement retValWE = findThroughFrames(winOnFocus,
+//								winfr, getWait(), findBy);
+//
+//						if (null != retValWE)
+//							return retValWE;
+//					} catch (NoSuchElementException | TimeoutException error1) {
+//
+//						continue;
 //					}
-					return retVal;
-				}
-			}
-		}
-		if (winFrame.getParentFrame()==null) {
-			winFrame.focusDefautContent();
-		} else {
-			winFrame.focusParent();
-		}
-		return null;
-	}
+//
+//				}
+//			}
+//
+//			throw new NoSuchElementException(findBy.toString());
+//		}
+//	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public WebElement doFind(IMyWebDriver myWebDriver, final String findByValue) {
-		WebDriver webD = myWebDriver.getWebDriver();
-		if (null == webD) {
-			throw new IllegalStateException(
-					"web driver is not correctly populated.");
-		} else {
-			createWait(webD);
-			BrowserWindow winOnFocus = myWebDriver.getMultiWindowsHandler()
-					.getBrowserWindowOnFocus();
-			if (winOnFocus.getFrames().isEmpty()) {
-
-				WebElement retValWE = getWait().until( // NOPMD
-						new Function<WebDriver, WebElement>() {
-							public @Nullable WebElement apply( // NOPMD
-									@Nullable WebDriver driver) {
-								if (null == driver) {
-									throw new IllegalStateException(
-											"webdriver is not correctly populated.");
-								} else {
-									return driver.findElement(By
-											.id(findByValue));
-								}
-							}
-						});
-				if (null == retValWE) {
-					throw new NoSuchElementException(findByValue);
-				} else {
-					return retValWE;
-				}
-			} else {
-				for (WindowFrame _wf : winOnFocus.getFrames()) {
-					// _wf.obtainFocus();
-					// webD.switchTo().frame(_wf.getFrame());
-					// webD.findElement(By.id(findByValue));
-					try {
-						if (null == _wf)
-							throw GlobalUtils
-									.createInternalError("arraylist error");
-						_wf.focusDefautContent();
-						WebElement retValWE = findThroughFrames(_wf, getWait(),
-								findByValue);
-						// WebElement retValWE = getWait().until( // NOPMD
-						// new Function<WebDriver, WebElement>() {
-						// public @Nullable WebElement apply( // NOPMD
-						// @Nullable WebDriver driver) {
-						// if (null == driver) {
-						// throw new IllegalStateException(
-						// "webdriver is not correctly populated.");
-						// } else {
-						// return driver.findElement(By
-						// .id(findByValue));
-						// }
-						// }
-						// });
-						if (null != retValWE)
-							return retValWE;
-					} catch (NoSuchElementException | TimeoutException error) {
-
-						continue;
-					}
-
-				}
-				// search in main frame
-				winOnFocus.switchToDefaultContent();
-				WebElement retValWE = getWait().until( // NOPMD
-						new Function<WebDriver, WebElement>() {
-							public @Nullable WebElement apply( // NOPMD
-									@Nullable WebDriver driver) {
-								if (null == driver) {
-									throw new IllegalStateException(
-											"webdriver is not correctly populated.");
-								} else {
-									return driver.findElement(By
-											.id(findByValue));
-								}
-							}
-						});
-				if (null == retValWE) {
-					throw new NoSuchElementException(findByValue);
-				} else {
-					return retValWE;
-				}
-
-			}
-		}
+		final By findBy = By.id(findByValue);
+		if (null == findBy)
+			throw GlobalUtils.createInternalError("selenium By creation");
+		return findElement(findBy, myWebDriver);
+//		WebDriver webD = myWebDriver.getWebDriver();
+//		if (null == webD) {
+//			throw new IllegalStateException(
+//					"web driver is not correctly populated.");
+//		} else {
+//			
+//			if (null == findBy)
+//				throw GlobalUtils.createInternalError("selenium By creation");
+//			createWait(webD);
+//
+//			BrowserWindow winOnFocus = myWebDriver.getMultiWindowsHandler()
+//					.getBrowserWindowOnFocus();
+//			winOnFocus.switchToDefaultContent();
+//			if (!winOnFocus.getLastSuccessElementFindFrameChain().isEmpty()) {
+//				for (WindowFrame lastSuccessWFrame : winOnFocus
+//						.getLastSuccessElementFindFrameChain()) {
+//					lastSuccessWFrame.obtainFocus();
+//				}
+//			}
+//			try {
+//				WebElement retValWE = getWait().until( // NOPMD
+//						new Function<WebDriver, WebElement>() {
+//							public @Nullable WebElement apply( // NOPMD
+//									@Nullable WebDriver driver) {
+//								if (null == driver) {
+//									throw new IllegalStateException(
+//											"webdriver is not correctly populated.");
+//								} else {
+//									return driver.findElement(findBy);
+//								}
+//							}
+//						});
+//				if (null != retValWE) {
+//					return retValWE;
+//				}
+//			} catch (NoSuchElementException | TimeoutException error) {
+//				winOnFocus.getCurrentElementFindFrameChain().clear();
+//				for (WindowFrame winfr : winOnFocus.getFrames()) {
+//
+//					try {
+//						if (null == winfr)
+//							throw GlobalUtils
+//									.createInternalError("arraylist error");
+//						winfr.focusDefautContent();
+//						WebElement retValWE = findThroughFrames(winOnFocus,
+//								winfr, getWait(), findBy);
+//
+//						if (null != retValWE)
+//							return retValWE;
+//					} catch (NoSuchElementException | TimeoutException error1) {
+//
+//						continue;
+//					}
+//
+//				}
+//			}
+//
+//			throw new NoSuchElementException(findByValue);
+//		}
 	}
 
 }

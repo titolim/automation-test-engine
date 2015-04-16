@@ -223,7 +223,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	public void focusOnLatestWindow() {
 		if (windows.isEmpty())
 			return;
-		windows.get(windows.size() - 1).obtainFocus();
+		windows.get(windows.size() - 1).obtainWindowFocus();
 	}
 
 	/**
@@ -252,11 +252,16 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 		if (windows.size() < openSequence + 1) {
 			return;
 		} else {
-			windows.get(openSequence).obtainFocus();
+			windows.get(openSequence).obtainWindowFocus();
 		}
 
 	}
 	
+	/**
+	 * Gets the browser window on focus.
+	 *
+	 * @return the browser window on focus
+	 */
 	public BrowserWindow getBrowserWindowOnFocus() {
 		String winHandle = this.getDriver().getWindowHandle(); //NOPMD
 		for (BrowserWindow bwd:windows) {

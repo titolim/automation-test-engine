@@ -65,14 +65,18 @@
 			stepDescription="stepClickApplyNow" stepName="stepClickApplyNow"
 			targetStep="false" elementActionDef="eadClickApplyNow"
 			optionalStep="true"
-			correlatedOptionalStepsUtilInclusive="stepFilloutApplicantName">
+			correlatedOptionalStepsUtilInclusive="stepFilloutApplicantEmail">
 		</ate:elementStep>
 		<ate:elementStep id="stepFilloutApplicantName"
 			stepDescription="stepFilloutApplicantName" stepName="stepFilloutApplicantName"
 			targetStep="false" elementActionDef="eadFilloutApplicantName"
 			>
 		</ate:elementStep>
-		
+		<ate:elementStep id="stepFilloutApplicantEmail"
+			stepDescription="stepFilloutApplicantEmail" stepName="stepFilloutApplicantEmail"
+			targetStep="false" elementActionDef="eadFilloutApplicantEmail"
+			>
+		</ate:elementStep>
 		<ate:elementStep id="stepCloseApplyWindow"
 			stepDescription="stepCloseApplyWindow" stepName="stepCloseApplyWindow"
 			targetStep="false" elementActionDef="eadCloseApplyWindow">

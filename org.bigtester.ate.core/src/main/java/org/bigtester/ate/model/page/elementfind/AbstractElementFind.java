@@ -20,21 +20,24 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementfind;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.annotation.RepeatStepRefreshable;
-import org.bigtester.ate.annotation.RepeatStepRefreshable.RefreshDataType;
 import org.bigtester.ate.model.data.IOnTheFlyData;
+import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.atewebdriver.WindowFrame;
 import org.eclipse.jdt.annotation.Nullable;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
-
+import com.google.common.base.Function;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,21 +45,19 @@ import org.openqa.selenium.support.ui.Wait;
  * 
  * @author Peidong Hu
  */
-public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl{
-	
+public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
+
 	/** The find by value. */
 	private String findByValue;
-	
+
 	/** The index of same elements. */
 	@Nullable
-	
 	private IOnTheFlyData<Integer> indexOfSameElements;
-	
+
 	/** The wait. */
 	@Nullable
 	transient protected Wait<WebDriver> wait;
 
-	
 	/**
 	 * @return the wait
 	 */
@@ -64,32 +65,35 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl{
 		final Wait<WebDriver> retVal = wait;
 		if (null == retVal) {
 			throw new IllegalStateException("wait is not correctly populated");
-			
+
 		} else {
 			return retVal;
 		}
 	}
 
-	
 	/**
 	 * Do find.
 	 *
-	 * @param myWebDriver the my web driver
-	 * @param findByValue            the find by value
+	 * @param myWebDriver
+	 *            the my web driver
+	 * @param findByValue
+	 *            the find by value
 	 * @return the web element
 	 */
-	public abstract WebElement doFind(IMyWebDriver myWebDriver, String findByValue);
-	
+	public abstract WebElement doFind(IMyWebDriver myWebDriver,
+			String findByValue);
+
 	/**
 	 * Instantiates a new abstract element find.
 	 *
-	 * @param findByValue the find by value
+	 * @param findByValue
+	 *            the find by value
 	 */
 	public AbstractElementFind(String findByValue) {
 		super();
 		this.findByValue = findByValue;
 	}
-	
+
 	/**
 	 * Gets the find by value.
 	 * 
@@ -98,7 +102,7 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl{
 	public String getFindByValue() {
 		return findByValue;
 	}
-	
+
 	/**
 	 * Sets the find by value.
 	 * 
@@ -108,38 +112,39 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl{
 	public void setFindByValue(final String findByValue) {
 		this.findByValue = findByValue;
 	}
-	
-	
 
 	/**
 	 * Supports plugin = false.
 	 *
-	 * @param arg0 the arg0
+	 * @param arg0
+	 *            the arg0
 	 * @return true, if successful
 	 */
 	public boolean supports(final String arg0) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	/**
 	 * Creates the wait.
 	 *
-	 * @param driver the driver
+	 * @param driver
+	 *            the driver
 	 */
 	public void createWait(WebDriver driver) {
 		wait = new FluentWait<WebDriver>(driver)
-	            .withTimeout(30, TimeUnit.SECONDS)
-	            .pollingEvery(5, TimeUnit.SECONDS)
-	            .ignoring(NoSuchElementException.class);
+				.withTimeout(30, TimeUnit.SECONDS)
+				.pollingEvery(5, TimeUnit.SECONDS)
+				.ignoring(NoSuchElementException.class);
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public @Nullable <T> T getCapability(Class<T> type) {
 		if (this instanceof IElementFind) {
-			return (T) this; //NOPMD
+			return (T) this; // NOPMD
 		} else {
 			return null;
 		}
@@ -148,45 +153,217 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl{
 	/**
 	 * Do find.
 	 *
-	 * @param myWebDriver the my web driver
+	 * @param myWebDriver
+	 *            the my web driver
 	 * @return the web element
-	 * @throws NoSuchElementException the no such element exception
+	 * @throws NoSuchElementException
+	 *             the no such element exception
 	 */
-	public WebElement doFind(IMyWebDriver myWebDriver) throws NoSuchElementException {
+	public WebElement doFind(IMyWebDriver myWebDriver)
+			throws NoSuchElementException {
 
 		return doFind(myWebDriver, findByValue);
 	}
 
-
 	/**
 	 * @return the indexOfSameElements
 	 */
-	public  int getIndexOfSameElementsInt() {
+	public int getIndexOfSameElementsInt() {
 		final IOnTheFlyData<Integer> indexOfSameElements2 = indexOfSameElements;
 		if (null == indexOfSameElements2) {
-			return 0;//NOPMD
+			return 0;// NOPMD
 		} else {
 			return indexOfSameElements2.getOnTheFlyData().intValue();
 		}
 	}
+
 	/**
 	 * @return the indexOfSameElements
 	 */
-	public  IOnTheFlyData<Integer> getIndexOfSameElements() {
+	public IOnTheFlyData<Integer> getIndexOfSameElements() {
 		final IOnTheFlyData<Integer> indexOfSameElements2 = indexOfSameElements;
 		if (null == indexOfSameElements2) {
-			throw GlobalUtils.createNotInitializedException("indexOfSameElements");
+			throw GlobalUtils
+					.createNotInitializedException("indexOfSameElements");
 		} else {
 			return indexOfSameElements2;
 		}
 	}
 
 	/**
-	 * @param indexOfSameElements the indexOfSameElements to set
+	 * @param indexOfSameElements
+	 *            the indexOfSameElements to set
 	 */
-	public void setIndexOfSameElements( IOnTheFlyData<Integer> indexOfSameElements) {
+	public void setIndexOfSameElements(
+			IOnTheFlyData<Integer> indexOfSameElements) {
 		this.indexOfSameElements = indexOfSameElements;
 	}
 
+	/**
+	 * Find through frames.
+	 *
+	 * @param win
+	 *            the win
+	 * @param winFrame
+	 *            the win frame
+	 * @param wait
+	 *            the wait
+	 * @param findByValue
+	 *            the find by value
+	 * @return the web element
+	 */
+	@Nullable
+	protected WebElement findThroughFrames(BrowserWindow win,
+			WindowFrame winFrame, Wait<WebDriver> wait, final By findByValue) {
+		win.getCurrentElementFindFrameChain().add(winFrame);
+		winFrame.obtainFrameFocus();
+		WebElement retValWE = null;// NOPMD
+		try {
+			retValWE = wait.until( // NOPMD
+					new Function<WebDriver, WebElement>() {
+						public @Nullable WebElement apply( // NOPMD
+								@Nullable WebDriver driver) {
+							if (null == driver) {
+								throw new IllegalStateException(
+										"webdriver is not correctly populated.");
+							} else {
+								List<WebElement> allElements = driver
+										.findElements(findByValue);
+								if (allElements.size() == 0)
+									throw new NoSuchElementException(
+											findByValue.toString());
+								WebElement retVal;
+								int intIndex = getIndexOfSameElementsInt();
+								if (intIndex < -1) {
+									retVal = allElements.get(0);
+								} else if (intIndex == -1) {
+									retVal = allElements.get(allElements.size() - 1);
+								} else {
+									retVal = allElements.get(intIndex);
+								}
+								return retVal;
+								// return driver.findElement(findByValue);
+							}
+						}
+					});
+			if (null != retValWE) {
+				if (!win.getLastSuccessElementFindFrameChain().equals(
+						win.getCurrentElementFindFrameChain())) {
+					win.getLastSuccessElementFindFrameChain().clear();
+					win.getLastSuccessElementFindFrameChain().addAll(
+							win.getCurrentElementFindFrameChain());
+				}
+
+			}
+		} catch (NoSuchElementException | TimeoutException error) {
+			List<WindowFrame> childFrames = winFrame.getChildFrames();
+			for (WindowFrame gChildF : childFrames) {
+				if (null == gChildF)
+					throw GlobalUtils.createInternalError("java arraylist",
+							error);
+				retValWE = findThroughFrames(win, gChildF, wait, findByValue);
+				if (null != retValWE) {
+
+					break;
+				}
+			}
+		}
+		if (null == retValWE) {
+			if (winFrame.getParentFrame() == null) {
+				winFrame.focusDefautContent();
+			} else {
+				winFrame.focusParentFrame();
+			}
+		}
+
+		return retValWE;
+	}
+
+	/**
+	 * Find element.
+	 *
+	 * @param findBy
+	 *            the find by
+	 * @param myWebDriver
+	 *            the my web driver
+	 * @return the web element
+	 */
+	protected WebElement findElement(final By findBy, IMyWebDriver myWebDriver) {
+		WebDriver webD = myWebDriver.getWebDriver();
+		if (null == webD) {
+			throw new IllegalStateException(
+					"web driver is not correctly populated.");
+		} else {
+			createWait(webD);
+
+			BrowserWindow winOnFocus = myWebDriver.getMultiWindowsHandler()
+					.getBrowserWindowOnFocus();
+			winOnFocus.switchToDefaultContent();
+			if (!winOnFocus.getLastSuccessElementFindFrameChain().isEmpty()) {
+				for (WindowFrame lastSuccessWFrame : winOnFocus
+						.getLastSuccessElementFindFrameChain()) {
+					lastSuccessWFrame.obtainFrameFocus();
+				}
+			}
+			WebElement retValWE = null;// NOPMD
+			try {
+				retValWE = getWait().until( // NOPMD
+						new Function<WebDriver, WebElement>() {
+							public @Nullable WebElement apply( // NOPMD
+									@Nullable WebDriver driver) {
+								if (null == driver) {
+									throw new IllegalStateException(
+											"webdriver is not correctly populated.");
+								} else {
+									List<WebElement> allElements = driver
+											.findElements(findBy);
+									if (allElements.size() == 0)
+										throw new NoSuchElementException(
+												findByValue);
+									WebElement retVal;
+									int intIndex = getIndexOfSameElementsInt();
+									if (intIndex < -1) {
+										retVal = allElements.get(0);
+									} else if (intIndex == -1) {
+										retVal = allElements.get(allElements
+												.size() - 1);
+									} else {
+										retVal = allElements.get(intIndex);
+									}
+									return retVal;
+								}
+							}
+						});
+
+			} catch (NoSuchElementException | TimeoutException error) {
+				winOnFocus.getCurrentElementFindFrameChain().clear();
+				for (WindowFrame winfr : winOnFocus.getFrames()) {
+
+					try {
+						if (null == winfr)
+							throw GlobalUtils.createInternalError(
+									"arraylist error", error);
+						winfr.focusDefautContent();
+						retValWE = findThroughFrames(winOnFocus, winfr,
+								getWait(), findBy);
+
+						if (null == retValWE)
+							winfr.focusDefautContent();
+						else {
+							break;
+						}
+					} catch (NoSuchElementException | TimeoutException error1) {
+
+						continue;
+					}
+
+				}
+			}
+			if (null != retValWE) {
+				return retValWE;
+			}
+			throw new NoSuchElementException(findBy.toString());
+		}
+	}
 
 }

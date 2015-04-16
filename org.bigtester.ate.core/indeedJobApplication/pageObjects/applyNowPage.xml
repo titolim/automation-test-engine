@@ -22,7 +22,7 @@
 		elementFind="efApplyNowButton" elementAction="eaApplyNowClick">
 	</ate:elementActionDef>
 	<ate:elementFindByXpath id="efApplyNowButton"
-		findByValue="//span[@class='indeed-apply-button-label1']" indexOfSameElements="0" />
+		findByValue="//span[@class='indeed-apply-button-label']" indexOfSameElements="0" />
 	<ate:clickAction id="eaApplyNowClick" />
 	
 	<ate:elementActionDef id="eadFilloutApplicantName"
@@ -31,6 +31,13 @@
 	<ate:elementFindById id="efApplicantName"
 		findByValue="applicant.name"  />
 	<ate:sendKeysAction id="eaFilloutApplicantName" dataValue="Peidong Hu"/>
+	
+	<ate:elementActionDef id="eadFilloutApplicantEmail"
+		elementFind="efApplicantEmail" elementAction="eaFilloutApplicantEmail">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efApplicantEmail"
+		findByValue="applicant.email"  />
+	<ate:sendKeysAction id="eaFilloutApplicantEmail" dataValue="gocarpool@hotmail.com"/>
 
 	
 </beans>
