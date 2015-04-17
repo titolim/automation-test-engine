@@ -37,10 +37,10 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 
 	/** The browser profile. */
 	@Nullable
-	final private BrowserProfile<ChromeOptions> browserProfile;
+	final private BrowserProfile<ChromeOptions> browserProfile; //NOPMD
 
 	/** The Constant BROWSERNAME. */
-	private static final String BROWSERNAME = "googlechrome";
+/*	private static final String BROWSERNAME = "googlechrome";*/
 	/** The Constant BROWSERDRVNAME. */
 	private static final String BROWSERDRVNAME = "webdriver.chrome.driver";
 	/** The Constant BROWSERWIN32PATH. */
@@ -56,7 +56,7 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 	/** The Constant BROWSEROSX32PATH. */
 	private static final String BROWSEROSX64PATH = "browserdriver/osx/googlechrome/64bit/";
 	/** The Constant BROWSERFILENAME. */
-	private static final String BROWSERFILENAME = "/chromedriver.exe";
+	private static final String BROWSERFILENAME = "chromedriver.exe";
 
 	/**
 	 * Instantiates a new my Chrome driver.
@@ -98,50 +98,37 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 	public WebDriver getWebDriverInstance() {
 		WebDriver retVal = getWebDriver();
 		if (null == retVal) {
-			String versionNum;
 			OSinfo osinfo = new OSinfo();
 			EPlatform platform = osinfo.getOSname();
-
+			/*	String versionNum;*/
+			
 			switch (platform) {
 			case Windows_32:
-				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
-						"windows", BROWSERNAME, ReadXmlFile.VERSION);
-				System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH
-						+ versionNum + BROWSERFILENAME);
+				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
+				System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + BROWSERFILENAME);
 				break;
 			case Windows_64:
-				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
-						"windows", BROWSERNAME, ReadXmlFile.VERSION);
-				System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH
-						+ versionNum + BROWSERFILENAME);
+				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
+				System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + BROWSERFILENAME);
 				break;
 			case Linux_32:
-				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
-						"linux", BROWSERNAME, ReadXmlFile.VERSION);
-				System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH
-						+ versionNum + BROWSERFILENAME);
+				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "linux", BROWSERNAME, ReadXmlFile.VERSION);*/
+				System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH + BROWSERFILENAME);
 				break;
 			case Linux_64:
-				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
-						"linux", BROWSERNAME, ReadXmlFile.VERSION);
-				System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH
-						+ versionNum + BROWSERFILENAME);
+				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "linux", BROWSERNAME, ReadXmlFile.VERSION);*/
+				System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH + BROWSERFILENAME);
 				break;
 			case Mac_OS_X_32:
-				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
-						"osx", BROWSERNAME, ReadXmlFile.VERSION);
-				System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH
-						+ versionNum + BROWSERFILENAME);
+				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "osx", BROWSERNAME, ReadXmlFile.VERSION);*/
+				System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH + BROWSERFILENAME);
 				break;
 			case Mac_OS_X_64:
-				versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME,
-						"osx", BROWSERNAME, ReadXmlFile.VERSION);
-				System.setProperty(BROWSERNAME, BROWSEROSX64PATH + versionNum
-						+ BROWSERFILENAME);
+				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "osx", BROWSERNAME, ReadXmlFile.VERSION);*/
+				System.setProperty(BROWSERDRVNAME, BROWSEROSX64PATH + BROWSERFILENAME);
 				break;
 			default:
-				throw GlobalUtils
-						.createNotInitializedException("operating system is not supported ");
+				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
 			}
 			retVal = new ChromeDriver();
 		}
