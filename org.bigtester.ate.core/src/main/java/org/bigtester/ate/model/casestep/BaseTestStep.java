@@ -61,7 +61,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	
 	/** The step logger. */
 	@Nullable
-	private RepeatStepExecutionLogger repeatStepLogger; 
+	private IRepeatStepExecutionLogger repeatStepLogger; 
 
 	/** The data holders. */
 	private List<IDataParser> dataHolders = new ArrayList<IDataParser>();
@@ -441,8 +441,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	 *
 	 * @return the stepLogger
 	 */
-	public RepeatStepExecutionLogger getRepeatStepLogger() {
-		final RepeatStepExecutionLogger repeatStepLogger2 = repeatStepLogger;
+	public IRepeatStepExecutionLogger getRepeatStepLogger() {
+		final IRepeatStepExecutionLogger repeatStepLogger2 = repeatStepLogger;
 		if (repeatStepLogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("repeatStepLogger");
 		} else {
@@ -455,7 +455,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	 *
 	 * @param repeatStepLogger the repeatStepLogger to set
 	 */
-	public void setRepeatStepLogger(RepeatStepExecutionLogger repeatStepLogger) {
+	public void setRepeatStepLogger(IRepeatStepExecutionLogger repeatStepLogger) {
 		this.repeatStepLogger = repeatStepLogger;
 	}
 

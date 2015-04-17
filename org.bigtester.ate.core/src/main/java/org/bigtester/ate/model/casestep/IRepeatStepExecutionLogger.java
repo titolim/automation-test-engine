@@ -20,40 +20,63 @@
  *******************************************************************************/
 package org.bigtester.ate.model.casestep;
 
-import javax.swing.tree.DefaultMutableTreeNode;
+import java.util.Map;
 
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 
+import org.eclipse.jdt.annotation.Nullable;
+import org.springframework.context.ApplicationListener;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class RepeatStepExecutionLoggerNode defines ....
+ * This class RepeatStepExecutionLogger defines ....
+ * 
  * @author Peidong Hu
  *
  */
-public class RepeatStepExecutionLoggerNode extends DefaultMutableTreeNode {
-	@XStreamOmitField
-	final RepeatStep repeatStep;
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7048151244571042316L;
+public interface IRepeatStepExecutionLogger extends
+		ApplicationListener<RepeatStepInOutEvent> {
+
 
 	/**
-	 * Instantiates a new repeat step execution logger node.
+	 * Gets the current repeat step path.
 	 *
-	 * @param repeatStepName the repeat step name
+	 * @return the current repeat step path
 	 */
-	public RepeatStepExecutionLoggerNode(String repeatStepName, RepeatStep step) {
-		super(repeatStepName);
-		this.repeatStep = step;
-	}
+	TreeNode[] getCurrentRepeatStepPathNodes() ;
 
 	/**
-	 * @return the repeatStep
+	 * Gets the current repeat step full path string.
+	 *
+	 * @return the current repeat step full path string
 	 */
-	public RepeatStep getRepeatStep() {
-		return repeatStep;
-	}
+	String getCurrentRepeatStepFullPathString();
+
+	/**
+	 * @return the repeatStepTrees
+	 */
+	Map<String, DefaultTreeModel> getRepeatStepTrees();
+	
+	/**
+	 * @return the currentExecutionTree
+	 */
+	@Nullable DefaultTreeModel getCurrentExecutionTree();
+	
+
+	/**
+	 * @return the currentExecutionNode
+	 */
+	@Nullable RepeatStepExecutionLoggerNode getRepeatStepExternalNode() ;
+
+	
+
+	/**
+	 * @return the currentRepeatStepNode
+	 */
+	@Nullable
+	RepeatStepExecutionLoggerNode getCurrentRepeatStepNode() ;
+
+
 
 }

@@ -39,7 +39,15 @@
 	<ate:elementActionDef id="eadCloseApplyWindow"
 		elementFind="efApplyJobWindow" elementAction="eaCloseWindow2">
 	</ate:elementActionDef>
-	
 	<ate:browserWindowClose id="eaCloseWindow2" />
+	
+	<ate:elementActionDef id="eadClickPagingNumber"
+		elementFind="efPageNumber" elementAction="eaPageNumberClick">
+	</ate:elementActionDef>
+	<ate:elementFindByXpath id="efPageNumber"
+		findByValue="//a[contains(@href, 'start=')]" indexOfSameElements="aidhPageNumber" />
+	<ate:autoIncrementalDataHolder id="aidhPageNumber"
+		startValue="0" pacing="1" />
+	<ate:clickAction id="eaPageNumberClick" />
 	
 </beans>

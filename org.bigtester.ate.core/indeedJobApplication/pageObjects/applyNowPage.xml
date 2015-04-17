@@ -39,5 +39,12 @@
 		findByValue="applicant.email"  />
 	<ate:sendKeysAction id="eaFilloutApplicantEmail" dataValue="gocarpool@hotmail.com"/>
 
+	<ate:elementActionDef id="eadFilloutApplicantPhoneNumber"
+		elementFind="efApplicantPhoneNumber" elementAction="eaFilloutApplicantPhoneNumber">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efApplicantPhoneNumber"
+		findByValue="applicant.phoneNumber"  />
+	<ate:sendKeysAction id="eaFilloutApplicantPhoneNumber" dataValue="5148036657"/>
+
 	
 </beans>
