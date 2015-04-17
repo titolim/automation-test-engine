@@ -68,6 +68,8 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 
 	/** The step i ds. */
 	final private List<Integer> stepIndexes = new ArrayList<Integer>();
+	
+	final private List<ITestStep> repeatingSteps = new ArrayList<ITestStep>();
 
 	/** The refresh data values. */
 	final private List<IStepInputData> refreshDataValues = new ArrayList<IStepInputData>();
@@ -139,6 +141,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 			if (i >= startIndex && i <= endIndex) {
 				stepIndexes.add(i);
 				ITestStep thisStep = testCase.getTestStepList().get(i);
+				repeatingSteps.add(thisStep);
 				for (int asserterIndex = 0; asserterIndex < thisStep
 						.getExpectedResultAsserter().size(); asserterIndex++) {
 					refreshERValues.add((IStepERValue) GlobalUtils
@@ -486,6 +489,13 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 */
 	public List<IOnTheFlyData<?>> getRefreshOnTheFlyValues() {
 		return refreshOnTheFlyValues;
+	}
+
+	/**
+	 * @return the repeatingSteps
+	 */
+	public List<ITestStep> getRepeatingSteps() {
+		return repeatingSteps;
 	}
 
 }
