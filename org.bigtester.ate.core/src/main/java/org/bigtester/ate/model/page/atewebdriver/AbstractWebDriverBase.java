@@ -27,6 +27,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class WebDriverBase defines ....
@@ -37,6 +39,7 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 
 	/** The web driver. */
 	@Nullable
+	@XStreamOmitField
 	protected WebDriver webDriver;
 	
 	/** The browser windows monitor. */

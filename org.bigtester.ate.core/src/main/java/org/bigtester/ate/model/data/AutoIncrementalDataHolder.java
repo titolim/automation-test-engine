@@ -138,4 +138,15 @@ public class AutoIncrementalDataHolder extends
 	public Integer getIndex() {
 		return getOnTheFlyData();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void resetIndex() {
+		setOnTheFlyData(0);
+		
+	}
+	
+	
 }

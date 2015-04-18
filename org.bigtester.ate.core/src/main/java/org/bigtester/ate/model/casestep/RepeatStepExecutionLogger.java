@@ -30,7 +30,6 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.casestep.RepeatStepInOutEvent.RepeatStepInOut;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.ApplicationListener;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -53,36 +52,50 @@ public class RepeatStepExecutionLogger implements IRepeatStepExecutionLogger {
 	/** The current repeat step node. */
 	private @Nullable RepeatStepExecutionLoggerNode currentRepeatStepNode;
 
+	/**
+	 * Step in processing.
+	 *
+	 * @param event the event
+	 */
 	public void stepInProcessing(RepeatStepInOutEvent event) {
 		//preserve this step initial value for future nested repeatStep case
 		RepeatStep rStep2 = (RepeatStep) event.getSource();
-		RepeatStep rStep;
+		
 		if (null == rStep2)
 			throw GlobalUtils
 					.createInternalError("event of spring for repeatstep");
+		RepeatStep rStep;
 		try {
+			
 			rStep = (RepeatStep) rStep2.clone();
+			RepeatStepExecutionLoggerNode newNode = new RepeatStepExecutionLoggerNode(
+					event.getRepeatStepName(), rStep, rStep2);
+			
+
+			final RepeatStepExecutionLoggerNode currentRepeatStepNode2 = currentRepeatStepNode;
+			if (currentRepeatStepNode2 == null) {
+				DefaultTreeModel repeatStepTree = new DefaultTreeModel(newNode);
+				repeatStepTrees.put(event.getRepeatStepName(), repeatStepTree);
+				currentExecutionTree = repeatStepTrees.get(event
+						.getRepeatStepName());
+			} else {
+				repeatStepExternalNode = currentRepeatStepNode2;
+				currentRepeatStepNode2.add(newNode);
+			}
+			currentRepeatStepNode = newNode;
+			
 		} catch (CloneNotSupportedException cne) {
 			throw GlobalUtils.createInternalError("preserve repeatstep", cne);
 		}
 		
-		RepeatStepExecutionLoggerNode newNode = new RepeatStepExecutionLoggerNode(
-				event.getRepeatStepName(), rStep, rStep2);
-
-		final RepeatStepExecutionLoggerNode currentRepeatStepNode2 = currentRepeatStepNode;
-		if (currentRepeatStepNode2 == null) {
-			DefaultTreeModel repeatStepTree = new DefaultTreeModel(newNode);
-			repeatStepTrees.put(event.getRepeatStepName(), repeatStepTree);
-			currentExecutionTree = repeatStepTrees.get(event
-					.getRepeatStepName());
-		} else {
-			repeatStepExternalNode = currentRepeatStepNode2;
-			currentRepeatStepNode2.add(newNode);
-		}
-		currentRepeatStepNode = newNode;
 
 	}
 
+	/**
+	 * Step out processing.
+	 *
+	 * @param event the event
+	 */
 	public void stepOutProcessing(RepeatStepInOutEvent event) {
 		//recover the initial values of the currently finished repeatStep for future repeatStep nested case.
 		final RepeatStepExecutionLoggerNode currentRepeatStepNode2 = currentRepeatStepNode;

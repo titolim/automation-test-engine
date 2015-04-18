@@ -29,6 +29,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 // TODO: Add wait
 /**
  * This class BrowserWindow defines ....
@@ -42,9 +44,11 @@ public class WindowFrame {
 	private int frameIndex;
 
 	/** The my wd. */
+	@XStreamOmitField
 	final private WebDriver myWd;
 
 	/** The frame. */
+	@XStreamOmitField
 	private WebElement frame;
 
 	/** The frames. */

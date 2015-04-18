@@ -21,7 +21,6 @@
 package org.bigtester.ate.model.casestep;//NOPMD
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
@@ -71,6 +70,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	/** The step i ds. */
 	final private List<Integer> stepIndexes = new ArrayList<Integer>();
 	
+	/** The repeating steps. */
 	final private List<ITestStep> repeatingSteps = new ArrayList<ITestStep>();
 
 	/** The refresh data values. */
@@ -120,9 +120,10 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 
 	private void buildRepeatStepContext() {
 		stepIndexes.clear();
+		repeatingSteps.clear();
 		refreshERValues.clear();
 		refreshDataValues.clear();
-		refreshIndexValues.clear();
+		
 		int startIndex = -1; // NOPMD
 		int endIndex = -1; // NOPMD
 
@@ -168,6 +169,11 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 
 			}
 		}
+		
+	}
+
+	private void buildRepeatIndexes() {
+		refreshIndexValues.clear();
 		StepDataLogger sdl = GlobalUtils
 				.findStepDataLoggerBean(getApplicationContext());
 		if (null != sdl.getRepeatStepOnTheFlies().get(
@@ -183,7 +189,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 			}
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -243,6 +249,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 		buildRepeatStepContext();
 		getApplicationContext().publishEvent(
 				new RepeatStepInOutEvent(this, RepeatStepInOut.IN));
+		buildRepeatIndexes();
 		for (int iteration = 1; iteration <= getNumberOfIterations(); iteration++) {
 			// if (1 == iteration) {// NOPMD
 			// if (null != getRepeatStepLogger().getRepeatStepExternalNode()) {
@@ -504,6 +511,39 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 */
 	public List<ITestStep> getRepeatingSteps() {
 		return repeatingSteps;
+	}
+
+	/**
+	 * @return the externalRepeatNodeOfThisStep
+	 */
+	@Nullable
+	public RepeatStepExecutionLoggerNode getExternalRepeatNodeOfThisStep() {
+		return externalRepeatNodeOfThisStep;
+	}
+
+	/**
+	 * @param externalRepeatNodeOfThisStep the externalRepeatNodeOfThisStep to set
+	 */
+	public void setExternalRepeatNodeOfThisStep(
+			RepeatStepExecutionLoggerNode externalRepeatNodeOfThisStep) {
+		this.externalRepeatNodeOfThisStep = externalRepeatNodeOfThisStep;
+	}
+
+	/**
+	 * @return the currentRepeatNodeOfThisStep
+	 */
+	@Nullable
+	public RepeatStepExecutionLoggerNode getCurrentRepeatNodeOfThisStep() {
+		return currentRepeatNodeOfThisStep;
+	}
+
+	/**
+	 * @param currentRepeatNodeOfThisStep the currentRepeatNodeOfThisStep to set
+	 */
+	
+	public void setCurrentRepeatNodeOfThisStep(
+			RepeatStepExecutionLoggerNode currentRepeatNodeOfThisStep) {
+		this.currentRepeatNodeOfThisStep = currentRepeatNodeOfThisStep;
 	}
 
 }

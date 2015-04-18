@@ -33,6 +33,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.springframework.util.StringUtils;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 // TODO: Auto-generated Javadoc
 /**
  * This class BrowserWindowsMonitor defines ....
@@ -43,6 +45,7 @@ import org.springframework.util.StringUtils;
 public class MultiWindowsHandler implements WebDriverEventListener {
 
 	/** The my web d. */
+	@XStreamOmitField
 	final private WebDriver driver;
 
 	/** The windows. */

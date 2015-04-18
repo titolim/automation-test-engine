@@ -91,7 +91,7 @@
 			stepDescription="stepClickPagingNumber" stepName="stepClickPagingNumber"
 			targetStep="false" elementActionDef="eadClickPagingNumber">
 		</ate:elementStep>
-		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="1" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>
+		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="2" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>
 		
 
 		<ate:lastStep id="mylaststep" stepName="mylaststep"

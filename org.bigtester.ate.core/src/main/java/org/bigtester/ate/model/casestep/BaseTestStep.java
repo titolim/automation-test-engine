@@ -28,7 +28,6 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.IDataParser;
-import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.page.IPageObject;
 import org.bigtester.ate.model.page.page.MyWebElement;

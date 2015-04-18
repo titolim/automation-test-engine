@@ -27,5 +27,16 @@ package org.bigtester.ate.model.data;
  *
  */
 public interface IRepeatIncrementalIndex extends IOnTheFlyData<Integer>{
+	
+	/**
+	 * Gets the index.
+	 *
+	 * @return the index
+	 */
 	Integer getIndex();
+	
+	/**
+	 * Reset index.
+	 */
+	void resetIndex();
 }

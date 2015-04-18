@@ -45,7 +45,7 @@
 		elementFind="efPageNumber" elementAction="eaPageNumberClick">
 	</ate:elementActionDef>
 	<ate:elementFindByXpath id="efPageNumber"
-		findByValue="//a[contains(@href, 'start=')]" indexOfSameElements="aidhPageNumber" />
+		findByValue="//a[span[not(*) and @class='pn' and not(translate(text(), '0123456789', ''))]]" indexOfSameElements="aidhPageNumber" />
 	<ate:autoIncrementalDataHolder id="aidhPageNumber"
 		startValue="0" pacing="1" />
 	<ate:clickAction id="eaPageNumberClick" />

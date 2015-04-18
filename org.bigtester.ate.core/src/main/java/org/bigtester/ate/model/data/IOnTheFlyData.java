@@ -20,8 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model.data;
 
-import org.bigtester.ate.annotation.RepeatStepRefreshable;
-import org.bigtester.ate.annotation.RepeatStepRefreshable.RefreshDataType;
 
 // TODO: Auto-generated Javadoc
 /**

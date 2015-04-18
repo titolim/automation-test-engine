@@ -39,6 +39,8 @@ public class RepeatStepInOutEvent extends ApplicationEvent {
 	public enum RepeatStepInOut {
 		IN, OUT
 	}
+	
+	/** The in out flag. */
 	final private RepeatStepInOut inOutFlag;
 	/**
 	 * 

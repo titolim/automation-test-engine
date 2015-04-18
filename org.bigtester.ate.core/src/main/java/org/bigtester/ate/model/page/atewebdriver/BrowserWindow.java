@@ -28,6 +28,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -50,6 +52,7 @@ public class BrowserWindow {
 	final private List<WindowFrame> currentElementFindFrameChain =  new ArrayList<WindowFrame>();
 	
 	/** The my wd. */
+	@XStreamOmitField
 	final private WebDriver myWd;
 	
 	/**

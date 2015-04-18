@@ -32,10 +32,14 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  *
  */
 public class RepeatStepExecutionLoggerNode extends DefaultMutableTreeNode {
+	
+	/** The repeat step with initial values. */
 	@XStreamOmitField
-	final RepeatStep repeatStepWithInitialValues;
+	final private RepeatStep repeatStepWithInitialValues;
+	
+	/** The live repeat step. */
 	@XStreamOmitField
-	final RepeatStep liveRepeatStep;
+	final private RepeatStep liveRepeatStep;
 	/**
 	 * 
 	 */
