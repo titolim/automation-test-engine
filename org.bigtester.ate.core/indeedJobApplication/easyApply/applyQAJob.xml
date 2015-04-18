@@ -61,27 +61,27 @@
 			stepDescription="stepSwitchToApplyWindow" stepName="stepSwitchToApplyWindow"
 			targetStep="false" elementActionDef="eadSwitchToApplyWindow">
 		</ate:elementStep>
-<!-- 		<ate:elementStep id="stepClickApplyNow" -->
-<!-- 			stepDescription="stepClickApplyNow" stepName="stepClickApplyNow" -->
-<!-- 			targetStep="false" elementActionDef="eadClickApplyNow" -->
-<!-- 			optionalStep="true" -->
-<!-- 			correlatedOptionalStepsUtilInclusive="stepFilloutApplicantName"> -->
-<!-- 		</ate:elementStep> -->
-<!-- 		<ate:elementStep id="stepFilloutApplicantName" -->
-<!-- 			stepDescription="stepFilloutApplicantName" stepName="stepFilloutApplicantName" -->
-<!-- 			targetStep="false" elementActionDef="eadFilloutApplicantName" -->
-<!-- 			> -->
-<!-- 		</ate:elementStep> -->
-<!-- 		<ate:elementStep id="stepFilloutApplicantEmail" -->
-<!-- 			stepDescription="stepFilloutApplicantEmail" stepName="stepFilloutApplicantEmail" -->
-<!-- 			targetStep="false" elementActionDef="eadFilloutApplicantEmail" -->
-<!-- 			> -->
-<!-- 		</ate:elementStep> -->
-<!-- 		<ate:elementStep id="stepFilloutApplicantPHoneNumber" -->
-<!-- 			stepDescription="stepFilloutApplicantPHoneNumber" stepName="stepFilloutApplicantPHoneNumber" -->
-<!-- 			targetStep="false" elementActionDef="eadFilloutApplicantPhoneNumber" -->
-<!-- 			> -->
-<!-- 		</ate:elementStep> -->
+		<ate:elementStep id="stepClickApplyNow"
+			stepDescription="stepClickApplyNow" stepName="stepClickApplyNow"
+			targetStep="false" elementActionDef="eadClickApplyNow"
+			optionalStep="true"
+			correlatedOptionalStepsUtilInclusive="stepFilloutApplicantPHoneNumber">
+		</ate:elementStep>
+		<ate:elementStep id="stepFilloutApplicantName"
+			stepDescription="stepFilloutApplicantName" stepName="stepFilloutApplicantName"
+			targetStep="false" elementActionDef="eadFilloutApplicantName"
+			>
+		</ate:elementStep>
+		<ate:elementStep id="stepFilloutApplicantEmail"
+			stepDescription="stepFilloutApplicantEmail" stepName="stepFilloutApplicantEmail"
+			targetStep="false" elementActionDef="eadFilloutApplicantEmail"
+			>
+		</ate:elementStep>
+		<ate:elementStep id="stepFilloutApplicantPHoneNumber"
+			stepDescription="stepFilloutApplicantPHoneNumber" stepName="stepFilloutApplicantPHoneNumber"
+			targetStep="false" elementActionDef="eadFilloutApplicantPhoneNumber"
+			>
+		</ate:elementStep>
 		<ate:elementStep id="stepCloseApplyWindow"
 			stepDescription="stepCloseApplyWindow" stepName="stepCloseApplyWindow"
 			targetStep="false" elementActionDef="eadCloseApplyWindow">
@@ -91,7 +91,7 @@
 			stepDescription="stepClickPagingNumber" stepName="stepClickPagingNumber"
 			targetStep="false" elementActionDef="eadClickPagingNumber">
 		</ate:elementStep>
-		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="2" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>
+		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="1" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>
 		
 
 		<ate:lastStep id="mylaststep" stepName="mylaststep"

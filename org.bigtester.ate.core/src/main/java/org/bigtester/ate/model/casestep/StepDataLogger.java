@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model.casestep;
 
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,18 +50,18 @@ import org.springframework.context.ApplicationListener;
 @Aspect
 public class StepDataLogger implements
 		ApplicationListener<RepeatStepInOutEvent> {
-	
+
 	/** The on the flies. */
-	final private Map<ITestStep, List<IOnTheFlyData<?>>> onTheFlies = new ConcurrentHashMap<ITestStep, List<IOnTheFlyData<?>>>(); //NOPMD
+	final private Map<ITestStep, List<IOnTheFlyData<?>>> onTheFlies = new ConcurrentHashMap<ITestStep, List<IOnTheFlyData<?>>>(); // NOPMD
 
 	/** The repeat step on the flies. */
-	final private Map<RepeatStep, List<IOnTheFlyData<?>>> repeatStepOnTheFlies = new ConcurrentHashMap<RepeatStep, List<IOnTheFlyData<?>>>(); //NOPMD
-	
+	final private Map<RepeatStep, List<IOnTheFlyData<?>>> repeatStepOnTheFlies = new ConcurrentHashMap<RepeatStep, List<IOnTheFlyData<?>>>(); // NOPMD
+
 	/** The repeat step logger. */
 	@Nullable
 	@Autowired
 	private IRepeatStepExecutionLogger repeatStepLogger;
-	
+
 	/** The current execution step. */
 	@Nullable
 	private transient ITestStep currentExecutionStep;
@@ -70,7 +69,8 @@ public class StepDataLogger implements
 	/**
 	 * Log data.
 	 *
-	 * @param data the data
+	 * @param data
+	 *            the data
 	 */
 	public void logData(IOnTheFlyData<?> data) {
 		if (null == onTheFlies.get(currentExecutionStep)) {
@@ -83,34 +83,33 @@ public class StepDataLogger implements
 
 	}
 
-	private void logRepeatStepData(IOnTheFlyData<?> data, RepeatStep liveRepeat) {
-		//boolean alreadyLoggedInRepeatStep = false;
-		// RepeatStep repeatStepWithThisData;
+	private boolean isAlreadyLoggedInRepeatStep(IOnTheFlyData<?> data) {
+		boolean alreadyLoggedInRepeatStep = false; //NOPMD
+
 		for (Map.Entry<RepeatStep, List<IOnTheFlyData<?>>> entry : repeatStepOnTheFlies
 				.entrySet()) {
 			if (entry.getValue().contains(data)) {
-				if (repeatStepOnTheFlies.containsKey(liveRepeat)) {
-					if (!repeatStepOnTheFlies.get(liveRepeat).contains(data))
-						repeatStepOnTheFlies.get(liveRepeat).add(data);
-				} else {
-					repeatStepOnTheFlies.put(liveRepeat,
-							new ArrayList<IOnTheFlyData<?>>());
-					repeatStepOnTheFlies.get(liveRepeat).add(data);
-				}
+				alreadyLoggedInRepeatStep = true;
 				break;
-			}
+			} 
+			
 		}
-//		if (!alreadyLoggedInRepeatStep) {
-//			if (repeatStepOnTheFlies.containsKey(liveRepeat)) {
-//				if (!repeatStepOnTheFlies.get(liveRepeat).contains(data))
-//					repeatStepOnTheFlies.get(liveRepeat).add(data);
-//			} else {
-//				repeatStepOnTheFlies.put(liveRepeat,
-//						new ArrayList<IOnTheFlyData<?>>());
-//				repeatStepOnTheFlies.get(liveRepeat).add(data);
-//			}
-//
-//		}
+		return alreadyLoggedInRepeatStep;
+	}
+
+	private void logRepeatStepData(IOnTheFlyData<?> data, RepeatStep liveRepeat) {
+
+		if (!isAlreadyLoggedInRepeatStep(data)) {
+			if (repeatStepOnTheFlies.containsKey(liveRepeat)) {
+				if (!repeatStepOnTheFlies.get(liveRepeat).contains(data))
+					repeatStepOnTheFlies.get(liveRepeat).add(data);
+			} else {
+				repeatStepOnTheFlies.put(liveRepeat,
+						new ArrayList<IOnTheFlyData<?>>());
+				repeatStepOnTheFlies.get(liveRepeat).add(data);
+			}
+
+		}
 	}
 
 	/**
@@ -144,7 +143,8 @@ public class StepDataLogger implements
 	/**
 	 * Log.
 	 *
-	 * @param joinPoint_p the join point_p
+	 * @param joinPoint_p
+	 *            the join point_p
 	 */
 	@SuppressWarnings("unchecked")
 	@Before("@annotation(org.bigtester.ate.annotation.StepLoggable)")
@@ -160,7 +160,8 @@ public class StepDataLogger implements
 	/**
 	 * Process data log.
 	 *
-	 * @param jPoint the j point
+	 * @param jPoint
+	 *            the j point
 	 * @return true, if successful
 	 */
 	@After("@annotation(org.bigtester.ate.annotation.RepeatStepRefreshable)")
@@ -227,33 +228,40 @@ public class StepDataLogger implements
 	}
 
 	private void resetRepeatIncrementalIndex(RepeatStep rStep) {
-		for (IOnTheFlyData<?> data : repeatStepOnTheFlies.get(
-				rStep)) {
+		List<IOnTheFlyData<?>> onTheFlies = getRepeatStepOnTheFlies()
+				.get(rStep);
+		if (null == onTheFlies)
+			return;
+		for (IOnTheFlyData<?> data : onTheFlies) {
 			if (data instanceof IRepeatIncrementalIndex) {
 				((IRepeatIncrementalIndex) data).resetIndex();
 			}
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void onApplicationEvent(@Nullable RepeatStepInOutEvent event) {
-		if (null == event) throw GlobalUtils.createInternalError("spring event");
+		if (null == event)
+			throw GlobalUtils.createInternalError("spring event");
 		if (event.getInOutFlag() == RepeatStepInOutEvent.RepeatStepInOut.IN) {
-			RepeatStep liveRepeatStep = GlobalUtils.getTargetObject(event.getSource());
+			RepeatStep liveRepeatStep = GlobalUtils.getTargetObject(event
+					.getSource());
 			for (ITestStep step : liveRepeatStep.getRepeatingSteps()) {
-				List<IOnTheFlyData<?>> dataList = onTheFlies.get(GlobalUtils.getTargetObject(step));
+				List<IOnTheFlyData<?>> dataList = onTheFlies.get(GlobalUtils
+						.getTargetObject(step));
 				if (null != dataList) {
-					for(IOnTheFlyData<?> data : dataList)
+					for (IOnTheFlyData<?> data : dataList)
 						if (data != null)
-						logRepeatStepData(data, liveRepeatStep);
+							logRepeatStepData(data, liveRepeatStep);
 				}
 			}
-			
+
 		} else if (event.getInOutFlag() == RepeatStepInOutEvent.RepeatStepInOut.OUT) {
-			resetRepeatIncrementalIndex((RepeatStep)GlobalUtils.getTargetObject(event.getSource()));
+			resetRepeatIncrementalIndex((RepeatStep) GlobalUtils
+					.getTargetObject(event.getSource()));
 		}
 
 	}

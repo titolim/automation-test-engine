@@ -337,7 +337,7 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 
 			} catch (NoSuchElementException | TimeoutException error) {
 				winOnFocus.getCurrentElementFindFrameChain().clear();
-				for (WindowFrame winfr : winOnFocus.getFrames()) {
+				for (WindowFrame winfr : winOnFocus.getVisibleFrames()) {
 
 					try {
 						if (null == winfr)
