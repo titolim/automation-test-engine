@@ -20,14 +20,14 @@
 	<import resource="../pageObjects/lastPage.xml" />
 	
 	<!-- 
-	<ate:firefoxDriver  id="MyWebDriver2" profileName="dentisteasy"/>  
-	<ate:chromeDriver   id="MyWebDriver2" />
-	<ate:IEDriver       id="MyWebDriver2" />
-	<ate:safariDriver   id="MyWebDriver2" />
-	<ate:operaDriver    id="MyWebDriver2" />
-	<ate:htmlUnitDriver id="MyWebDriver2" />
+	<ate:firefoxDriver  />  
+	<ate:chromeDriver   />
+	<ate:IEDriver       />
+	<ate:safariDriver   />
+	<ate:operaDriver    />
+	<ate:htmlUnitDriver />
       -->
-	<ate:firefoxDriver  id="MyWebDriver2"/>
+	<ate:firefoxDriver  />
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="Bigtester home page test case">

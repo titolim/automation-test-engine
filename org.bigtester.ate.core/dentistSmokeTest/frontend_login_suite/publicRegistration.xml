@@ -19,15 +19,16 @@
 	<import resource="../pageObjects/publicLoginPage2.0.xml" />
 	<import resource="../pageObjects/publicLoginDashBoard2.0.xml" />
 	<import resource="../pageObjects/lastPage.xml" />
+	
 <!-- 
-	<ate:firefoxDriver  id="MyWebDriver2" profileName="dentisteasy"/>  
-	<ate:chromeDriver   id="MyWebDriver2" />
-	<ate:IEDriver       id="MyWebDriver2" />
-	<ate:safariDriver   id="MyWebDriver2" />
-	<ate:operaDriver    id="MyWebDriver2" />
-	<ate:htmlUnitDriver id="MyWebDriver2" />
-      -->
-	<ate:firefoxDriver  id="MyWebDriver2" />
+	<ate:firefoxDriver  />  
+	<ate:chromeDriver   />
+	<ate:IEDriver       />
+	<ate:safariDriver   />
+	<ate:operaDriver    />
+	<ate:htmlUnitDriver />
+  -->
+	<ate:firefoxDriver  />
 	
 	<ate:testCase id="testcase" testCaseName="Validate public login and logout">
 		<ate:homeStep id="openPublicHomePage" stepName="openPublicHomePage"
