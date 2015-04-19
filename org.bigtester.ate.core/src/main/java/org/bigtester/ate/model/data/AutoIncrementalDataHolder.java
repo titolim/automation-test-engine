@@ -34,7 +34,7 @@ import org.springframework.context.ApplicationListener;
  *
  */
 public class AutoIncrementalDataHolder extends
-		AbstractOnTheFlyDataHolder<Integer> implements IOnTheFlyData<Integer>,
+		AbstractOnTheFlyDataHolder<Integer> implements IRepeatIncrementalIndex,
 		ApplicationListener<RepeatDataRefreshEvent> {
 	
 	/** The start value. */
@@ -91,7 +91,7 @@ public class AutoIncrementalDataHolder extends
 		if (arg0 == null)
 			return;// NOPMD
 		RepeatStep currentRepeatStep = ((RepeatStep) arg0.getSource());
-		if (!(currentRepeatStep).getRefreshOnTheFlyValues().contains(this))
+		if (!(currentRepeatStep).getRefreshIndexValues().contains(this))
 			return;
 
 		Integer tmp = Integer
@@ -129,5 +129,13 @@ public class AutoIncrementalDataHolder extends
 	 */
 	public int getPacing() {
 		return pacing;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Integer getIndex() {
+		return getOnTheFlyData();
 	}
 }

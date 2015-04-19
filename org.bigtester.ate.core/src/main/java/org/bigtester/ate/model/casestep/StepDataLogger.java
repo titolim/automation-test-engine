@@ -40,6 +40,8 @@ import org.bigtester.ate.annotation.RepeatStepRefreshable.RefreshDataType;
 import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.testresult.TestStepResult;
 import org.eclipse.jdt.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
@@ -48,22 +50,54 @@ import com.thoughtworks.xstream.XStream;
 // TODO: Auto-generated Javadoc
 /**
  * This class StepDataLogger defines ....
+ * 
  * @author Peidong Hu
  *
  */
 @Aspect
-public class StepDataLogger {
+public class StepDataLogger implements
+		ApplicationListener<RepeatStepInOutEvent> {
 	final private Map<ITestStep, List<IOnTheFlyData<?>>> onTheFlies = new ConcurrentHashMap<ITestStep, List<IOnTheFlyData<?>>>();
-	
+
+	final private Map<RepeatStep, List<IOnTheFlyData<?>>> repeatStepOnTheFlies = new ConcurrentHashMap<RepeatStep, List<IOnTheFlyData<?>>>();
+	@Nullable
+	@Autowired
+	private IRepeatStepExecutionLogger repeatStepLogger;
 	@Nullable
 	private transient ITestStep currentExecutionStep;
-	
+
 	public void logData(IOnTheFlyData<?> data) {
 		if (null == onTheFlies.get(currentExecutionStep)) {
-			onTheFlies.put(currentExecutionStep, new ArrayList<IOnTheFlyData<?>>());
+			onTheFlies.put(currentExecutionStep,
+					new ArrayList<IOnTheFlyData<?>>());
 			onTheFlies.get(currentExecutionStep).add(data);
 		} else if (!onTheFlies.get(currentExecutionStep).contains(data)) {
 			onTheFlies.get(currentExecutionStep).add(data);
+		}
+
+	}
+
+	private void logRepeatStepData(IOnTheFlyData<?> data, RepeatStep liveRepeat) {
+		boolean alreadyLoggedInRepeatStep = false;
+		// RepeatStep repeatStepWithThisData;
+		for (Map.Entry<RepeatStep, List<IOnTheFlyData<?>>> entry : repeatStepOnTheFlies
+				.entrySet()) {
+			if (entry.getValue().contains(data)) {
+				alreadyLoggedInRepeatStep = true;
+				// repeatStepWithThisData = entry.getKey();
+				break;
+			}
+		}
+		if (!alreadyLoggedInRepeatStep) {
+			if (repeatStepOnTheFlies.containsKey(liveRepeat)) {
+				if (!repeatStepOnTheFlies.get(liveRepeat).contains(data))
+					repeatStepOnTheFlies.get(liveRepeat).add(data);
+			} else {
+				repeatStepOnTheFlies.put(liveRepeat,
+						new ArrayList<IOnTheFlyData<?>>());
+				repeatStepOnTheFlies.get(liveRepeat).add(data);
+			}
+
 		}
 	}
 
@@ -74,65 +108,118 @@ public class StepDataLogger {
 		return onTheFlies;
 	}
 
-	
-
 	/**
 	 * @return the currentExecutionStep
 	 */
 	public ITestStep getCurrentExecutionStep() {
 		final ITestStep currentExecutionStep2 = currentExecutionStep;
 		if (currentExecutionStep2 == null) {
-			throw GlobalUtils.createNotInitializedException("currentExecutionStep");
+			throw GlobalUtils
+					.createNotInitializedException("currentExecutionStep");
 		} else {
 			return currentExecutionStep2;
 		}
 	}
 
 	/**
-	 * @param currentExecutionStep the currentExecutionStep to set
+	 * @param currentExecutionStep
+	 *            the currentExecutionStep to set
 	 */
 	public void setCurrentExecutionStep(ITestStep currentExecutionStep) {
 		this.currentExecutionStep = currentExecutionStep;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Before("@annotation(org.bigtester.ate.annotation.StepLoggable)")
 	public void log(final JoinPoint joinPoint_p) {
-		
-		ITestStep bts = (ITestStep)joinPoint_p
-				.getTarget();
-		if (bts == null) throw
-				 GlobalUtils.createInternalError("stepresultmaker log function.");
+
+		ITestStep bts = (ITestStep) joinPoint_p.getTarget();
+		if (bts == null)
+			throw GlobalUtils
+					.createInternalError("stepresultmaker log function.");
 		currentExecutionStep = bts;
 	}
+
 	@After("@annotation(org.bigtester.ate.annotation.RepeatStepRefreshable)")
-	//@Around("execution(public * org.bigtester.ate.annotation.RepeatStepRefreshable+.*(..))")
+	// @Around("execution(public * org.bigtester.ate.annotation.RepeatStepRefreshable+.*(..))")
 	public boolean processDataLog(JoinPoint jPoint) {
 		if (getDataType(jPoint) == RefreshDataType.ONTHEFLY) {
 			Object targ = jPoint.getTarget();
-			if (null == targ) throw GlobalUtils.createInternalError("RepeatStepRefreshable pointcut error");
-			if ( targ instanceof IOnTheFlyData<?>) {
-				logData((IOnTheFlyData<?>)targ);
+			if (null == targ)
+				throw GlobalUtils
+						.createInternalError("RepeatStepRefreshable pointcut error");
+			if (targ instanceof IOnTheFlyData<?>) {
+				logData((IOnTheFlyData<?>) targ);
 			}
 		}
 		return true;
 	}
 
-	private RefreshDataType getDataType(JoinPoint thisJoinPoint)
-    {
-		
-        MethodSignature methodSignature = (MethodSignature) thisJoinPoint.getSignature();
-        String methodName = methodSignature.getMethod().getName();
-        Class<?>[] parameterTypes = methodSignature.getMethod().getParameterTypes();
-        Method targetMethod;
+	private RefreshDataType getDataType(JoinPoint thisJoinPoint) {
+
+		MethodSignature methodSignature = (MethodSignature) thisJoinPoint
+				.getSignature();
+		String methodName = methodSignature.getMethod().getName();
+		Class<?>[] parameterTypes = methodSignature.getMethod()
+				.getParameterTypes();
+		Method targetMethod;
 		try {
-			targetMethod = thisJoinPoint.getTarget().getClass().getMethod(methodName,parameterTypes);
-			return ((RepeatStepRefreshable) targetMethod.getAnnotation(RepeatStepRefreshable.class)).dataType();
+			targetMethod = thisJoinPoint.getTarget().getClass()
+					.getMethod(methodName, parameterTypes);
+			return ((RepeatStepRefreshable) targetMethod
+					.getAnnotation(RepeatStepRefreshable.class)).dataType();
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw GlobalUtils.createInternalError("jvm class method error");
 		}
-        //targetMethod = methodSignature.getMethod();
+		// targetMethod = methodSignature.getMethod();
 
-        
-    }
+	}
+
+	/**
+	 * @return the repeatStepLogger
+	 */
+	public IRepeatStepExecutionLogger getRepeatStepLogger() {
+		final IRepeatStepExecutionLogger repeatStepLogger2 = repeatStepLogger;
+		if (repeatStepLogger2 == null) {
+			throw GlobalUtils
+					.createNotInitializedException("repeat step logger in stepdatalogger");
+		} else {
+			return repeatStepLogger2;
+		}
+	}
+
+	/**
+	 * @param repeatStepLogger
+	 *            the repeatStepLogger to set
+	 */
+	public void setRepeatStepLogger(RepeatStepExecutionLogger repeatStepLogger) {
+		this.repeatStepLogger = repeatStepLogger;
+	}
+
+	/**
+	 * @return the repeatStepOnTheFlies
+	 */
+	public Map<RepeatStep, List<IOnTheFlyData<?>>> getRepeatStepOnTheFlies() {
+		return repeatStepOnTheFlies;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void onApplicationEvent(@Nullable RepeatStepInOutEvent event) {
+		if (null == event) throw GlobalUtils.createInternalError("spring event");
+		if (event.getInOutFlag() == RepeatStepInOutEvent.RepeatStepInOut.IN) {
+			RepeatStep liveRepeatStep = GlobalUtils.getTargetObject(event.getSource());
+			for (ITestStep step : liveRepeatStep.getRepeatingSteps()) {
+				List<IOnTheFlyData<?>> dataList = onTheFlies.get(step);
+				if (null != dataList) {
+					for(IOnTheFlyData<?> data : dataList)
+						logRepeatStepData(data, liveRepeatStep);
+				}
+			}
+			
+		}
+
+	}
 }

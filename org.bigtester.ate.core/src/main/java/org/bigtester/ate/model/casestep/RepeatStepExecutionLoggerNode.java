@@ -33,7 +33,9 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  */
 public class RepeatStepExecutionLoggerNode extends DefaultMutableTreeNode {
 	@XStreamOmitField
-	final RepeatStep repeatStep;
+	final RepeatStep repeatStepWithInitialValues;
+	@XStreamOmitField
+	final RepeatStep liveRepeatStep;
 	/**
 	 * 
 	 */
@@ -44,16 +46,24 @@ public class RepeatStepExecutionLoggerNode extends DefaultMutableTreeNode {
 	 *
 	 * @param repeatStepName the repeat step name
 	 */
-	public RepeatStepExecutionLoggerNode(String repeatStepName, RepeatStep step) {
+	public RepeatStepExecutionLoggerNode(String repeatStepName, RepeatStep repeatStepWithInitialValues, RepeatStep liveRepeatStep) {
 		super(repeatStepName);
-		this.repeatStep = step;
+		this.repeatStepWithInitialValues = repeatStepWithInitialValues;
+		this.liveRepeatStep = liveRepeatStep;
 	}
 
 	/**
 	 * @return the repeatStep
 	 */
-	public RepeatStep getRepeatStep() {
-		return repeatStep;
+	public RepeatStep getRepeatStepWithInitialValues() {
+		return repeatStepWithInitialValues;
+	}
+
+	/**
+	 * @return the liveRepeatStep
+	 */
+	public RepeatStep getLiveRepeatStep() {
+		return liveRepeatStep;
 	}
 
 }

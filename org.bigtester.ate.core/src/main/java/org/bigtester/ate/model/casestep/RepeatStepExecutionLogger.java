@@ -67,7 +67,7 @@ public class RepeatStepExecutionLogger implements IRepeatStepExecutionLogger {
 		}
 		
 		RepeatStepExecutionLoggerNode newNode = new RepeatStepExecutionLoggerNode(
-				event.getRepeatStepName(), rStep);
+				event.getRepeatStepName(), rStep, rStep2);
 
 		final RepeatStepExecutionLoggerNode currentRepeatStepNode2 = currentRepeatStepNode;
 		if (currentRepeatStepNode2 == null) {
@@ -88,7 +88,7 @@ public class RepeatStepExecutionLogger implements IRepeatStepExecutionLogger {
 		final RepeatStepExecutionLoggerNode currentRepeatStepNode2 = currentRepeatStepNode;
 		if (currentRepeatStepNode2 == null) throw GlobalUtils.createInternalError("repeat Internal error.");
 		RepeatStep rStep = (RepeatStep) event.getSource();
-		BeanUtils.copyProperties(currentRepeatStepNode2.getRepeatStep(), rStep);
+		BeanUtils.copyProperties(currentRepeatStepNode2.getRepeatStepWithInitialValues(), rStep);
 		
 		final RepeatStepExecutionLoggerNode repeatStepExternalNode2 = repeatStepExternalNode;
 		if (repeatStepExternalNode2 == null) {

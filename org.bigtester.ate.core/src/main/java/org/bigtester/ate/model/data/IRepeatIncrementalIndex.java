@@ -26,6 +26,6 @@ package org.bigtester.ate.model.data;
  * @author Peidong Hu
  *
  */
-public interface IRepeatIncrementalIndex {
+public interface IRepeatIncrementalIndex extends IOnTheFlyData<Integer>{
 	Integer getIndex();
 }

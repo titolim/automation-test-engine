@@ -21,12 +21,14 @@
 package org.bigtester.ate.model.casestep;//NOPMD
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.casestep.RepeatStepInOutEvent.RepeatStepInOut;
 import org.bigtester.ate.model.data.IOnTheFlyData;
+import org.bigtester.ate.model.data.IRepeatIncrementalIndex;
 import org.bigtester.ate.model.data.IStepERValue;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
@@ -78,7 +80,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	final private List<IStepERValue> refreshERValues = new ArrayList<IStepERValue>();
 
 	/** The refresh on the fly values. */
-	final private List<IOnTheFlyData<?>> refreshOnTheFlyValues = new ArrayList<IOnTheFlyData<?>>();
+	final private List<IRepeatIncrementalIndex> refreshIndexValues = new ArrayList<IRepeatIncrementalIndex>();
 
 	/** The external repeat node of this step. */
 	private transient @Nullable RepeatStepExecutionLoggerNode externalRepeatNodeOfThisStep;
@@ -120,7 +122,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 		stepIndexes.clear();
 		refreshERValues.clear();
 		refreshDataValues.clear();
-		refreshOnTheFlyValues.clear();
+		refreshIndexValues.clear();
 		int startIndex = -1; // NOPMD
 		int endIndex = -1; // NOPMD
 
@@ -149,17 +151,9 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 									.getExpectedResultAsserter()
 									.get(asserterIndex).getStepERValue()));
 				}
-				StepDataLogger sdl = GlobalUtils
-						.findStepDataLoggerBean(getApplicationContext());
+				
 
-				if (null != sdl.getOnTheFlies().get(
-						GlobalUtils.getTargetObject(thisStep))
-						&& !sdl.getOnTheFlies()
-								.get(GlobalUtils.getTargetObject(thisStep))
-								.isEmpty()) {
-					refreshOnTheFlyValues.addAll(sdl.getOnTheFlies().get(
-							GlobalUtils.getTargetObject(thisStep)));
-				}
+				
 				MyWebElement<?> webE = thisStep.getMyWebElement();
 				if (null != webE
 						&& webE.getTestObjectAction() instanceof IElementAction) {
@@ -172,6 +166,20 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 					}
 				}
 
+			}
+		}
+		StepDataLogger sdl = GlobalUtils
+				.findStepDataLoggerBean(getApplicationContext());
+		if (null != sdl.getRepeatStepOnTheFlies().get(
+				GlobalUtils.getTargetObject(this))
+				&& !sdl.getRepeatStepOnTheFlies()
+						.get(GlobalUtils.getTargetObject(this))
+						.isEmpty()) {
+			for (IOnTheFlyData<?> data : sdl.getRepeatStepOnTheFlies().get(
+					GlobalUtils.getTargetObject(this))) {
+				if (data instanceof IRepeatIncrementalIndex) {
+					refreshIndexValues.add((IRepeatIncrementalIndex) data);
+				}
 			}
 		}
 	}
@@ -232,9 +240,9 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 */
 	private void repeatSteps() throws StepExecutionException2,
 			PageValidationException2, RuntimeDataException {
+		buildRepeatStepContext();
 		getApplicationContext().publishEvent(
 				new RepeatStepInOutEvent(this, RepeatStepInOut.IN));
-		buildRepeatStepContext();
 		for (int iteration = 1; iteration <= getNumberOfIterations(); iteration++) {
 			// if (1 == iteration) {// NOPMD
 			// if (null != getRepeatStepLogger().getRepeatStepExternalNode()) {
@@ -487,8 +495,8 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	/**
 	 * @return the refreshOnTheFlyValues
 	 */
-	public List<IOnTheFlyData<?>> getRefreshOnTheFlyValues() {
-		return refreshOnTheFlyValues;
+	public List<IRepeatIncrementalIndex> getRefreshIndexValues() {
+		return refreshIndexValues;
 	}
 
 	/**
