@@ -63,15 +63,15 @@ public class ElementTestStep extends BaseTestStep implements ITestStep {
 	 * @param pageObject
 	 * @param myWebElement
 	 */
-	public ElementTestStep(IPageObject pageObject, MyWebElement<?> myWebElement) {
-		super(pageObject, myWebElement);
+	public ElementTestStep(IPageObject pageObject, MyWebElement<?> myWebElement, TestCase testCase) {
+		super(pageObject, myWebElement, testCase);
 	}
 
 	/**
 	 * @param myWebElement
 	 */
-	public ElementTestStep( MyWebElement<?> myWebElement) {
-		super( myWebElement);
+	public ElementTestStep( MyWebElement<?> myWebElement, TestCase testCase) {
+		super( myWebElement, testCase);
 	}
 	/**
 	 * {@inheritDoc}

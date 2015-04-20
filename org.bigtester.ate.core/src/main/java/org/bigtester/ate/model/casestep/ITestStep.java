@@ -53,7 +53,14 @@ public interface ITestStep {
 	 *
 	 * @return the optional step util inclusive
 	 */
-	String getCorrelatedOptionalStepsUtilInclusive();
+	String getCorrelatedOptionalStepsUtilInclusiveName();
+	
+	/**
+	 * Gets the correlated optional steps util inclusive index.
+	 *
+	 * @return the correlated optional steps util inclusive index
+	 */
+	int getCorrelatedOptionalStepsUtilInclusiveIndex();
 	/**
 	 * Checks if is optional step.
 	 *

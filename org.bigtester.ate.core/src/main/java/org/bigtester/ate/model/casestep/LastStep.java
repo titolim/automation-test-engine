@@ -43,16 +43,16 @@ public class LastStep extends BaseTestStep implements ITestStep {
 	 * @param pageObject
 	 * @param myWebElement
 	 */
-	public LastStep(ILastpage pageObject, @Nullable MyWebElement<?> myWebElement) {
-		super(pageObject, myWebElement);
+	public LastStep(ILastpage pageObject, @Nullable MyWebElement<?> myWebElement, TestCase testcase) {
+		super(pageObject, myWebElement, testcase);
 		this.lastPage = pageObject;
 	}
 	/**
 	 * @param pageObject
 	 * @param myWebElement
 	 */
-	public LastStep(ILastpage pageObject) {
-		super(pageObject);
+	public LastStep(ILastpage pageObject, TestCase testCase) {
+		super(pageObject, testCase);
 		this.lastPage = pageObject;
 	}
 	/**

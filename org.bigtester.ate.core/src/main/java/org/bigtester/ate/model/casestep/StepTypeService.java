@@ -55,8 +55,8 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 	 * @param testCase
 	 *            the test case
 	 */
-	public StepTypeService(String stepName) {
-		super();
+	public StepTypeService(String stepName, TestCase testCase) {
+		super(testCase);
 		setStepName(stepName);
 
 	}

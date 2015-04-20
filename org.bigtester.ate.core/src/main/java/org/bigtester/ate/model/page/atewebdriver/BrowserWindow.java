@@ -25,56 +25,65 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * This class BrowserWindow defines ....
+ * 
  * @author Peidong Hu
  *
  */
 public class BrowserWindow {
-	
+
 	/** The window handle. */
 	final private String windowHandle;
-	
+
 	/** The frames. */
 	final private List<WindowFrame> visibleFrames = new ArrayList<WindowFrame>();
-	
+
 	/** The last success element find frame chain. */
-	final private List<WindowFrame> lastSuccessElementFindFrameChain =  new ArrayList<WindowFrame>();
-	
+	final private List<WindowFrame> lastSuccessElementFindFrameChain = new ArrayList<WindowFrame>();
+
 	/** The current element find frame chain. */
-	final private List<WindowFrame> currentElementFindFrameChain =  new ArrayList<WindowFrame>();
-	
+	final private List<WindowFrame> currentElementFindFrameChain = new ArrayList<WindowFrame>();
+
 	/** The my wd. */
 	@XStreamOmitField
 	final private WebDriver myWd;
-	
+
+	// /** The frame refresh try counting. */
+	// private transient int frameRefreshTryCounting = 0;
+
+	/** The Constant maxFrameRefreshTryCount. */
+	final static private int MAXFRAMEREFRESHTRYCOUNT = 2;
+
 	/**
 	 * Instantiates a new browser window.
 	 *
-	 * @param winHandle the win handle
-	 * @param myWd the my wd
+	 * @param winHandle
+	 *            the win handle
+	 * @param myWd
+	 *            the my wd
 	 */
 	public BrowserWindow(String winHandle, WebDriver myWd) {
 		this.windowHandle = winHandle;
 		this.myWd = myWd;
 	}
-	
+
 	/**
 	 * Switch to main frame.
 	 */
-	public void switchToDefaultContent () {
-		//if (!frames.isEmpty()) {
-			myWd.switchTo().defaultContent();
-		//}
+	public void switchToDefaultContent() {
+		// if (!frames.isEmpty()) {
+		myWd.switchTo().defaultContent();
+		// }
 	}
-	
+
 	/**
 	 * Maximize.
 	 */
@@ -82,7 +91,7 @@ public class BrowserWindow {
 		obtainWindowFocus();
 		myWd.manage().window().maximize();
 	}
-	
+
 	/**
 	 * Close.
 	 */
@@ -90,55 +99,71 @@ public class BrowserWindow {
 		obtainWindowFocus();
 		myWd.close();
 	}
-	
+
 	/**
 	 * Refresh frames.
 	 */
 	public void refreshFrames() {
 		obtainWindowFocus();
-		switchToDefaultContent ();
-		List<WebElement> iframes = myWd.findElements(By.tagName("iframe"));
-		int index;
-		this.visibleFrames.clear();
-		for (index=0; index<iframes.size(); index++) {
-			WebElement iframe = iframes.get(index);
-			if (null == iframe) throw GlobalUtils.createInternalError("web driver");
-			if (!iframe.isDisplayed()) { 
+
+		for (int i = 0; i < BrowserWindow.MAXFRAMEREFRESHTRYCOUNT; i++) {
+			try {
+				switchToDefaultContent();
+				List<WebElement> iframes = myWd.findElements(By
+						.tagName("iframe"));
+				int index;
+				this.visibleFrames.clear();
+				for (index = 0; index < iframes.size(); index++) {
+					WebElement iframe = iframes.get(index);
+					if (null == iframe)
+						throw GlobalUtils.createInternalError("web driver");
+					if (!iframe.isDisplayed()) {
+						continue;
+					}
+					WindowFrame winF = new WindowFrame(index, this.myWd, iframe);
+					this.visibleFrames.add(winF);
+					switchToDefaultContent();
+					winF.refreshChildFrames();
+				}
+
+				List<WebElement> frames = myWd
+						.findElements(By.tagName("frame"));
+				for (int indexj = 0; indexj < frames.size(); indexj++) {
+					WebElement frame = frames.get(indexj);
+					if (null == frame)
+						throw GlobalUtils.createInternalError("web driver");
+					if (!frame.isDisplayed()) {
+						continue;
+					}
+					WindowFrame winF = new WindowFrame(indexj + index,
+							this.myWd, frame);
+					this.visibleFrames.add(winF);
+					switchToDefaultContent();
+					winF.refreshChildFrames();
+				}
+				switchToDefaultContent();
+				break;
+			} catch (StaleElementReferenceException frameDeletedError) {
 				continue;
 			}
-			WindowFrame winF = new WindowFrame(index, this.myWd, iframe);
-			this.visibleFrames.add(winF);
-			switchToDefaultContent ();
-			winF.refreshChildFrames();
 		}
-		
-		List<WebElement> frames = myWd.findElements(By.tagName("frame"));
-		for (int indexj = 0; indexj<frames.size(); indexj++) {
-			WebElement frame = frames.get(indexj);
-			if (null == frame) throw GlobalUtils.createInternalError("web driver");
-			if (!frame.isDisplayed()) { 
-				continue;
-			}
-			WindowFrame winF = new WindowFrame(indexj + index, this.myWd, frame);
-			this.visibleFrames.add(winF);
-			switchToDefaultContent ();
-			winF.refreshChildFrames();
-		}
-		switchToDefaultContent ();
-		//obtainFocus();
+		// obtainFocus();
 	}
+
 	/**
 	 * Obtain focus.
 	 */
 	public void obtainWindowFocus() {
 		myWd.switchTo().window(getWindowHandle());
 	}
+
 	/**
 	 * @return the windowHandle
 	 */
 	public String getWindowHandle() {
 		return windowHandle;
 	}
+
 	/**
 	 * @return the myWd
 	 */
@@ -166,4 +191,5 @@ public class BrowserWindow {
 	public List<WindowFrame> getCurrentElementFindFrameChain() {
 		return currentElementFindFrameChain;
 	}
+
 }

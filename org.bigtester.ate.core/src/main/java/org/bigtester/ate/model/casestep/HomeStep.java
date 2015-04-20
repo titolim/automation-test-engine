@@ -53,8 +53,8 @@ public class HomeStep extends BaseTestStep implements ITestStep{
 	 * @param pageObject the page object
 	 * @param myWebElement the my web element
 	 */
-	public HomeStep(IHomepage pageObject, MyWebElement<?> myWebElement) {
-		super(pageObject, myWebElement);
+	public HomeStep(IHomepage pageObject, MyWebElement<?> myWebElement, TestCase testCase) {
+		super(pageObject, myWebElement, testCase);
 		this.homePage = pageObject;
 	}
 	
@@ -64,8 +64,8 @@ public class HomeStep extends BaseTestStep implements ITestStep{
 	 * @param pageObject the page object
 	 * @param myWebElement the my web element
 	 */
-	public HomeStep(IHomepage pageObject) {
-		super(pageObject);
+	public HomeStep(IHomepage pageObject, TestCase testCase) {
+		super(pageObject, testCase);
 		this.homePage = pageObject;
 	}
 	

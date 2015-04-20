@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model.casestep;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +30,7 @@ import org.bigtester.ate.model.data.IDataParser;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.page.IPageObject;
 import org.bigtester.ate.model.page.page.MyWebElement;
+import org.codehaus.plexus.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -46,35 +46,40 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author Peidong Hu
  * 
  */
-public class BaseTestStep implements ApplicationContextAware {//NOPMD
+public class BaseTestStep implements ApplicationContextAware {// NOPMD
+
+	/** The test case. */
+	final private TestCase testCase;
+
 	/** The current iteration. */
 	private int currentIteration;
-	
+
 	/** The current repeat step name. */
 	private String currentRepeatStepName = "";
-	
+
 	/** The application context. */
 	@Nullable
 	@XStreamOmitField
 	private ApplicationContext applicationContext;
-	
+
 	/** The step logger. */
 	@Nullable
-	private IRepeatStepExecutionLogger repeatStepLogger; 
+	private IRepeatStepExecutionLogger repeatStepLogger;
 
 	/** The data holders. */
 	private List<IDataParser> dataHolders = new ArrayList<IDataParser>();
 
-//	/** The on the fly data holders. */
-//	private List<IOnTheFlyData<?>> onTheFlyDataHolders = new ArrayList<IOnTheFlyData<?>>();
-//	
+	// /** The on the fly data holders. */
+	// private List<IOnTheFlyData<?>> onTheFlyDataHolders = new
+	// ArrayList<IOnTheFlyData<?>>();
+	//
 	/** The element step flag. */
-	
+
 	private transient boolean elementStepFlag;
 
 	/** The i expected result asserter. */
 	private List<IExpectedResultAsserter> expectedResultAsserter = new ArrayList<IExpectedResultAsserter>();
-	
+
 	/** The forced page validation. */
 	private boolean forcedPageValidation;
 
@@ -82,80 +87,140 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	@Nullable
 	protected MyWebElement<?> myWebElement;
 
-	/** The optional step. default is false*/
+	/** The optional step. default is false */
 	private boolean optionalStep;
-	
+
 	/** The optional step inclusive. */
-	private String correlatedOptionalStepsUtilInclusive="";//NOPMD
-	
+	private String correlatedOptionalStepsUtilInclusive = "";// NOPMD
+
+	/** The correlated optional steps util inclusive index. */
+	private int correlatedOptionalStepsUtilInclusiveIndex = -1;// NOPMD
 	/** The page object. */
 	@Nullable
 	private IPageObject pageObject;
-	
+
 	/** The step description. */
 	@Nullable
 	private String stepDescription = "";
-	
+
 	/** The step name. */
 	private String stepName = "";
-	
+
 	/** The passed. */
 	private StepResultStatus stepResultStatus = StepResultStatus.FAIL;
-	
+
 	/** The target step. */
 	private boolean targetStep;
-	
+
 	/**
 	 * Instantiates a new base test step.
 	 */
-	public BaseTestStep() {
+	public BaseTestStep(TestCase testCase) {
 		elementStepFlag = false;
+		this.testCase = testCase;
 	}
-	
+
 	/**
 	 * Instantiates a new base test step.
 	 *
-	 * @param pageObject the page object
+	 * @param pageObject
+	 *            the page object
 	 */
-	public BaseTestStep( IPageObject pageObject ) {
+	public BaseTestStep(IPageObject pageObject, TestCase testCase) {
 		this.pageObject = pageObject;
+		this.testCase = testCase;
 	}
+
 	/**
 	 * Instantiates a new base test step.
 	 *
-	 * @param pageObject the page object
-	 * @param myWebElement the my web element
+	 * @param pageObject
+	 *            the page object
+	 * @param myWebElement
+	 *            the my web element
 	 */
-	public BaseTestStep( IPageObject pageObject, @Nullable MyWebElement<?> myWebElement) {
+	public BaseTestStep(IPageObject pageObject,
+			@Nullable MyWebElement<?> myWebElement, TestCase testCase) {
 		this.pageObject = pageObject;
 		this.myWebElement = myWebElement;
+		this.testCase = testCase;
 	}
-	
+
+	/**
+	 * @return the testCase
+	 */
+	public TestCase getTestCase() {
+		return testCase;
+	}
+
 	/**
 	 * Instantiates a new base test step.
 	 *
-	 * @param myWebElement the my web element
+	 * @param myWebElement
+	 *            the my web element
 	 */
-	public BaseTestStep( MyWebElement<?> myWebElement) {
+	public BaseTestStep(MyWebElement<?> myWebElement, TestCase testCase) {
 		this.myWebElement = myWebElement;
+		this.testCase = testCase;
 	}
-	
+
 	/**
 	 * Gets the application context.
 	 *
 	 * @return the application context
-	 * @throws IllegalStateException the illegal state exception
+	 * @throws IllegalStateException
+	 *             the illegal state exception
 	 */
-	public ApplicationContext getApplicationContext() throws IllegalStateException{
-		
+	public ApplicationContext getApplicationContext()
+			throws IllegalStateException {
+
 		final ApplicationContext applicationContext2 = applicationContext;
 		if (null == applicationContext2) {
-			throw new IllegalStateException("applicationContext is not correctly initialized in test step");
+			throw new IllegalStateException(
+					"applicationContext is not correctly initialized in test step");
 		} else {
 			return applicationContext2;
 		}
 	}
-	
+
+	/**
+	 * @return the correlatedOptionalStepsUtilInclusiveIndex
+	 */
+
+	public int getCorrelatedOptionalStepsUtilInclusiveIndex() {
+		if (-1 == correlatedOptionalStepsUtilInclusiveIndex
+				&& !StringUtils
+						.isEmpty(getCorrelatedOptionalStepsUtilInclusiveName())) {
+
+			setOptionalStep(true);
+			int startIndex = -1;// NOPMD
+			int endIndex = -1;// NOPMD
+			for (int index = 0; index < getTestCase().getTestStepList().size(); index++) {
+				if (startIndex == -1
+						&& getTestCase().getTestStepList().get(index)
+								.getStepName() == getStepName()) {
+					startIndex = index;// NOPMD
+				}
+				if (getTestCase().getTestStepList().get(index).getStepName() == getCorrelatedOptionalStepsUtilInclusiveName()) {
+					endIndex = index;
+					break;
+				}
+			}
+			if (startIndex == -1 || endIndex == -1 || endIndex < startIndex)
+				throw GlobalUtils
+						.createInternalError("Optional Step util inclusive");
+			for (int index2 = startIndex; index2 <= endIndex; index2++) {
+				getTestCase().getTestStepList().get(index2)
+						.setOptionalStep(true);
+			}
+			correlatedOptionalStepsUtilInclusiveIndex = endIndex;
+
+		}
+
+		return correlatedOptionalStepsUtilInclusiveIndex;
+
+	}
+
 	/**
 	 * Gets the data holders.
 	 *
@@ -163,9 +228,9 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	 */
 	public List<IDataParser> getDataHolders() {
 		return dataHolders;
-		
+
 	}
-	
+
 	/**
 	 * Gets the expected result asserter.
 	 *
@@ -256,12 +321,11 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	 * @return true, if is page validation
 	 */
 	public boolean isPageValidation() {
-		
+
 		return forcedPageValidation ? true : targetStep;
-	
+
 	}
 
-	
 	/**
 	 * Checks if is target step.
 	 * 
@@ -274,32 +338,35 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	/**
 	 * Parses the data holder.
 	 *
-	 * @throws RuntimeDataException the runtime data exception
+	 * @throws RuntimeDataException
+	 *             the runtime data exception
 	 */
 	protected void parseDataHolder() throws RuntimeDataException {
-		for (int i=0; i<getDataHolders().size(); i++) {
+		for (int i = 0; i < getDataHolders().size(); i++) {
 			getDataHolders().get(i).parseData();
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setApplicationContext(@Nullable ApplicationContext applicationContext)
+	public void setApplicationContext(
+			@Nullable ApplicationContext applicationContext)
 			throws BeansException {
 		if (null == applicationContext) {
 			throw new NoSuchBeanDefinitionException(ApplicationContext.class);
 		} else {
 			this.applicationContext = applicationContext;
 		}
-		
+
 	}
 
 	/**
 	 * Sets the data holders.
 	 *
-	 * @param dataHolders the dataHolders to set
+	 * @param dataHolders
+	 *            the dataHolders to set
 	 */
 	public void setDataHolders(List<IDataParser> dataHolders) {
 		this.dataHolders = dataHolders;
@@ -308,16 +375,19 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	/**
 	 * Sets the expected result asserter.
 	 *
-	 * @param iExpectedResultAsserter the iExpectedResultAsserter to set
+	 * @param iExpectedResultAsserter
+	 *            the iExpectedResultAsserter to set
 	 */
-	public void setExpectedResultAsserter(List<IExpectedResultAsserter> iExpectedResultAsserter) {
+	public void setExpectedResultAsserter(
+			List<IExpectedResultAsserter> iExpectedResultAsserter) {
 		this.expectedResultAsserter = iExpectedResultAsserter;
 	}
 
 	/**
 	 * Sets the forced page validation.
 	 *
-	 * @param forcedPageValidation the forcedPageValidation to set
+	 * @param forcedPageValidation
+	 *            the forcedPageValidation to set
 	 */
 	public void setForcedPageValidation(boolean forcedPageValidation) {
 		this.forcedPageValidation = forcedPageValidation;
@@ -333,15 +403,17 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 		this.elementStepFlag = true;
 		this.myWebElement = myWebElement;
 	}
-	
+
 	/**
 	 * Sets the optional step.
 	 *
-	 * @param optionalStep the optionalStep to set
+	 * @param optionalStep
+	 *            the optionalStep to set
 	 */
 	public void setOptionalStep(boolean optionalStep) {
 		this.optionalStep = optionalStep;
 	}
+
 	/**
 	 * Sets the page object.
 	 * 
@@ -351,6 +423,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	public void setPageObject(IPageObject pageObject) {
 		this.pageObject = pageObject;
 	}
+
 	/**
 	 * Sets the step description.
 	 * 
@@ -360,7 +433,7 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	public void setStepDescription(String stepDescription) {
 		this.stepDescription = stepDescription;
 	}
-	
+
 	/**
 	 * Sets the step name.
 	 * 
@@ -370,16 +443,17 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	public void setStepName(final String stepName) {
 		this.stepName = stepName;
 	}
-	
-	
+
 	/**
 	 * Sets the step result status.
 	 *
-	 * @param stepResultStatus the stepResultStatus to set
+	 * @param stepResultStatus
+	 *            the stepResultStatus to set
 	 */
 	public void setStepResultStatus(StepResultStatus stepResultStatus) {
 		this.stepResultStatus = stepResultStatus;
 	}
+
 	/**
 	 * Sets the target step.
 	 * 
@@ -402,7 +476,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	/**
 	 * Sets the current iteration.
 	 *
-	 * @param currentIteration the currentIteration to set
+	 * @param currentIteration
+	 *            the currentIteration to set
 	 */
 	public void setCurrentIteration(int currentIteration) {
 		this.currentIteration = currentIteration;
@@ -420,7 +495,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	/**
 	 * Sets the current repeat step name.
 	 *
-	 * @param currentRepeatStepName the currentRepeatStepName to set
+	 * @param currentRepeatStepName
+	 *            the currentRepeatStepName to set
 	 */
 	public void setCurrentRepeatStepName(String currentRepeatStepName) {
 		this.currentRepeatStepName = currentRepeatStepName;
@@ -429,7 +505,8 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	/**
 	 * Sets the element step flag.
 	 *
-	 * @param elementStepFlag the elementStepFlag to set
+	 * @param elementStepFlag
+	 *            the elementStepFlag to set
 	 */
 	public void setElementStepFlag(boolean elementStepFlag) {
 		this.elementStepFlag = elementStepFlag;
@@ -452,19 +529,21 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	/**
 	 * Sets the repeat step logger.
 	 *
-	 * @param repeatStepLogger the repeatStepLogger to set
+	 * @param repeatStepLogger
+	 *            the repeatStepLogger to set
 	 */
 	public void setRepeatStepLogger(IRepeatStepExecutionLogger repeatStepLogger) {
 		this.repeatStepLogger = repeatStepLogger;
 	}
 
-	
 	/**
 	 * Sets the correlated optional steps util inclusive.
 	 *
-	 * @param correlatedOptionalStepsUtilInclusive the new correlated optional steps util inclusive
+	 * @param correlatedOptionalStepsUtilInclusive
+	 *            the new correlated optional steps util inclusive
 	 */
-	public void setCorrelatedOptionalStepsUtilInclusive(String correlatedOptionalStepsUtilInclusive) {//NOPMD
+	public void setCorrelatedOptionalStepsUtilInclusive(
+			String correlatedOptionalStepsUtilInclusive) {// NOPMD
 		this.correlatedOptionalStepsUtilInclusive = correlatedOptionalStepsUtilInclusive;
 	}
 
@@ -473,29 +552,36 @@ public class BaseTestStep implements ApplicationContextAware {//NOPMD
 	 *
 	 * @return the optionalStepUtilInclusive
 	 */
-	public String getCorrelatedOptionalStepsUtilInclusive() {
+	public String getCorrelatedOptionalStepsUtilInclusiveName() {
 		return correlatedOptionalStepsUtilInclusive;
 	}
 
-//	/**
-//	 * Gets the on the fly data holders.
-//	 *
-//	 * @return the onTheFlyDataHolders
-//	 */
-//	public List<IOnTheFlyData<?>> getOnTheFlyDataHolders() {
-//		return onTheFlyDataHolders;
-//	}
+	/**
+	 * @param correlatedOptionalStepsUtilInclusiveIndex
+	 *            the correlatedOptionalStepsUtilInclusiveIndex to set
+	 */
+	public void setCorrelatedOptionalStepsUtilInclusiveIndex(
+			int correlatedOptionalStepsUtilInclusiveIndex) {//NOPMD
+		this.correlatedOptionalStepsUtilInclusiveIndex = correlatedOptionalStepsUtilInclusiveIndex;
+	}
 
-//	/**
-//	 * Sets the on the fly data holders.
-//	 *
-//	 * @param onTheFlyDataHolders the onTheFlyDataHolders to set
-//	 */
-//	public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>> onTheFlyDataHolders) {
-//		this.onTheFlyDataHolders = onTheFlyDataHolders;
-//	}
+	// /**
+	// * Gets the on the fly data holders.
+	// *
+	// * @return the onTheFlyDataHolders
+	// */
+	// public List<IOnTheFlyData<?>> getOnTheFlyDataHolders() {
+	// return onTheFlyDataHolders;
+	// }
 
+	// /**
+	// * Sets the on the fly data holders.
+	// *
+	// * @param onTheFlyDataHolders the onTheFlyDataHolders to set
+	// */
+	// public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>>
+	// onTheFlyDataHolders) {
+	// this.onTheFlyDataHolders = onTheFlyDataHolders;
+	// }
 
-
-	
 }

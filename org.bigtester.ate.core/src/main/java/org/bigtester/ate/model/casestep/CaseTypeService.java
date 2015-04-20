@@ -263,7 +263,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCorrelatedOptionalStepsUtilInclusive() {
+	public String getCorrelatedOptionalStepsUtilInclusiveName() {
 		// TODO add optionalStepUtil parameter for caseTypeService
 		return "";
 	}
@@ -290,6 +290,15 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 */
 	public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>> onTheFlyDataHolders) {
 		this.onTheFlyDataHolders = onTheFlyDataHolders;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getCorrelatedOptionalStepsUtilInclusiveIndex() {
+		// TODO Auto-generated method stub
+		return -1;
 	}
 
 }

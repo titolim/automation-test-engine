@@ -22,14 +22,12 @@ package org.bigtester.ate.model.casestep;
 
 import java.util.List;
 
-import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
 import org.bigtester.ate.model.utils.ThinkTime;
-import org.codehaus.plexus.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -128,36 +126,36 @@ public class TestCase {
 	 * Optional step population.
 	 * return the endindex;
 	 */
-	private int optionalStepPopulation(@Nullable ITestStep currentStep) {
-		if (null == currentStep)
-			throw GlobalUtils.createNotInitializedException("currentStep");
-		int retVal = -1;//NOPMD
-		if (!StringUtils.isEmpty(currentStep.getCorrelatedOptionalStepsUtilInclusive())) {
-			currentStep.setOptionalStep(true);
-			int startIndex = -1;//NOPMD
-			int endIndex = -1;//NOPMD
-			for (int index = 0; index < getTestStepList().size(); index++) {
-				if (getTestStepList().get(index).getStepName() == currentStep
-						.getStepName()) {
-					startIndex = index;//NOPMD
-				}
-				if (getTestStepList().get(index).getStepName() == currentStep
-						.getCorrelatedOptionalStepsUtilInclusive()) {
-					endIndex = index;
-					break;
-				}
-			}
-			if (startIndex == -1 || endIndex == -1 || endIndex < startIndex)
-				throw GlobalUtils
-						.createInternalError("Optional Step util inclusive");
-			for (int index2 = startIndex; index2 <= endIndex; index2++) {
-				getTestStepList().get(index2).setOptionalStep(true);
-			}
-			retVal = endIndex;
-		}
-		return retVal;
-		
-	}
+//	private int optionalStepPopulation(@Nullable ITestStep currentStep) {
+//		if (null == currentStep)
+//			throw GlobalUtils.createNotInitializedException("currentStep");
+//		int retVal = -1;//NOPMD
+//		if (!StringUtils.isEmpty(currentStep.getCorrelatedOptionalStepsUtilInclusiveName())) {
+//			currentStep.setOptionalStep(true);
+//			int startIndex = -1;//NOPMD
+//			int endIndex = -1;//NOPMD
+//			for (int index = 0; index < getTestStepList().size(); index++) {
+//				if (getTestStepList().get(index).getStepName() == currentStep
+//						.getStepName()) {
+//					startIndex = index;//NOPMD
+//				}
+//				if (getTestStepList().get(index).getStepName() == currentStep
+//						.getCorrelatedOptionalStepsUtilInclusiveName()) {
+//					endIndex = index;
+//					break;
+//				}
+//			}
+//			if (startIndex == -1 || endIndex == -1 || endIndex < startIndex)
+//				throw GlobalUtils
+//						.createInternalError("Optional Step util inclusive");
+//			for (int index2 = startIndex; index2 <= endIndex; index2++) {
+//				getTestStepList().get(index2).setOptionalStep(true);
+//			}
+//			retVal = endIndex;
+//		}
+//		return retVal;
+//		
+//	}
 
 	/**
 	 * run steps.
@@ -169,7 +167,7 @@ public class TestCase {
 	public void goSteps() throws StepExecutionException2,
 			PageValidationException2, IllegalStateException,
 			RuntimeDataException {
-		int correlatedOptionlStepsEndIndex = -1;//NOPMD
+//		int correlatedOptionlStepsEndIndex = -1;//NOPMD
 		for (int i = 0; i < getTestStepList().size(); i++) {
 
 			ITestStep currentTestStepTmp = getTestStepList().get(i);
@@ -181,20 +179,19 @@ public class TestCase {
 			} else {
 				setCurrentTestStep(currentTestStepTmp);
 			}
-			if (correlatedOptionlStepsEndIndex == -1)
-				correlatedOptionlStepsEndIndex = optionalStepPopulation(currentTestStepTmp);
-			// setCurrentWebDriver(getCurrentTestStep().getMyWebDriver());
+//			if (correlatedOptionlStepsEndIndex == -1)
+//				correlatedOptionlStepsEndIndex = optionalStepPopulation(currentTestStepTmp);
 			try {
 				getCurrentTestStep().doStep();// NOPMD
 				getCurrentTestStep().setStepResultStatus(StepResultStatus.PASS);
-				if (i == correlatedOptionlStepsEndIndex) correlatedOptionlStepsEndIndex = -1;//NOPMD
+				//if (i == correlatedOptionlStepsEndIndex) correlatedOptionlStepsEndIndex = -1;//NOPMD
 			} catch (Exception e) { //NOPMD
 				if (getCurrentTestStep().isOptionalStep()) {
 					getCurrentTestStep().setStepResultStatus(
 							StepResultStatus.SKIP);
-					if (correlatedOptionlStepsEndIndex >= i) {
-						i = correlatedOptionlStepsEndIndex;//NOPMD
-						correlatedOptionlStepsEndIndex = -1;//NOPMD
+					if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
+						i = currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex();//NOPMD
+						//correlatedOptionlStepsEndIndex = -1;//NOPMD
 					}
 				} else {
 					throw e;

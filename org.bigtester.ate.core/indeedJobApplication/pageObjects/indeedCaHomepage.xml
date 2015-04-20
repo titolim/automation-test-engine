@@ -25,7 +25,7 @@
 		findByValue="//*[@class='input_text']" indexOfSameElements="indexOfKeyWordInput" />
 	<ate:sendKeysAction id="eaTypeKeyWordQA" dataValue="dvkeyWordQA" />
 	<ate:runTimeDataHolder id="dvkeyWordQA"
-		dataHolderType="ManualAssigned" dataType="Text" dataValue="QA" />
+		dataHolderType="ManualAssigned" dataType="Text" dataValue=".NET" />
 	<ate:autoIncrementalDataHolder id="indexOfKeyWordInput" startValue="0" pacing="1"></ate:autoIncrementalDataHolder>
 
 	<ate:elementActionDef id="eadClearTextInWhere"
