@@ -54,8 +54,12 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 	private static final String BROWSEROSX32PATH = "browserdriver/osx/operachromium/32bit/";
 	/** The Constant BROWSEROSX32PATH. */
 	private static final String BROWSEROSX64PATH = "browserdriver/osx/operachromium/64bit/";
-	/** The Constant BROWSERFILENAME. */
-	private static final String BROWSERFILENAME = "operadriver.exe";
+	/** The Constant BROWSERWINFILENAME. */
+	private static final String BROWSERWINFILENAME = "operadriver.exe";
+	/** The Constant BROWSERLINUXFILENAME. */
+	private static final String BROWSERLINUXFILENAME = "operadriver";
+	/** The Constant BROWSERMACFILENAME. */
+	private static final String BROWSERMACFILENAME = "operadriver";
 
 	/**
 	 * Instantiates a new my Opera driver.
@@ -104,27 +108,27 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 			switch (platform) {
 			case Windows_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + BROWSERWINFILENAME);
 				break;
 			case Windows_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + BROWSERWINFILENAME);
 				break;
 			case Linux_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "linux", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH + BROWSERLINUXFILENAME);
 				break;
 			case Linux_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "linux", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH + BROWSERLINUXFILENAME);
 				break;
 			case Mac_OS_X_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "osx", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH + BROWSERMACFILENAME);
 				break;
 			case Mac_OS_X_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "osx", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSEROSX64PATH	+ BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSEROSX64PATH	+ BROWSERMACFILENAME);
 				break;
 			default:
 				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
