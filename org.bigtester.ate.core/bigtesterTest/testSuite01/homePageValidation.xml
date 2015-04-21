@@ -27,13 +27,13 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:chromeDriver   />
+	<ate:firefoxDriver  />
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="Bigtester home page test case">
 	
-		<ate:homeStep id="OpenBigtesterHomePage" stepName="OpenBigtesterHomePage"
-			stepDescription="open my home step" targetStep="true" pageObject="homePage">
+		<ate:homeStep id="stepOpenBigtesterHomePage" stepName="stepOpenBigtesterHomePage"
+			stepDescription="open bigtester.com home step" targetStep="true" pageObject="poHomePage">
 			<property name="expectedResultAsserter">
 				<list>
 					<ref bean="homeElementExistenceAsserter" />
@@ -41,8 +41,8 @@
 				</list>
 			</property>
 		</ate:homeStep>
-		<ate:lastStep id="myLaststep" stepName="myLaststep"
-			stepDescription="last step close browser" targetStep="false" pageObject="myLastPage">
+		<ate:lastStep id="stepLastStep" stepName="stepLastStep"
+			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
 		</ate:lastStep>
 
 	</ate:testCase>

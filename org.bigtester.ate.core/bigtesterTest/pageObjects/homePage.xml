@@ -15,43 +15,19 @@
 
 	<import resource="classpath:META-INF/logger-reporter.xml" />
 	<import resource="classpath:META-INF/page_base_bean.xml" />
-	
-	<ate:homePage id="homePage" homeUrl="http://www.bigtester.com" dataFile="bigtesterTest/pageObjects/homePage.data.xml"/>
+	<import resource="./loginForm.xml" />
+	<ate:homePage id="poHomePage" homeUrl="http://www.bigtester.com" dataFile="bigtesterTest/pageObjects/homePage.data.xml"/>
 	
     <!-- myWebElement definition -->
-    <ate:elementActionDef id="clickHomepageEnglish" elementFind="homePageEnglishLink" elementAction="homePageEnglishLinkClick" />
-	<ate:elementFindByXpath id="homePageEnglishLink" findByValue="//img[@alt='English (United Kingdom)']" />
-	<ate:clickAction id="homePageEnglishLinkClick" />
-
-    <!-- myWebElement definition -->
-	<ate:elementActionDef id="loginUserNameWE"   elementFind="loginUserNameEF" elementAction="loginUserNameEA" />
-	<ate:elementFindById id="loginUserNameEF" findByValue="modlgn_username" />
-	<ate:sendKeysAction id="loginUserNameEA" dataValue="userNameValue" />
-	<ate:fileDataHolder id="userNameValue" dataValueID="1"/>
-
-	<!-- myWebElement definition -->
-	<ate:elementActionDef id="loginPasswordWE"   elementFind="loginPasswordEF" elementAction="loginPasswordEA" />
-	<ate:elementFindById id="loginPasswordEF" findByValue="modlgn_passwd" />
-	<ate:sendKeysAction id="loginPasswordEA" dataValue="loginPasswordEAValue" />
-	<ate:fileDataHolder id="loginPasswordEAValue" dataValueID="3"/>
-
-	<!-- myWebElement definition -->
-	<ate:elementActionDef id="loginWrongPasswordWE" elementFind="loginPasswordEF" elementAction="loginWrongPasswordEA"/>
-	<ate:sendKeysAction id="loginWrongPasswordEA" dataValue="loginWrongPasswordEAValue" />
-	<ate:fileDataHolder id="loginWrongPasswordEAValue" dataValueID="4"/>
-
-	<!-- step publicLogin_clickLoginbutton myWebElement definition -->
-	<ate:elementActionDef id="clickLoginButtonWE" elementFind="loginButtonEF" elementAction="loginButtonEA" />
-	<ate:elementFindByXpath id="loginButtonEF" findByValue="//button[@type='submit']" />
-	<ate:clickAction id="loginButtonEA" />
-
-	<ate:runTimeDataHolder id="wrongCode1" dataHolderType="PageSourceParsed" dataType="Text" pageHtmlLeftBoundry="Oops" pageHtmlRightBoundry="ong password" page="homePage"/>
+    <ate:elementActionDef id="eadClickHomepageEnglish" elementFind="efHomePageEnglishLink" elementAction="eaHomePageEnglishLinkClick" />
+	<ate:elementFindByXpath id="efHomePageEnglishLink" findByValue="//img[@alt='English (United Kingdom)']" />
+	<ate:clickAction id="eaHomePageEnglishLinkClick" />
 
 <!-- 	<ate:pagePropertyCorrectnessAsserter -->
 <!-- 	id="homePagePropertyAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/> -->
 
 	<ate:pageElementExistenceAsserter 
-	 id="homeElementExistenceAsserter" resultPage="homePage" stepERValue="homePageVID"/>
+	 id="homeElementExistenceAsserter" resultPage="poHomePage" stepERValue="homePageVID"/>
 	
 <!-- 	<ate:stepExpectedResultValue id="homePageValidationValue" dataValueID="homePageVID" /> -->
 			

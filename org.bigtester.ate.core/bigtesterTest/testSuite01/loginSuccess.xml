@@ -27,31 +27,25 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:IEDriver       />
+	<ate:firefoxDriver       />
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="Bigtester home page test case">
 	
-		<ate:homeStep id="OpenBigtesterHomePage" stepName="OpenBigtesterHomePage"
-			stepDescription="open my home step" targetStep="true" pageObject="homePage">
-<!-- 			<property name="expectedResultAsserter"> -->
-<!-- 				<list> -->
-<!-- 					<ref bean="homePagePropertyAsserter" /> -->
-<!-- 					<ref bean="homeElementExistenceAsserter" /> -->
-<!-- 				</list> -->
-<!-- 			</property> -->
+		<ate:homeStep id="stepOpenBigtesterHomePage" stepName="stepOpenBigtesterHomePage"
+			stepDescription="open bigtester.com home step" targetStep="true" pageObject="poHomePage">
 		</ate:homeStep>
 		<ate:elementStep id="stepClickHomepageEnglishLink"
-			stepDescription="Click homepage english link" stepName="clickHomepageEnglishLink" optionalStep="true"
-			targetStep="false" elementActionDef="clickHomepageEnglish" pageObject="homePage">
+			stepDescription="Click homepage english link" stepName="stepClickHomepageEnglishLink" optionalStep="true"
+			targetStep="false" elementActionDef="eadClickHomepageEnglish" pageObject="poHomePage">
 		</ate:elementStep>
-		<ate:elementStep id="publicLogin_typeUsername"
-			stepDescription="type in public user name" stepName="typeUsername"
-			targetStep="true" elementActionDef="loginUserNameWE" pageObject="homePage">
+		<ate:elementStep id="stepUserLogintypeUsername"
+			stepDescription="type in public user name" stepName="stepUserLogintypeUsername"
+			targetStep="false" elementActionDef="eadTypeLoginUserName" pageObject="poHomePage">
 		</ate:elementStep>
-		<ate:elementStep id="publicLogin_typePassword"
-			stepDescription="type in public user password" stepName="typePassword"
-			targetStep="true" elementActionDef="loginPasswordWE" pageObject="homePage">
+		<ate:elementStep id="stepUserLoginTypePassword"
+			stepDescription="type in public user password" stepName="stepUserLoginTypePassword"
+			targetStep="false" elementActionDef="eadTypeLoginPassword" pageObject="poHomePage">
 		</ate:elementStep>
 	<!-- 	<ate:elementStep id="publicLogin_clickLoginButton"
 			stepDescription="click Login button to log in" stepName="clickLoginButton"
@@ -67,8 +61,8 @@
 			stepDescription="logout user" stepName="logoutUser"
 			targetStep="false" elementActionDef="logoutUser">
 		</ate:elementStep> -->
-		<ate:lastStep id="myLaststep" stepName="myLaststep"
-			stepDescription="last step close browser" targetStep="false" pageObject="myLastPage">
+		<ate:lastStep id="stepLaststep" stepName="stepLaststep"
+			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
 		</ate:lastStep>
 
 	</ate:testCase>

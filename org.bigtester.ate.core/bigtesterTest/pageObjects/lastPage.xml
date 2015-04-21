@@ -16,6 +16,6 @@
 	<import resource="classpath:META-INF/logger-reporter.xml" />
 	<import resource="classpath:META-INF/page_base_bean.xml" />
 	
-	<ate:lastPage id="myLastPage" />
+	<ate:lastPage id="poLastPage" />
 	
 </beans>
