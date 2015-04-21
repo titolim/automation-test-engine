@@ -55,9 +55,14 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 	private static final String BROWSEROSX32PATH = "browserdriver/osx/googlechrome/32bit/";
 	/** The Constant BROWSEROSX32PATH. */
 	private static final String BROWSEROSX64PATH = "browserdriver/osx/googlechrome/64bit/";
-	/** The Constant BROWSERFILENAME. */
-	private static final String BROWSERFILENAME = "chromedriver.exe";
+	/** The Constant BROWSERWINFILENAME. */
+	private static final String BROWSERWINFILENAME = "chromedriver.exe";
+	/** The Constant BROWSERLINUXFILENAME. */
+	private static final String BROWSERLINUXFILENAME = "chromedriver";
+	/** The Constant BROWSERMACFILENAME. */
+	private static final String BROWSERMACFILENAME = "chromedriver";
 
+	
 	/**
 	 * Instantiates a new my Chrome driver.
 	 */
@@ -105,27 +110,27 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 			switch (platform) {
 			case Windows_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + BROWSERWINFILENAME);
 				break;
 			case Windows_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + BROWSERWINFILENAME);
 				break;
 			case Linux_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "linux", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH + BROWSERLINUXFILENAME);
 				break;
 			case Linux_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "linux", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH + BROWSERLINUXFILENAME);
 				break;
 			case Mac_OS_X_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "osx", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH + BROWSERMACFILENAME);
 				break;
 			case Mac_OS_X_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "osx", BROWSERNAME, ReadXmlFile.VERSION);*/
-				System.setProperty(BROWSERDRVNAME, BROWSEROSX64PATH + BROWSERFILENAME);
+				System.setProperty(BROWSERDRVNAME, BROWSEROSX64PATH + BROWSERMACFILENAME);
 				break;
 			default:
 				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
