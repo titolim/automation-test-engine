@@ -67,6 +67,10 @@ public class OperaDriverBeanDefinitionParser extends
 //            bean.addPropertyValue("lenient", Boolean.valueOf(lenient));
 //        }
     }
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	protected String resolveId(@Nullable Element element, @Nullable AbstractBeanDefinition definition, @Nullable ParserContext parserContext)
 			throws BeanDefinitionStoreException {
 
