@@ -22,7 +22,7 @@
 		id="MyWebDriver2" /> <ate:IEDriver id="MyWebDriver2" /> <ate:safariDriver 
 		id="MyWebDriver2" /> <ate:operaDriver id="MyWebDriver2" /> <ate:htmlUnitDriver 
 		id="MyWebDriver2" /> -->
-	<ate:firefoxDriver id="MyWebDriver2" />
+	<ate:chromeDriver />
 
 	<ate:testCase id="testcase" testCaseName="apply easily-apply job.">
 

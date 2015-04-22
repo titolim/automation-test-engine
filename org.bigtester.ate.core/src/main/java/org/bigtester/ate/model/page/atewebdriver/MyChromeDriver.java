@@ -50,7 +50,7 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 	/** The Constant BROWSERLINUX32PATH. */
 	private static final String BROWSERLINUX32PATH = "browserdriver/linux/googlechrome/32bit/";
 	/** The Constant BROWSERLINUX64PATH. */
-	private static final String BROWSERLINUX64PATH = "browserdriver/liunx/googlechrome/64bit/";
+	private static final String BROWSERLINUX64PATH = "browserdriver/linux/googlechrome/64bit/";
 	/** The Constant BROWSEROSX32PATH. */
 	private static final String BROWSEROSX32PATH = "browserdriver/osx/googlechrome/32bit/";
 	/** The Constant BROWSEROSX32PATH. */
