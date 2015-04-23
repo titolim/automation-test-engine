@@ -104,6 +104,8 @@ public class CaseRunnerGenerator {
 	/** The suites. */
 	final private List<TestSuite> suites;
 
+	@Nullable
+	final private JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 	/**
 	 * @return the caseRunnerCacheAbsoluteFolder
 	 */
@@ -556,8 +558,7 @@ public class CaseRunnerGenerator {
 	private void loadClass(String classFilePathName, String className) throws ClassNotFoundException, IOException {
 		/** Compilation Requirements *********************************************************************************************/
 		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-		StandardJavaFileManager fileManager = compiler.getStandardFileManager(
+		StandardJavaFileManager fileManager = getCompiler().getStandardFileManager(
 				diagnostics, null, null);
 
 		// This sets up the class path that the compiler will use.
@@ -572,7 +573,7 @@ public class CaseRunnerGenerator {
 
 		Iterable<? extends JavaFileObject> compilationUnit = fileManager
 				.getJavaFileObjectsFromFiles(Arrays.asList(helloWorldJava));
-		JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager,
+		JavaCompiler.CompilationTask task =  getCompiler().getTask(null, fileManager,
 				diagnostics, optionList, null, compilationUnit);
 
 		/********************************************************************************************* Compilation Requirements **/
@@ -670,5 +671,17 @@ public class CaseRunnerGenerator {
 		// retVal = retVal + jar.getCanonicalPath() + ":";
 		// }
 		// return retVal;
+	}
+
+	/**
+	 * @return the compiler
+	 */
+	public JavaCompiler getCompiler() {
+		final JavaCompiler compiler2 = compiler;
+		if (compiler2 == null) {
+			throw GlobalUtils.createInternalError("JDK tools.jar is not correctly set in test environment.");
+		} else {
+			return compiler2;
+		}
 	}
 }
