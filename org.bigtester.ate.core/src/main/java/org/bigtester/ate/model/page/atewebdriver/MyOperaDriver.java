@@ -49,7 +49,7 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 	/** The Constant BROWSERLINUX32PATH. */
 	private static final String BROWSERLINUX32PATH = "browserdriver/linux/operachromium/32bit/";
 	/** The Constant BROWSERLINUX64PATH. */
-	private static final String BROWSERLINUX64PATH = "browserdriver/liunx/operachromium/64bit/";
+	private static final String BROWSERLINUX64PATH = "browserdriver/linux/operachromium/64bit/";
 	/** The Constant BROWSEROSX32PATH. */
 	private static final String BROWSEROSX32PATH = "browserdriver/osx/operachromium/32bit/";
 	/** The Constant BROWSEROSX32PATH. */
