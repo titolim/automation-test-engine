@@ -513,6 +513,25 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	
+	<xsd:complexType name="UploadFileActionType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+				<xsd:attribute name="dataValue" type="xsd:string" use="required">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<tool:annotation kind="ref">
+								<tool:expected-type
+									type="org.bigtester.ate.model.data.IStepInputData" />
+							</tool:annotation>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 	<xsd:complexType name="RunTimeDataHolderType">
 		<xsd:complexContent>
@@ -775,6 +794,7 @@
 	<xsd:element name="browserWindowFindByOpenSequence" type="BrowserWindowFindByOpenSequence" />
 	
 	<xsd:element name="sendKeysAction" type="SendKeysActionType" />
+	<xsd:element name="uploadFileAction" type="UploadFileActionType" />
 	<xsd:element name="elementActionDef" type="ElementActionDefType">
 	</xsd:element>
 	<xsd:element name="elementStep" type="ElementStepType" />

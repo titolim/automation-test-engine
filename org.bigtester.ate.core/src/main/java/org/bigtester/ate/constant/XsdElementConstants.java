@@ -130,6 +130,12 @@ public final class XsdElementConstants {
 	/** The Constant ATTR_SENDKEYSACTION_DATAVALUE. */
 	public static final String ATTR_SENDKEYSACTION_DATAVALUE = "dataValue";
 	
+	/** The Constant ELEMENT_UPLOADFILEACTION. */
+	public static final String ELEMENT_UPLOADFILEACTION = "uploadFileAction";
+	
+	/** The Constant ATTR_UPLOADFILEACTION_DATAVALUE. */
+	public static final String ATTR_UPLOADFILEACTION_DATAVALUE = "dataValue";
+	
 	/** The Constant ELEMENT_MYWEBELEMENT. */
 	public static final String ELEMENT_ELEMENTACTIONDEF = "elementActionDef";
 	
