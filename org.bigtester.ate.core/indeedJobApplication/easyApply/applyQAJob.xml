@@ -70,7 +70,7 @@
 			stepDescription="stepClickApplyNow" stepName="stepClickApplyNow"
 			targetStep="false" elementActionDef="eadClickApplyNow"
 			optionalStep="true"
-			correlatedOptionalStepsUtilInclusive="stepFilloutApplicantPHoneNumber">
+			correlatedOptionalStepsUtilInclusive="stepSubmitResume">
 		</ate:elementStep>
 		<ate:elementStep id="stepFilloutApplicantName"
 			stepDescription="stepFilloutApplicantName" stepName="stepFilloutApplicantName"
@@ -92,6 +92,12 @@
 			targetStep="false" elementActionDef="eadApplyChooseFile"
 			>
 		</ate:elementStep>
+		<ate:elementStep id="stepSubmitResume"
+			stepDescription="stepSubmitResume" stepName="stepSubmitResume"
+			targetStep="false" elementActionDef="eadSubmitResume"
+			>
+		</ate:elementStep>
+			
 		
 		<ate:elementStep id="stepCloseApplyWindow"
 			stepDescription="stepCloseApplyWindow" stepName="stepCloseApplyWindow"
@@ -99,8 +105,10 @@
 		</ate:elementStep>
 		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="1" endStepName="stepCloseApplyWindow" stepName="stepRepeatApplySamePageJobs" targetStep="false"/>
 		<ate:elementStep id="stepClickPagingNumber"
-			stepDescription="stepClickPagingNumber" stepName="stepClickPagingNumber"
-			targetStep="false" elementActionDef="eadClickPagingNumber">
+			stepDescription="stepClickPagingNumber"
+			stepName="stepClickPagingNumber" targetStep="false"
+			optionalStep="true" elementActionDef="eadClickPagingNumber"
+			correlatedOptionalStepsUtilInclusive="stepRepeatApplyOtherPageJobs">
 		</ate:elementStep>
 		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="1" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>
 		

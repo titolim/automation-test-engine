@@ -52,6 +52,13 @@
 	<ate:elementFindById id="efApplyNowChooseFile"
 		findByValue="resume"  />
 	<ate:uploadFileAction id="eaApplyChooseFile" dataValue="/home/peidong/Downloads/peidonghu_resume_en_QALead.pdf"/>
+	
+	<ate:elementActionDef id="eadSubmitResume"
+		elementFind="efResumeSubmitButton" elementAction="eaClickSubmitButton">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efResumeSubmitButton"
+		findByValue="apply"  />
+	<ate:clickAction id="eaClickSubmitButton"/>
 
 	
 </beans>
