@@ -60,6 +60,8 @@
 		<ate:elementStep id="stepClickJobLink"
 			stepDescription="stepClickJobLink" stepName="stepClickJobLink"
 			targetStep="false" elementActionDef="eadClickNonAdsJobLink"
+			optionalStep="true"
+			correlatedOptionalStepsUtilInclusive="stepRepeatApplyOtherPageJobs"
 			pageObject="jobSearchResult">
 		</ate:elementStep>
 		<ate:elementStep id="stepSwitchToApplyWindow"
