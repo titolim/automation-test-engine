@@ -26,7 +26,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ExceptionMessage;
-import org.bigtester.ate.model.AbstractATECaseExecE;
+import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.AbstractATEException;
 import org.bigtester.ate.systemlogger.problemhandler.ProblemLogbackHandler;
 import org.bigtester.ate.systemlogger.problems.ATEProblemFactory;
@@ -126,14 +126,14 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 		setAlreadyCasePointCut(error);
 
 		if (error instanceof AbstractATEException
-				&& error instanceof AbstractATECaseExecE) {
+				&& error instanceof BaseATECaseExecE) {
 
 			Object obj = joinPoint.getTarget();
 			if (obj == null)
 				throw GlobalUtils.createInternalError("GenericTestCaseLogger");
 			{
 				IATEProblemFactory ipf = ATEProblemFactory.getInstance();
-				prb = ipf.getATEProblem(obj, (AbstractATECaseExecE) error);
+				prb = ipf.getATEProblem(obj, (BaseATECaseExecE) error);
 				
 			}
 

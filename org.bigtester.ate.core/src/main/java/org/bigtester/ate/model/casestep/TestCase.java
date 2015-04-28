@@ -23,6 +23,7 @@ package org.bigtester.ate.model.casestep;
 import java.util.List;
 
 import org.bigtester.ate.constant.StepResultStatus;
+import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
@@ -167,7 +168,7 @@ public class TestCase {
 	public void goSteps() throws StepExecutionException2,
 			PageValidationException2, IllegalStateException,
 			RuntimeDataException {
-//		int correlatedOptionlStepsEndIndex = -1;//NOPMD
+
 		for (int i = 0; i < getTestStepList().size(); i++) {
 
 			ITestStep currentTestStepTmp = getTestStepList().get(i);
@@ -179,39 +180,38 @@ public class TestCase {
 			} else {
 				setCurrentTestStep(currentTestStepTmp);
 			}
-//			if (correlatedOptionlStepsEndIndex == -1)
-//				correlatedOptionlStepsEndIndex = optionalStepPopulation(currentTestStepTmp);
+
 			try {
 				getCurrentTestStep().doStep();// NOPMD
 				getCurrentTestStep().setStepResultStatus(StepResultStatus.PASS);
 				//if (i == correlatedOptionlStepsEndIndex) correlatedOptionlStepsEndIndex = -1;//NOPMD
+			} catch (BaseATECaseExecE baee) {
+				
+				if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1) { //NOPMD
+					i = ((BaseATECaseExecE) baee).getStepIndexJumpTo(); //NOPMD
+				} else if (getCurrentTestStep().isOptionalStep()) {
+					getCurrentTestStep().setStepResultStatus(
+							StepResultStatus.SKIP);
+					if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
+						i = currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex();//NOPMD
+						
+					}
+				} else {
+					throw baee;
+				}
 			} catch (Exception e) { //NOPMD
 				if (getCurrentTestStep().isOptionalStep()) {
 					getCurrentTestStep().setStepResultStatus(
 							StepResultStatus.SKIP);
 					if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
 						i = currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex();//NOPMD
-						//correlatedOptionlStepsEndIndex = -1;//NOPMD
+						
 					}
 				} else {
 					throw e;
 				}
 			}
-			// } catch (StepExecutionException2 stepE) {
-			//
-			// if (stepE.getErrorCode() ==
-			// ExceptionErrorCode.WEBELEMENT_NOTFOUND
-			// && getCurrentTestStep().isOptionalStep()) {
-			// getCurrentTestStep().setStepResultStatus(
-			// StepResultStatus.SKIP);
-			// } else if (AopUtils.getTargetClass(getCurrentTestStep()) ==
-			// RepeatStep.class && getCurrentTestStep().isOptionalStep()) {
-			// getCurrentTestStep().setStepResultStatus(
-			// StepResultStatus.SKIP);
-			// } else {
-			// throw stepE;
-			// }
-			// }
+			
 			if (stepThinkTime > 0) {
 				ThinkTime thinkTimer = new ThinkTime(stepThinkTime);
 				thinkTimer.setTimer();

@@ -29,7 +29,7 @@ import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
  * @author Peidong Hu
  *
  */
-abstract public class AbstractATECaseExecE extends AbstractATEException implements IATECaseExecException{
+public class BaseATECaseExecE extends AbstractATEException implements IATECaseExecException{
 
 
 	/** The Constant serialVersionUID. */
@@ -41,13 +41,16 @@ abstract public class AbstractATECaseExecE extends AbstractATEException implemen
 	/** The my web driver. */
 	private IMyWebDriver myWebDriver;
 	
+	/** The step index jump to. */
+	private int stepIndexJumpTo = -1;
+	
 	/**
 	 * Instantiates a new abstract ate case exec e.
 	 *
 	 * @param message the message
 	 * @param errorCode the error code
 	 */
-	public AbstractATECaseExecE(final String message, final String errorCode, final TestCase currentTestCase, final IMyWebDriver myWebDriver) {
+	public BaseATECaseExecE(final String message, final String errorCode, final TestCase currentTestCase, final IMyWebDriver myWebDriver) {
 		super(message, errorCode);
 		this.currentTestCase = currentTestCase;
 		this.myWebDriver = myWebDriver;
@@ -83,6 +86,18 @@ abstract public class AbstractATECaseExecE extends AbstractATEException implemen
 	 */
 	public void setMyWebDriver(IMyWebDriver myWebDriver) {
 		this.myWebDriver = myWebDriver;
+	}
+	/**
+	 * @return the stepIndexJumpTo
+	 */
+	public int getStepIndexJumpTo() {
+		return stepIndexJumpTo;
+	}
+	/**
+	 * @param stepIndexJumpTo the stepIndexJumpTo to set
+	 */
+	public void setStepIndexJumpTo(int stepIndexJumpTo) {
+		this.stepIndexJumpTo = stepIndexJumpTo;
 	}
 	
 	
