@@ -45,6 +45,13 @@
 	<ate:elementFindById id="efApplicantPhoneNumber"
 		findByValue="applicant.phoneNumber"  />
 	<ate:sendKeysAction id="eaFilloutApplicantPhoneNumber" dataValue="5148036657"/>
+	
+	<ate:elementActionDef id="eadApplyChooseFile"
+		elementFind="efApplyNowChooseFile" elementAction="eaApplyChooseFile">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efApplyNowChooseFile"
+		findByValue="resume"  />
+	<ate:uploadFileAction id="eaApplyChooseFile" dataValue="/home/peidong/Downloads/peidonghu_resume_en_QALead.pdf"/>
 
 	
 </beans>

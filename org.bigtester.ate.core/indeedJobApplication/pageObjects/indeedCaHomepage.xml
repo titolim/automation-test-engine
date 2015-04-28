@@ -25,7 +25,7 @@
 		findByValue="//*[@class='input_text']" indexOfSameElements="indexOfKeyWordInput" />
 	<ate:sendKeysAction id="eaTypeKeyWordQA" dataValue="dvkeyWordQA" />
 	<ate:runTimeDataHolder id="dvkeyWordQA"
-		dataHolderType="ManualAssigned" dataType="Text" dataValue=".NET" />
+		dataHolderType="ManualAssigned" dataType="Text" dataValue="QA" />
 	<ate:autoIncrementalDataHolder id="indexOfKeyWordInput" startValue="0" pacing="1"></ate:autoIncrementalDataHolder>
 
 	<ate:elementActionDef id="eadClearTextInWhere"
@@ -39,6 +39,12 @@
 		elementFind="efWhere" elementAction="eaTypeInLocation">
 	</ate:elementActionDef>
 	<ate:sendKeysAction id="eaTypeInLocation" dataValue="Montreal, QC" />
+	
+	<ate:elementActionDef id="eadTypeWindsorInWhere"
+		elementFind="efWhere" elementAction="eaTypeWindsor">
+	</ate:elementActionDef>
+	<ate:sendKeysAction id="eaTypeWindsor" dataValue="Windsor, ON" />
+	
 <!-- 	<ate:runTimeDataHolder id="Montreal1, QC" -->
 <!-- 		dataHolderType="ManualAssigned" dataType="Text" dataValue="Montreal, QC" /> -->
 
