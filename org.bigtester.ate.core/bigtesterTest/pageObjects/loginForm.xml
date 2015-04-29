@@ -21,7 +21,7 @@
     <!-- elementActionDef definition -->
 	<ate:elementActionDef id="eadTypeLoginUserName"   elementFind="efLoginUserName" elementAction="eaTypeLoginUserName" />
 	<ate:elementFindById id="efLoginUserName" findByValue="modlgn_username" />
-	<ate:uploadFileAction id="eaTypeLoginUserName" fileNameWithAbsolutePath="peidonghu1x" />
+	<ate:sendKeysAction id="eaTypeLoginUserName" dataValue="peidonghu1x" />
 <!-- 	<ate:fileDataHolder id="userNameValue" dataValueID="1"/> -->
 
 	<!-- elementActionDef definition -->
