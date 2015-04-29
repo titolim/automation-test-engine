@@ -20,7 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.exception;
 
-import org.bigtester.ate.model.AbstractATECaseExecE;
+import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.MyWebElement;
@@ -32,13 +32,15 @@ import org.bigtester.ate.model.page.page.MyWebElement;
  * @author Peidong Hu
  * 
  */
-public class StepExecutionException2 extends AbstractATECaseExecE {
+public class StepExecutionException2 extends BaseATECaseExecE {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 6019919237360483689L;
 
 	/** The my web element. */
-	private final MyWebElement myWebElement;
+	private final MyWebElement<?> myWebElement;
+	
+
 
 	
 	/**
@@ -51,11 +53,29 @@ public class StepExecutionException2 extends AbstractATECaseExecE {
 	 * @param currentTestCase the current test case
 	 */
 	public StepExecutionException2(String message, String errorCode,
-			MyWebElement myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase) {
+			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		this.myWebElement = myWebElement;
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
+	}
+	
+	/**
+	 * Instantiates a new step execution exception2.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 * @param myWebElement the my web element
+	 * @param myWebDriver the my web driver
+	 * @param currentTestCase the current test case
+	 */
+	public StepExecutionException2(String message, String errorCode,
+			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo) {
+		super(message, errorCode, currentTestCase, myWebDriver);
+		this.myWebElement = myWebElement;
+		setMyWebDriver(myWebDriver);
+		setCurrentTestCase(currentTestCase);
+		super.setStepIndexJumpTo(stepIndexJumpTo);
 	}
 
 	/**
@@ -63,7 +83,8 @@ public class StepExecutionException2 extends AbstractATECaseExecE {
 	 * 
 	 * @return the myWebElement
 	 */
-	public MyWebElement getMyWebElement() {
+	public MyWebElement<?> getMyWebElement() {
 		return myWebElement;
 	}
+
 }

@@ -51,8 +51,9 @@
 	</ate:elementActionDef>
 	<ate:elementFindById id="efApplyNowChooseFile"
 		findByValue="resume"  />
-	<ate:uploadFileAction id="eaApplyChooseFile" dataValue="/home/peidong/Downloads/peidonghu_resume_en_QALead.pdf"/>
-	
+	<ate:uploadFileAction id="eaApplyChooseFile"	
+		fileNameWithAbsolutePath="/home/peidong/Downloads/peidonghu_resume_en_QALead.pdf" />
+
 	<ate:elementActionDef id="eadSubmitResume"
 		elementFind="efResumeSubmitButton" elementAction="eaClickSubmitButton">
 	</ate:elementActionDef>

@@ -22,7 +22,7 @@ package org.bigtester.ate.model.page.exception;
 
 import java.util.List;
 
-import org.bigtester.ate.model.AbstractATECaseExecE;
+import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -36,7 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peidong Hu
  *
  */
-public class PageValidationException2 extends AbstractATECaseExecE {
+public class PageValidationException2 extends BaseATECaseExecE {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -7144577815429959503L;
@@ -52,6 +52,7 @@ public class PageValidationException2 extends AbstractATECaseExecE {
 	@Nullable
 	private List<IExpectedResultAsserter> listAsserters;
 
+		
 	/**
 	 * @return the listAsserters
 	 */
