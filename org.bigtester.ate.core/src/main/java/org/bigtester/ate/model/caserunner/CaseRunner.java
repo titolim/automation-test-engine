@@ -283,6 +283,9 @@ public class CaseRunner implements IRunTestCase {
 			} else {
 				throw fbe;
 			}
+		} catch (Throwable th) {//NOPMD
+			LogbackWriter.printStackTrace(th);
+			throw th;
 		}
 	}
 

@@ -101,6 +101,15 @@ public class TestCaseBeanDefinitionParser extends AbstractBeanDefinitionParser {
 					+ XsdElementConstants.ELEMENT_CASETYPESERVICE) {
 				CaseTypeServiceBeanDefinitionParser caseService = new CaseTypeServiceBeanDefinitionParser();
 				children.add(caseService.parse(element, parserContext));
+			} else if (element.getTagName().equals("ate:"
+					+ XsdElementConstants.ELEMENT_STEPTYPESERVICEREFERENCE)) {
+				String stepServiceDefRef = element.getAttribute(XsdElementConstants.ATTR_STEPTYPESERVICEREFERENCE_STEPTYPESERVICEDEFINITIONID);
+				if (StringUtils.isEmpty(stepServiceDefRef)) {
+					throw GlobalUtils.createNotInitializedException("STEPTYPESERVICEDEFINITIONID");
+				} else {
+					children.add(parserContext.getRegistry().getBeanDefinition(stepServiceDefRef));
+				}
+				
 			}
 		}
 		factory.addPropertyValue(

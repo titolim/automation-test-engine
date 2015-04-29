@@ -663,16 +663,33 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 	
-<xsd:complexType name="StepTypeServiceType">
+	<xsd:complexType name="StepTypeServiceRefType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+<!-- 				<xsd:group ref="beans:beanElements"/> -->
+<!-- 				<xsd:attributeGroup ref="beans:beanAttributes"/> -->
+				<xsd:attribute name="stepTypeServiceDefinitionID" type="xsd:string"
+					use="required">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<tool:annotation kind="ref">
+								<tool:expected-type type="org.bigtester.ate.model.casestep.StepTypeService" />
+							</tool:annotation>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="StepTypeServiceDefType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				
 				<xsd:choice maxOccurs="unbounded">
-					<xsd:element ref="caseTypeService" minOccurs="0"
-						maxOccurs="unbounded" />
-					<xsd:element ref="homeStep" minOccurs="1" maxOccurs="unbounded" />
-					<xsd:element ref="elementStep" minOccurs="0" maxOccurs="unbounded" />
-					<xsd:element ref="lastStep" minOccurs="1" maxOccurs="unbounded" />
+
+					<xsd:element ref="homeStep" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element ref="elementStep" minOccurs="1" maxOccurs="unbounded" />
+					<xsd:element ref="lastStep" minOccurs="0" maxOccurs="unbounded" />
 				</xsd:choice>
 				<xsd:attribute name="targetStep" type="xsd:boolean"
 					use="required" />
@@ -744,6 +761,8 @@
 
 				<xsd:choice maxOccurs="unbounded">
 					<xsd:element ref="caseTypeService" minOccurs="0"
+						maxOccurs="unbounded" />
+					<xsd:element ref="stepTypeServiceReference" minOccurs="0"
 						maxOccurs="unbounded" />
 					<xsd:element ref="homeStep" minOccurs="1" maxOccurs="unbounded" />
 					<xsd:element ref="elementStep" minOccurs="0" maxOccurs="unbounded" />
@@ -827,7 +846,9 @@
 	<xsd:element name="regularPage" type="RegularPageType" />
 
 	<xsd:element name="caseTypeService" type="CaseTypeServiceType" />
-	<xsd:element name="stepTypeService" type="StepTypeServiceType" />
+	<xsd:element name="stepTypeServiceDefinition" type="StepTypeServiceDefType" />
+	
+	<xsd:element name="stepTypeServiceReference" type="StepTypeServiceRefType" />
 	<xsd:element name="runTimeDataHolder" type="RunTimeDataHolderType" />
 	<xsd:element name="autoIncrementalDataHolder" type="AutoIncrementalDataHolderType" />
 

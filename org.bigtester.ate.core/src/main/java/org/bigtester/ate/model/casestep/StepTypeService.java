@@ -88,7 +88,8 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 				getStepSet().get(i).doStep();// NOPMD
 				getStepSet().get(i).setStepResultStatus(StepResultStatus.PASS);
 			} catch (Exception e) { //NOPMD
-					throw e;
+				getStepSet().get(i).setStepResultStatus(StepResultStatus.FAIL);
+				throw e;
 			}
 			if (getServingCase().getStepThinkTime() > 0) {
 				ThinkTime thinkTimer = new ThinkTime(getServingCase().getStepThinkTime());

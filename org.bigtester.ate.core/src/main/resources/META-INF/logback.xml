@@ -53,8 +53,8 @@
 		</filter>
 	</appender>
 
-	<logger name="org.bigtester" level="TRACE" />
-	<root level="debug">
+	<logger name="org.bigtester" level="ALL" />
+	<root level="ALL">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 		<appender-ref ref="newAppenderName" />

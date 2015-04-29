@@ -41,6 +41,26 @@ public final class LogbackWriter {
 			.getLogger(LogbackWriter.class);
 
 	/**
+	 * Prints the stack trace.
+	 *
+	 * @param thr the th
+	 */
+	public static void printStackTrace(Throwable thr) {
+		final Logger mylogger2 = MYLOGGER;
+		if (mylogger2 == null) {
+			throw GlobalUtils.createNotInitializedException("MYLOGGER"); //NOPMD
+		} else {
+			if (mylogger2.isErrorEnabled()) {
+				mylogger2.error("Uncaught error!", thr);
+			} else {
+				throw new UnsupportedOperationException(
+						ExceptionMessage.MSG_UNSUPPORTED_LOGBACK_LEVEL
+								+ "MYLOGGER.isErrorEnabled()");
+			}
+			
+		}
+	}
+	/**
 	 * Write app error.
 	 *
 	 * @param msg

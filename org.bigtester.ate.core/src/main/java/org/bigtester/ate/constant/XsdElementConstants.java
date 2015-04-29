@@ -199,6 +199,7 @@ public final class XsdElementConstants {
 	/** The Constant ATTR_RUNTIMEDATAHOLDER_INDEXOFSAMETYPEDATAONPAGE. */
 	public static final String ATTR_RUNTIMEDATAHOLDER_INDEXOFSAMETYPEDATAONPAGE = "indexOfSameTypeDataOnPage"; //NOPMD
 	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_RANDOMINPUTLENGTH. */
 	public static final String ATTR_RUNTIMEDATAHOLDER_RANDOMINPUTLENGTH = "randomInputLength"; //NOPMD
 	
 	
@@ -248,8 +249,14 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_CASETYPESERVICE. */
 	public static final String ELEMENT_CASETYPESERVICE = "caseTypeService";
 
-	/** The Constant ELEMENT_STEPTYPESERVICE. */
-	public static final String ELEMENT_STEPTYPESERVICE = "stepTypeService";
+	/** The Constant ELEMENT_STEPTYPESERVICE Definition. */
+	public static final String ELEMENT_STEPTYPESERVICEDEFINITION = "stepTypeServiceDefinition";
+	
+	/** The Constant ELEMENT_STEPTYPESERVICEREFERENCE. */
+	public static final String ELEMENT_STEPTYPESERVICEREFERENCE = "stepTypeServiceReference";
+	
+	/** The Constant ATTR_STEPTYPESERVICEREFERENCE_STEPTYPESERVICEDEFINITIONID. */
+	public static final String ATTR_STEPTYPESERVICEREFERENCE_STEPTYPESERVICEDEFINITIONID = "stepTypeServiceDefinitionID";//NOPMD
 	
 	/** The Constant ELEMENT_FIREFOXDRIVER. */
 	public static final String ELEMENT_FIREFOXDRIVER = "firefoxDriver";
@@ -338,6 +345,9 @@ public final class XsdElementConstants {
 	
 	/** The Constant PROP_TESTCASE_TESTSTEPLIST. */
 	public static final String PROP_TESTCASE_TESTSTEPLIST = "testStepList";
+	
+	/** The Constant PROP_STEPTYPESERVICE_STEPSET. */
+	public static final String PROP_STEPTYPESERVICE_STEPSET = "stepSet";
 	
 	/** The Constant PROP_TESTSUITE_SUITENAME. */
 	public static final String ATTR_TESTSUITE_SUITENAME = "suiteName";
