@@ -47,20 +47,20 @@
 			stepDescription="type in public user password" stepName="stepUserLoginTypePassword"
 			targetStep="false" elementActionDef="eadTypeLoginPassword" pageObject="poHomePage">
 		</ate:elementStep>
-	<!-- 	<ate:elementStep id="publicLogin_clickLoginButton"
+		<ate:elementStep id="publicLogin_clickLoginButton"
 			stepDescription="click Login button to log in" stepName="clickLoginButton"
-			targetStep="true" elementActionDef="clickLoginButtonWE" pageObject="homePage">
-			<property name="expectedResultAsserter">
+			targetStep="false" elementActionDef="eadClickLoginButton" pageObject="poHomePage">
+		<!-- 	<property name="expectedResultAsserter">
 				<list>
 					<ref bean="publicLoginDashBoardPropertyAsserter" />
 					<ref bean="publicLoginDashBoardElementExistenceAsserter" />
 				</list>
-			</property>
+			</property> -->
 		</ate:elementStep>
-		<ate:elementStep id="publicLogin_clickLogoutLink"
-			stepDescription="logout user" stepName="logoutUser"
-			targetStep="false" elementActionDef="logoutUser">
-		</ate:elementStep> -->
+		<ate:elementStep id="publicLogout_clickLogoutLink"
+			stepDescription="click Logout button to logout" stepName="clickLogoutButton"
+			targetStep="false" elementActionDef="eadClickLogoutButton" pageObject="poHomePage">
+		</ate:elementStep>
 		<ate:lastStep id="stepLaststep" stepName="stepLaststep"
 			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
 		</ate:lastStep>

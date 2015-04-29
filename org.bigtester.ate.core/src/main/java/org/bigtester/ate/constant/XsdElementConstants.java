@@ -134,7 +134,7 @@ public final class XsdElementConstants {
 	public static final String ELEMENT_UPLOADFILEACTION = "uploadFileAction";
 	
 	/** The Constant ATTR_UPLOADFILEACTION_DATAVALUE. */
-	public static final String ATTR_UPLOADFILEACTION_DATAVALUE = "dataValue";
+	public static final String ATTR_UPLOADFILEACTION_DATAVALUE = "fileNameWithAbsolutePath";
 	
 	/** The Constant ELEMENT_MYWEBELEMENT. */
 	public static final String ELEMENT_ELEMENTACTIONDEF = "elementActionDef";
