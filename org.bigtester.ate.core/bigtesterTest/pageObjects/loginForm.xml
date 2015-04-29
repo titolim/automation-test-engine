@@ -17,13 +17,11 @@
 	<import resource="classpath:META-INF/page_base_bean.xml" />
 
 	<ate:regularPage id="poLoginForm" />
-
-	
 	
     <!-- elementActionDef definition -->
 	<ate:elementActionDef id="eadTypeLoginUserName"   elementFind="efLoginUserName" elementAction="eaTypeLoginUserName" />
 	<ate:elementFindById id="efLoginUserName" findByValue="modlgn_username" />
-	<ate:sendKeysAction id="eaTypeLoginUserName" dataValue="peidonghu1x" />
+	<ate:uploadFileAction id="eaTypeLoginUserName" fileNameWithAbsolutePath="peidonghu1x" />
 <!-- 	<ate:fileDataHolder id="userNameValue" dataValueID="1"/> -->
 
 	<!-- elementActionDef definition -->
@@ -39,15 +37,18 @@
 
 	<!-- elementActionDef definition -->
 	<ate:elementActionDef id="eadClickLoginButton" elementFind="efLoginButton" elementAction="eaLoginButtonClick" />
-	<ate:elementFindByXpath id="efLoginButton" findByValue="//button[@type='submit']" />
+	<ate:elementFindByXpath id="efLoginButton" findByValue="//input[@name='Submit']" />
 	<ate:clickAction id="eaLoginButtonClick" />
-
 <!-- 	<ate:runTimeDataHolder id="wrongCode1" dataHolderType="PageSourceParsed" dataType="Text" pageHtmlLeftBoundry="Oops" pageHtmlRightBoundry="ong password" page="poHomePage"/> -->
 
-    <!-- elementActionDef definition -->
-	<ate:elementActionDef id="eadClickCreateAnAccountLink" elementFind="efCreateAccountLink" elementAction="eaClickCreateAccountLink"/>
-	<ate:elementFindById id="efCreateAccountLink"	findByValue="register-btn" />
-	<ate:clickAction id="eaClickCreateAccountLink" />
+<!-- elementActionDef definition -->
+	<ate:elementActionDef id="eadClickLogoutButton" elementFind="efLogoutButton" elementAction="eaLogoutButtonClick" />
+	<ate:elementFindByXpath id="efLogoutButton" findByValue="//input[@name='Submit']" />
+	<ate:clickAction id="eaLogoutButtonClick" />
 
+    <!-- elementActionDef definition -->
+	<!-- <ate:elementActionDef id="eadClickCreateAnAccountLink" elementFind="efCreateAccountLink" elementAction="eaClickCreateAccountLink"/>
+	<ate:elementFindById id="efCreateAccountLink"	findByValue="register-btn" />
+	<ate:clickAction id="eaClickCreateAccountLink" /> --> 
 
 </beans>
