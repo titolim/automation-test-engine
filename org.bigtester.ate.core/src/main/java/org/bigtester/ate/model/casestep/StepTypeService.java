@@ -40,8 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  */
 public class StepTypeService extends BaseTestStep implements ITestStep {
-	@Nullable
-	private transient TestCase servingCase;
+	
 	/** The step i ds. */
 	final private List<ITestStep> stepSet = new ArrayList<ITestStep>();
 
@@ -55,8 +54,8 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 	 * @param testCase
 	 *            the test case
 	 */
-	public StepTypeService(String stepName, TestCase testCase) {
-		super(testCase);
+	public StepTypeService(String stepName) {
+		super();
 		setStepName(stepName);
 
 	}
@@ -120,19 +119,9 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 	 * @return the servingCase
 	 */
 	public TestCase getServingCase() {
-		final TestCase servingCase2 = servingCase;
-		if (servingCase2 == null) {
-			throw GlobalUtils.createNotInitializedException("service test case in steptypeservice");
-		} else {
-			return servingCase2;
-		}
+		return getTestCase();
 	}
 
-	/**
-	 * @param servingCase the servingCase to set
-	 */
-	public void setServingCase(TestCase servingCase) {
-		this.servingCase = servingCase;
-	}
+	
 
 }

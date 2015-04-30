@@ -49,7 +49,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 public class BaseTestStep implements ApplicationContextAware {// NOPMD
 
 	/** The test case. */
-	final private TestCase testCase;
+	@Nullable
+	private TestCase testCase;
 
 	/** The current iteration. */
 	private int currentIteration;
@@ -114,17 +115,36 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 
 	/**
 	 * Instantiates a new base test step.
+	 *
+	 * @param testCase the test case
 	 */
 	public BaseTestStep(TestCase testCase) {
 		elementStepFlag = false;
 		this.testCase = testCase;
 	}
+	
+	/**
+	 * Instantiates a new base test step.
+	 */
+	public BaseTestStep() {
+		elementStepFlag = false;
+	
+	}
 
 	/**
 	 * Instantiates a new base test step.
 	 *
-	 * @param pageObject
-	 *            the page object
+	 * @param pageObject the page object
+	 */
+	public BaseTestStep(IPageObject pageObject) {
+		this.pageObject = pageObject;
+	}
+	
+	/**
+	 * Instantiates a new base test step.
+	 *
+	 * @param pageObject            the page object
+	 * @param testCase the test case
 	 */
 	public BaseTestStep(IPageObject pageObject, TestCase testCase) {
 		this.pageObject = pageObject;
@@ -134,10 +154,22 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	/**
 	 * Instantiates a new base test step.
 	 *
-	 * @param pageObject
-	 *            the page object
-	 * @param myWebElement
-	 *            the my web element
+	 * @param pageObject the page object
+	 * @param myWebElement the my web element
+	 */
+	public BaseTestStep(IPageObject pageObject,
+			@Nullable MyWebElement<?> myWebElement) {
+		this.pageObject = pageObject;
+		this.myWebElement = myWebElement;
+		
+	}
+	
+	/**
+	 * Instantiates a new base test step.
+	 *
+	 * @param pageObject            the page object
+	 * @param myWebElement            the my web element
+	 * @param testCase the test case
 	 */
 	public BaseTestStep(IPageObject pageObject,
 			@Nullable MyWebElement<?> myWebElement, TestCase testCase) {
@@ -145,24 +177,45 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 		this.myWebElement = myWebElement;
 		this.testCase = testCase;
 	}
-
-	/**
-	 * @return the testCase
-	 */
-	public TestCase getTestCase() {
-		return testCase;
-	}
-
+	
 	/**
 	 * Instantiates a new base test step.
 	 *
-	 * @param myWebElement
-	 *            the my web element
+	 * @param myWebElement the my web element
+	 */
+	public BaseTestStep(MyWebElement<?> myWebElement) {
+		this.myWebElement = myWebElement;
+	}
+	
+	/**
+	 * Instantiates a new base test step.
+	 *
+	 * @param myWebElement            the my web element
+	 * @param testCase the test case
 	 */
 	public BaseTestStep(MyWebElement<?> myWebElement, TestCase testCase) {
 		this.myWebElement = myWebElement;
 		this.testCase = testCase;
 	}
+
+	/**
+	 * Gets the test case.
+	 *
+	 * @return the testCase
+	 */
+	public TestCase getTestCase() {
+		
+		if (null == testCase) 
+			testCase = GlobalUtils.findTestCaseBean();
+		final TestCase testCase2 = testCase;
+		if (testCase2 != null) {
+			return testCase2;
+		} else {
+			throw GlobalUtils.createInternalError("test case bean couldn't be found");
+		}
+	}
+
+	
 
 	/**
 	 * Gets the application context.
@@ -184,6 +237,8 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	}
 
 	/**
+	 * Gets the correlated optional steps util inclusive index.
+	 *
 	 * @return the correlatedOptionalStepsUtilInclusiveIndex
 	 */
 
@@ -557,8 +612,9 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	}
 
 	/**
-	 * @param correlatedOptionalStepsUtilInclusiveIndex
-	 *            the correlatedOptionalStepsUtilInclusiveIndex to set
+	 * Sets the correlated optional steps util inclusive index.
+	 *
+	 * @param correlatedOptionalStepsUtilInclusiveIndex            the correlatedOptionalStepsUtilInclusiveIndex to set
 	 */
 	public void setCorrelatedOptionalStepsUtilInclusiveIndex(
 			int correlatedOptionalStepsUtilInclusiveIndex) {//NOPMD

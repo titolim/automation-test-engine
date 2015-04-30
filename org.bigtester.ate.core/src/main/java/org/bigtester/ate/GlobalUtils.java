@@ -38,9 +38,11 @@ import org.bigtester.ate.model.page.page.RegularPage;
 import org.bigtester.ate.model.project.TestProject;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.aop.support.AopUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
 // TODO: Auto-generated Javadoc
@@ -50,8 +52,11 @@ import org.springframework.core.io.Resource;
  * @author Peidong Hu
  *
  */
-public final class GlobalUtils {
+public class GlobalUtils implements ApplicationContextAware {
 
+	/** The apx. */
+	@Nullable
+	private static ApplicationContext apx;
 	/**
 	 * Gets the target object.
 	 *
@@ -89,6 +94,32 @@ public final class GlobalUtils {
 	 */
 	public static TestCase findTestCaseBean(ApplicationContext appCtx)
 			throws NoSuchBeanDefinitionException {
+		Map<String, TestCase> testcases = appCtx.getBeansOfType(TestCase.class);
+
+		if (testcases.isEmpty()) {
+			throw new NoSuchBeanDefinitionException(TestCase.class);
+		} else {
+			TestCase retVal = testcases.values().iterator().next();
+			if (null == retVal) {
+				throw new NoSuchBeanDefinitionException(TestCase.class);
+			} else {
+				return retVal;
+			}
+		}
+	}
+	
+	/**
+	 * Find test case bean.
+	 *
+	 * @param appCtx
+	 *            the app ctx
+	 * @return the xml test case
+	 * @throws NoSuchBeanDefinitionException
+	 *             the no such bean definition exception
+	 */
+	public static TestCase findTestCaseBean()
+			throws NoSuchBeanDefinitionException {
+		ApplicationContext appCtx = getApx();
 		Map<String, TestCase> testcases = appCtx.getBeansOfType(TestCase.class);
 
 		if (testcases.isEmpty()) {
@@ -374,7 +405,30 @@ public final class GlobalUtils {
 	// TODO use generic Type <T> to reduce the number of duplicated findNNNBean
 	// functions.
 
-	private GlobalUtils() {
+	public GlobalUtils() {
+		GlobalUtils.apx = null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setApplicationContext(@Nullable ApplicationContext arg0)
+			throws BeansException {
+		if (null == arg0) throw GlobalUtils.createInternalError("Application Context Aware");
+		GlobalUtils.apx = arg0;
+	}
+
+	/**
+	 * @return the apx
+	 */
+	public static ApplicationContext getApx() {
+		final ApplicationContext apx2 = apx;
+		if (apx2 == null) {
+			throw GlobalUtils.createInternalError("application context aware");
+		} else {
+			return apx2;
+		}
 	}
 
 }

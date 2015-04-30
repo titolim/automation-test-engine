@@ -111,10 +111,11 @@ public class BaseTestStepBeanDefinitionParser extends
 		
 		bDef.getPropertyValues().addPropertyValue("repeatStepLogger",
 				new RuntimeBeanReference(GlobalConstants.BEAN_ID_REPEATSTEPEXECUTIONLOGGER));
-		
-		String testcaseParentName = element.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
-		bDef.getConstructorArgumentValues().addGenericArgumentValue(
-				new RuntimeBeanReference(testcaseParentName));
+		if (!"beans".equals(element.getParentNode().getLocalName())) {
+			String testcaseParentName = element.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
+			bDef.getConstructorArgumentValues().addGenericArgumentValue(
+					new RuntimeBeanReference(testcaseParentName));
+		}
 //        String text = element.getAttribute("text");
 //        bd.getPropertyValues().addPropertyValue("text", text);
         parserContext.getRegistry().registerBeanDefinition(element.getAttribute("id"), bDef);

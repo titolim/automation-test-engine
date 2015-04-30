@@ -12,12 +12,8 @@
 	
 	<import resource="classpath:META-INF/db-services.xml" />
 	
-	<bean class="org.bigtester.ate.model.data.CaseDataProcessor" />
-	<bean class="org.bigtester.ate.model.page.elementaction.SendKeysActionPostBeanProcessor" />
-	<bean class="org.bigtester.ate.model.page.elementfind.ElementFinderIndexOfSameProcessor"/>
-	<bean id="StepDataLogger" class="org.bigtester.ate.model.casestep.StepDataLogger" />
-	<bean id="repeatStepExecutionLogger" class="org.bigtester.ate.model.casestep.RepeatStepExecutionLogger" />
-	<bean id="globalUtilsForTestCase" class="org.bigtester.ate.GlobalUtils" />
-	<ate:TestDatabaseInitializer id="dbInitializer"/>
+	<ate:GenericSystemLogger id="systemlogger" />
+	<ate:TestDatabaseInitializer id="dbInitializer" />
+	<bean id="globalUtilsForTestProject" class="org.bigtester.ate.GlobalUtils" />
 	
 </beans>
