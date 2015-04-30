@@ -103,13 +103,7 @@ public interface ITestStep {
 	
 	String getStepName();
 	
-	/**
-	 * Gets the my web element.
-	 *
-	 * @return the my web element
-	 */
-	@Nullable
-	MyWebElement<?> getMyWebElement();
+	
 	/**
 	 * Gets the step description.
 	 * 

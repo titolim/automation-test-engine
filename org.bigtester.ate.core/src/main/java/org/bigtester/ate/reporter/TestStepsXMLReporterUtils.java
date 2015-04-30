@@ -26,6 +26,7 @@ import java.util.Properties;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ReportMessage;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
+import org.bigtester.ate.model.casestep.IElementStep;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.page.MyWebElement;
@@ -95,9 +96,9 @@ public final class TestStepsXMLReporterUtils {
 		String testData;
 		String stepReportMSG;
 		if (tsr.getThisStep().isElementStepFlag()) {
+			
 			@SuppressWarnings("unchecked")
-			MyWebElement<WebElement> mwe = (MyWebElement<WebElement>) tsr.getThisStep().getMyWebElement();
-			if (null==mwe) throw GlobalUtils.createNotInitializedException("myWebElement in element step.");
+			MyWebElement<WebElement> mwe = (MyWebElement<WebElement>) ((IElementStep) tsr.getThisStep()).getMyWebElement();
 			IElementAction myEA = (IElementAction) mwe.getTestObjectAction();
 			if (null == myEA) {
 				throw GlobalUtils.createNotInitializedException("element action in element step.");

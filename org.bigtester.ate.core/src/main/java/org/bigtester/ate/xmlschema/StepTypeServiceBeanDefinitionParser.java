@@ -82,11 +82,17 @@ BaseTestStepBeanDefinitionParser {
 			if (element.getTagName() == "ate:" //NOPMD
 					+ XsdElementConstants.ELEMENT_HOMESTEP) {
 				HomeStepBeanDefinitionParser homeStep = new HomeStepBeanDefinitionParser();
-				children.add(homeStep.parse(element, parserContext));
+				BeanDefinition tmpBDef = homeStep.parse(element, parserContext);
+				tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
+				
+				children.add(tmpBDef);
 			} else if (element.getTagName() == "ate:"
 					+ XsdElementConstants.ELEMENT_ELEMENTSTEP) {
 				ElementStepBeanDefinitionParser elementStep = new ElementStepBeanDefinitionParser();
-				children.add(elementStep.parse(element, parserContext));
+				BeanDefinition tmpBDef = elementStep.parse(element, parserContext);
+				tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
+				
+				children.add(tmpBDef);
 //			} else if (element.getTagName() == "ate:"
 //					+ XsdElementConstants.ELEMENT_REPEATSTEP) {
 //				RepeatStepBeanDefinitionParser repeatStep = new RepeatStepBeanDefinitionParser();
@@ -94,7 +100,11 @@ BaseTestStepBeanDefinitionParser {
 			} else if (element.getTagName() == "ate:"
 					+ XsdElementConstants.ELEMENT_LASTSTEP) {
 				LastStepBeanDefinitionParser lastStep = new LastStepBeanDefinitionParser();
-				children.add(lastStep.parse(element, parserContext));
+				BeanDefinition tmpBDef = lastStep.parse(element, parserContext);
+				tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
+				
+				children.add(tmpBDef);
+		
 			}
 //			} else if (element.getTagName() == "ate:"
 //					+ XsdElementConstants.ELEMENT_CASETYPESERVICE) {
@@ -103,6 +113,6 @@ BaseTestStepBeanDefinitionParser {
 //			}
 		}
 		beanDef.getPropertyValues().addPropertyValue(
-				XsdElementConstants.PROP_STEPTYPESERVICE_STEPSET, children);
+				XsdElementConstants.MEMBER_STEPTYPESERVICE_STEPSET, children);
 	}
 }

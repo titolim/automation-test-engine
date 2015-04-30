@@ -42,23 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class StepTypeService extends BaseTestStep implements ITestStep {
 	
 	/** The step i ds. */
-	final private List<ITestStep> stepSet = new ArrayList<ITestStep>();
-
-	/**
-	 * Instantiates a new repeat step.
-	 *
-	 * @param startStepName
-	 *            the start step name
-	 * @param endStepName
-	 *            the end step name
-	 * @param testCase
-	 *            the test case
-	 */
-	public StepTypeService(String stepName) {
-		super();
-		setStepName(stepName);
-
-	}
+	private List<ITestStep> stepSet = new ArrayList<ITestStep>();
 
 	/**
 	 * {@inheritDoc}
@@ -120,6 +104,13 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 	 */
 	public TestCase getServingCase() {
 		return getTestCase();
+	}
+
+	/**
+	 * @param stepSet the stepSet to set
+	 */
+	public void setStepSet(List<ITestStep> stepSet) {
+		this.stepSet = stepSet;
 	}
 
 	

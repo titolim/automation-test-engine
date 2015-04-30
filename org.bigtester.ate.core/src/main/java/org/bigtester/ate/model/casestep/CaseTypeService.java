@@ -118,14 +118,6 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 		return getTestCaseName();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Nullable
-	public MyWebElement<?> getMyWebElement() {
-		return null;
-	}
 
 	/**
 	 * {@inheritDoc}

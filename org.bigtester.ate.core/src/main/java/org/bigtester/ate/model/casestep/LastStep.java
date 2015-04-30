@@ -24,8 +24,6 @@ package org.bigtester.ate.model.casestep;
 import org.bigtester.ate.annotation.StepLoggable;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.ILastpage;
-import org.bigtester.ate.model.page.page.MyWebElement;
-import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,20 +37,13 @@ public class LastStep extends BaseTestStep implements ITestStep {
 
 	private ILastpage lastPage;
 
+	
 	/**
 	 * @param pageObject
 	 * @param myWebElement
 	 */
-	public LastStep(ILastpage pageObject, @Nullable MyWebElement<?> myWebElement, TestCase testcase) {
-		super(pageObject, myWebElement, testcase);
-		this.lastPage = pageObject;
-	}
-	/**
-	 * @param pageObject
-	 * @param myWebElement
-	 */
-	public LastStep(ILastpage pageObject, TestCase testCase) {
-		super(pageObject, testCase);
+	public LastStep(ILastpage pageObject ) {
+		super(); 
 		this.lastPage = pageObject;
 	}
 	/**

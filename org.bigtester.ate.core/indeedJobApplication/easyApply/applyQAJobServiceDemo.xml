@@ -31,7 +31,7 @@
 			stepDescription="open indeed home page" targetStep="false"
 			pageObject="indeedCaHomepage" />
 
-<!-- 		<ate:stepTypeServiceReference id="searchjobs" stepTypeServiceDefinitionID="qaJobSearchService"/> -->
+		<ate:stepTypeServiceReference id="searchjobs" stepTypeServiceDefinitionID="qaJobSearchService"/>
 		
 		<ate:elementStep id="stepClickJobLink"
 			stepDescription="stepClickJobLink" stepName="stepClickJobLink"

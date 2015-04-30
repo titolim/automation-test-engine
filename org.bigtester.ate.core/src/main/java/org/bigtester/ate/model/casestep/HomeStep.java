@@ -32,7 +32,6 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.page.IHomepage;
-import org.bigtester.ate.model.page.page.MyWebElement;
 
 
 // TODO: Auto-generated Javadoc
@@ -47,16 +46,7 @@ public class HomeStep extends BaseTestStep implements ITestStep{
 	/** The homepg. */
 	private IHomepage homePage;
 
-	/**
-	 * Instantiates a new home step.
-	 *
-	 * @param pageObject the page object
-	 * @param myWebElement the my web element
-	 */
-	public HomeStep(IHomepage pageObject, MyWebElement<?> myWebElement, TestCase testCase) {
-		super(pageObject, myWebElement, testCase);
-		this.homePage = pageObject;
-	}
+	
 	
 	/**
 	 * Instantiates a new home step.
@@ -64,8 +54,8 @@ public class HomeStep extends BaseTestStep implements ITestStep{
 	 * @param pageObject the page object
 	 * @param myWebElement the my web element
 	 */
-	public HomeStep(IHomepage pageObject, TestCase testCase) {
-		super(pageObject, testCase);
+	public HomeStep(IHomepage pageObject) {
+		super();
 		this.homePage = pageObject;
 	}
 	

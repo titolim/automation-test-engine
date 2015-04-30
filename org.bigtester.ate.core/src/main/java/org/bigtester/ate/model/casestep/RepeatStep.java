@@ -104,9 +104,9 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 * @param testCase
 	 *            the test case
 	 */
-	public RepeatStep(String startStepName, String endStepName,
-			TestCase testCase) {
-		super(testCase);
+	public RepeatStep(String startStepName, String endStepName
+		) {
+		 
 		this.startStepName = startStepName;
 		this.endStepName = endStepName;
 		this.continueOnFailure = false;
@@ -152,16 +152,16 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 				}
 				
 
-				
-				MyWebElement<?> webE = thisStep.getMyWebElement();
-				if (null != webE
-						&& webE.getTestObjectAction() instanceof IElementAction) {
-					ITestObjectAction<?> iTOA = webE.getTestObjectAction();
-					if (null != iTOA
-							&& ((IElementAction) iTOA).getDataValue() != null) {
-						refreshDataValues.add((IStepInputData) GlobalUtils
-								.getTargetObject(((IElementAction) iTOA)
-										.getDataValue()));
+				if (thisStep instanceof IElementStep) {
+					MyWebElement<?> webE = ((IElementStep)thisStep ).getMyWebElement();
+					if (webE.getTestObjectAction() instanceof IElementAction) {
+						ITestObjectAction<?> iTOA = webE.getTestObjectAction();
+						if (null != iTOA
+								&& ((IElementAction) iTOA).getDataValue() != null) {
+							refreshDataValues.add((IStepInputData) GlobalUtils
+									.getTargetObject(((IElementAction) iTOA)
+											.getDataValue()));
+						}
 					}
 				}
 

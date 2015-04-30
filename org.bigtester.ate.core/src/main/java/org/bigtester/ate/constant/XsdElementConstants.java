@@ -309,6 +309,9 @@ public final class XsdElementConstants {
 	/** The Constant ATTR_TESTSTEP_TARGETSTEP. */
 	public static final String ATTR_TESTSTEP_TARGETSTEP = "targetStep";
 	
+	/** The Constant ATTR_TESTSTEP_PAGEOBJECT. */
+	public static final String ATTR_TESTSTEP_PAGEOBJECT = "pageObject";
+	
 	/** The Constant ATTR_REPEATSTEP_STARTSTEPNAME. */
 	public static final String ATTR_REPEATSTEP_STARTSTEPNAME = "startStepName";
 	
@@ -347,7 +350,10 @@ public final class XsdElementConstants {
 	public static final String PROP_TESTCASE_TESTSTEPLIST = "testStepList";
 	
 	/** The Constant PROP_STEPTYPESERVICE_STEPSET. */
-	public static final String PROP_STEPTYPESERVICE_STEPSET = "stepSet";
+	public static final String MEMBER_STEPTYPESERVICE_STEPSET = "stepSet";
+	
+	/** The Constant MEMBER_BASETESTSTEP_TESTCASE. */
+	public static final String MEMBER_BASETESTSTEP_TESTCASE = "testCase";
 	
 	/** The Constant PROP_TESTSUITE_SUITENAME. */
 	public static final String ATTR_TESTSUITE_SUITENAME = "suiteName";

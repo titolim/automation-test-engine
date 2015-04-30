@@ -34,6 +34,7 @@ import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
 import org.bigtester.ate.model.page.page.IPageObject;
 import org.bigtester.ate.model.page.page.MyWebElement;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 
@@ -43,35 +44,21 @@ import org.openqa.selenium.TimeoutException;
  * 
  * @author Peidong Hu
  */
-public class ElementTestStep extends BaseTestStep implements ITestStep {
+public class ElementTestStep extends BaseTestStep implements IElementStep {
 
-	/**
-	 * Gets the my web element.
-	 * 
-	 * @return the myWebElement
-	 */
-	@Override
-	public final MyWebElement<?> getMyWebElement() throws IllegalStateException{
-		final MyWebElement<?> myWebElement2 = myWebElement;
-		if ( null == myWebElement2 ) {
-			throw new IllegalStateException("Element Test Step MyWebElement can't be null.");
-		} else {
-			return myWebElement2;
-		}
-	}
-	/**
-	 * @param pageObject
-	 * @param myWebElement
-	 */
-	public ElementTestStep(IPageObject pageObject, MyWebElement<?> myWebElement, TestCase testCase) {
-		super(pageObject, myWebElement, testCase);
-	}
+	/** The my web element. */
+	
+	protected MyWebElement<?> myWebElement;
+	
+
 
 	/**
 	 * @param myWebElement
 	 */
-	public ElementTestStep( MyWebElement<?> myWebElement, TestCase testCase) {
-		super( myWebElement, testCase);
+	public ElementTestStep( MyWebElement<?> myWebElement) {
+		
+		this.myWebElement = myWebElement;
+		setElementStepFlag(true);
 	}
 	/**
 	 * {@inheritDoc}
@@ -141,4 +128,23 @@ public class ElementTestStep extends BaseTestStep implements ITestStep {
 		return getMyWebElement().getMyWd();
 	}
 	
+	/**
+	 * Gets the my web element.
+	 * 
+	 * @return the myWebElement
+	 */
+	
+	public MyWebElement<?> getMyWebElement() {
+		return myWebElement;
+	}
+	
+	/**
+	 * Sets the my web element.
+	 * 
+	 * @param myWebElement
+	 *            the myWebElement to set
+	 */
+	public void setMyWebElement(final MyWebElement<?> myWebElement) {
+		this.myWebElement = myWebElement;
+	}
 }

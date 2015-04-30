@@ -13,31 +13,31 @@
 	<aop:aspectj-autoproxy />
 
 
-<!-- 	<import resource="../pageObjects/indeedCaHomepage.xml" /> -->
+	<import resource="../pageObjects/indeedCaHomepage.xml" />
 	
 	<ate:stepTypeServiceDefinition id="qaJobSearchService" stepName="qaJobSearchService" targetStep="false">
 
-<!-- 		<ate:elementStep id="stepTypeInSearchKeyWordQA" -->
-<!-- 			stepDescription="type in search key word QA" stepName="typeInSearchKeyWordQA" -->
-<!-- 			optionalStep="false" targetStep="false" elementActionDef="eadTypeInSearchKeyWordQA"> -->
-<!-- 		</ate:elementStep> -->
+		<ate:elementStep id="stepTypeInSearchKeyWordQA"
+			stepDescription="type in search key word QA" stepName="typeInSearchKeyWordQA"
+			optionalStep="false" targetStep="false" elementActionDef="eadTypeInSearchKeyWordQA">
+		</ate:elementStep>
 				
-<!-- 		<ate:elementStep id="stepClearWhereText" -->
-<!-- 			stepDescription="clear where text" stepName="clearWhereText" -->
-<!-- 			targetStep="false" elementActionDef="eadClearTextInWhere" -->
-<!-- 			> -->
-<!-- 		</ate:elementStep> -->
+		<ate:elementStep id="stepClearWhereText"
+			stepDescription="clear where text" stepName="clearWhereText"
+			targetStep="false" elementActionDef="eadClearTextInWhere"
+			>
+		</ate:elementStep>
 		
-<!-- 		<ate:elementStep id="stepTypeInWindsorOn" -->
-<!-- 			stepDescription="type in search location, Windsor" stepName="stepTypeInWindsorOn" -->
-<!-- 			targetStep="false" elementActionDef="eadTypeWindsorInWhere"> -->
-<!-- 		</ate:elementStep> -->
+		<ate:elementStep id="stepTypeInWindsorOn"
+			stepDescription="type in search location, Windsor" stepName="stepTypeInWindsorOn"
+			targetStep="false" elementActionDef="eadTypeWindsorInWhere">
+		</ate:elementStep>
 		
-<!-- 		<ate:elementStep id="stepClickFindJobsButton" -->
-<!-- 			stepDescription="stepClickFindJobsButton" stepName="clickFindJobsButton" -->
-<!-- 			targetStep="false" elementActionDef="eadClickFindJobsButton" -->
-<!-- 			pageObject="indeedCaHomepage"> -->
-<!-- 		</ate:elementStep> -->
+		<ate:elementStep id="stepClickFindJobsButton"
+			stepDescription="stepClickFindJobsButton" stepName="clickFindJobsButton"
+			targetStep="false" elementActionDef="eadClickFindJobsButton"
+			pageObject="indeedCaHomepage">
+		</ate:elementStep>
 		
 		
 	</ate:stepTypeServiceDefinition>

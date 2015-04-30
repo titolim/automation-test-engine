@@ -29,7 +29,6 @@ import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.IDataParser;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.page.IPageObject;
-import org.bigtester.ate.model.page.page.MyWebElement;
 import org.codehaus.plexus.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.BeansException;
@@ -84,10 +83,7 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	/** The forced page validation. */
 	private boolean forcedPageValidation;
 
-	/** The my web element. */
-	@Nullable
-	protected MyWebElement<?> myWebElement;
-
+	
 	/** The optional step. default is false */
 	private boolean optionalStep;
 
@@ -113,91 +109,7 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	/** The target step. */
 	private boolean targetStep;
 
-	/**
-	 * Instantiates a new base test step.
-	 *
-	 * @param testCase the test case
-	 */
-	public BaseTestStep(TestCase testCase) {
-		elementStepFlag = false;
-		this.testCase = testCase;
-	}
 	
-	/**
-	 * Instantiates a new base test step.
-	 */
-	public BaseTestStep() {
-		elementStepFlag = false;
-	
-	}
-
-	/**
-	 * Instantiates a new base test step.
-	 *
-	 * @param pageObject the page object
-	 */
-	public BaseTestStep(IPageObject pageObject) {
-		this.pageObject = pageObject;
-	}
-	
-	/**
-	 * Instantiates a new base test step.
-	 *
-	 * @param pageObject            the page object
-	 * @param testCase the test case
-	 */
-	public BaseTestStep(IPageObject pageObject, TestCase testCase) {
-		this.pageObject = pageObject;
-		this.testCase = testCase;
-	}
-
-	/**
-	 * Instantiates a new base test step.
-	 *
-	 * @param pageObject the page object
-	 * @param myWebElement the my web element
-	 */
-	public BaseTestStep(IPageObject pageObject,
-			@Nullable MyWebElement<?> myWebElement) {
-		this.pageObject = pageObject;
-		this.myWebElement = myWebElement;
-		
-	}
-	
-	/**
-	 * Instantiates a new base test step.
-	 *
-	 * @param pageObject            the page object
-	 * @param myWebElement            the my web element
-	 * @param testCase the test case
-	 */
-	public BaseTestStep(IPageObject pageObject,
-			@Nullable MyWebElement<?> myWebElement, TestCase testCase) {
-		this.pageObject = pageObject;
-		this.myWebElement = myWebElement;
-		this.testCase = testCase;
-	}
-	
-	/**
-	 * Instantiates a new base test step.
-	 *
-	 * @param myWebElement the my web element
-	 */
-	public BaseTestStep(MyWebElement<?> myWebElement) {
-		this.myWebElement = myWebElement;
-	}
-	
-	/**
-	 * Instantiates a new base test step.
-	 *
-	 * @param myWebElement            the my web element
-	 * @param testCase the test case
-	 */
-	public BaseTestStep(MyWebElement<?> myWebElement, TestCase testCase) {
-		this.myWebElement = myWebElement;
-		this.testCase = testCase;
-	}
-
 	/**
 	 * Gets the test case.
 	 *
@@ -208,10 +120,11 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 		if (null == testCase) 
 			testCase = GlobalUtils.findTestCaseBean();
 		final TestCase testCase2 = testCase;
-		if (testCase2 != null) {
-			return testCase2;
-		} else {
+		if (testCase2 == null) {
 			throw GlobalUtils.createInternalError("test case bean couldn't be found");
+			
+		} else {
+			return testCase2;
 		}
 	}
 
@@ -295,15 +208,7 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 		return expectedResultAsserter;
 	}
 
-	/**
-	 * Gets the my web element.
-	 * 
-	 * @return the myWebElement
-	 */
-	@Nullable
-	public MyWebElement<?> getMyWebElement() {
-		return myWebElement;
-	}
+	
 
 	/**
 	 * Gets the page object.
@@ -448,16 +353,7 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 		this.forcedPageValidation = forcedPageValidation;
 	}
 
-	/**
-	 * Sets the my web element.
-	 * 
-	 * @param myWebElement
-	 *            the myWebElement to set
-	 */
-	public final void setMyWebElement(final MyWebElement<?> myWebElement) {
-		this.elementStepFlag = true;
-		this.myWebElement = myWebElement;
-	}
+	
 
 	/**
 	 * Sets the optional step.
@@ -619,6 +515,20 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	public void setCorrelatedOptionalStepsUtilInclusiveIndex(
 			int correlatedOptionalStepsUtilInclusiveIndex) {//NOPMD
 		this.correlatedOptionalStepsUtilInclusiveIndex = correlatedOptionalStepsUtilInclusiveIndex;
+	}
+
+	/**
+	 * @param testCase the testCase to set
+	 */
+	public void setTestCase(TestCase testCase) {
+		this.testCase = testCase;
+	}
+
+	/**
+	 * @return the correlatedOptionalStepsUtilInclusive
+	 */
+	public String getCorrelatedOptionalStepsUtilInclusive() {
+		return correlatedOptionalStepsUtilInclusive;
 	}
 
 	// /**
