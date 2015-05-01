@@ -197,7 +197,7 @@ public class TestCase {
 						
 					}
 				} else {
-						if (!this.continueOnFailure)
+						
 						throw baee;
 				}
 			} catch (Exception e) { //NOPMD
