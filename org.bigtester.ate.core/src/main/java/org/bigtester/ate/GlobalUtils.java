@@ -56,7 +56,7 @@ public class GlobalUtils implements ApplicationContextAware {
 
 	/** The apx. */
 	@Nullable
-	private static ApplicationContext apx;
+	private static ApplicationContext apx;//NOPMD
 	/**
 	 * Gets the target object.
 	 *
@@ -405,8 +405,11 @@ public class GlobalUtils implements ApplicationContextAware {
 	// TODO use generic Type <T> to reduce the number of duplicated findNNNBean
 	// functions.
 
+	/**
+	 * Instantiates a new global utils.
+	 */
 	public GlobalUtils() {
-		GlobalUtils.apx = null;
+		GlobalUtils.apx = null;//NOPMD
 	}
 
 	/**

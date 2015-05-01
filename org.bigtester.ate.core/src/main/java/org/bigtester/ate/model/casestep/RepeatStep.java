@@ -106,7 +106,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 */
 	public RepeatStep(String startStepName, String endStepName
 		) {
-		 
+		 super();
 		this.startStepName = startStepName;
 		this.endStepName = endStepName;
 		this.continueOnFailure = false;

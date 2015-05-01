@@ -29,8 +29,7 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
-import org.bigtester.ate.model.page.page.IPageObject;
-import org.bigtester.ate.model.page.page.MyWebElement;
+import org.bigtester.ate.model.page.page.IPageObject; 
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc

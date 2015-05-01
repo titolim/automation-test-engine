@@ -146,7 +146,7 @@ public class StepDataLogger implements
 	 * @param joinPoint_p
 	 *            the join point_p
 	 */
-	@SuppressWarnings("unchecked")
+ 
 	@Before("@annotation(org.bigtester.ate.annotation.StepLoggable)")
 	public void log(final JoinPoint joinPoint_p) {
 

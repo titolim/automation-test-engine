@@ -78,42 +78,49 @@ public class TestCaseBeanDefinitionParser extends AbstractBeanDefinitionParser {
 
 	private static void parseTestStepComponents(List<Element> childElements,
 			BeanDefinitionBuilder factory, ParserContext parserContext) {
-		ManagedList<BeanDefinition> children = new ManagedList<BeanDefinition>(
-				childElements.size());
-		for (Element element : childElements) {
-			if (element.getTagName() == "ate:" //NOPMD
-					+ XsdElementConstants.ELEMENT_HOMESTEP) {
-				HomeStepBeanDefinitionParser homeStep = new HomeStepBeanDefinitionParser();
-				children.add(homeStep.parse(element, parserContext));
-			} else if (element.getTagName() == "ate:"
-					+ XsdElementConstants.ELEMENT_ELEMENTSTEP) {
-				ElementStepBeanDefinitionParser elementStep = new ElementStepBeanDefinitionParser();
-				children.add(elementStep.parse(element, parserContext));
-			} else if (element.getTagName() == "ate:"
-					+ XsdElementConstants.ELEMENT_REPEATSTEP) {
-				RepeatStepBeanDefinitionParser repeatStep = new RepeatStepBeanDefinitionParser();
-				children.add(repeatStep.parse(element, parserContext));
-			} else if (element.getTagName() == "ate:"
-					+ XsdElementConstants.ELEMENT_LASTSTEP) {
-				LastStepBeanDefinitionParser lastStep = new LastStepBeanDefinitionParser();
-				children.add(lastStep.parse(element, parserContext));
-			} else if (element.getTagName() == "ate:"
-					+ XsdElementConstants.ELEMENT_CASETYPESERVICE) {
-				CaseTypeServiceBeanDefinitionParser caseService = new CaseTypeServiceBeanDefinitionParser();
-				children.add(caseService.parse(element, parserContext));
-			} else if (element.getTagName().equals("ate:"
-					+ XsdElementConstants.ELEMENT_STEPTYPESERVICEREFERENCE)) {
-				String stepServiceDefRef = element.getAttribute(XsdElementConstants.ATTR_STEPTYPESERVICEREFERENCE_STEPTYPESERVICEDEFINITIONID);
-				if (StringUtils.isEmpty(stepServiceDefRef)) {
-					throw GlobalUtils.createNotInitializedException("STEPTYPESERVICEDEFINITIONID");
-				} else {
-					children.add(parserContext.getRegistry().getBeanDefinition(stepServiceDefRef));
+		if (!childElements.isEmpty()) {
+			ManagedList<BeanDefinition> children = new ManagedList<BeanDefinition>(//NOPMD
+					childElements.size());
+			for (Element element : childElements) {
+				if (element.getTagName() == "ate:" // NOPMD
+						+ XsdElementConstants.ELEMENT_HOMESTEP) {
+					HomeStepBeanDefinitionParser homeStep = new HomeStepBeanDefinitionParser();
+					children.add(homeStep.parse(element, parserContext));
+				} else if (element.getTagName() == "ate:"
+						+ XsdElementConstants.ELEMENT_ELEMENTSTEP) {
+					ElementStepBeanDefinitionParser elementStep = new ElementStepBeanDefinitionParser();
+					children.add(elementStep.parse(element, parserContext));
+				} else if (element.getTagName() == "ate:"
+						+ XsdElementConstants.ELEMENT_REPEATSTEP) {
+					RepeatStepBeanDefinitionParser repeatStep = new RepeatStepBeanDefinitionParser();
+					children.add(repeatStep.parse(element, parserContext));
+				} else if (element.getTagName() == "ate:"
+						+ XsdElementConstants.ELEMENT_LASTSTEP) {
+					LastStepBeanDefinitionParser lastStep = new LastStepBeanDefinitionParser();
+					children.add(lastStep.parse(element, parserContext));
+				} else if (element.getTagName() == "ate:"
+						+ XsdElementConstants.ELEMENT_CASETYPESERVICE) {
+					CaseTypeServiceBeanDefinitionParser caseService = new CaseTypeServiceBeanDefinitionParser();
+					children.add(caseService.parse(element, parserContext));
+				} else if (element
+						.getTagName()
+						.equals("ate:"
+								+ XsdElementConstants.ELEMENT_STEPTYPESERVICEREFERENCE)) {
+					String stepServiceDefRef = element
+							.getAttribute(XsdElementConstants.ATTR_STEPTYPESERVICEREFERENCE_STEPTYPESERVICEDEFINITIONID);
+					if (StringUtils.isEmpty(stepServiceDefRef)) {
+						throw GlobalUtils
+								.createNotInitializedException("STEPTYPESERVICEDEFINITIONID");
+					} else {
+						children.add(parserContext.getRegistry()
+								.getBeanDefinition(stepServiceDefRef));
+					}
+
 				}
-				
 			}
+			factory.addPropertyValue(
+					XsdElementConstants.PROP_TESTCASE_TESTSTEPLIST, children);
 		}
-		factory.addPropertyValue(
-				XsdElementConstants.PROP_TESTCASE_TESTSTEPLIST, children);
 	}
 
 }
