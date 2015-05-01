@@ -248,6 +248,71 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_PAGEELEMENTEXISTENCE. */
 	public static final String ELEMENT_PAGEELEMENTEXISTENCE = "pageElementExistenceAsserter";
+	
+    /******************************* following for Test Data ****************************/
+	
+	/** The Constant ELEMENT_ID_BASEINPUTDATAVALUE. */
+	public static final String ELEMENT_ID_BASEINPUTDATAVALUE = "baseInputDataValue";
+	
+	/** The Constant ELEMENT_BASEDATAVALUE. */
+	public static final String ELEMENT_BASEINPUTDATAVALUE = "baseInputDataValue";
+	
+	/** The Constant ATTR_BASEDATAVALUE_ELEMENTDATADAO. */
+	public static final String ATTR_BASEINPUTDATAVALUE_ELEMENTDATADAO = "elementDataDao"; //NOPMD
+	
+	/** The Constant ELEMENT_INPUTDATAVALUEPARENT. */
+	public static final String ELEMENT_INPUTDATAVALUEPARENT = "stepInputDataValueParent";
+				
+	/** The Constant ELEMENT_STEPDATAVALUE. */
+	public static final String ELEMENT_STEPINPUTDATAVALUE = "fileDataHolder";
+			
+	/** The Constant ATTR_STEPDATAVALUE_DATAVALUEID. */
+	public static final String ATTR_STEPDATAVALUE_DATAVALUEID = "dataValueID";
+	
+	/** The Constant ATTR_ABSTRACTEXPECTEDRESULTASSERTER_STEPERVALUE. */
+	public static final String ATTR_ABSTRACTEXPECTEDRESULTASSERTER_STEPERVALUE = "stepERValue";//NOPMD
+	
+	/** The Constant ELEMENT_autoIncrementalDataHolder. */
+	public static final String ELEMENT_AUTOINCREMENTALDATAHOLDSER = "autoIncrementalDataHolder";
+	
+	/** The Constant ATTR_AUTOINCREMENTALDATAHOLDSER_STARTVALUE. */
+	public static final String ATTR_AUTOINCREMENTALDATAHOLDSER_STARTVALUE = "startValue";//NOPMD
+	
+	/** The Constant ATTR_AUTOINCREMENTALDATAHOLDSER_ENDVALUE. */
+	public static final String ATTR_AUTOINCREMENTALDATAHOLDSER_ENDVALUE = "endValue";//NOPMD
+
+	/** The Constant ATTR_AUTOINCREMENTALDATAHOLDSER_PACING. */
+	public static final String ATTR_AUTOINCREMENTALDATAHOLDSER_PACING = "pacing";//NOPMD
+	
+	/** The Constant ELEMENT_RUNTIMEDATAHOLDER. */
+	public static final String ELEMENT_RUNTIMEDATAHOLDER = "runTimeDataHolder";
+	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_DATATYPE. */
+	public static final String ATTR_RUNTIMEDATAHOLDER_DATATYPE = "dataType";
+	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_DATAHOLDERTYPE. */
+	public static final String ATTR_RUNTIMEDATAHOLDER_DATAHOLDERTYPE = "dataHolderType"; //NOPMD
+	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_SUBCASEMAPPEDDATAHOLDERID. */
+	public static final String ATTR_RUNTIMEDATAHOLDER_SUBCASEMAPPEDDATAHOLDERID = "subCaseMappedDataHolderID"; //NOPMD
+	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_INDEXOFSAMETYPEDATAONPAGE. */
+	public static final String ATTR_RUNTIMEDATAHOLDER_INDEXOFSAMETYPEDATAONPAGE = "indexOfSameTypeDataOnPage"; //NOPMD
+	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_RANDOMINPUTLENGTH. */
+	public static final String ATTR_RUNTIMEDATAHOLDER_RANDOMINPUTLENGTH = "randomInputLength"; //NOPMD
+	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_DATAVALUE. */
+	public static final String ATTR_RUNTIMEDATAHOLDER_DATAVALUE = "dataValue";
+	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_LEFTBOUNDRY. */
+	public static final String ATTR_RUNTIMEDATAHOLDER_LEFTBOUNDRY = "pageHtmlLeftBoundry";
+	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_RIGHTBOUNDRY. */
+	public static final String ATTR_RUNTIMEDATAHOLDER_RIGHTBOUNDRY = "pageHtmlRightBoundry"; //NOPMD
+	
+	/** The Constant ATTR_RUNTIMEDATAHOLDER_PAGE. */
+	public static final String ATTR_RUNTIMEDATAHOLDER_PAGE = "page"; //NOPMD
 			
 	/******************************* following for Element Find ******************************/	
 	
@@ -324,72 +389,7 @@ public final class XsdElementConstants {
 
 	/** The Constant ATTR_ELEMENTACTIONDEF_ELEMENTACTION. */
 	public static final String ATTR_ELEMENTACTIONDEF_ELEMENTACTION = "elementAction"; //NOPMD
-
-	/******************************* following for Test Data ****************************/
 	
-	/** The Constant ELEMENT_ID_BASEINPUTDATAVALUE. */
-	public static final String ELEMENT_ID_BASEINPUTDATAVALUE = "baseInputDataValue";
-	
-	/** The Constant ELEMENT_BASEDATAVALUE. */
-	public static final String ELEMENT_BASEINPUTDATAVALUE = "baseInputDataValue";
-	
-	/** The Constant ATTR_BASEDATAVALUE_ELEMENTDATADAO. */
-	public static final String ATTR_BASEINPUTDATAVALUE_ELEMENTDATADAO = "elementDataDao"; //NOPMD
-	
-	/** The Constant ELEMENT_INPUTDATAVALUEPARENT. */
-	public static final String ELEMENT_INPUTDATAVALUEPARENT = "stepInputDataValueParent";
-				
-	/** The Constant ELEMENT_STEPDATAVALUE. */
-	public static final String ELEMENT_STEPINPUTDATAVALUE = "fileDataHolder";
-			
-	/** The Constant ATTR_STEPDATAVALUE_DATAVALUEID. */
-	public static final String ATTR_STEPDATAVALUE_DATAVALUEID = "dataValueID";
-	
-	/** The Constant ATTR_ABSTRACTEXPECTEDRESULTASSERTER_STEPERVALUE. */
-	public static final String ATTR_ABSTRACTEXPECTEDRESULTASSERTER_STEPERVALUE = "stepERValue";//NOPMD
-	
-	/** The Constant ELEMENT_autoIncrementalDataHolder. */
-	public static final String ELEMENT_AUTOINCREMENTALDATAHOLDSER = "autoIncrementalDataHolder";
-	
-	/** The Constant ATTR_AUTOINCREMENTALDATAHOLDSER_STARTVALUE. */
-	public static final String ATTR_AUTOINCREMENTALDATAHOLDSER_STARTVALUE = "startValue";//NOPMD
-	
-	/** The Constant ATTR_AUTOINCREMENTALDATAHOLDSER_ENDVALUE. */
-	public static final String ATTR_AUTOINCREMENTALDATAHOLDSER_ENDVALUE = "endValue";//NOPMD
-
-	/** The Constant ATTR_AUTOINCREMENTALDATAHOLDSER_PACING. */
-	public static final String ATTR_AUTOINCREMENTALDATAHOLDSER_PACING = "pacing";//NOPMD
-	
-	/** The Constant ELEMENT_RUNTIMEDATAHOLDER. */
-	public static final String ELEMENT_RUNTIMEDATAHOLDER = "runTimeDataHolder";
-	
-	/** The Constant ATTR_RUNTIMEDATAHOLDER_DATATYPE. */
-	public static final String ATTR_RUNTIMEDATAHOLDER_DATATYPE = "dataType";
-	
-	/** The Constant ATTR_RUNTIMEDATAHOLDER_DATAHOLDERTYPE. */
-	public static final String ATTR_RUNTIMEDATAHOLDER_DATAHOLDERTYPE = "dataHolderType"; //NOPMD
-	
-	/** The Constant ATTR_RUNTIMEDATAHOLDER_SUBCASEMAPPEDDATAHOLDERID. */
-	public static final String ATTR_RUNTIMEDATAHOLDER_SUBCASEMAPPEDDATAHOLDERID = "subCaseMappedDataHolderID"; //NOPMD
-	
-	/** The Constant ATTR_RUNTIMEDATAHOLDER_INDEXOFSAMETYPEDATAONPAGE. */
-	public static final String ATTR_RUNTIMEDATAHOLDER_INDEXOFSAMETYPEDATAONPAGE = "indexOfSameTypeDataOnPage"; //NOPMD
-	
-	/** The Constant ATTR_RUNTIMEDATAHOLDER_RANDOMINPUTLENGTH. */
-	public static final String ATTR_RUNTIMEDATAHOLDER_RANDOMINPUTLENGTH = "randomInputLength"; //NOPMD
-	
-	/** The Constant ATTR_RUNTIMEDATAHOLDER_DATAVALUE. */
-	public static final String ATTR_RUNTIMEDATAHOLDER_DATAVALUE = "dataValue";
-	
-	/** The Constant ATTR_RUNTIMEDATAHOLDER_LEFTBOUNDRY. */
-	public static final String ATTR_RUNTIMEDATAHOLDER_LEFTBOUNDRY = "pageHtmlLeftBoundry";
-	
-	/** The Constant ATTR_RUNTIMEDATAHOLDER_RIGHTBOUNDRY. */
-	public static final String ATTR_RUNTIMEDATAHOLDER_RIGHTBOUNDRY = "pageHtmlRightBoundry"; //NOPMD
-	
-	/** The Constant ATTR_RUNTIMEDATAHOLDER_PAGE. */
-	public static final String ATTR_RUNTIMEDATAHOLDER_PAGE = "page"; //NOPMD
-		
 	/******************************* following for Webdriver ******************************/
 	
 	/** The Constant ELEMENT_FIREFOXDRIVER. */

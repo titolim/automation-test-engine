@@ -9,7 +9,7 @@
 <xsd:import namespace="http://www.springframework.org/schema/beans"
 		    schemaLocation="http://www.springframework.org/schema/beans/spring-beans-4.0.xsd" />
 
-    <!-- following for testproject -->
+    <!--************************* following for testproject *************************-->
     
 	<xsd:element name="TestProject">
 		<xsd:complexType>
@@ -104,7 +104,7 @@
 		</xsd:complexType>
 	</xsd:element>
 
-	<!-- following for TestCase -->
+	<!--************************* following for TestCase *************************-->
 	
     <xsd:complexType name="TestCaseType">
 		<xsd:complexContent>
@@ -152,7 +152,7 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-    <!-- following for Test Step -->
+    <!--************************* following for Test Step *************************-->
     
     <xsd:complexType name="BaseTestStepType" abstract="true">
 		<xsd:complexContent>
@@ -347,9 +347,9 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 	    
-    <!-- following for Test Page -->
+    <!--************************* following for Test Page *************************-->
     
-	<xsd:complexType name="PageModelBaseType" abstract="false">
+    <xsd:complexType name="PageModelBaseType" abstract="false">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<!-- Here we re-use Spring elements and attributes -->
@@ -496,9 +496,9 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<!-- following for Test Data -->
+	<!--************************* following for Test Data *************************-->
 	
-	<xsd:complexType name="BaseInputDataValueType">
+    <xsd:complexType name="BaseInputDataValueType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<!-- Here we re-use Spring elements and attributes -->
@@ -602,9 +602,9 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 	
-	<!-- following for Element Find -->
+    <!--************************* following for Element Find *************************-->
     
-	<xsd:complexType name="GenericElementFindType">
+    <xsd:complexType name="GenericElementFindType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="findByValue" type="xsd:string" />
@@ -653,7 +653,7 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-    <!-- following for Element Action -->
+    <!--************************* following for Element Action *************************-->
     
     <xsd:complexType name="ElementActionDefType">
 		<xsd:complexContent>
@@ -751,10 +751,9 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 	
-	<!-- following for Webdriver -->
+	<!--************************* following for Webdriver *************************-->
 	  
-    <xsd:complexType name="AbstractWebDriverBaseType"
-		abstract="true">
+    <xsd:complexType name="AbstractWebDriverBaseType" abstract="true">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType"/>
 		</xsd:complexContent>
@@ -808,56 +807,56 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<!-- following elements definition -->
+	<!--************************* following elements definition *************************-->
 	
     <xsd:element name="testCase" type="TestCaseType" />
     <xsd:element name="caseTypeService" type="CaseTypeServiceType" />
     
     <xsd:element name="elementStep" type="ElementStepType" />
     <xsd:element name="homeStep" type="HomeStepType" />
-	<xsd:element name="lastStep" type="LastStepType" />
-	<xsd:element name="repeatStep" type="RepeatStepType" />
-	<xsd:element name="stepTypeServiceDefinition" type="StepTypeServiceDefType" />
-	<xsd:element name="stepTypeServiceReference" type="StepTypeServiceRefType" />
+    <xsd:element name="lastStep" type="LastStepType" />
+    <xsd:element name="repeatStep" type="RepeatStepType" />
+    <xsd:element name="stepTypeServiceDefinition" type="StepTypeServiceDefType" />
+    <xsd:element name="stepTypeServiceReference" type="StepTypeServiceRefType" />
 	
-	<xsd:element name="baseERValue" type="BaseERValueType" />
-	<xsd:element name="stepExpectedResultValue" type="StepExpectedResultValueType" />
+    <xsd:element name="baseERValue" type="BaseERValueType" />
+    <xsd:element name="stepExpectedResultValue" type="StepExpectedResultValueType" />
 		
-	<xsd:element name="basePageModel" type="PageModelBaseType" />
-	<xsd:element name="basePageObject" type="BasePageObjectType" />
-	<xsd:element name="lastPage" type="LastpageType" />
-	<xsd:element name="homePage" type="HomepageType" />
-	<xsd:element name="regularPage" type="RegularPageType" />
+    <xsd:element name="basePageModel" type="PageModelBaseType" />
+    <xsd:element name="basePageObject" type="BasePageObjectType" />
+    <xsd:element name="lastPage" type="LastpageType" />
+    <xsd:element name="homePage" type="HomepageType" />
+    <xsd:element name="regularPage" type="RegularPageType" />
 		
-	<xsd:element name="baseElementAction" type="BaseElementActionType" />
-	<xsd:element name="pagePropertyCorrectnessAsserter" type="PagePropertyCorrectnessAsserterType" />
-	<xsd:element name="pageElementExistenceAsserter" type="PageElementExistenceAsserterType" />
+    <xsd:element name="baseElementAction" type="BaseElementActionType" />
+    <xsd:element name="pagePropertyCorrectnessAsserter" type="PagePropertyCorrectnessAsserterType" />
+    <xsd:element name="pageElementExistenceAsserter" type="PageElementExistenceAsserterType" />
 	
-	<xsd:element name="baseInputDataValue" type="BaseInputDataValueType" />
-	<xsd:element name="stepInputDataValueParent" type="InputDataValueParentType" />
-	<xsd:element name="runTimeDataHolder" type="RunTimeDataHolderType" />
-	<xsd:element name="fileDataHolder" type="StepInputDataValueType" />
-	<xsd:element name="autoIncrementalDataHolder" type="AutoIncrementalDataHolderType" />
+    <xsd:element name="baseInputDataValue" type="BaseInputDataValueType" />
+    <xsd:element name="stepInputDataValueParent" type="InputDataValueParentType" />
+    <xsd:element name="runTimeDataHolder" type="RunTimeDataHolderType" />
+    <xsd:element name="fileDataHolder" type="StepInputDataValueType" />
+    <xsd:element name="autoIncrementalDataHolder" type="AutoIncrementalDataHolderType" />
 	
-	<xsd:element name="elementFindById" type="ElementFindByIdType" />
-	<xsd:element name="elementFindByXpath" type="GenericElementFindType" />
-	<xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />
-	<xsd:element name="browserWindowFindByOpenSequence" type="BrowserWindowFindByOpenSequence" />
+    <xsd:element name="elementFindById" type="ElementFindByIdType" />
+    <xsd:element name="elementFindByXpath" type="GenericElementFindType" />
+    <xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />
+    <xsd:element name="browserWindowFindByOpenSequence" type="BrowserWindowFindByOpenSequence" />
 	
-	<xsd:element name="elementActionDef" type="ElementActionDefType"/>
-	<xsd:element name="clickAction" type="ClickActionType" />
-	<xsd:element name="clearTextAction" type="ClearTextActionType" />
-	<xsd:element name="mouseMoveToAction" type="MouseMoveToActionType" />
-	<xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType" />
-	<xsd:element name="browserWindowClose" type="TestWindowsCloseActionType" />
-	<xsd:element name="sendKeysAction" type="SendKeysActionType" />
-	<xsd:element name="uploadFileAction" type="UploadFileActionType" />
+    <xsd:element name="elementActionDef" type="ElementActionDefType"/>
+    <xsd:element name="browserWindowClose" type="TestWindowsCloseActionType" />
+    <xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType" />
+    <xsd:element name="clickAction" type="ClickActionType" />
+    <xsd:element name="clearTextAction" type="ClearTextActionType" />
+    <xsd:element name="mouseMoveToAction" type="MouseMoveToActionType" />
+    <xsd:element name="sendKeysAction" type="SendKeysActionType" />
+    <xsd:element name="uploadFileAction" type="UploadFileActionType" />
 		
-	<xsd:element name="firefoxDriver" type="MyFirefoxDriverType" />
-	<xsd:element name="chromeDriver" type="MyChromeDriverType" />
-	<xsd:element name="IEDriver" type="MyIEDriverType" />
-	<xsd:element name="safariDriver" type="MySafariDriverType" />
-	<xsd:element name="operaDriver" type="MyOperaDriverType" />
-	<xsd:element name="htmlUnitDriver" type="MyHtmlUnitDriverType" />
+    <xsd:element name="firefoxDriver" type="MyFirefoxDriverType" />
+    <xsd:element name="chromeDriver" type="MyChromeDriverType" />
+    <xsd:element name="IEDriver" type="MyIEDriverType" />
+    <xsd:element name="safariDriver" type="MySafariDriverType" />
+    <xsd:element name="operaDriver" type="MyOperaDriverType" />
+    <xsd:element name="htmlUnitDriver" type="MyHtmlUnitDriverType" />
 
 </xsd:schema>
