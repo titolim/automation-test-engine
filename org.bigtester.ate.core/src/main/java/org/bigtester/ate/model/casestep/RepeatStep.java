@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
+import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.casestep.RepeatStepInOutEvent.RepeatStepInOut;
 import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.IRepeatIncrementalIndex;
@@ -302,38 +303,56 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 							StepResultStatus.PASS);
 //					if (i == correlatedOptionlStepsEndIndex)
 //						correlatedOptionlStepsEndIndex = -1;// NOPMD
-
-				} catch (StepExecutionException2 stepE) {
-					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
+				} catch (BaseATECaseExecE baee) {
+					
+					if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1) { //NOPMD
+						i = ((BaseATECaseExecE) baee).getStepIndexJumpTo(); //NOPMD
+					} else if (getTestCase().getCurrentTestStep().isOptionalStep()) {
 						getTestCase().getCurrentTestStep().setStepResultStatus(
 								StepResultStatus.SKIP);
 						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
 							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
 							if (-1 == i) {
-								stepE.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
-								throw stepE;
-							}
-						}
-					} else {
-						throw stepE;
-					}
-				} catch (PageValidationException2 pve) {// NOPMD
-					// TODO add code to handle the page validation error
-					// according to parameter of continueOnFailure
-					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
-						getTestCase().getCurrentTestStep().setStepResultStatus(
-								StepResultStatus.SKIP);
-						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
-							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
-							if (-1 == i) {
-								pve.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
-								throw pve;
+								baee.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
+								throw baee;
 							}
 						}
 					} else {
 						if (!this.continueOnFailure)
-							throw pve;
+						throw baee;
 					}
+				
+//				} catch (StepExecutionException2 stepE) {
+//					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
+//						getTestCase().getCurrentTestStep().setStepResultStatus(
+//								StepResultStatus.SKIP);
+//						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
+//							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+//							if (-1 == i) {
+//								stepE.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
+//								throw stepE;
+//							}
+//						}
+//					} else {
+//						throw stepE;
+//					}
+//				} catch (PageValidationException2 pve) {// NOPMD
+//					// TODO add code to handle the page validation error
+//					// according to parameter of continueOnFailure
+//					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
+//						getTestCase().getCurrentTestStep().setStepResultStatus(
+//								StepResultStatus.SKIP);
+//						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
+//							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+//							if (-1 == i) {
+//								pve.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
+//								throw pve;
+//							}
+//						}
+//					} else {
+//						if (!this.continueOnFailure)
+//							throw pve;
+//					}
 				} catch (Exception e) { // NOPMD
 					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
 						getTestCase().getCurrentTestStep().setStepResultStatus(
