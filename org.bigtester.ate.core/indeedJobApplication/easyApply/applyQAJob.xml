@@ -94,11 +94,11 @@
 			targetStep="false" elementActionDef="eadFilloutApplicantPhoneNumber"
 			>
 		</ate:elementStep>
-		<ate:elementStep id="stepChooseFile"
-			stepDescription="stepChooseFile" stepName="stepChooseFile"
-			targetStep="false" elementActionDef="eadApplyChooseFile"
-			>
-		</ate:elementStep>
+<!-- 		<ate:elementStep id="stepChooseFile" -->
+<!-- 			stepDescription="stepChooseFile" stepName="stepChooseFile" -->
+<!-- 			targetStep="false" elementActionDef="eadApplyChooseFile" -->
+<!-- 			> -->
+<!-- 		</ate:elementStep> -->
 		<ate:elementStep id="stepSubmitResume"
 			stepDescription="stepSubmitResume" stepName="stepSubmitResume"
 			targetStep="false" elementActionDef="eadSubmitResume"

@@ -26,6 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -607,6 +608,10 @@ public class CaseRunnerGenerator {
 		}
 	}
 
+	public static @Nullable URI fixFileURL(URL url) {
+	    if (!"file".equals(url.getProtocol())) throw new IllegalArgumentException();
+	    return new File(url.getFile()).toURI();
+	}
 	private String getAllJarsClassPathInMavenLocalRepo(){
 
 		Class cls;
@@ -638,11 +643,13 @@ public class CaseRunnerGenerator {
 				+ "*.jar" + pathSep + "dist"
 				+ System.getProperty("file.separator") + "InlineCompiler.jar";
 		for (URL path : paths) {
-			try {
-				retVal = retVal + pathSep + Paths.get(path.toURI()).toString();
-			} catch (URISyntaxException e) {
-				throw GlobalUtils.createInternalError("class path resolving error");
-			}//NOPMD
+//			try {
+				if (null == path) throw GlobalUtils.createInternalError("classloader url wrong");
+				URI fileURI = fixFileURL(path);
+				retVal = retVal + pathSep + Paths.get(fileURI).toString();
+//			} catch (URISyntaxException e) {
+//				throw GlobalUtils.createInternalError("class path resolving error", e);
+//			}//NOPMD
 		}
 
 		return retVal;
