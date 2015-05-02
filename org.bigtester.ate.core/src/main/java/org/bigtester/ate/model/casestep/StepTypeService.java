@@ -23,7 +23,6 @@ package org.bigtester.ate.model.casestep;//NOPMD
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -68,9 +67,12 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 		for (int i = 0; i < getStepSet().size(); i++) {
 
 			try {
+				
 				getStepSet().get(i).doStep();// NOPMD
 				getStepSet().get(i).setStepResultStatus(StepResultStatus.PASS);
 			} catch (Exception e) { //NOPMD
+				//StepTypeService is considered as atomic step. We don't do step jump inside of the steptypeservice
+				//if error appears, directly, we exit the service and throw error.
 				getStepSet().get(i).setStepResultStatus(StepResultStatus.FAIL);
 				throw e;
 			}

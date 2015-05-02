@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Paths;
@@ -107,8 +106,10 @@ public class CaseRunnerGenerator {
 	/** The suites. */
 	final private List<TestSuite> suites;
 
+	/** The compiler. */
 	@Nullable
 	final private JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+
 	/**
 	 * @return the caseRunnerCacheAbsoluteFolder
 	 */
@@ -558,11 +559,12 @@ public class CaseRunnerGenerator {
 		}
 	}
 
-	private void loadClass(String classFilePathName, String className) throws ClassNotFoundException, IOException {
+	private void loadClass(String classFilePathName, String className)
+			throws ClassNotFoundException, IOException {
 		/** Compilation Requirements *********************************************************************************************/
 		DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
-		StandardJavaFileManager fileManager = getCompiler().getStandardFileManager(
-				diagnostics, null, null);
+		StandardJavaFileManager fileManager = getCompiler()
+				.getStandardFileManager(diagnostics, null, null);
 
 		// This sets up the class path that the compiler will use.
 		// I've added the .jar file that contains the DoStuff interface within
@@ -576,8 +578,8 @@ public class CaseRunnerGenerator {
 
 		Iterable<? extends JavaFileObject> compilationUnit = fileManager
 				.getJavaFileObjectsFromFiles(Arrays.asList(helloWorldJava));
-		JavaCompiler.CompilationTask task =  getCompiler().getTask(null, fileManager,
-				diagnostics, optionList, null, compilationUnit);
+		JavaCompiler.CompilationTask task = getCompiler().getTask(null,
+				fileManager, diagnostics, optionList, null, compilationUnit);
 
 		/********************************************************************************************* Compilation Requirements **/
 		if (task.call()) {
@@ -585,7 +587,7 @@ public class CaseRunnerGenerator {
 			// Create a new custom class loader, pointing to the directory that
 			// contains the compiled
 			// classes, this should point to the top of the package structure!
-			//TODO the / separator needs to be revised to platform awared 
+			// TODO the / separator needs to be revised to platform awared
 			URLClassLoader classLoader = new URLClassLoader(
 					new URL[] { new File(System.getProperty("user.dir")
 							+ "/generated-code/caserunners/").toURI().toURL() },
@@ -601,27 +603,28 @@ public class CaseRunnerGenerator {
 			for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics
 					.getDiagnostics()) {
 				System.out.format("Error on line %d in %s%n with error %s",
-						diagnostic.getLineNumber(), diagnostic.getSource()
-								, diagnostic
-								.getMessage(new Locale("en")));
+						diagnostic.getLineNumber(), diagnostic.getSource(),
+						diagnostic.getMessage(new Locale("en")));
 			}
 		}
 	}
 
-	public static @Nullable URI fixFileURL(URL url) {
-	    if (!"file".equals(url.getProtocol())) throw new IllegalArgumentException();
-	    return new File(url.getFile()).toURI();
+	private static @Nullable URI fixFileURL(URL url) {
+		if (!"file".equals(url.getProtocol()))//NOPMD
+			throw new IllegalArgumentException();// NOPMD
+		return new File(url.getFile()).toURI();
 	}
-	private String getAllJarsClassPathInMavenLocalRepo(){
 
-		Class cls;
+	private String getAllJarsClassPathInMavenLocalRepo() {
+
+		Class<?> cls;
 		String retVal;
 		try {
-			cls = Class.forName("org.bigtester.ate.TestProjectRunner");//NOPMD
+			cls = Class.forName("org.bigtester.ate.TestProjectRunner");// NOPMD
 		} catch (ClassNotFoundException e) {
 			retVal = System.getProperty("java.class.path")
 					+ ":dist/InlineCompiler.jar:target/*.jar";
-			return retVal;//NOPMD
+			return retVal;// NOPMD
 		}
 
 		// returns the ClassLoader object associated with this Class
@@ -643,13 +646,15 @@ public class CaseRunnerGenerator {
 				+ "*.jar" + pathSep + "dist"
 				+ System.getProperty("file.separator") + "InlineCompiler.jar";
 		for (URL path : paths) {
-//			try {
-				if (null == path) throw GlobalUtils.createInternalError("classloader url wrong");
-				URI fileURI = fixFileURL(path);
-				retVal = retVal + pathSep + Paths.get(fileURI).toString();
-//			} catch (URISyntaxException e) {
-//				throw GlobalUtils.createInternalError("class path resolving error", e);
-//			}//NOPMD
+			// try {
+			if (null == path)
+				throw GlobalUtils.createInternalError("classloader url wrong");
+			URI fileURI = fixFileURL(path);
+			retVal = retVal + pathSep + Paths.get(fileURI).toString();// NOPMD
+			// } catch (URISyntaxException e) {
+			// throw
+			// GlobalUtils.createInternalError("class path resolving error", e);
+			// }//NOPMD
 		}
 
 		return retVal;
@@ -692,7 +697,8 @@ public class CaseRunnerGenerator {
 	public JavaCompiler getCompiler() {
 		final JavaCompiler compiler2 = compiler;
 		if (compiler2 == null) {
-			throw GlobalUtils.createInternalError("JDK tools.jar is not correctly set in test environment.");
+			throw GlobalUtils
+					.createInternalError("JDK tools.jar is not correctly set in test environment.");
 		} else {
 			return compiler2;
 		}

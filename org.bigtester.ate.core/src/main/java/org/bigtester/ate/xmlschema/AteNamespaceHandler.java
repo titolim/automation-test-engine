@@ -72,6 +72,19 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_PAGEELEMENTEXISTENCE, new PageElementExistBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_PAGEPROPERTYCORRECTNESS, new PagePropertyCorrectBeanDefinitionParser());
 		
+		/******************************* following for Test Data ******************************/
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BASEINPUTDATAVALUE, new BaseInputDataValueBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_STEPINPUTDATAVALUE, new StepInputDataValueBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_INPUTDATAVALUEPARENT, new InputDataValueParentBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_RUNTIMEDATAHOLDER, new RunTimeDataHolderBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_AUTOINCREMENTALDATAHOLDSER, new AutoIncrementalDataHolderBeanDefinitionParser());
+		
+		/******************************* following for Element Find ******************************/
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYXPATH, new FindByXpathBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYID, new FindByIdBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYTITLE, new WindowFindByTitleBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE, new WindowFindByOpenSequenceBeanDefinitionParser());
+		
 		/******************************* following for Element Action ******************************/
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTACTIONDEF, new ElementActionDefBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CLICKACTION, new ClickActionBeanDefinitionParser());
@@ -82,20 +95,7 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 				
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWSWITCH, new WindowSwitchActionBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWCLOSE, new WindowCloseActionBeanDefinitionParser());
-								
-		/******************************* following for Element Find ******************************/
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYXPATH, new FindByXpathBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYID, new FindByIdBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYTITLE, new WindowFindByTitleBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE, new WindowFindByOpenSequenceBeanDefinitionParser());
-				
-		/******************************* following for Test Data ******************************/
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BASEINPUTDATAVALUE, new BaseInputDataValueBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_STEPINPUTDATAVALUE, new StepInputDataValueBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_INPUTDATAVALUEPARENT, new InputDataValueParentBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_RUNTIMEDATAHOLDER, new RunTimeDataHolderBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_AUTOINCREMENTALDATAHOLDSER, new AutoIncrementalDataHolderBeanDefinitionParser());
-		
+	
 		/******************************* following for Webdriver ******************************/
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FIREFOXDRIVER, new FirefoxDriverBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CHROMEDRIVER, new ChromeDriverBeanDefinitionParser());

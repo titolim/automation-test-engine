@@ -197,7 +197,8 @@ public class TestCase {
 						
 					}
 				} else {
-					throw baee;
+						
+						throw baee;
 				}
 			} catch (Exception e) { //NOPMD
 				if (getCurrentTestStep().isOptionalStep()) {

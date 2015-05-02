@@ -24,9 +24,6 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.casestep.BaseTestStep;
-import org.bigtester.ate.model.casestep.TestCase;
-import org.bigtester.ate.model.page.page.IPageObject;
-import org.bigtester.ate.model.page.page.MyWebElement;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -101,7 +98,7 @@ public class BaseTestStepBeanDefinitionParser extends
 		
 		bDef.getPropertyValues().addPropertyValue("repeatStepLogger",
 				new RuntimeBeanReference(GlobalConstants.BEAN_ID_REPEATSTEPEXECUTIONLOGGER));
-		if (!"beans".equals(element.getParentNode().getLocalName())) {
+		if (!"beans".equals(element.getParentNode().getLocalName())) {//NOPMD
 			String testcaseParentName = element.getParentNode().getAttributes().getNamedItem("id").getNodeValue();
 			bDef.getPropertyValues().addPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE,
 					new RuntimeBeanReference(testcaseParentName));

@@ -27,15 +27,13 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.ICaseServiceParsedDataParser;
-import org.bigtester.ate.model.data.IDataParser;
-import org.bigtester.ate.model.data.IOnTheFlyData;
+import org.bigtester.ate.model.data.IDataParser; 
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
-import org.bigtester.ate.model.page.page.IPageObject;
-import org.bigtester.ate.model.page.page.MyWebElement;
+import org.bigtester.ate.model.page.page.IPageObject; 
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.springframework.context.ApplicationContext;
@@ -64,9 +62,9 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	/** The data holders. */
 	private List<IDataParser> dataHolders = new ArrayList<IDataParser>();
 
-	/** The on the fly data holders. */
-	private List<IOnTheFlyData<?>> onTheFlyDataHolders = new ArrayList<IOnTheFlyData<?>>();
-	
+//	/** The on the fly data holders. */
+//	private List<IOnTheFlyData<?>> onTheFlyDataHolders = new ArrayList<IOnTheFlyData<?>>();
+//	
 	/**
 	 * @param testCaseName
 	 */
@@ -172,6 +170,8 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 			}
 
 		} catch (Throwable t) { // NOPMD
+			//CaseTypeservice is considered as atomic step. We don't do step jump inside of the casetypeservice
+			//if error appears, directly, we exit the service and throw error.
 			mainDriver.quit();
 			throw t;
 		}
@@ -277,12 +277,12 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 //		return onTheFlyDataHolders;
 //	}
 
-	/**
-	 * @param onTheFlyDataHolders the onTheFlyDataHolders to set
-	 */
-	public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>> onTheFlyDataHolders) {
-		this.onTheFlyDataHolders = onTheFlyDataHolders;
-	}
+//	/**
+//	 * @param onTheFlyDataHolders the onTheFlyDataHolders to set
+//	 */
+//	public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>> onTheFlyDataHolders) {
+//		this.onTheFlyDataHolders = onTheFlyDataHolders;
+//	}
 
 	/**
 	 * {@inheritDoc}
