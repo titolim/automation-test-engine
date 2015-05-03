@@ -34,6 +34,10 @@ public final class LogbackTag {
 	
 	/** The Constant TAG_SYS_LOG. */
 	public static final String TAG_SYS_LOG = "SYS_LOG: ";
+	
+	/** The Constant TAG_SYS_ERROR. */
+	public static final String TAG_SYS_ERROR = "System-Throwable-Might-Not-Be-Application-Error: ";
+	
 	/** The Constant MSG_WEBELEMENT_NOTFOUND. */
 	public static final String TAG_TEST_ERROR = "Test-Error: ";
 	

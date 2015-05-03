@@ -118,10 +118,7 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 		if (isAlreadyCasePointCut(error)) {
 			return;
 		}
-
-		//IMyWebDriver myWebDriver;
 		Problem prb;
-		//ProblemBrowserHandler pbh;
 
 		setAlreadyCasePointCut(error);
 
@@ -137,29 +134,11 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 				
 			}
 
-//			myWebDriver = ((AbstractATECaseExecE) error).getMyWebDriver();
-//			pbh = new ProblemBrowserHandler(myWebDriver);
-//			Problomatic.addProblemHandlerForProblem(prb, pbh);
 		} else {
 			Object obj = joinPoint.getTarget();
 			if (obj == null)
 				throw GlobalUtils.createInternalError("GenericTestCaseLogger");
 			prb = new GenericATEProblem(obj, error); // NOPMD
-//			try {
-//				Map<String, IMyWebDriver> myWebDrivers = getAppContext()
-//						.getBeansOfType(IMyWebDriver.class);
-//				for (IMyWebDriver myWebDriver2 : myWebDrivers.values()) {
-//					if (null == myWebDriver2)
-//						throw GlobalUtils
-//								.createInternalError("application context my web driver");
-//					else {
-//						pbh = new ProblemBrowserHandler(myWebDriver2);
-//						Problomatic.addProblemHandlerForProblem(prb, pbh);
-//					}
-//				}
-//			} catch (Exception ext) { // NOPMD
-//				// if webdriver can't be successfully accessed, do nothing
-//			}
 		}
 		ProblemLogbackHandler plbh = new ProblemLogbackHandler();
 

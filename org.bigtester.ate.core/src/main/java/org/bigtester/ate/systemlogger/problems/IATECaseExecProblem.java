@@ -54,6 +54,13 @@ public interface IATECaseExecProblem {
 	String getProblemMessage();
 	
 	/**
+	 * Gets the short problem message.
+	 *
+	 * @return the short problem message
+	 */
+	String getShortStackTrace();
+	
+	/**
 	 * Gets the ATE case exec exception.
 	 *
 	 * @return the ATE case exec exception

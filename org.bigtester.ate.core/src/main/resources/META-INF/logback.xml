@@ -7,14 +7,21 @@
 			</Pattern>
 		</encoder>
 	</appender>
-	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+	<appender name="SystemLog" class="ch.qos.logback.core.FileAppender">
 		<file>logs/SystemLog.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n - %throwable{full}
 			</Pattern>
 		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+			<FileNamePattern>logs/SystemLog.log.%d{yyyy-MM-dd-HH}
+
+			</FileNamePattern>
+
+		</rollingPolicy>
 	</appender>
-	<appender name="newAppenderName"
+	<appender name="ApplicationLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 
 		<File>logs/ApplicationLog.log</File>
@@ -56,7 +63,7 @@
 	<logger name="org.bigtester" level="ALL" />
 	<root level="ALL">
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE" />
-		<appender-ref ref="newAppenderName" />
+		<appender-ref ref="SystemLog" />
+		<appender-ref ref="ApplicationLog" />
 	</root>
 </configuration>

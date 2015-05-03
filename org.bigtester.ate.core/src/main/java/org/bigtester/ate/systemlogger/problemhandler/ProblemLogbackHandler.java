@@ -71,25 +71,27 @@ public class ProblemLogbackHandler extends AbstractProblemHandler implements
 					+ pTS.getStepName() + LogbackTag.TAG_SEPERATOR
 					+ pTS.getStepDescription() + LogbackTag.TAG_SEPERATOR
 					+ caseExecProblem.getProblemMessage();
-			if (pTS.isTargetStep()) {
+			if (pTS.isTargetStep() & !pTS.isOptionalStep()) {
 				LogbackWriter.writeAppError(logMsg);
 			} else {
 				LogbackWriter.writeAppWarning(logMsg);
 			}
-		} else {
-			if (null == aProblem)
-				LogbackWriter
-						.writeAppInfo(ExceptionMessage.MSG_UNCAUGHT_APP_ERRORS
-								+ LogbackTag.TAG_SEPERATOR
-								+ getClass().toString()
-								+ "aProblem parameter error.");
-			else
-				LogbackWriter
-						.writeAppInfo(ExceptionMessage.MSG_UNCAUGHT_APP_ERRORS
-								+ LogbackTag.TAG_SEPERATOR
-								+ aProblem.getSource().toString()
-								+ aProblem.getMessages().toString());
 		}
+		//non application level error is not logged in application.log
+//		else {
+//			if (null == aProblem)
+//				LogbackWriter
+//						.writeAppInfo(ExceptionMessage.MSG_UNCAUGHT_APP_ERRORS
+//								+ LogbackTag.TAG_SEPERATOR
+//								+ getClass().toString()
+//								+ "aProblem parameter error.");
+//			else
+//				LogbackWriter
+//						.writeAppInfo(ExceptionMessage.MSG_UNCAUGHT_APP_ERRORS
+//								+ LogbackTag.TAG_SEPERATOR
+//								+ aProblem.getSource().toString()
+//								+ aProblem.getMessages().toString());
+//		}
 	}
 
 	/**
