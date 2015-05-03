@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -42,6 +43,15 @@ public class BrowserWindow {
 
 	/** The window handle. */
 	final private String windowHandle;
+	
+	/** The my wd. */
+	@XStreamOmitField
+	final private WebDriver myWd;  //NOPMD
+	
+	/** The browser driver path*/
+	@Nullable
+	@XStreamOmitField
+	private static String driverPath; //NOPMD
 
 	/** The frames. */
 	final private List<WindowFrame> visibleFrames = new ArrayList<WindowFrame>();
@@ -51,10 +61,6 @@ public class BrowserWindow {
 
 	/** The current element find frame chain. */
 	final private List<WindowFrame> currentElementFindFrameChain = new ArrayList<WindowFrame>();
-
-	/** The my wd. */
-	@XStreamOmitField
-	final private WebDriver myWd;
 
 	// /** The frame refresh try counting. */
 	// private transient int frameRefreshTryCounting = 0;
@@ -192,4 +198,17 @@ public class BrowserWindow {
 		return currentElementFindFrameChain;
 	}
 
+	/**
+	 * @return the browser driver path
+	 */
+	@Nullable public static String getDriverPath() {
+		return driverPath;
+	}
+
+	/**
+	 * @set the browser driver path
+	 */
+	public static void setDriverPath(@Nullable String driverPath) {
+		 BrowserWindow.driverPath = driverPath;
+	}
 }
