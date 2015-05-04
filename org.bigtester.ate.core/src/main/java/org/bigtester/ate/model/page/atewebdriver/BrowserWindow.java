@@ -48,11 +48,6 @@ public class BrowserWindow {
 	@XStreamOmitField
 	final private WebDriver myWd;  //NOPMD
 	
-	/** The browser driver path*/
-	@Nullable
-	@XStreamOmitField
-	private static String driverPath; //NOPMD
-
 	/** The frames. */
 	final private List<WindowFrame> visibleFrames = new ArrayList<WindowFrame>();
 
@@ -198,17 +193,4 @@ public class BrowserWindow {
 		return currentElementFindFrameChain;
 	}
 
-	/**
-	 * @return the browser driver path
-	 */
-	@Nullable public static String getDriverPath() {
-		return driverPath;
-	}
-
-	/**
-	 * @set the browser driver path
-	 */
-	public static void setDriverPath(@Nullable String driverPath) {
-		 BrowserWindow.driverPath = driverPath;
-	}
 }

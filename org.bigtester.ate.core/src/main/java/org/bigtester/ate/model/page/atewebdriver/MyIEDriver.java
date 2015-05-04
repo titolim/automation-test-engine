@@ -62,7 +62,7 @@ public class MyIEDriver extends AbstractWebDriverBase implements IMyWebDriver {
 		if (null == retVal) {
 			OSinfo osinfo = new OSinfo();
 			EPlatform platform = osinfo.getOSname();
-			String driverPath = BrowserWindow.getDriverPath(); //NOPMD
+			String driverPath = GlobalUtils.getDriverPath(); //NOPMD
 			
 			// System.setProperty("webdriver.ie.driver.loglevel", "ERROR");
 			// System.setProperty("webdriver.ie.driver.logfile",
@@ -77,14 +77,14 @@ public class MyIEDriver extends AbstractWebDriverBase implements IMyWebDriver {
 				if (driverPath == null)
 					System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + BROWSERFILENAME);
 				else
-					System.setProperty(BROWSERDRVNAME, driverPath + "/" + BROWSERFILENAME);
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSERFILENAME);
 				break;
 			case Windows_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
 				if (driverPath == null)
 					System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + BROWSERFILENAME);
 				else
-					System.setProperty(BROWSERDRVNAME, driverPath + "/" + BROWSERFILENAME);
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSERFILENAME);
 				break;
 			default:
 				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
