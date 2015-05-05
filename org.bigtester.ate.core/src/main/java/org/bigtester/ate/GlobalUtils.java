@@ -64,6 +64,9 @@ public class GlobalUtils implements ApplicationContextAware {
 	/** The Constant PATH DELIMITER IN WINDOWS. */
 	public static final String PATH_DELIMITER = "/" ;
 	
+	/** The Constant PATH DELIMITER IN WINDOWS. */
+	public static final String DEFAULT_DRIVER_PATH = "browserdriver" ;
+	
 	/** The browser driver path*/
 	@Nullable
 	@XStreamOmitField

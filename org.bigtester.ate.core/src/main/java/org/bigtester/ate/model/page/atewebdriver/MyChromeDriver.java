@@ -44,17 +44,17 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 	/** The Constant BROWSERDRVNAME. */
 	private static final String BROWSERDRVNAME = "webdriver.chrome.driver";
 	/** The Constant BROWSERWIN32PATH. */
-	private static final String BROWSERWIN32PATH = "browserdriver/windows/googlechrome/32bit/";
+	private static final String BROWSERWIN32PATH = "windows/googlechrome/32bit/";
 	/** The Constant BROWSERWIN64PATH. */
-	private static final String BROWSERWIN64PATH = "browserdriver/windows/googlechrome/64bit/";
+	private static final String BROWSERWIN64PATH = "windows/googlechrome/64bit/";
 	/** The Constant BROWSERLINUX32PATH. */
-	private static final String BROWSERLINUX32PATH = "browserdriver/linux/googlechrome/32bit/";
+	private static final String BROWSERLINUX32PATH = "linux/googlechrome/32bit/";
 	/** The Constant BROWSERLINUX64PATH. */
-	private static final String BROWSERLINUX64PATH = "browserdriver/linux/googlechrome/64bit/";
+	private static final String BROWSERLINUX64PATH = "linux/googlechrome/64bit/";
 	/** The Constant BROWSEROSX32PATH. */
-	private static final String BROWSEROSX32PATH = "browserdriver/osx/googlechrome/32bit/";
+	private static final String BROWSEROSX32PATH = "osx/googlechrome/32bit/";
 	/** The Constant BROWSEROSX32PATH. */
-	private static final String BROWSEROSX64PATH = "browserdriver/osx/googlechrome/64bit/";
+	private static final String BROWSEROSX64PATH = "osx/googlechrome/64bit/";
 	/** The Constant BROWSERWINFILENAME. */
 	private static final String BROWSERWINFILENAME = "chromedriver.exe";
 	/** The Constant BROWSERLINUXFILENAME. */
@@ -111,44 +111,56 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 			case Windows_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
 				if (driverPath == null)
-					System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + BROWSERWINFILENAME);
+					System.setProperty(BROWSERDRVNAME, GlobalUtils.DEFAULT_DRIVER_PATH + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERWIN32PATH + BROWSERWINFILENAME);
 				else
-					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSERWINFILENAME);
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERWIN32PATH + BROWSERWINFILENAME);
 				break;
 			case Windows_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
 				if (driverPath == null)
-					System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + BROWSERWINFILENAME);	
+					System.setProperty(BROWSERDRVNAME, GlobalUtils.DEFAULT_DRIVER_PATH + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERWIN64PATH + BROWSERWINFILENAME);	
 				else
-					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSERWINFILENAME);
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERWIN64PATH + BROWSERWINFILENAME);
 				break;
 			case Linux_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "linux", BROWSERNAME, ReadXmlFile.VERSION);*/
 				if (driverPath == null)
-					System.setProperty(BROWSERDRVNAME, BROWSERLINUX32PATH + BROWSERLINUXFILENAME);	
+					System.setProperty(BROWSERDRVNAME, GlobalUtils.DEFAULT_DRIVER_PATH + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERLINUX32PATH + BROWSERLINUXFILENAME);	
 				else
-					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSERLINUXFILENAME);
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERLINUX32PATH + BROWSERLINUXFILENAME);
 				break;
 			case Linux_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "linux", BROWSERNAME, ReadXmlFile.VERSION);*/
 				if (driverPath == null)
-					System.setProperty(BROWSERDRVNAME, BROWSERLINUX64PATH + BROWSERLINUXFILENAME);	
+					System.setProperty(BROWSERDRVNAME, GlobalUtils.DEFAULT_DRIVER_PATH + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERLINUX64PATH + BROWSERLINUXFILENAME);	
 				else
-					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSERLINUXFILENAME);
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERLINUX64PATH + BROWSERLINUXFILENAME);
 				break;
 			case Mac_OS_X_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "osx", BROWSERNAME, ReadXmlFile.VERSION);*/
 				if (driverPath == null)
-					System.setProperty(BROWSERDRVNAME, BROWSEROSX32PATH + BROWSER0SXFILENAME);
+					System.setProperty(BROWSERDRVNAME, GlobalUtils.DEFAULT_DRIVER_PATH + GlobalUtils.PATH_DELIMITER 
+							           + BROWSEROSX32PATH + BROWSER0SXFILENAME);
 				else 
-					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSER0SXFILENAME);				
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
+							           + BROWSEROSX32PATH + BROWSER0SXFILENAME);				
 				break;
 			case Mac_OS_X_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "osx", BROWSERNAME, ReadXmlFile.VERSION);*/
 				if (driverPath == null)
-					System.setProperty(BROWSERDRVNAME, BROWSEROSX64PATH + BROWSER0SXFILENAME);	
+					System.setProperty(BROWSERDRVNAME, GlobalUtils.DEFAULT_DRIVER_PATH + GlobalUtils.PATH_DELIMITER 
+							           + BROWSEROSX64PATH + BROWSER0SXFILENAME);	
 				else
-					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSER0SXFILENAME);
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
+							           + BROWSEROSX64PATH + BROWSER0SXFILENAME);
 				break;
 			default:
 				throw GlobalUtils.createNotInitializedException("operating system is not supported ");

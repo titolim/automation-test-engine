@@ -38,9 +38,9 @@ public class MyIEDriver extends AbstractWebDriverBase implements IMyWebDriver {
 	/** The Constant BROWSERDRVNAME. */
 	private static final String BROWSERDRVNAME = "webdriver.ie.driver";
 	/** The Constant BROWSERWIN32PATH. */
-	private static final String BROWSERWIN32PATH = "browserdriver/windows/internetexplorer/32bit/";
+	private static final String BROWSERWIN32PATH = "windows/internetexplorer/32bit/";
 	/** The Constant BROWSERWIN64PATH. */
-	private static final String BROWSERWIN64PATH = "browserdriver/windows/internetexplorer/64bit/";
+	private static final String BROWSERWIN64PATH = "windows/internetexplorer/64bit/";
 	/** The Constant BROWSERLINUX32PATH. */
 	private static final String BROWSERFILENAME = "IEDriverServer.exe";
 
@@ -75,16 +75,20 @@ public class MyIEDriver extends AbstractWebDriverBase implements IMyWebDriver {
 			case Windows_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
 				if (driverPath == null)
-					System.setProperty(BROWSERDRVNAME, BROWSERWIN32PATH + BROWSERFILENAME);
+					System.setProperty(BROWSERDRVNAME, GlobalUtils.DEFAULT_DRIVER_PATH + GlobalUtils.PATH_DELIMITER
+							           + BROWSERWIN32PATH + BROWSERFILENAME);
 				else
-					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSERFILENAME);
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERWIN32PATH + BROWSERFILENAME);
 				break;
 			case Windows_64:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
 				if (driverPath == null)
-					System.setProperty(BROWSERDRVNAME, BROWSERWIN64PATH + BROWSERFILENAME);
+					System.setProperty(BROWSERDRVNAME, GlobalUtils.DEFAULT_DRIVER_PATH + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERWIN64PATH + BROWSERFILENAME);
 				else
-					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER + BROWSERFILENAME);
+					System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
+							           + BROWSERWIN64PATH + BROWSERFILENAME);
 				break;
 			default:
 				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
