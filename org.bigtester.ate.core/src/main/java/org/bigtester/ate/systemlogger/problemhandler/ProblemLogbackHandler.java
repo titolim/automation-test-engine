@@ -22,7 +22,7 @@ package org.bigtester.ate.systemlogger.problemhandler;
 
 import java.util.Properties;
 
-import org.bigtester.ate.constant.ExceptionMessage;
+ 
 import org.bigtester.ate.constant.LogbackTag;
 import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.casestep.TestCase;

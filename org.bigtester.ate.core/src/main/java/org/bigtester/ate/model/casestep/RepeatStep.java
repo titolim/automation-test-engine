@@ -249,6 +249,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 		getApplicationContext().publishEvent(
 				new RepeatStepInOutEvent(this, RepeatStepInOut.IN));
 		buildRepeatIndexes();
+		Throwable thr = null;//NOPMD
 		for (int iteration = 1; iteration <= getNumberOfIterations(); iteration++) {
 			// if (1 == iteration) {// NOPMD
 			// if (null != getRepeatStepLogger().getRepeatStepExternalNode()) {
@@ -297,6 +298,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 									.getCurrentRepeatStepFullPathString());
 				}
 				String tmpStepDesc = currentTestStepTmp.getStepDescription();// NOPMD
+		
 				try {
 					getTestCase().getCurrentTestStep().doStep();// NOPMD
 					getTestCase().getCurrentTestStep().setStepResultStatus(
@@ -314,45 +316,13 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
 							if (-1 == i) {
 								baee.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
-								throw baee;
+								thr = baee;//NOPMD
 							}
 						}
 					} else {
 						if (!this.continueOnFailure)
-						throw baee;
+						thr = baee;//NOPMD
 					}
-				
-//				} catch (StepExecutionException2 stepE) {
-//					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
-//						getTestCase().getCurrentTestStep().setStepResultStatus(
-//								StepResultStatus.SKIP);
-//						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
-//							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
-//							if (-1 == i) {
-//								stepE.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
-//								throw stepE;
-//							}
-//						}
-//					} else {
-//						throw stepE;
-//					}
-//				} catch (PageValidationException2 pve) {// NOPMD
-//					// TODO add code to handle the page validation error
-//					// according to parameter of continueOnFailure
-//					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
-//						getTestCase().getCurrentTestStep().setStepResultStatus(
-//								StepResultStatus.SKIP);
-//						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
-//							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
-//							if (-1 == i) {
-//								pve.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
-//								throw pve;
-//							}
-//						}
-//					} else {
-//						if (!this.continueOnFailure)
-//							throw pve;
-//					}
 				} catch (Exception e) { // NOPMD
 					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
 						getTestCase().getCurrentTestStep().setStepResultStatus(
@@ -362,7 +332,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 							//correlatedOptionlStepsEndIndex = -1;// NOPMD
 						}
 					} else {
-						throw e;
+						thr = e;
 					}
 				}
 
@@ -388,18 +358,22 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 							.getStepThinkTime());
 					thinkTimer.setTimer();
 				}
-
+				if (null != thr) {
+					break;
+				}
+			}
+			if (null != thr) {
+				break;
 			}
 		}
 		getApplicationContext().publishEvent(
 				new RepeatStepInOutEvent(this, RepeatStepInOut.OUT));
-		// RepeatStepExecutionLoggerNode currentRepeatNode =
-		// getRepeatStepLogger()
-		// .getCurrentRepeatStepNode();
-		// if (currentRepeatNode != null) {
-		// getApplicationContext().publishEvent(
-		// new RepeatDataRefreshEvent(this));
-		// }
+		if (null != thr)
+			try {
+				throw thr;
+			} catch (Throwable e) {//NOPMD
+				throw GlobalUtils.createInternalError("java throwable", e);
+			}
 	}
 
 	/**

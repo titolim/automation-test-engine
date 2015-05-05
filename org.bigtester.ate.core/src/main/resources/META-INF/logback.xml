@@ -7,7 +7,7 @@
 			</Pattern>
 		</encoder>
 	</appender>
-	<appender name="SystemLog" class="ch.qos.logback.core.FileAppender">
+	<appender name="SystemLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>logs/SystemLog.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n - %throwable{full}

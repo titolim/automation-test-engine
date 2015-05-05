@@ -97,7 +97,7 @@ public final class LogbackWriter {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
 			if (mylogger2.isErrorEnabled()) {
-				mylogger2.error(LogbackTag.TAG_SYS_LOG + LogbackTag.TAG_TEST_ERROR
+				mylogger2.error(LogbackTag.TAG_SYS_LOG + LogbackTag.TAG_SYS_ERROR
 						+ msg);
 			} else {
 				throw new UnsupportedOperationException(
