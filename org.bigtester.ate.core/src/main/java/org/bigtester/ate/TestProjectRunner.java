@@ -26,7 +26,6 @@ import java.sql.SQLException;
 
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
-import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.project.TestProject;
 import org.dbunit.DatabaseUnitException;
 import org.eclipse.jdt.annotation.Nullable;
@@ -42,7 +41,7 @@ import com.github.javaparser.ParseException;
 /**
  * The Class TestProjectRunner defines ....
  * 
- * @author Peidong Hu
+ * @author Peidong Hu & Jun Yang
  */
 public final class TestProjectRunner {
 	
@@ -65,7 +64,7 @@ public final class TestProjectRunner {
 		if (args.length > 2 )                          //NOPMD
 			throw GlobalUtils.createNotInitializedException("Only support two arguments");
 		if (args.length > 1 ) {                        //NOPMD                       
-			BrowserWindow.setDriverPath (args[1]);     //NOPMD
+			GlobalUtils.setDriverPath (args[1]);       //NOPMD
 		}
 		if (args.length > 0 ) {
 		   	runTest(args[0]);
@@ -104,7 +103,6 @@ public final class TestProjectRunner {
 					"testproject.xml");
 		} else {
 			context = new FileSystemXmlApplicationContext(testProjectXml);
-			
 		}
 		
 		TestProject testplan = GlobalUtils.findTestProjectBean(context);

@@ -31,6 +31,7 @@ import org.bigtester.ate.model.casestep.StepDataLogger;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.data.AbstractRunTimeDataHolder;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
+import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.Homepage;
 import org.bigtester.ate.model.page.page.Lastpage;
@@ -45,11 +46,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 // TODO: Auto-generated Javadoc
 /**
  * This class GlobalUtils defines ....
  * 
- * @author Peidong Hu
+ * @author Peidong Hu & Jun Yang
  *
  */
 public class GlobalUtils implements ApplicationContextAware {
@@ -57,6 +60,32 @@ public class GlobalUtils implements ApplicationContextAware {
 	/** The apx. */
 	@Nullable
 	private static ApplicationContext apx;//NOPMD
+	
+	/** The Constant - path delimiter */
+	public static final String PATH_DELIMITER = "/" ;
+	
+	/** The Constant - default driver path */
+	public static final String DEFAULT_DRIVER_PATH = "browserdriver" ;
+	
+	/** The browser driver path*/
+	@Nullable
+	@XStreamOmitField
+	private static String driverPath; //NOPMD
+	
+	/**
+	 * @return the browser driver path
+	 */
+	@Nullable public static String getDriverPath() {
+		return driverPath;
+	}
+
+	/**
+	 * @set the browser driver path
+	 */
+	public static void setDriverPath(@Nullable String driverPath) {
+		GlobalUtils.driverPath = driverPath;
+	}
+	
 	/**
 	 * Gets the target object.
 	 *
