@@ -59,7 +59,7 @@ public class CookiesFindAll extends BaseCookieFinderImpl implements ICookieFinde
 		} else {
 			Set<Cookie> coos = webD.manage().getCookies();
 			if (null == coos) coos = new HashSet<Cookie>();
-			return new CookiesManager(coos);
+			return new CookiesManager(myWebDriver, coos);
 		
 		}
 	}

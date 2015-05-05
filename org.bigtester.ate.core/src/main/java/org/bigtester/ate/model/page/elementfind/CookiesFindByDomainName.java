@@ -61,7 +61,7 @@ public class CookiesFindByDomainName extends BaseCookieFinderImpl implements ICo
 		} else {
 			Set<Cookie> coos = webD.manage().getCookies();
 			if (null == coos) coos = new HashSet<Cookie>();
-			return new CookiesManager(getDomain(), coos);
+			return new CookiesManager(myWebDriver, getDomain(), coos);
 		
 		}
 	}
