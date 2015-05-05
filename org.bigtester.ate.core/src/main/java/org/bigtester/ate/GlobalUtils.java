@@ -61,10 +61,10 @@ public class GlobalUtils implements ApplicationContextAware {
 	@Nullable
 	private static ApplicationContext apx;//NOPMD
 	
-	/** The Constant PATH DELIMITER IN WINDOWS. */
+	/** The Constant - path delimiter */
 	public static final String PATH_DELIMITER = "/" ;
 	
-	/** The Constant PATH DELIMITER IN WINDOWS. */
+	/** The Constant - default driver path */
 	public static final String DEFAULT_DRIVER_PATH = "browserdriver" ;
 	
 	/** The browser driver path*/
