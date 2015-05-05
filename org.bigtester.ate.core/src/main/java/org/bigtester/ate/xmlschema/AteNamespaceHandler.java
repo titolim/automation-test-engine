@@ -84,6 +84,8 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYID, new FindByIdBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYTITLE, new WindowFindByTitleBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE, new WindowFindByOpenSequenceBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_COOKIESFINDALL, new CookiesFindAllBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_COOKIESFINDBYDOMAINNAME, new CookiesFindByDomainNameBeanDefinitionParser());
 		
 		/******************************* following for Element Action ******************************/
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTACTIONDEF, new ElementActionDefBeanDefinitionParser());
@@ -95,7 +97,14 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 				
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWSWITCH, new WindowSwitchActionBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWCLOSE, new WindowCloseActionBeanDefinitionParser());
-	
+		
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILEIMPORTACTION, new FileImportActionBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILESIMPORTACTION, new FilesImportActionBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILEEXPORTACTION, new FileExportActionBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILESEXPORTACTION, new FilesExportActionBeanDefinitionParser());
+		
+		
+		
 		/******************************* following for Webdriver ******************************/
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FIREFOXDRIVER, new FirefoxDriverBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CHROMEDRIVER, new ChromeDriverBeanDefinitionParser());

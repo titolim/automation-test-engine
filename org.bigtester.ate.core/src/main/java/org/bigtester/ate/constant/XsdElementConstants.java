@@ -319,6 +319,15 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_BASETESTSTEP. */
 	public static final String ELEMENT_ELEMENTFINDBYID = "elementFindById";
 	
+	public static final String ELEMENT_COOKIESFINDALL = "cookiesFindAll";
+	
+	public static final String ATTR_COOKIESFINDBYDOMAINNAME_DOMAINNAME = "domainName";//NOPMD
+	
+	public static final String ELEMENT_COOKIESFINDBYDOMAINNAME = "cookiesFindByDomainName";
+	
+	public static final String ELEMENT_COOKIEFINDBYCOOKIENAMEINDOMAIN = "cookieFindByCookieNameInDomain";
+	
+	
 	/** The Constant ELEMENT_ELEMENTFINDBYXPATH. */
 	public static final String ELEMENT_ELEMENTFINDBYXPATH = "elementFindByXpath";
 	
@@ -371,6 +380,16 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_SENDKEYSACTION. */
 	public static final String ELEMENT_SENDKEYSACTION = "sendKeysAction";
+	
+	public static final String ELEMENT_FILEIMPORTACTION = "fileImportAction";
+	public static final String ELEMENT_FILEEXPORTACTION = "fileExportAction";
+	public static final String ELEMENT_FILESEXPORTACTION = "filesExportAction";
+	public static final String ELEMENT_FILESIMPORTACTION = "filesImportAction";
+	
+	public static final String ATTR_FILEIMPORTACTION_FILENAMEWITHABSOLUTEPATH = "fileNameWithAbsolutePath";
+	public static final String ATTR_FILEEXPORTACTION_FILENAMEWITHABSOLUTEPATH = "fileNameWithAbsolutePath";
+	public static final String ATTR_FILESIMPORTACTION_FOLDERNAMEWITHABSOLUTEPATH = "folderNameWithAbsolutePath";
+	public static final String ATTR_FILESEXPORTACTION_FOLDERNAMEWITHABSOLUTEPATH = "folderNameWithAbsolutePath";
 	
 	/** The Constant ATTR_SENDKEYSACTION_DATAVALUE. */
 	public static final String ATTR_SENDKEYSACTION_DATAVALUE = "dataValue";
