@@ -52,7 +52,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 /**
  * This class GlobalUtils defines ....
  * 
- * @author Peidong Hu
+ * @author Peidong Hu & Jun Yang
  *
  */
 public class GlobalUtils implements ApplicationContextAware {

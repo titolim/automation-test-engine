@@ -41,7 +41,7 @@ import com.github.javaparser.ParseException;
 /**
  * The Class TestProjectRunner defines ....
  * 
- * @author Peidong Hu
+ * @author Peidong Hu & Jun Yang
  */
 public final class TestProjectRunner {
 	
