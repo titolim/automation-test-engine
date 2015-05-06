@@ -18,46 +18,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.io;
- 
+package org.bigtester.ate.model.page.atewebdriver;
+
+import org.openqa.selenium.WebDriver;
+
+// TODO: Auto-generated Javadoc
 /**
- * The Interface IDiskFileOperation.
- *
+ * This class PopupAlertDialog defines ....
  * @author Peidong Hu
+ *
  */
-public interface IDiskFileOperation {
-	
+public class PopupAlertDialog extends AbstractAlertDialog {
+
 	/**
-	 * Save to single file.
+	 * @param winHandler
+	 * @param webD
 	 */
-	void saveToSingleFile();
-	
+	public PopupAlertDialog(String winHandler, WebDriver webD) {
+		super(winHandler, webD);
+	}
+
 	/**
-	 * Save to multiple files.
+	 * {@inheritDoc}
 	 */
-	void saveToMultipleFiles();
-	
-	/**
-	 * Import from single file.
-	 */
-	void importFromSingleFile();
-	
-	/**
-	 * Import from multiple files.
-	 */
-	void importFromMultipleFiles();
-	
-	/**
-	 * Sets the import file name with absolute path.
-	 *
-	 * @param fileNameWithAbsolutePath the new import file name with absolute path
-	 */
-	void setImportFileNameWithAbsolutePath(String fileNameWithAbsolutePath);
-	
-	/**
-	 * Sets the export file name with absolute path.
-	 *
-	 * @param fileNameWithAbsolutePath the new export file name with absolute path
-	 */
-	void setExportFileNameWithAbsolutePath(String fileNameWithAbsolutePath);
+	@Override
+	void accept() {
+		obtainFocus();
+		getMyWd().manage().
+	}
+
 }

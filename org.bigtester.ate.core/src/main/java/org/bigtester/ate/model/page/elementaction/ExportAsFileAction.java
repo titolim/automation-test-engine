@@ -26,7 +26,6 @@ import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.aether.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
-import org.openqa.selenium.WebDriver;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -36,19 +35,35 @@ import org.openqa.selenium.WebDriver;
  */
 public class ExportAsFileAction extends PageModelBase implements
 		IFileAction, ITestObjectActionImpl {
+	
+	/** The file name with absolute path. */
 	private String fileNameWithAbsolutePath;
+	
+	/**
+	 * Gets the file name with absolute path.
+	 *
+	 * @return the file name with absolute path
+	 */
 	public String getFileNameWithAbsolutePath() {
 		return fileNameWithAbsolutePath;
 	}
 
 
+	/**
+	 * Sets the file name with absolute path.
+	 *
+	 * @param fileNameWithAbsolutePath the new file name with absolute path
+	 */
 	public void setFileNameWithAbsolutePath(String fileNameWithAbsolutePath) {
 		this.fileNameWithAbsolutePath = fileNameWithAbsolutePath;
 	}
 
 
 	/**
-	 * @param myWd
+	 * Instantiates a new export as file action.
+	 *
+	 * @param myWd the my wd
+	 * @param fileName the file name
 	 */
 	public ExportAsFileAction(IMyWebDriver myWd, String fileName) {
 		super(myWd);
@@ -60,6 +75,7 @@ public class ExportAsFileAction extends PageModelBase implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	public @Nullable <T> T getCapability(Class<T> type) {
 		if (this instanceof IFileAction) {
 			return (T) this; //NOPMD
@@ -71,6 +87,9 @@ public class ExportAsFileAction extends PageModelBase implements
 
 	
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void doAction(IDiskFileOperation fileOpr) {
 		fileOpr.setExportFileNameWithAbsolutePath(getFileNameWithAbsolutePath());

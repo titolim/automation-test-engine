@@ -33,15 +33,27 @@ public class BaseCookieFinderImpl extends AbstractTestObjectFinderImpl {
 	/** The title. */
 	private String domain = "";
 	
+	/**
+	 * Sets the domain.
+	 *
+	 * @param domain the new domain
+	 */
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
+	
+	/**
+	 * Gets the domain.
+	 *
+	 * @return the domain
+	 */
 	public String getDomain() {
 		return domain;
 	}
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	@Nullable
 	public <T> T getCapability(Class<T> type) {

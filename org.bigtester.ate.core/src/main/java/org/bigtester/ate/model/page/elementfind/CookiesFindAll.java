@@ -38,15 +38,7 @@ import org.openqa.selenium.WebDriver;
  */
 public class CookiesFindAll extends BaseCookieFinderImpl implements ICookieFinder, ITestObjectFinderImpl{
 
-	/**
-	 * Instantiates a new test window find by title.
-	 *
-	 * @param title the title
-	 */
-	public CookiesFindAll() {
-		super();
-		
-	}
+
 	
 	/**
 	 * {@inheritDoc}

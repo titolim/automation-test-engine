@@ -26,7 +26,6 @@ import org.bigtester.ate.model.io.IDiskFileOperation;
 import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.jdt.annotation.Nullable;
-import org.openqa.selenium.WebDriver;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,12 +36,24 @@ import org.openqa.selenium.WebDriver;
 public class ImportFromFileAction extends PageModelBase implements
 		IFileAction, ITestObjectActionImpl {
 
+	/** The file name with absolute path. */
 	private String fileNameWithAbsolutePath;
+	
+	/**
+	 * Gets the file name with absolute path.
+	 *
+	 * @return the file name with absolute path
+	 */
 	public String getFileNameWithAbsolutePath() {
 		return fileNameWithAbsolutePath;
 	}
 
 
+	/**
+	 * Sets the file name with absolute path.
+	 *
+	 * @param fileNameWithAbsolutePath the new file name with absolute path
+	 */
 	public void setFileNameWithAbsolutePath(String fileNameWithAbsolutePath) {
 		this.fileNameWithAbsolutePath = fileNameWithAbsolutePath;
 	}
@@ -61,6 +72,7 @@ public class ImportFromFileAction extends PageModelBase implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	public @Nullable <T> T getCapability(Class<T> type) {
 		if (this instanceof IFileAction) {
 			return (T) this; //NOPMD
@@ -72,6 +84,9 @@ public class ImportFromFileAction extends PageModelBase implements
 
 	
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void doAction(IDiskFileOperation fileOpr) {
 		fileOpr.setImportFileNameWithAbsolutePath(getFileNameWithAbsolutePath());

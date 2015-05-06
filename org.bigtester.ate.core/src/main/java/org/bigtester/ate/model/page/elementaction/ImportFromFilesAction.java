@@ -20,12 +20,10 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementaction;
 
-import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.io.IDiskFileOperation;
 import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.jdt.annotation.Nullable;
-import org.openqa.selenium.WebDriver;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -47,6 +45,7 @@ public class ImportFromFilesAction extends PageModelBase implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	public @Nullable <T> T getCapability(Class<T> type) {
 		if (this instanceof IFileAction) {
 			return (T) this; //NOPMD
@@ -58,6 +57,9 @@ public class ImportFromFilesAction extends PageModelBase implements
 
 	
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void doAction(IDiskFileOperation fileOpr) {
 		fileOpr.importFromMultipleFiles();

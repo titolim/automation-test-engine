@@ -21,7 +21,6 @@
 package org.bigtester.ate.model.page.elementaction;
 
 import org.bigtester.ate.model.io.IDiskFileOperation;
-import org.bigtester.ate.model.page.page.CookiesManager;
 
 
 // TODO: Auto-generated Javadoc
