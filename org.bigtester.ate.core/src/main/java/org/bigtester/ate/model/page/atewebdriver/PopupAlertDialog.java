@@ -42,9 +42,9 @@ public class PopupAlertDialog extends AbstractAlertDialog {
 	 * {@inheritDoc}
 	 */
 	@Override
-	void accept() {
-		obtainFocus();
-		getMyWd().manage().
+	public void accept() {
+		obtainAlert();
+		getAlertDialog().accept();
 	}
 
 }

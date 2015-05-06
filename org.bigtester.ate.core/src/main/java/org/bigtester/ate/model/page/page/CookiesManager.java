@@ -21,14 +21,12 @@
 package org.bigtester.ate.model.page.page;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream; 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.util.Iterator;
+import java.io.ObjectOutputStream; 
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,6 +39,7 @@ import org.eclipse.aether.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Cookie;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CookiesManager.
  *
@@ -65,7 +64,7 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 	private String exportFolderNameWithAbsoluatePath;
 
 	/** The cookies. */
-	private Map<String, Cookie> cookies = new ConcurrentHashMap<String, Cookie>();
+	private Map<String, Cookie> cookies = new ConcurrentHashMap<String, Cookie>();//NOPMD
 
 	// if domain is "", it means all cookies in the browser storing in manager.
 	/** The domain. */
@@ -157,7 +156,8 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 		return retVal;
 	}
 
-	/* (non-Javadoc)
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public void setImportFileNameWithAbsolutePath(
@@ -183,7 +183,8 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 		return retVal;
 	}
 
-	/* (non-Javadoc)
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	public void setExportFileNameWithAbsolutePath(
@@ -247,7 +248,8 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 		this.exportFolderNameWithAbsoluatePath = exportFolderNameWithAbsoluatePath;
 	}
 
-	/* (non-Javadoc)
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -265,7 +267,8 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 
 	}
 
-	/* (non-Javadoc)
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -278,7 +281,8 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 		}
 	}
 
-	/* (non-Javadoc)
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
@@ -290,15 +294,15 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 		} else {
 			try {
 				File file = new File(this.getExportFileNameWithAbsolutePath());
-				ObjectInputStream in = new ObjectInputStream(
+				ObjectInputStream ins = new ObjectInputStream(
 						new FileInputStream(file));
-				final Map<String, Cookie> temp = (Map<String, Cookie>) in.readObject();
+				final Map<String, Cookie> temp = (Map<String, Cookie>) ins.readObject();
 				if (null == temp) {
-					in.close();
+					ins.close();
 					throw GlobalUtils.createNotInitializedException("cookie loading initial condition");
 				}
 				this.cookies = temp;
-				in.close();
+				ins.close();
 			} catch (IOException | ClassNotFoundException e) {
 				throw GlobalUtils.createInternalError("File loading operation", e);
 			}
@@ -308,7 +312,8 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 		}
 	}
 
-	/* (non-Javadoc)
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override

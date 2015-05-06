@@ -319,13 +319,17 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_BASETESTSTEP. */
 	public static final String ELEMENT_ELEMENTFINDBYID = "elementFindById";
 	
+	/** The Constant ELEMENT_COOKIESFINDALL. */
 	public static final String ELEMENT_COOKIESFINDALL = "cookiesFindAll";
 	
+	/** The Constant ATTR_COOKIESFINDBYDOMAINNAME_DOMAINNAME. */
 	public static final String ATTR_COOKIESFINDBYDOMAINNAME_DOMAINNAME = "domainName";//NOPMD
 	
+	/** The Constant ELEMENT_COOKIESFINDBYDOMAINNAME. */
 	public static final String ELEMENT_COOKIESFINDBYDOMAINNAME = "cookiesFindByDomainName";
 	
-	public static final String ELEMENT_COOKIEFINDBYCOOKIENAMEINDOMAIN = "cookieFindByCookieNameInDomain";
+	/** The Constant ELEMENT_COOKIEFINDBYCOOKIENAMEINDOMAIN. */
+	public static final String ELEMENT_COOKIEFINDBYCOOKIENAMEINDOMAIN = "cookieFindByCookieNameInDomain";//NOPMD
 	
 	
 	/** The Constant ELEMENT_ELEMENTFINDBYXPATH. */
@@ -381,15 +385,29 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_SENDKEYSACTION. */
 	public static final String ELEMENT_SENDKEYSACTION = "sendKeysAction";
 	
+	/** The Constant ELEMENT_FILEIMPORTACTION. */
 	public static final String ELEMENT_FILEIMPORTACTION = "fileImportAction";
+	
+	/** The Constant ELEMENT_FILEEXPORTACTION. */
 	public static final String ELEMENT_FILEEXPORTACTION = "fileExportAction";
+	
+	/** The Constant ELEMENT_FILESEXPORTACTION. */
 	public static final String ELEMENT_FILESEXPORTACTION = "filesExportAction";
+	
+	/** The Constant ELEMENT_FILESIMPORTACTION. */
 	public static final String ELEMENT_FILESIMPORTACTION = "filesImportAction";
 	
-	public static final String ATTR_FILEIMPORTACTION_FILENAMEWITHABSOLUTEPATH = "fileNameWithAbsolutePath";
-	public static final String ATTR_FILEEXPORTACTION_FILENAMEWITHABSOLUTEPATH = "fileNameWithAbsolutePath";
-	public static final String ATTR_FILESIMPORTACTION_FOLDERNAMEWITHABSOLUTEPATH = "folderNameWithAbsolutePath";
-	public static final String ATTR_FILESEXPORTACTION_FOLDERNAMEWITHABSOLUTEPATH = "folderNameWithAbsolutePath";
+	/** The Constant ATTR_FILEIMPORTACTION_FILENAMEWITHABSOLUTEPATH. */
+	public static final String ATTR_FILEIMPORTACTION_FILENAMEWITHABSOLUTEPATH = "fileNameWithAbsolutePath";//NOPMD
+	
+	/** The Constant ATTR_FILEEXPORTACTION_FILENAMEWITHABSOLUTEPATH. */
+	public static final String ATTR_FILEEXPORTACTION_FILENAMEWITHABSOLUTEPATH = "fileNameWithAbsolutePath";//NOPMD
+	
+	/** The Constant ATTR_FILESIMPORTACTION_FOLDERNAMEWITHABSOLUTEPATH. */
+	public static final String ATTR_FILESIMPORTACTION_FOLDERNAMEWITHABSOLUTEPATH = "folderNameWithAbsolutePath";//NOPMD
+	
+	/** The Constant ATTR_FILESEXPORTACTION_FOLDERNAMEWITHABSOLUTEPATH. */
+	public static final String ATTR_FILESEXPORTACTION_FOLDERNAMEWITHABSOLUTEPATH = "folderNameWithAbsolutePath";//NOPMD
 	
 	/** The Constant ATTR_SENDKEYSACTION_DATAVALUE. */
 	public static final String ATTR_SENDKEYSACTION_DATAVALUE = "dataValue";

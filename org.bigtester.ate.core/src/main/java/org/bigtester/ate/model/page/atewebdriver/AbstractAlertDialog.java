@@ -41,6 +41,8 @@ public abstract class AbstractAlertDialog {
 	/** The my wd. */
 	@XStreamOmitField
 	final private WebDriver myWd;
+	/** The owner handler. */
+	final private String ownerHandler;
 	
 	/**
 	 * Gets the my wd.
@@ -51,8 +53,6 @@ public abstract class AbstractAlertDialog {
 		return myWd;
 	}
 
-	/** The owner handler. */
-	final private String ownerHandler;
 	
 	/**
 	 * Instantiates a new abstract alert dialog.
@@ -68,14 +68,14 @@ public abstract class AbstractAlertDialog {
 	/**
 	 * Obtain focus.
 	 */
-	public void obtainFocus() {
-		myWd.switchTo().alert();
+	public void obtainAlert() {
+		alertDialog = myWd.switchTo().alert();
 	}
 	
 	/**
 	 * Accept.
 	 */
-	abstract void accept();
+	abstract public void accept();
 
 	/**
 	 * Gets the owner handler.
@@ -86,6 +86,11 @@ public abstract class AbstractAlertDialog {
 		return ownerHandler;
 	}
 
+	/**
+	 * Gets the alert dialog.
+	 *
+	 * @return the alert dialog
+	 */
 	public Alert getAlertDialog() {
 		final Alert alertDialog2 = alertDialog;
 		if (alertDialog2 == null) {
@@ -95,6 +100,11 @@ public abstract class AbstractAlertDialog {
 		}
 	}
 
+	/**
+	 * Sets the alert dialog.
+	 *
+	 * @param alertDialog the new alert dialog
+	 */
 	public void setAlertDialog(Alert alertDialog) {
 		this.alertDialog = alertDialog;
 	}
