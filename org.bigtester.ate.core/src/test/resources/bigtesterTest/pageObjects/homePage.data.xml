@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+<STEPERELEMENTEXISTENCE FirstTimeExecution= "Yes" ELEMENTFINDBY="ID" ELEMENTFINDBYVALUE="logo" ASSERTPRIORITY="HIGH" PAGENAME="homepage" STEPERSETID="homePageVID" TESTDATACONTEXT_IDCOLUMN="5" />
+<STEPERELEMENTEXISTENCE FirstTimeExecution= "Yes"  ELEMENTFINDBY="ID" ELEMENTFINDBYVALUE="banner" ASSERTPRIORITY="MEDIUM" PAGENAME="homepage" STEPERSETID="homePageVID" TESTDATACONTEXT_IDCOLUMN="5" />
+<STEPERELEMENTEXISTENCE FirstTimeExecution= "Yes"  ELEMENTFINDBY="ID" ELEMENTFINDBYVALUE="search_phu" ASSERTPRIORITY="HIGH" PAGENAME="homepage" STEPERSETID="homePageVID" TESTDATACONTEXT_IDCOLUMN="5" />
+<STEPERELEMENTEXISTENCE FirstTimeExecution= "Yes"  ELEMENTFINDBY="LINKTEXT" ELEMENTFINDBYVALUE="https://ssl.req.gouv.qc.ca/slc0110_eng.html" ASSERTPRIORITY="HIGH" PAGENAME="homepage" STEPERSETID="2" TESTDATACONTEXT_IDCOLUMN="5" />
+<!-- <STEPERELEMENTEXISTENCE FirstTimeExecution= "Yes"  ASSERTPROPERTY="Page_Title" ASSERTVALUE="My Page Title"	PAGENAME="homepage"	STEPERSETID="1"	TESTDATACONTEXT_IDCOLUMN="8" ASSERTPRIORITY="HIGH"/> -->
+ 
+<ElementInputData FirstTimeExecution= "Yes" stepEIDsetID="1" dataName="UserName" dataValue="peidonghu1x" testDataContext_idColumn="1" />
+<ElementInputData FirstTimeExecution= "Yes" stepEIDsetID="2" dataName="UserName" dataValue="peidonghu2x" testDataContext_idColumn="1" />
+<ElementInputData FirstTimeExecution= "Yes" stepEIDsetID="3" dataName="Password" dataValue="pa1x" testDataContext_idColumn="1" />
+<ElementInputData FirstTimeExecution= "Yes" stepEIDsetID="4" dataName="Password" dataValue="pa2x" testDataContext_idColumn="1" />
+
+</dataset>

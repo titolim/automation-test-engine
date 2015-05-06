@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:ate="http://www.bigtester.org/schema/ate" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                           http://www.bigtester.org/schema/ate 
+                           http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+	                       
+	<!-- this registers beans annotated with @Aspect -->
+	<aop:aspectj-autoproxy/>
+
+	<import resource="classpath:META-INF/logger-reporter.xml" />
+	<import resource="classpath:META-INF/page_base_bean.xml" />
+
+	<ate:regularPage id="poRegistrationPage" />
+
+	
+	
+	<ate:runTimeDataHolder id="randomFirstname" dataHolderType="RandomAlphaText" randomInputLength="10"/>
+	<ate:runTimeDataHolder id="randomLastname" dataHolderType="RandomAlphaText" randomInputLength="10"/>
+	<ate:runTimeDataHolder id="randomEmail" dataHolderType="RandomEmail"/>
+	<ate:runTimeDataHolder id="randomPhone" dataHolderType="RandomNumbers" randomInputLength="10" />
+	<ate:runTimeDataHolder id="randomPassword" dataHolderType="RandomTextNumbers" randomInputLength="10" />
+
+	<!-- elementactiondef of typeInFirstname -->
+	<ate:elementActionDef id="typeInFirstName" elementFind="signUpFirstName" elementAction="signUpFirstNameAction" />
+	<ate:elementFindByXpath id="signUpFirstName" findByValue="//input[@name='firstName']" />
+	<ate:sendKeysAction id="signUpFirstNameAction" dataValue="randomFirstname" />
+	
+	<!-- elementactiondef of typeInLastname -->
+	<ate:elementActionDef id="typeInLastName" elementFind="signUpLastName" elementAction="signUpLastNameAction" />
+	<ate:elementFindByXpath id="signUpLastName"	findByValue="//input[@name='lastName']" />
+	<ate:sendKeysAction id="signUpLastNameAction" dataValue="randomLastname" />
+
+    <!-- elementactiondef of clickEmailInput -->
+	<ate:elementActionDef id="clickEmailInput"   elementFind="signUpEmail" elementAction="signUpEmailClickAction" />
+	<ate:clickAction id="signUpEmailClickAction" />
+
+    <!-- elementactiondef of typeInEmail -->
+	<ate:elementActionDef id="typeInEmail" elementFind="signUpEmail" elementAction="signUpEmailAction" />
+	<ate:elementFindByXpath id="signUpEmail" findByValue="//input[@id='email_register']" />
+	<ate:sendKeysAction id="signUpEmailAction" dataValue="randomEmail" />
+	
+	<!-- click Phone input box ate:elementActionDef definition -->
+	<ate:elementActionDef id="clickPhoneInput" elementFind="signUpPhone" elementAction="phoneInputClick"/>
+	<ate:clickAction id="phoneInputClick" />
+	
+	<!-- elementactiondef of typeInPhone -->
+	<ate:elementActionDef id="typeInPhone" elementFind="signUpPhone" elementAction="signUpPhoneAction" />
+	<ate:elementFindByXpath id="signUpPhone" findByValue="//input[@id='phone']" />
+	<ate:sendKeysAction id="signUpPhoneAction" dataValue="randomPhone" />
+	
+	<!-- elementactiondef of typeInPassword -->
+	<ate:elementActionDef id="typeInPassword" elementFind="signUpPassword" elementAction="signUpPasswordAction" />
+	<ate:elementFindByXpath id="signUpPassword"	findByValue="//input[@id='register_password']" />
+	<ate:sendKeysAction id="signUpPasswordAction" dataValue="randomPassword" />
+	
+	<!-- move cursor agree term check box ate:elementActionDef definition -->
+    <ate:elementActionDef id="moveMouseToAgreeTermBox" elementFind="agreeTermsBox" elementAction="moveMouseToAgreeBox" />
+    <ate:mouseMoveToAction id="moveMouseToAgreeBox" />
+	
+    <!-- click agree term check box ate:elementActionDef definition -->
+	<ate:elementActionDef id="agreeTerms" elementFind="agreeTermsBox" elementAction="agreeTermsClick"/>
+	<ate:elementFindByXpath id="agreeTermsBox" findByValue="//label[contains(.,'I agree to the')]" />
+	<ate:clickAction id="agreeTermsClick" />
+
+    <!-- click sign up button def ate:elementActionDef definition -->
+	<ate:elementActionDef id="clickSignUp" elementFind="signUpButton" elementAction="signUpButtonClick"/>
+	<ate:elementFindByXpath id="signUpButton" findByValue="//button[@id='register-submit-btn']" />
+	<ate:clickAction id="signUpButtonClick" />
+
+</beans>
