@@ -35,16 +35,18 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.PriorityOrdered;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 /**
  * The Class CookiesManagerTest.
  *
  * @author Peidong Hu
  */
-public class BaseATETest implements ApplicationContextAware, BeanFactoryPostProcessor, PriorityOrdered {
+
+public class BaseATETest extends AbstractTestNGSpringContextTests implements ApplicationContextAware, BeanFactoryPostProcessor, PriorityOrdered {
 	
-	/** The application context. */
-	@Nullable
-	private transient ApplicationContext applicationContext;
+//	/** The application context. */
+//	@Nullable
+//	private transient ApplicationContext applicationContext;
 	/**
 	 * @return the applicationContext
 	 */
@@ -93,16 +95,16 @@ public int getOrder() {
 	// TODO Auto-generated method stub
 	return 0;
 }
-/**
-* {@inheritDoc}
-*/
-@Override
-public void setApplicationContext(@Nullable ApplicationContext arg0)
-		throws BeansException {
-	if (null == arg0) throw GlobalUtils.createInternalError("application context");
-	this.applicationContext = arg0;
-	
-}
+///**
+//* {@inheritDoc}
+//*/
+//@Override
+//public void setApplicationContext(@Nullable ApplicationContext arg0)
+//		throws BeansException {
+//	if (null == arg0) throw GlobalUtils.createInternalError("application context");
+//	this.applicationContext = arg0;
+//	
+//}
   
  
 }
