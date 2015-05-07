@@ -61,6 +61,11 @@ public class PopupPromptDialog extends PopupConfirmationDialog {
 		this.text = text;
 	}
 
+	/**
+	 * Receive text.
+	 *
+	 * @param text the text
+	 */
 	public void receiveText(String text) {
 		setText(text);
 		
