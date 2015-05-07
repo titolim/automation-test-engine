@@ -20,7 +20,12 @@
  *******************************************************************************/
 package org.bigtester.ate.test;
 
+import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,5 +35,49 @@ import org.springframework.test.context.ContextConfiguration;
  */
 @ContextConfiguration(locations = {"classpath:bigtesterTestNG/testproject.xml"})
 public class BigtesterProjectTest extends BaseATETest {
+	
+	/** The my driver. */
+	@Nullable
+	private IMyWebDriver myDriver;
 
+	/**
+	 * @param myDriver the myDriver to set
+	 */
+	public final void setMyDriver(IMyWebDriver myDriver) {
+		this.myDriver = myDriver;
+	}
+	
+	/**
+	 * @return the myDriver
+	 */
+	public final IMyWebDriver getMyDriver() {
+		final IMyWebDriver myDriver2 = myDriver;
+		if (myDriver2 == null) {
+			throw GlobalUtils.createNotInitializedException("web driver");
+		} else {
+			return myDriver2;
+			
+		}
+	}
+	
+	/**
+	 * Inits the test objects.
+	 */
+	@BeforeClass
+	public void initTestObjects() {
+		Object obj = applicationContext.getBean(IMyWebDriver.class);
+		if (obj == null) {
+			throw GlobalUtils.createInternalError("app ctx web driver");
+		}
+		myDriver = (IMyWebDriver) obj;
+	}
+	
+	/**
+	 * Tear down.
+	 */
+	@AfterClass
+	public void tearDown() {
+		getMyDriver().getWebDriverInstance().quit();
+		
+	}
 }

@@ -44,9 +44,6 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 public class BaseATETest extends AbstractTestNGSpringContextTests implements ApplicationContextAware, BeanFactoryPostProcessor, PriorityOrdered {
 	
-//	/** The application context. */
-//	@Nullable
-//	private transient ApplicationContext applicationContext;
 	/**
 	 * @return the applicationContext
 	 */
@@ -95,16 +92,6 @@ public int getOrder() {
 	// TODO Auto-generated method stub
 	return 0;
 }
-///**
-//* {@inheritDoc}
-//*/
-//@Override
-//public void setApplicationContext(@Nullable ApplicationContext arg0)
-//		throws BeansException {
-//	if (null == arg0) throw GlobalUtils.createInternalError("application context");
-//	this.applicationContext = arg0;
-//	
-//}
-  
+ 
  
 }

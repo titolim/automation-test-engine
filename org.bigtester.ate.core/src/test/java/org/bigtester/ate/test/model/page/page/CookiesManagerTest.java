@@ -20,7 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.test.model.page.page;
 
-import org.bigtester.ate.test.BaseATETest;
+
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
@@ -37,9 +37,12 @@ public class CookiesManagerTest extends BigtesterProjectTest {
   
   /**
    * Hello world test
+ * @throws InterruptedException 
    */
   @Test
-  public void f() {
-	  System.out.println(applicationContext.containsBean("abc"));
+  public void startBrowser() throws InterruptedException {
+	  getMyDriver().getWebDriverInstance();
+	  Thread.sleep(1000);
   }
+    
 }
