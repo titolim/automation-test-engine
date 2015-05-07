@@ -14,9 +14,10 @@
 	<aop:aspectj-autoproxy />
 
 	<import resource="classpath:META-INF/db-services.xml" />
+	<import resource="classpath:META-INF/project_base_bean.xml" />
 	
-	<ate:GenericSystemLogger id="systemlogger"/>
-	<ate:TestDatabaseInitializer id="dbInitializer"/>
+<!-- 	<ate:GenericSystemLogger id="systemlogger"/> -->
+<!-- 	<ate:TestDatabaseInitializer id="dbInitializer"/> -->
 	
 	<ate:TestProject id="testproject" stepThinkTime="6" globalInitXmlFile="bigtesterTest/data.xml">
 		<ate:TestSuite id="suite01" suiteName="suite01">
