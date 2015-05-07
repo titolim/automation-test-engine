@@ -653,6 +653,70 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
+<xsd:complexType name="ElementFindByLinkTextType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="findByValue" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+
+
+<xsd:complexType name="ElementFindByPartialLinkTextType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="findByValue" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+
+
+<xsd:complexType name="ElementFindByNameType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="findByValue" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+
+
+<xsd:complexType name="ElementFindByClassNameType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="findByValue" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+
+
+<xsd:complexType name="ElementFindByCssType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="findByValue" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+
+
+
+
+<xsd:complexType name="ElementFindByTagNameType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="findByValue" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+
+
+
+
     <!--************************* following for Element Action *************************-->
     
     <xsd:complexType name="ElementActionDefType">
@@ -842,6 +906,12 @@
     <xsd:element name="elementFindByXpath" type="GenericElementFindType" />
     <xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />
     <xsd:element name="browserWindowFindByOpenSequence" type="BrowserWindowFindByOpenSequence" />
+    <xsd:element name="elementFindByLinkText" type="ElementFindByLinkTextType" />
+    <xsd:element name="elementFindByPartialLinkText" type="ElementFindByPartialLinkTextType" />
+    <xsd:element name="elementFindByName" type="ElementFindByNameType" />
+    <xsd:element name="elementFindByClassName" type="ElementFindByClassNameType" />
+    <xsd:element name="elementFindByCss" type="ElementFindByCssType" />
+    <xsd:element name="elementFindByTagName" type="ElementFindByTagNameType" />
 	
     <xsd:element name="elementActionDef" type="ElementActionDefType"/>
     <xsd:element name="browserWindowClose" type="TestWindowsCloseActionType" />

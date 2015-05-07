@@ -84,7 +84,17 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYID, new FindByIdBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYTITLE, new WindowFindByTitleBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE, new WindowFindByOpenSequenceBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYNAME, new FindByNameBeanDefinitionParser());	
+
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYCLASSNAME, new FindByClassBeanDefinitionParser());
+	
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYCSS, new FindByCssBeanDefinitionParser());
+	
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYLINKTEXT, new FindByLinkTextBeanDefinitionParser());
 		
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYPLINKTEXT, new FindByPartialLinkTextBeanDefinitionParser());
+
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYTAGNAME, new FindByTagNameBeanDefinitionParser());		
 		/******************************* following for Element Action ******************************/
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTACTIONDEF, new ElementActionDefBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CLICKACTION, new ClickActionBeanDefinitionParser());
@@ -103,7 +113,7 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_SAFARIDRIVER, new SafariDriverBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_OPERADRIVER, new OperaDriverBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_HTMLUNITDRIVER, new HtmlUnitDriverBeanDefinitionParser());
-				
+		
 	}
 
 }

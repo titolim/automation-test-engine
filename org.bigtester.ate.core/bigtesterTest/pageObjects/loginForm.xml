@@ -20,7 +20,7 @@
 	
     <!-- elementActionDef definition -->
 	<ate:elementActionDef id="eadTypeLoginUserName"   elementFind="efLoginUserName" elementAction="eaTypeLoginUserName" />
-	<ate:elementFindById id="efLoginUserName" findByValue="modlgn_username" />
+	<ate:elementFindByName id="efLoginUserName" findByValue="username" />
 	<ate:sendKeysAction id="eaTypeLoginUserName" dataValue="peidonghu1x" />
 <!-- 	<ate:fileDataHolder id="userNameValue" dataValueID="1"/> -->
 
