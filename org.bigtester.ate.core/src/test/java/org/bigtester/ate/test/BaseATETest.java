@@ -34,6 +34,7 @@ import org.bigtester.ate.model.project.TestProject;
 import org.dbunit.DatabaseUnitException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriver.Options;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -57,6 +58,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 	/** The my mocked driver. */
 	final private IMyWebDriver myMockedDriver;
 
+	final private Options options;
 	/**
 	 * @return the mockedDriver
 	 */
@@ -64,6 +66,20 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		return mockedDriver;
 	}
 
+	/**
+	 * ATE mock. Use ate mock to avoid null pointer check warning in your code.
+	 *
+	 * @param <T> the generic type
+	 * @param classToMock the class to mock
+	 * @return the t
+	 */
+	public final <T> T ATEMock(Class<?> classToMock) {
+		@SuppressWarnings("unchecked")
+		T retVal = (T) mock(classToMock);
+		if (null == retVal) throw GlobalUtils.createInternalError("mock");
+		return retVal;
+	}
+	
 	/**
 	 * @return the myMockedDriver
 	 */
@@ -76,13 +92,9 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 	 */
 	public BaseATETest() {
 		super();
-		WebDriver mockedDriver2 = mock(WebDriver.class);
-		if (mockedDriver2 == null) throw GlobalUtils.createInternalError("mock"); 
-		mockedDriver = mockedDriver2;
-		
-		IMyWebDriver myMockedDriver2 = mock(IMyWebDriver.class);
-		if (myMockedDriver2 == null) throw GlobalUtils.createInternalError("my mocked");
-		myMockedDriver = myMockedDriver2;
+		mockedDriver = ATEMock(WebDriver.class);
+		myMockedDriver = ATEMock(IMyWebDriver.class);
+		options = ATEMock(Options.class);
 	}
 	
 	/**
@@ -135,6 +147,13 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 	@Override
 	public int getOrder() {
 		return 0;
+	}
+
+	/**
+	 * @return the options
+	 */
+	public Options getOptions() {
+		return options;
 	}
 
 }

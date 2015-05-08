@@ -26,14 +26,17 @@ import java.util.Set;
 
 import org.bigtester.ate.model.page.page.CookiesManager;
 import org.bigtester.ate.test.BigtesterProjectTest;
+import org.mockito.Mockito;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver.Options;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.Assert;
-//import static org.mockito.Mockito.mock;
-//import static org.mockito.Mockito.when;
+
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 
 /**
  * The Class CookiesManagerTest.
@@ -44,6 +47,7 @@ import org.testng.Assert;
 @ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/loginSuccess.xml" })
 public class CookiesManagerTest extends BigtesterProjectTest {
 
+	
 	/** The cookies. */
 
 	private static Set<Cookie> cookies = new HashSet<Cookie>();
@@ -72,6 +76,7 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 		cookies.add(cookie2);
 		cookies.add(cookie3);
 		cookiesMng = new CookiesManager(getMyMockedDriver(), cookies);
+		
 	
 	}
 	
@@ -81,7 +86,11 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 	@BeforeClass
 	public void setup() {
 		cookiesMng.setExportFileNameWithAbsolutePath(fileNameWithAbsolutePath);
-		//when(getMyMockedDriver().getWebDriverInstance()).thenReturn(getMockedDriver());
+		when(getMyMockedDriver().getWebDriverInstance()).thenReturn(getMockedDriver());
+		when(getMockedDriver().manage()).thenReturn(getOptions());
+		Mockito.doNothing().when(getOptions()).addCookie(Mockito.refEq(cookie1));
+		Mockito.doNothing().when(getOptions()).addCookie(Mockito.refEq(cookie2));
+		Mockito.doNothing().when(getOptions()).addCookie(Mockito.refEq(cookie3));
 	}
 
 	/**
@@ -89,11 +98,16 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Test
+	@Test (priority = 1)
 	public void exportFileTest() throws InterruptedException {
 		cookiesMng.saveToSingleFile();
 		File newFile = new File(cookiesMng.getExportFileNameWithAbsolutePath());
 		Assert.assertTrue(newFile.exists());
+	}
+	
+	@Test (priority = 2)
+	public void importFileTest() {
+		
 	}
 	
 	/**
