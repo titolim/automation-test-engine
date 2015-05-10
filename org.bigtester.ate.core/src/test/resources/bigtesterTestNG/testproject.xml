@@ -18,9 +18,9 @@
 	
 	<ate:TestProject id="testproject" stepThinkTime="6" globalInitXmlFile="bigtesterTestNG/data.xml">
 		<ate:TestSuite id="suite01" suiteName="suite01">
-<!-- 		    <ate:XmlTestCase testCaseFilePathName="src/test/resources/bigtesterTestNG/testSuite01/homePageValidation.xml" /> -->
-<!-- 		    <ate:XmlTestCase testCaseFilePathName="src/test/resources/bigtesterTestNG/testSuite01/loginSuccess.xml" /> -->
- <ate:XmlTestCase testCaseFilePathName="src/test/resources/bigtesterTestNG/testSuite01/unexpectedAlertHandling.xml" /> 
+		    <ate:XmlTestCase testCaseFilePathName="src/test/resources/bigtesterTestNG/testSuite01/homePageValidation.xml" />
+		    <ate:XmlTestCase testCaseFilePathName="src/test/resources/bigtesterTestNG/testSuite01/loginSuccess.xml" />
+ 			<ate:XmlTestCase testCaseFilePathName="src/test/resources/bigtesterTestNG/testSuite01/unexpectedAlertHandling.xml" /> 
 		</ate:TestSuite>
 	</ate:TestProject>
 </beans>

@@ -340,6 +340,9 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE. */
 	public static final String ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE = "browserWindowFindByOpenSequence";//NOPMD
+
+	/** The Constant ELEMENT_ALERTDIALOGFINDINCURRENTFOCUS. */
+	public static final String ELEMENT_ALERTDIALOGFINDINCURRENTFOCUS = "alertDialogFindInCurrentFocus";//NOPMD
 	
 	/** The Constant ATTR_BROWSERWINDOWFINDBYOPENSEQUENCE_OPENSEQUENCE. */
 	public static final String ATTR_BROWSERWINDOWFINDBYOPENSEQUENCE_OPENSEQUENCE = "openSequence";//NOPMD
@@ -372,6 +375,9 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_BROWSERWINDOWCLOSE. */
 	public static final String ELEMENT_BROWSERWINDOWCLOSE = "browserWindowClose";
+
+	/** The Constant ELEMENT_ALERTDIALOGACCEPT. */
+	public static final String ELEMENT_ALERTDIALOGACCEPT = "alertDialogAccept";
 	
 	/** The Constant ELEMENT_CLICKACTION. */
 	public static final String ELEMENT_CLICKACTION = "clickAction";

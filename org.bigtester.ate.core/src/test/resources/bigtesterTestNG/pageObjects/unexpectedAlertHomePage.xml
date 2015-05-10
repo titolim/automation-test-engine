@@ -28,5 +28,8 @@
     	openSequence="1" />
     <ate:browserWindowClose id="eaAlertWindowClose"/>
     
+    <ate:elementActionDef id="eadAcceptAlertInFocus" elementFind="efAlertInFocus" elementAction="eaAcceptAlert" />
+	<ate:alertDialogFindInCurrentFocus id="efAlertInFocus"/>
+	<ate:alertDialogAccept id="eaAcceptAlert"/>
     
 </beans>

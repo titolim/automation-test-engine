@@ -253,28 +253,41 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	}
 
 	/**
-	 * Obtain focus on alert.
-	 *
-	 * @param openSequence the open sequence, indexed from 0
-	 * @return the alert
-	 */
-	public Alert obtainFocusOnAlert(int openSequence) {
-		if (openSequence >= alerts.size()) throw GlobalUtils.createNotInitializedException("this alert, opensequence is too large");
-		return alerts.get(openSequence).getAlertDialog();
-	}
-	
-	/**
 	 * Obtain focus on alert dialog.
 	 *
 	 * @param openSequence the open sequence, indexed from 0
 	 * @return the abstract alert dialog
 	 */
+	@Nullable
 	public AbstractAlertDialog obtainFocusOnAlertDialog(int openSequence) {
-		if (openSequence >= alerts.size()) throw GlobalUtils.createNotInitializedException("this alert, opensequence is too large");
-		AbstractAlertDialog retVal = alerts.get(openSequence);
-		if (null == retVal) throw GlobalUtils.createInternalError("java");
+		AbstractAlertDialog retVal;
+		if (alerts.isEmpty()) 
+			retVal = null;
+		else {
+			if (openSequence >= alerts.size()) throw GlobalUtils.createNotInitializedException("this alert, opensequence is too large");
+			retVal = alerts.get(openSequence);
+			if (null == retVal) throw GlobalUtils.createInternalError("java");
+		}
 		return retVal;
 	}
+	
+	/**
+	 * Obtain focus on latest alert dialog.
+	 *
+	 * @return the abstract alert dialog
+	 */
+	@Nullable
+	public AbstractAlertDialog obtainFocusOnLatestAlertDialog() {
+		AbstractAlertDialog retVal;
+		if (alerts.isEmpty()) 
+			retVal = null;
+		else {
+			retVal = alerts.get(alerts.size()-1);
+			if (null == retVal) throw GlobalUtils.createInternalError("java");
+		}
+		return retVal;
+	}
+	
 	
 	/**
 	 * Focus on open sequence number.

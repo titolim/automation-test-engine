@@ -41,6 +41,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.PriorityOrdered;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 
@@ -118,7 +119,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		TestProject testplan = GlobalUtils
 				.findTestProjectBean(getApplicationContext());
 		testplan.setAppCtx(getApplicationContext());
-
+		getApplicationContext().getBean(LocalContainerEntityManagerFactoryBean.class);
 		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) getApplicationContext()
 				.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
 

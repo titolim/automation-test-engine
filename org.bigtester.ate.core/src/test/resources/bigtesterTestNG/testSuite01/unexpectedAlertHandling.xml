@@ -38,6 +38,8 @@
 		</ate:homeStep>
 		<ate:elementStep id="stepClickAlertWinLink" stepName="stepClickAlertWinLink" targetStep="true" elementActionDef="eadClickAlertWinLink"></ate:elementStep>
 		<ate:elementStep id="stepCloseAlertWindow" stepName="stepCloseAlertWindow" targetStep="true" elementActionDef="eadCloseAlertWindow"></ate:elementStep>
+		<ate:elementStep id="stepAccepAlert" stepName="stepAccepAlert" targetStep="true" elementActionDef="eadAcceptAlertInFocus"></ate:elementStep>
+		
 		<ate:lastStep id="stepLastStep" stepName="stepLastStep"
 			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
 		</ate:lastStep>

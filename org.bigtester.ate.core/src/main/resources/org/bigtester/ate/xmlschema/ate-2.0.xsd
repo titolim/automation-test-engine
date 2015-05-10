@@ -636,6 +636,13 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	
+	<xsd:complexType name="AlertDialogFindInCurrentFocusType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 	<xsd:complexType name="ElementFindByIdType">
 		<xsd:complexContent>
@@ -784,6 +791,15 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	
+	<xsd:complexType name="AlertDialogAcceptLikeActionType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 	<xsd:complexType name="SendKeysActionType">
 		<xsd:complexContent>
@@ -914,12 +930,15 @@
     <xsd:element name="elementFindByXpath" type="GenericElementFindType" />
     <xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />
     <xsd:element name="browserWindowFindByOpenSequence" type="BrowserWindowFindByOpenSequence" />
+    <xsd:element name="alertDialogFindInCurrentFocus" type="AlertDialogFindInCurrentFocusType" />
+    
 	<xsd:element name="cookiesFindByDomainName" type="AllCookiesFindByDomainNameType" />	
 	<xsd:element name="cookiesFindAll" type="CookiesFindAllType" />
 <!-- 	<xsd:element name="cookieFindByCookieNameInDomain" type="CookieFindByCookieNameInDomainType" /> -->
 	
     <xsd:element name="elementActionDef" type="ElementActionDefType"/>
     <xsd:element name="browserWindowClose" type="TestWindowsCloseActionType" />
+    <xsd:element name="alertDialogAccept" type="AlertDialogAcceptLikeActionType" />
     <xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType" />
     <xsd:element name="clickAction" type="ClickActionType" />
     <xsd:element name="clearTextAction" type="ClearTextActionType" />

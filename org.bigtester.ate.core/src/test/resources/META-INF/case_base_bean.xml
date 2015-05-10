@@ -20,6 +20,6 @@
 	<bean id="globalUtilsForTestCase" class="org.bigtester.ate.GlobalUtils" />
 	<bean id="stepUnexpectedAlertHandler" class="org.bigtester.ate.model.casestep.StepUnexpectedAlertHandler" />
 	
-	<ate:TestDatabaseInitializer id="dbInitializer"/>
+<!-- 	<ate:TestDatabaseInitializer id="dbInitializer"/> -->
 	
 </beans>

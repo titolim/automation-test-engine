@@ -84,6 +84,7 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYID, new FindByIdBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYTITLE, new WindowFindByTitleBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE, new WindowFindByOpenSequenceBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ALERTDIALOGFINDINCURRENTFOCUS, new AlertDialogFindInFocusBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_COOKIESFINDALL, new CookiesFindAllBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_COOKIESFINDBYDOMAINNAME, new CookiesFindByDomainNameBeanDefinitionParser());
 		
@@ -97,6 +98,7 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 				
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWSWITCH, new WindowSwitchActionBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWCLOSE, new WindowCloseActionBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ALERTDIALOGACCEPT, new AlertDialogAcceptActionBeanDefinitionParser());
 		
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILEIMPORTACTION, new FileImportActionBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILESIMPORTACTION, new FilesImportActionBeanDefinitionParser());
