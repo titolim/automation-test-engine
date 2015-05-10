@@ -288,6 +288,16 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 		return retVal;
 	}
 	
+	/**
+	 * Accept alert dialog on focus.
+	 */
+	public void acceptAlertDialogOnFocus() {
+		AbstractAlertDialog alert = obtainFocusOnLatestAlertDialog();
+		if (null == alert) throw GlobalUtils.createNotInitializedException("default alert dialog");
+		alert.accept();
+		this.refreshWindowsList(getDriver(), false);
+	}
+	
 	
 	/**
 	 * Focus on open sequence number.
@@ -325,7 +335,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	 * @param webD
 	 *            the web d
 	 */
-	private void refreshWindowsList(@Nullable WebDriver webD,
+	public void refreshWindowsList(@Nullable WebDriver webD,
 			boolean refreshFrameFlag) {
 		if (null == webD)
 			throw GlobalUtils.createNotInitializedException("Web Driver");

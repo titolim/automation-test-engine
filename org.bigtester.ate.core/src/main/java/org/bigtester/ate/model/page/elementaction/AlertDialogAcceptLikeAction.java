@@ -62,6 +62,7 @@ public class AlertDialogAcceptLikeAction extends PageModelBase implements
 	@Override
 	public void doAction(AbstractAlertDialog winHandle) {
 		winHandle.accept();
+		getMyWd().getMultiWindowsHandler().refreshWindowsList(getMyWd().getWebDriver(), false);
 		
 	}
 
