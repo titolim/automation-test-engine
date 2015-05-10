@@ -36,7 +36,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 public abstract class AbstractAlertDialog {
 	
 	/** The alert dialog. */
-	@Nullable
+	@XStreamOmitField
 	private Alert alertDialog;
 	/** The my wd. */
 	@XStreamOmitField
@@ -59,17 +59,11 @@ public abstract class AbstractAlertDialog {
 	 * @param winHandler the win handler
 	 * @param webD the web d
 	 */
-	public AbstractAlertDialog( WebDriver webD){
+	public AbstractAlertDialog(WebDriver webD, Alert alt){
 		myWd = webD;
-
+		this.alertDialog = alt;
 	}
 
-	/**
-	 * Obtain focus.
-	 */
-	public void obtainAlert() {
-		alertDialog = myWd.switchTo().alert();
-	}
 	
 	/**
 	 * Accept.
@@ -83,12 +77,7 @@ public abstract class AbstractAlertDialog {
 	 * @return the alert dialog
 	 */
 	public Alert getAlertDialog() {
-		final Alert alertDialog2 = alertDialog;
-		if (alertDialog2 == null) {
-			throw GlobalUtils.createNotInitializedException("alertdialog");
-		} else {
-			return alertDialog2;
-		}
+		return alertDialog;
 	}
 
 	/**

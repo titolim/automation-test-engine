@@ -20,18 +20,15 @@
  *******************************************************************************/
 package org.bigtester.ate.model.casestep;
 
+import java.util.List;
+
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.page.atewebdriver.AbstractAlertDialog;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.UnhandledAlertException;
 import org.springframework.context.ApplicationListener;
 
-// TODO: Auto-generated Javadoc
-/**
- * This class StepUnexpectedThrowableHandler defines ....
- * 
- * @author Peidong Hu
- *
- */
+
 public class StepUnexpectedAlertHandler implements
 		ApplicationListener<StepUnexpectedThrowableEvent> {
 
@@ -45,7 +42,10 @@ public class StepUnexpectedAlertHandler implements
 					.createInternalError("spring application context event");
 		if (arg0.getThrowable() instanceof UnhandledAlertException) {
 			ElementTestStep step = (ElementTestStep) arg0.getSource();
-			step.getMyWebDriver().getAlertDialogProcessorInstance().accept();
+			List<AbstractAlertDialog> alerts = step.getMyWebDriver().getMultiWindowsHandler().getAlerts();
+			for (AbstractAlertDialog alert:alerts) {
+				alert.accept();
+			}
 			step.setCorrectedOnTheFly(true);
 		}
 

@@ -52,6 +52,9 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 
 	/** The windows. */
 	final private List<BrowserWindow> windows = new ArrayList<BrowserWindow>();
+	
+	/** The alerts. */
+	final private List<AbstractAlertDialog> alerts = new ArrayList<AbstractAlertDialog>();
 
 	/** The main window handler. */
 	@Nullable
@@ -250,6 +253,30 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	}
 
 	/**
+	 * Obtain focus on alert.
+	 *
+	 * @param openSequence the open sequence, indexed from 0
+	 * @return the alert
+	 */
+	public Alert obtainFocusOnAlert(int openSequence) {
+		if (openSequence >= alerts.size()) throw GlobalUtils.createNotInitializedException("this alert, opensequence is too large");
+		return alerts.get(openSequence).getAlertDialog();
+	}
+	
+	/**
+	 * Obtain focus on alert dialog.
+	 *
+	 * @param openSequence the open sequence, indexed from 0
+	 * @return the abstract alert dialog
+	 */
+	public AbstractAlertDialog obtainFocusOnAlertDialog(int openSequence) {
+		if (openSequence >= alerts.size()) throw GlobalUtils.createNotInitializedException("this alert, opensequence is too large");
+		AbstractAlertDialog retVal = alerts.get(openSequence);
+		if (null == retVal) throw GlobalUtils.createInternalError("java");
+		return retVal;
+	}
+	
+	/**
 	 * Focus on open sequence number.
 	 *
 	 * @param openSequence
@@ -294,6 +321,9 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 		String winHandlePreserved = null;//NOPMD
 		try {
 			winAlert = webD.switchTo().alert(); //NOPMD
+			if (!alerts.contains(winAlert)) {
+				alerts.add((AbstractAlertDialog) winAlert);
+			}
 		} catch (NoAlertPresentException noAlert) {
 			winHandlePreserved = webD.getWindowHandle(); //NOPMD
 		}
@@ -532,6 +562,13 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	 */
 	public void setMainWindowTitle(String mainWindowTitle) {
 		this.mainWindowTitle = mainWindowTitle;
+	}
+
+	/**
+	 * @return the alerts
+	 */
+	public List<AbstractAlertDialog> getAlerts() {
+		return alerts;
 	}
 
 }

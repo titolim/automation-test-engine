@@ -21,6 +21,7 @@
 package org.bigtester.ate.model.page.atewebdriver;
 
 import org.eclipse.jdt.annotation.Nullable;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
 // TODO: Auto-generated Javadoc
@@ -38,8 +39,8 @@ public class PopupPromptDialog extends PopupConfirmationDialog {
 	 * @param winHandler
 	 * @param webD
 	 */
-	public PopupPromptDialog(WebDriver webD) {
-		super(webD);
+	public PopupPromptDialog(WebDriver webD, Alert alt) {
+		super(webD, alt);
 	}
 	/**
 	 * @return the text

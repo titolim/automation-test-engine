@@ -52,10 +52,5 @@ public interface IMyWebDriver {
 	 */
 	MultiWindowsHandler getMultiWindowsHandler();
 	
-	/**
-	 * Gets the alert dialog processor instance.
-	 *
-	 * @return the alert dialog processor instance
-	 */
-	AbstractAlertDialog getAlertDialogProcessorInstance();
+
 }

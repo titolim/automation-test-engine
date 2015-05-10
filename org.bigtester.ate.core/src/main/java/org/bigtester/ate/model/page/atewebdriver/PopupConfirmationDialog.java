@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
 // TODO: Auto-generated Javadoc
@@ -34,15 +35,14 @@ public class PopupConfirmationDialog extends PopupAlertDialog {
 	 * @param winHandler
 	 * @param webD
 	 */
-	public PopupConfirmationDialog(WebDriver webD) {
-		super( webD);
+	public PopupConfirmationDialog(WebDriver webD, Alert alt) {
+		super( webD, alt);
 	}
 
 	/**
 	 * Reject.
 	 */
 	public void reject() {
-		obtainAlert();
 		getAlertDialog().dismiss();
 	}
 
