@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.page.page.AbstractAlertDialog;
-import org.bigtester.ate.model.page.page.PopupPromptDialog;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;

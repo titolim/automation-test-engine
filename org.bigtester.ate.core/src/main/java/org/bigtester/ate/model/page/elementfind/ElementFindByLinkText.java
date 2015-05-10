@@ -38,7 +38,7 @@ public class ElementFindByLinkText extends AbstractElementFind implements IEleme
 	 */
 	public ElementFindByLinkText(String findByValue) {
 		super(findByValue);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	/**

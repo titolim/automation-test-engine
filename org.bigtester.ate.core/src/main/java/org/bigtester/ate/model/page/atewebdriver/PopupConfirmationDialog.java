@@ -18,56 +18,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.page.page;
+package org.bigtester.ate.model.page.atewebdriver;
 
-import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class PopupPromptDialog defines ....
+ * This class PopupConfirmationDialog defines ....
  * @author Peidong Hu
  *
  */
-public class PopupPromptDialog extends PopupConfirmationDialog {
+public class PopupConfirmationDialog extends PopupAlertDialog {
 
-	/** The text. */
-	@Nullable
-	private transient String text;
 	/**
 	 * @param winHandler
 	 * @param webD
 	 */
-	public PopupPromptDialog(WebDriver webD) {
-		super(webD);
-	}
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		final String text2 = text;
-		String retVal;
-		if (text2 == null) {
-			retVal = "";
-		} else {
-			retVal = text2;
-		}
-		return retVal;
-	}
-	/**
-	 * @param text the text to set
-	 */
-	public void setText(String text) {
-		this.text = text;
+	public PopupConfirmationDialog(WebDriver webD) {
+		super( webD);
 	}
 
 	/**
-	 * Receive text.
-	 *
-	 * @param text the text
+	 * Reject.
 	 */
-	public void receiveText(String text) {
-		setText(text);
-		getAlertDialog().sendKeys(text);
+	public void reject() {
+		obtainAlert();
+		getAlertDialog().dismiss();
 	}
+
 }

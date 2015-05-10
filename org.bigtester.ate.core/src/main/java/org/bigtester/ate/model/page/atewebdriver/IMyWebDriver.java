@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
-import org.bigtester.ate.model.page.page.AbstractAlertDialog;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 
