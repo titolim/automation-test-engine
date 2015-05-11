@@ -30,13 +30,13 @@ import org.springframework.context.ApplicationListener;
 
 
 public class StepUnexpectedAlertHandler implements
-		ApplicationListener<StepUnexpectedThrowableEvent> {
+		ApplicationListener<StepUnexpectedAlertEvent> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void onApplicationEvent(@Nullable StepUnexpectedThrowableEvent arg0) {
+	public void onApplicationEvent(@Nullable StepUnexpectedAlertEvent arg0) {
 		if (arg0 == null)
 			throw GlobalUtils
 					.createInternalError("spring application context event");

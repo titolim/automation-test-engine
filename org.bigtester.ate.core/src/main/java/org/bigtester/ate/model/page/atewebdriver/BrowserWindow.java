@@ -24,11 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.casestep.StepUnexpectedAlertEvent;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.context.ApplicationListener;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -39,7 +41,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author Peidong Hu
  *
  */
-public class BrowserWindow {
+public class BrowserWindow{
 
 	/** The window handle. */
 	final private String windowHandle;
@@ -231,6 +233,8 @@ public class BrowserWindow {
 	public void setClosed(boolean closed) {
 		this.closed = closed;
 	}
+
+	
 
 	
 }

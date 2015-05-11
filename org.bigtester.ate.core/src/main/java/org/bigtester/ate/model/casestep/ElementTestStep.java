@@ -94,7 +94,7 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 			throw pve;
 		} catch (Throwable otherE) {//NOPMD
 			getApplicationContext().publishEvent(
-					new StepUnexpectedThrowableEvent(this, otherE));
+					new StepUnexpectedAlertEvent(this, otherE));
 			throw otherE;
 		}
 

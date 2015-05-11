@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
@@ -45,6 +46,9 @@ public abstract class AbstractAlertDialog {
 	
 	/** The closed. */
 	private boolean closed;
+	
+	@Nullable
+	private String closingWindowHandle;
 	
 	/**
 	 * Gets the my wd.
@@ -115,6 +119,26 @@ public abstract class AbstractAlertDialog {
 	 */
 	public void setClosed(boolean closed) {
 		this.closed = closed;
+	}
+
+
+	
+
+
+	/**
+	 * @return the closingWindowHandle
+	 */
+	@Nullable
+	public String getClosingWindowHandle() {
+		return closingWindowHandle;
+	}
+
+
+	/**
+	 * @param closingWindowHandle the closingWindowHandle to set
+	 */
+	public void setClosingWindowHandle(String closingWindowHandle) {
+		this.closingWindowHandle = closingWindowHandle;
 	}
 
 

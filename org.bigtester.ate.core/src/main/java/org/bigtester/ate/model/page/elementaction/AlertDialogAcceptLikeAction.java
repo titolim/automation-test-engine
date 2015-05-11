@@ -23,6 +23,7 @@ package org.bigtester.ate.model.page.elementaction;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.AbstractAlertDialog;
+import org.bigtester.ate.model.page.atewebdriver.AlertDialogAcceptedEvent;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
@@ -60,9 +61,10 @@ public class AlertDialogAcceptLikeAction extends PageModelBase implements
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void doAction(AbstractAlertDialog winHandle) {
-		winHandle.accept();
-		//getMyWd().getMultiWindowsHandler().refreshWindowsList(getMyWd().getWebDriver(), false);
+	public void doAction(AbstractAlertDialog alertD) {
+		alertD.accept();
+		GlobalUtils.getApx().publishEvent(
+				new AlertDialogAcceptedEvent(alertD));
 		
 	}
 

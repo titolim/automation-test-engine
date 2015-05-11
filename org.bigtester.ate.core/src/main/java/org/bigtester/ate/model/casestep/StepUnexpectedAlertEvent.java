@@ -1,7 +1,7 @@
 /*******************************************************************************
  * ATE, Automation Test Engine
  *
- * Copyright 2014, Montreal PROT, or individual contributors as
+ * Copyright 2015, Montreal PROT, or individual contributors as
  * indicated by the @author tags or express copyright attribution
  * statements applied by the authors.  All third-party contributions are
  * distributed under license by Montreal PROT.
@@ -18,39 +18,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.page.atewebdriver;
+package org.bigtester.ate.model.casestep;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.openqa.selenium.WebDriver;
+import org.springframework.context.ApplicationEvent;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Interface IMyWebDriver defines ....
+ * This class RepeatDataRefreshEvent defines ....
  * 
  * @author Peidong Hu
+ *
  */
-public interface IMyWebDriver {
-	
+public class StepUnexpectedAlertEvent extends ApplicationEvent {
+
 	/**
-	 * Creates the driver.
-	 *
-	 * @return the web driver
-	 */
-	WebDriver getWebDriverInstance();
-	
-	/**
-	 * Gets the webdriver.
 	 * 
-	 * @return the webdriver
 	 */
-	@Nullable WebDriver getWebDriver();
-	
+	private static final long serialVersionUID = 7538715299841005256L;
+
+	/** The throwable. */
+	final private Throwable throwable;
 	/**
-	 * Gets the browser windows monitor.
+	 * Instantiates a new repeat data refresh event.
 	 *
-	 * @return the browser windows monitor
+	 * @param source
+	 *            the source
+	 * @param repeatStepInvokePathNodes
+	 *            the repeat step invoke path nodes
+	 * @param iteration
+	 *            the iteration
 	 */
-	IMultiWindowsHandler getMultiWindowsHandler();
+	public StepUnexpectedAlertEvent(BaseTestStep source, Throwable thr) {
+		super(source);
+		throwable = thr;
+	}
+
 	
+		
+	/**
+	 * @return the throwable
+	 */
+	public Throwable getThrowable() {
+		return throwable;
+	}
+
 
 }

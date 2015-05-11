@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.casestep;
+package org.bigtester.ate.model.page.atewebdriver;
 
 import org.springframework.context.ApplicationEvent;
 
@@ -29,15 +29,13 @@ import org.springframework.context.ApplicationEvent;
  * @author Peidong Hu
  *
  */
-public class StepUnexpectedThrowableEvent extends ApplicationEvent {
-
+public class AlertDialogAcceptedEvent extends ApplicationEvent {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7538715299841005256L;
-
-	/** The throwable. */
-	final private Throwable throwable;
+	private static final long serialVersionUID = 3408265974268390150L;
+	
+	
 	/**
 	 * Instantiates a new repeat data refresh event.
 	 *
@@ -48,19 +46,10 @@ public class StepUnexpectedThrowableEvent extends ApplicationEvent {
 	 * @param iteration
 	 *            the iteration
 	 */
-	public StepUnexpectedThrowableEvent(BaseTestStep source, Throwable thr) {
+	public AlertDialogAcceptedEvent(AbstractAlertDialog source) {
 		super(source);
-		throwable = thr;
 	}
 
 	
-		
-	/**
-	 * @return the throwable
-	 */
-	public Throwable getThrowable() {
-		return throwable;
-	}
-
 
 }
