@@ -58,6 +58,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 	/** The my mocked driver. */
 	final private IMyWebDriver myMockedDriver;
 
+	/** The options. */
 	final private Options options;
 	/**
 	 * @return the mockedDriver
@@ -73,7 +74,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 	 * @param classToMock the class to mock
 	 * @return the t
 	 */
-	public final <T> T ATEMock(Class<?> classToMock) {
+	public final <T> T ateMock(Class<?> classToMock) {
 		@SuppressWarnings("unchecked")
 		T retVal = (T) mock(classToMock);
 		if (null == retVal) throw GlobalUtils.createInternalError("mock");
@@ -92,9 +93,9 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 	 */
 	public BaseATETest() {
 		super();
-		mockedDriver = ATEMock(WebDriver.class);
-		myMockedDriver = ATEMock(IMyWebDriver.class);
-		options = ATEMock(Options.class);
+		mockedDriver = ateMock(WebDriver.class);
+		myMockedDriver = ateMock(IMyWebDriver.class);
+		options = ateMock(Options.class);
 	}
 	
 	/**
@@ -156,4 +157,12 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		return options;
 	}
 
+	/**
+	 * Gets the web driver manage.
+	 *
+	 * @return the web driver manage
+	 */
+	public Options getWebDriverManage() {
+		return getOptions();
+	}
 }

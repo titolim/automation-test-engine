@@ -28,7 +28,6 @@ import org.bigtester.ate.model.page.page.CookiesManager;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.mockito.Mockito;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver.Options;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -36,7 +35,6 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doReturn;
 
 /**
  * The Class CookiesManagerTest.
@@ -46,7 +44,6 @@ import static org.mockito.Mockito.doReturn;
 
 @ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/loginSuccess.xml" })
 public class CookiesManagerTest extends BigtesterProjectTest {
-
 	
 	/** The cookies. */
 
@@ -60,7 +57,10 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 
 	/** The cookie3. */
 	private static Cookie cookie3 = new Cookie("cookie3", "cookie3value");
-
+	
+	/** The cookie4. */
+	private static Cookie cookie4 = new Cookie("cookie3", "cookie4value");
+	
 	/** The cookies mng. */
 	final private transient CookiesManager cookiesMng;
 
@@ -76,8 +76,6 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 		cookies.add(cookie2);
 		cookies.add(cookie3);
 		cookiesMng = new CookiesManager(getMyMockedDriver(), cookies);
-		
-	
 	}
 	
 	/**
@@ -88,9 +86,9 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 		cookiesMng.setExportFileNameWithAbsolutePath(fileNameWithAbsolutePath);
 		when(getMyMockedDriver().getWebDriverInstance()).thenReturn(getMockedDriver());
 		when(getMockedDriver().manage()).thenReturn(getOptions());
-		Mockito.doNothing().when(getOptions()).addCookie(Mockito.refEq(cookie1));
-		Mockito.doNothing().when(getOptions()).addCookie(Mockito.refEq(cookie2));
-		Mockito.doNothing().when(getOptions()).addCookie(Mockito.refEq(cookie3));
+//		Mockito.doThrow(GlobalUtils.createInternalError("errora")).when(getOptions()).addCookie(Mockito.refEq(cookie4));
+//		Mockito.doNothing().when(getOptions()).addCookie(Mockito.refEq(cookie2));
+//		Mockito.doNothing().when(getOptions()).addCookie(Mockito.eq(cookie4));
 	}
 
 	/**
@@ -99,15 +97,22 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 	 * @throws InterruptedException
 	 */
 	@Test (priority = 1)
-	public void exportFileTest() throws InterruptedException {
+	public void exportToSingleFileTest() throws InterruptedException {
 		cookiesMng.saveToSingleFile();
 		File newFile = new File(cookiesMng.getExportFileNameWithAbsolutePath());
 		Assert.assertTrue(newFile.exists());
 	}
 	
+	/**
+	 * Import file test.
+	 */
 	@Test (priority = 2)
-	public void importFileTest() {
-		
+	public void importFromSingleFileTest() {
+		cookiesMng.setImportFileNameWithAbsolutePath(fileNameWithAbsolutePath);
+		cookiesMng.importFromSingleFile();
+		Mockito.verify(getOptions()).addCookie(cookie1);
+		Mockito.verify(getOptions()).addCookie(cookie2);
+		Mockito.verify(getOptions()).addCookie(cookie3);
 	}
 	
 	/**
@@ -117,6 +122,20 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 	public void tearDown() {
 		File newFile = new File(cookiesMng.getExportFileNameWithAbsolutePath());
 		if (newFile.exists()) newFile.delete();
+	}
+
+	/**
+	 * @return the cookie4
+	 */
+	public static Cookie getCookie4() {
+		return cookie4;
+	}
+
+	/**
+	 * @param cookie4 the cookie4 to set
+	 */
+	public static void setCookie4(Cookie cookie4) {
+		CookiesManagerTest.cookie4 = cookie4;
 	}
 
 }
