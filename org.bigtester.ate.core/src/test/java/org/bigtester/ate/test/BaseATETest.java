@@ -21,14 +21,19 @@
 package org.bigtester.ate.test;
 
 import java.io.IOException;
+
+import static org.mockito.Mockito.mock;
+
 import java.sql.SQLException;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
+import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.project.TestProject;
 import org.dbunit.DatabaseUnitException;
 import org.eclipse.jdt.annotation.Nullable;
+import org.openqa.selenium.WebDriver;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -36,13 +41,49 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+
 /**
  * The Class CookiesManagerTest.
  *
  * @author Peidong Hu
  */
 
-public class BaseATETest extends AbstractTestNGSpringContextTests implements ApplicationContextAware, BeanFactoryPostProcessor, PriorityOrdered {
+public class BaseATETest extends AbstractTestNGSpringContextTests implements
+		ApplicationContextAware, BeanFactoryPostProcessor, PriorityOrdered {
+
+	
+	/** The mocked driver. */
+	final private WebDriver mockedDriver;
+	/** The my mocked driver. */
+	final private IMyWebDriver myMockedDriver;
+
+	/**
+	 * @return the mockedDriver
+	 */
+	public final WebDriver getMockedDriver() {
+		return mockedDriver;
+	}
+
+	/**
+	 * @return the myMockedDriver
+	 */
+	public final IMyWebDriver getMyMockedDriver() {
+		return myMockedDriver;
+	}
+
+	/**
+	 * Instantiates a new base ate test.
+	 */
+	public BaseATETest() {
+		super();
+		WebDriver mockedDriver2 = mock(WebDriver.class);
+		if (mockedDriver2 == null) throw GlobalUtils.createInternalError("mock"); 
+		mockedDriver = mockedDriver2;
+		
+		IMyWebDriver myMockedDriver2 = mock(IMyWebDriver.class);
+		if (myMockedDriver2 == null) throw GlobalUtils.createInternalError("my mocked");
+		myMockedDriver = myMockedDriver2;
+	}
 	
 	/**
 	 * @return the applicationContext
@@ -53,45 +94,47 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements App
 			throw GlobalUtils.createNotInitializedException("app context");
 		} else {
 			return applicationContext2;
-			
+
 		}
-		
+
 	}
-	
-  private void initDB() throws IOException, DatabaseUnitException, SQLException {
-	 	TestProject testplan = GlobalUtils.findTestProjectBean(getApplicationContext());
+
+	private void initDB() throws IOException, DatabaseUnitException,
+			SQLException {
+		TestProject testplan = GlobalUtils
+				.findTestProjectBean(getApplicationContext());
 		testplan.setAppCtx(getApplicationContext());
-		
-		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) getApplicationContext().getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
-		
+
+		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) getApplicationContext()
+				.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
+
 		dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
-		
-	
+
 		dbinit.initializeGlobalDataFile(getApplicationContext());
-	
-		
-  }
-/**
-* {@inheritDoc}
-*/
-@Override
-public void postProcessBeanFactory(@Nullable ConfigurableListableBeanFactory arg0)
-		throws BeansException {
-	try {
-		initDB();
-	} catch (IOException | DatabaseUnitException | SQLException e) {
-		throw GlobalUtils.createInternalError("initDB", e);
-	} 
-	
-}
-/**
-* {@inheritDoc}
-*/
-@Override
-public int getOrder() {
-	// TODO Auto-generated method stub
-	return 0;
-}
- 
- 
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void postProcessBeanFactory(
+			@Nullable ConfigurableListableBeanFactory arg0)
+			throws BeansException {
+		try {
+			initDB();
+		} catch (IOException | DatabaseUnitException | SQLException e) {
+			throw GlobalUtils.createInternalError("initDB", e);
+		}
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getOrder() {
+		return 0;
+	}
+
 }

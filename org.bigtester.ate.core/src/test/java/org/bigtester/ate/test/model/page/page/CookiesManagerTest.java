@@ -24,18 +24,16 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.page.CookiesManager;
 import org.bigtester.ate.test.BigtesterProjectTest;
-import org.eclipse.jdt.annotation.Nullable;
-
-import static org.mockito.Mockito.mock;
-
 import org.openqa.selenium.Cookie;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.Assert;
+//import static org.mockito.Mockito.mock;
+//import static org.mockito.Mockito.when;
 
 /**
  * The Class CookiesManagerTest.
@@ -48,7 +46,7 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 
 	/** The cookies. */
 
-	private static Set<Cookie> cookies;
+	private static Set<Cookie> cookies = new HashSet<Cookie>();
 
 	/** The cookie1. */
 	private static Cookie cookie1 = new Cookie("cookie1", "cookie1value");
@@ -60,33 +58,30 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 	private static Cookie cookie3 = new Cookie("cookie3", "cookie3value");
 
 	/** The cookies mng. */
-	private transient CookiesManager cookiesMng;
+	final private transient CookiesManager cookiesMng;
 
 	/** The file name with absolute path. */
-	private static String fileNameWithAbsolutePath = "~/testfile";
+	private static String fileNameWithAbsolutePath = "logs/testfile";
+
+	/**
+	 * Instantiates a new cookies manager test.
+	 */
+	public CookiesManagerTest() {
+		super();
+		cookies.add(cookie1);
+		cookies.add(cookie2);
+		cookies.add(cookie3);
+		cookiesMng = new CookiesManager(getMyMockedDriver(), cookies);
+	
+	}
+	
 	/**
 	 * Setup.
 	 */
 	@BeforeClass
 	public void setup() {
-		cookies = new HashSet<Cookie>();
-		cookies.add(cookie1);
-		cookies.add(cookie2);
-		cookies.add(cookie3);
-
-		final Set<Cookie> cookies2 = cookies;
-		if (cookies2 == null) {
-			
-		} else {
-			cookiesMng = new CookiesManager(getMyDriver(), cookies2);
-			final String fileNameWithAbsolutePath2 = fileNameWithAbsolutePath;
-			if (fileNameWithAbsolutePath2 != null) {//NOPMD
-				cookiesMng.setExportFileNameWithAbsolutePath(fileNameWithAbsolutePath2);
-			} else {
-				// TODO handle null value
-			}
-		}
-
+		cookiesMng.setExportFileNameWithAbsolutePath(fileNameWithAbsolutePath);
+		//when(getMyMockedDriver().getWebDriverInstance()).thenReturn(getMockedDriver());
 	}
 
 	/**
@@ -99,6 +94,15 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 		cookiesMng.saveToSingleFile();
 		File newFile = new File(cookiesMng.getExportFileNameWithAbsolutePath());
 		Assert.assertTrue(newFile.exists());
+	}
+	
+	/**
+	* {@inheritDoc}
+	*/
+	@AfterClass
+	public void tearDown() {
+		File newFile = new File(cookiesMng.getExportFileNameWithAbsolutePath());
+		if (newFile.exists()) newFile.delete();
 	}
 
 }

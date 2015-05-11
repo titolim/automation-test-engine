@@ -77,7 +77,8 @@ public class BigtesterProjectTest extends BaseATETest {
 	 */
 	@AfterClass
 	public void tearDown() {
-		getMyDriver().getWebDriverInstance().quit();
+		if (getMyDriver().getWebDriver() != null)
+			getMyDriver().getWebDriverInstance().quit();
 		
 	}
 }
