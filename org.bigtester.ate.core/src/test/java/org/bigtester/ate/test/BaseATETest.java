@@ -43,6 +43,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
+
 /**
  * The Class CookiesManagerTest.
  *
@@ -165,4 +166,5 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 	public Options getWebDriverManage() {
 		return getOptions();
 	}
+	
 }

@@ -23,7 +23,6 @@ package org.bigtester.ate.model.page.elementfind;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.CookiesManager;
 import org.openqa.selenium.Cookie;
@@ -33,27 +32,25 @@ import org.openqa.selenium.WebDriver;
 // TODO: Auto-generated Javadoc
 /**
  * This class TestWindowFindByTitle defines ....
+ * 
  * @author Peidong Hu
  *
  */
-public class CookiesFindAll extends BaseCookieFinderImpl implements ICookieFinder, ITestObjectFinderImpl{
+public class CookiesFindAll extends BaseCookieFinderImpl implements
+		ICookieFinder, ITestObjectFinderImpl {
 
-
-	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CookiesManager doFind(IMyWebDriver myWebDriver) throws NoSuchElementException {
-		WebDriver webD = myWebDriver.getWebDriver();
-		if (null == webD) {
-			throw GlobalUtils.createNotInitializedException("web driver");
-		} else {
-			Set<Cookie> coos = webD.manage().getCookies();
-			if (null == coos) coos = new HashSet<Cookie>();
-			return new CookiesManager(myWebDriver, coos);
-		
-		}
+	public CookiesManager doFind(IMyWebDriver myWebDriver)
+			throws NoSuchElementException {
+		WebDriver webD = myWebDriver.getWebDriverInstance();
+		Set<Cookie> coos = webD.manage().getCookies();
+		if (null == coos)
+			coos = new HashSet<Cookie>();
+		return new CookiesManager(myWebDriver, coos);
+
 	}
 
 }

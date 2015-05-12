@@ -21,13 +21,11 @@
 package org.bigtester.ate.test.model.page.page;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.bigtester.ate.model.page.page.CookiesManager;
 import org.bigtester.ate.test.BigtesterProjectTest;
+import org.bigtester.ate.test.data.cookies.CookiesData;
 import org.mockito.Mockito;
-import org.openqa.selenium.Cookie;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -45,21 +43,8 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/loginSuccess.xml" })
 public class CookiesManagerTest extends BigtesterProjectTest {
 	
-	/** The cookies. */
-
-	private static Set<Cookie> cookies = new HashSet<Cookie>();
-
-	/** The cookie1. */
-	private static Cookie cookie1 = new Cookie("cookie1", "cookie1value");
-
-	/** The cookie2. */
-	private static Cookie cookie2 = new Cookie("cookie2", "cookie2value");
-
-	/** The cookie3. */
-	private static Cookie cookie3 = new Cookie("cookie3", "cookie3value");
-	
-	/** The cookie4. */
-	private static Cookie cookie4 = new Cookie("cookie3", "cookie4value");
+	/** The cookies data. */
+	final private CookiesData cookiesData = new CookiesData();
 	
 	/** The cookies mng. */
 	final private transient CookiesManager cookiesMng;
@@ -72,10 +57,7 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 	 */
 	public CookiesManagerTest() {
 		super();
-		cookies.add(cookie1);
-		cookies.add(cookie2);
-		cookies.add(cookie3);
-		cookiesMng = new CookiesManager(getMyMockedDriver(), cookies);
+		cookiesMng = new CookiesManager(getMyMockedDriver(), cookiesData.getCookies());
 	}
 	
 	/**
@@ -110,9 +92,9 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 	public void importFromSingleFileTest() {
 		cookiesMng.setImportFileNameWithAbsolutePath(fileNameWithAbsolutePath);
 		cookiesMng.importFromSingleFile();
-		Mockito.verify(getOptions()).addCookie(cookie1);
-		Mockito.verify(getOptions()).addCookie(cookie2);
-		Mockito.verify(getOptions()).addCookie(cookie3);
+		Mockito.verify(getOptions()).addCookie(cookiesData.getCookie1());
+		Mockito.verify(getOptions()).addCookie(cookiesData.getCookie2());
+		Mockito.verify(getOptions()).addCookie(cookiesData.getCookie3());
 	}
 	
 	/**
@@ -125,17 +107,10 @@ public class CookiesManagerTest extends BigtesterProjectTest {
 	}
 
 	/**
-	 * @return the cookie4
+	 * @return the cookiesData
 	 */
-	public static Cookie getCookie4() {
-		return cookie4;
-	}
-
-	/**
-	 * @param cookie4 the cookie4 to set
-	 */
-	public static void setCookie4(Cookie cookie4) {
-		CookiesManagerTest.cookie4 = cookie4;
+	public CookiesData getCookiesData() {
+		return cookiesData;
 	}
 
 }
