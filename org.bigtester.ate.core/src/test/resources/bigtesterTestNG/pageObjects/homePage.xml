@@ -22,6 +22,15 @@
     <ate:elementActionDef id="eadClickHomepageEnglish" elementFind="efHomePageEnglishLink" elementAction="eaHomePageEnglishLinkClick" />
 	<ate:elementFindByXpath id="efHomePageEnglishLink" findByValue="//img[@alt='English (United Kingdom)']" />
 	<ate:clickAction id="eaHomePageEnglishLinkClick" />
+	
+<ate:elementActionDef id="eadSaveCookies" elementFind="efAllCookies" elementAction="eaExportAsFile" />
+	<ate:cookiesFindAll id="efAllCookies" />
+	<ate:fileExportAction id="eaExportAsFile"
+		fileNameWithAbsolutePath="myFile" />
+<ate:elementActionDef id="eadLoadCookies" elementFind="efAllCookies" elementAction="eaImportFromFile" />
+	<ate:fileImportAction id="eaImportFromFile"
+		fileNameWithAbsolutePath="myFile" />
+
 
 <!-- 	<ate:pagePropertyCorrectnessAsserter -->
 <!-- 	id="homePagePropertyAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/> -->

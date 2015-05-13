@@ -293,7 +293,7 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 					.createNotInitializedException("import filename with full path");
 		} else {
 			try {
-				File file = new File(this.getExportFileNameWithAbsolutePath());
+				File file = new File(this.getImportFileNameWithAbsolutePath());
 				ObjectInputStream ins = new ObjectInputStream(
 						new FileInputStream(file));
 				final Map<String, Cookie> temp = (Map<String, Cookie>) ins.readObject();
@@ -303,12 +303,16 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 				}
 				this.cookies = temp;
 				ins.close();
+				getMyWd().getWebDriverInstance().manage().deleteAllCookies();
+				for (Map.Entry<String, Cookie> entry : cookies.entrySet()) {
+					
+					getMyWd().getWebDriverInstance().manage()
+							.addCookie(entry.getValue());
+				}
 			} catch (IOException | ClassNotFoundException e) {
 				throw GlobalUtils.createInternalError("File loading operation", e);
 			}
-			for (Map.Entry<String, Cookie> entry : cookies.entrySet())
-				super.getMyWd().getWebDriverInstance().manage()
-						.addCookie(entry.getValue());
+			
 		}
 	}
 

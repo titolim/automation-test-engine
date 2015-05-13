@@ -27,10 +27,7 @@ import org.bigtester.ate.model.page.elementaction.ExportAsFileAction;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
-//import org.springframework.beans.factory.config.ConstructorArgumentValues;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
-//import org.springframework.beans.factory.support.ChildBeanDefinition;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.StringUtils;
@@ -67,9 +64,10 @@ public class FileExportActionBeanDefinitionParser extends
 						.getAttribute(XsdElementConstants.ATTR_FILEIMPORTACTION_FILENAMEWITHABSOLUTEPATH);
 				if (StringUtils.hasText(fileName)) {
 					bDef.setAttribute(XsdElementConstants.ATTR_FILEIMPORTACTION_FILENAMEWITHABSOLUTEPATH, fileName);
-					bDef.getConstructorArgumentValues().addGenericArgumentValue( new RuntimeBeanReference(fileName));
+					bDef.getConstructorArgumentValues().addGenericArgumentValue( fileName);
 				} 
-
+				bDef.setParentName(XsdElementConstants.ELEMENT_ID_BASEELEMENTACTION);
+				
 				 
 				bDef.setAttribute("id", element.getAttribute("id"));
 				parserContext.getRegistry().registerBeanDefinition(
