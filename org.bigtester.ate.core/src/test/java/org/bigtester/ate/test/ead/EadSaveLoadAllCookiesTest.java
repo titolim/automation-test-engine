@@ -44,6 +44,8 @@ import org.testng.annotations.Test;
  * elementaction definition. It is a good example of how to use real spring bean
  * to unit test or integration test.
  * 
+ * To run this test, the web site bigtester.com has to be alive and Internet connection is required.
+ * 
  * @author Peidong Hu
  *
  */
