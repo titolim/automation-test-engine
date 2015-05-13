@@ -293,4 +293,22 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 		return -1;
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public boolean isCorrectedOnTheFly() {
+		
+		return false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public void setCorrectedOnTheFly(boolean correctedOnTheFly) {
+		
+		
+	}
+
 }

@@ -170,4 +170,16 @@ public interface ITestStep {
 	 */
 	StepResultStatus getStepResultStatus();
 	
+	
+	/**
+	 * @return the correctedOnTheFly
+	 */
+	boolean isCorrectedOnTheFly() ;
+
+
+
+	/**
+	 * @param correctedOnTheFly the correctedOnTheFly to set
+	 */
+	void setCorrectedOnTheFly(boolean correctedOnTheFly);
 }

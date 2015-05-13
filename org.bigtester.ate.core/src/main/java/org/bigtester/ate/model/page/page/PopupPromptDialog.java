@@ -38,8 +38,8 @@ public class PopupPromptDialog extends PopupConfirmationDialog {
 	 * @param winHandler
 	 * @param webD
 	 */
-	public PopupPromptDialog(String winHandler, WebDriver webD) {
-		super(winHandler, webD);
+	public PopupPromptDialog(WebDriver webD) {
+		super(webD);
 	}
 	/**
 	 * @return the text
@@ -68,6 +68,6 @@ public class PopupPromptDialog extends PopupConfirmationDialog {
 	 */
 	public void receiveText(String text) {
 		setText(text);
-		
+		getAlertDialog().sendKeys(text);
 	}
 }

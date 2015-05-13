@@ -109,6 +109,8 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	/** The target step. */
 	private boolean targetStep;
 
+	/** The corrected on the fly. */
+	private boolean correctedOnTheFly;
 	
 	/**
 	 * Gets the test case.
@@ -531,23 +533,23 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 		return correlatedOptionalStepsUtilInclusive;
 	}
 
-	// /**
-	// * Gets the on the fly data holders.
-	// *
-	// * @return the onTheFlyDataHolders
-	// */
-	// public List<IOnTheFlyData<?>> getOnTheFlyDataHolders() {
-	// return onTheFlyDataHolders;
-	// }
 
-	// /**
-	// * Sets the on the fly data holders.
-	// *
-	// * @param onTheFlyDataHolders the onTheFlyDataHolders to set
-	// */
-	// public void setOnTheFlyDataHolders(List<IOnTheFlyData<?>>
-	// onTheFlyDataHolders) {
-	// this.onTheFlyDataHolders = onTheFlyDataHolders;
-	// }
 
+	/**
+	 * @return the correctedOnTheFly
+	 */
+	public boolean isCorrectedOnTheFly() {
+		return correctedOnTheFly;
+	}
+
+
+
+	/**
+	 * @param correctedOnTheFly the correctedOnTheFly to set
+	 */
+	public void setCorrectedOnTheFly(boolean correctedOnTheFly) {
+		this.correctedOnTheFly = correctedOnTheFly;
+	}
+
+	
 }

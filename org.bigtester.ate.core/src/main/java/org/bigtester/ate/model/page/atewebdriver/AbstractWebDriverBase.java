@@ -23,6 +23,8 @@ package org.bigtester.ate.model.page.atewebdriver;
 import java.net.ProxySelector;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.page.page.AbstractAlertDialog;
+import org.bigtester.ate.model.page.page.PopupPromptDialog;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -45,6 +47,10 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 	/** The browser windows monitor. */
 	@Nullable
 	private MultiWindowsHandler multiWindowsHandler;
+	
+	/** The alert dialog processor. */
+	@Nullable
+	private AbstractAlertDialog alertDialogProcessor;
 	
 	/**
 	 * Gets the web driver.
@@ -120,4 +126,32 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 		this.multiWindowsHandler = multiWindowsHandler;
 	}
 
+	/**
+	 * @return the alertDialogProcessor
+	 */
+	@Nullable
+	public AbstractAlertDialog getAlertDialogProcessor() {
+
+		return alertDialogProcessor;
+
+	}
+
+	public AbstractAlertDialog getAlertDialogProcessorInstance() {
+		AbstractAlertDialog retVal = alertDialogProcessor;
+		if (null == retVal) {
+			retVal = new PopupPromptDialog(
+					this.getWebDriverInstance());
+			alertDialogProcessor = retVal;
+		} 
+		return retVal;
+
+	}
+
+	/**
+	 * @param alertDialogProcessor
+	 *            the alertDialogProcessor to set
+	 */
+	public void setAlertDialogProcessor(AbstractAlertDialog alertDialogProcessor) {
+		this.alertDialogProcessor = alertDialogProcessor;
+	}
 }

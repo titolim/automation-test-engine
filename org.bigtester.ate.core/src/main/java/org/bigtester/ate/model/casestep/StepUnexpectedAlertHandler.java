@@ -18,33 +18,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.page.page;
+package org.bigtester.ate.model.casestep;
 
-import org.openqa.selenium.WebDriver;
+import org.bigtester.ate.GlobalUtils;
+import org.eclipse.jdt.annotation.Nullable;
+import org.openqa.selenium.UnhandledAlertException;
+import org.springframework.context.ApplicationListener;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class PopupAlertDialog defines ....
+ * This class StepUnexpectedThrowableHandler defines ....
+ * 
  * @author Peidong Hu
  *
  */
-public class PopupAlertDialog extends AbstractAlertDialog {
-
-	/**
-	 * @param winHandler
-	 * @param webD
-	 */
-	public PopupAlertDialog( WebDriver webD) {
-		super( webD);
-	}
+public class StepUnexpectedAlertHandler implements
+		ApplicationListener<StepUnexpectedThrowableEvent> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void accept() {
-		obtainAlert();
-		getAlertDialog().accept();
-	}
+	public void onApplicationEvent(@Nullable StepUnexpectedThrowableEvent arg0) {
+		if (arg0 == null)
+			throw GlobalUtils
+					.createInternalError("spring application context event");
+		if (arg0.getThrowable() instanceof UnhandledAlertException) {
+			ElementTestStep step = (ElementTestStep) arg0.getSource();
+			step.getMyWebDriver().getAlertDialogProcessorInstance().accept();
+			step.setCorrectedOnTheFly(true);
+		}
 
+	}
 }

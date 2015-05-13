@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.page.page.AbstractAlertDialog;
+import org.bigtester.ate.model.page.page.PopupPromptDialog;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -43,15 +45,15 @@ public class BrowserWindow {
 
 	/** The window handle. */
 	final private String windowHandle;
-	
+
 	/** The my wd. */
 	@XStreamOmitField
-	final private WebDriver myWd;  //NOPMD
-	
-	/** The browser driver path*/
+	final private WebDriver myWd; // NOPMD
+
+	/** The browser driver path */
 	@Nullable
 	@XStreamOmitField
-	private static String driverPath; //NOPMD
+	private static String driverPath; // NOPMD
 
 	/** The frames. */
 	final private List<WindowFrame> visibleFrames = new ArrayList<WindowFrame>();
@@ -68,7 +70,8 @@ public class BrowserWindow {
 	/** The Constant maxFrameRefreshTryCount. */
 	final static private int MAXFRAMEREFRESHTRYCOUNT = 2;
 
-	//final private alertDialogProcessor;
+	
+
 	/**
 	 * Instantiates a new browser window.
 	 *
@@ -80,6 +83,7 @@ public class BrowserWindow {
 	public BrowserWindow(String winHandle, WebDriver myWd) {
 		this.windowHandle = winHandle;
 		this.myWd = myWd;
+
 	}
 
 	/**
@@ -202,7 +206,8 @@ public class BrowserWindow {
 	/**
 	 * @return the browser driver path
 	 */
-	@Nullable public static String getDriverPath() {
+	@Nullable
+	public static String getDriverPath() {
 		return driverPath;
 	}
 
@@ -210,6 +215,8 @@ public class BrowserWindow {
 	 * @set the browser driver path
 	 */
 	public static void setDriverPath(@Nullable String driverPath) {
-		 BrowserWindow.driverPath = driverPath;
+		BrowserWindow.driverPath = driverPath;
 	}
+
+	
 }

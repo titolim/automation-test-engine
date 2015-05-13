@@ -1,7 +1,7 @@
 /*******************************************************************************
  * ATE, Automation Test Engine
  *
- * Copyright 2014, Montreal PROT, or individual contributors as
+ * Copyright 2015, Montreal PROT, or individual contributors as
  * indicated by the @author tags or express copyright attribution
  * statements applied by the authors.  All third-party contributions are
  * distributed under license by Montreal PROT.
@@ -18,51 +18,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.page.page;
+package org.bigtester.ate.model.casestep;
 
-import org.bigtester.ate.constant.EnumElementFindType;
-import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.elementfind.ITestObjectFinderImpl;
+import org.springframework.context.ApplicationEvent;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class IPageFactory defines ....
+ * This class RepeatDataRefreshEvent defines ....
+ * 
  * @author Peidong Hu
  *
  */
-public interface IATEPageFactory {
-	
+public class StepUnexpectedThrowableEvent extends ApplicationEvent {
+
 	/**
-	 * Gets the i page object.
+	 * 
+	 */
+	private static final long serialVersionUID = 7538715299841005256L;
+
+	/** The throwable. */
+	final private Throwable throwable;
+	/**
+	 * Instantiates a new repeat data refresh event.
 	 *
-	 * @return the i page object
+	 * @param source
+	 *            the source
+	 * @param repeatStepInvokePathNodes
+	 *            the repeat step invoke path nodes
+	 * @param iteration
+	 *            the iteration
 	 */
-	//IPageObject getIPageObject();
-	
-	
-	/**
-	 * Gets the i element action.
-	 *
-	 * @return the i element action
-	 */
-	//IElementAction getIElementAction();
+	public StepUnexpectedThrowableEvent(BaseTestStep source, Throwable thr) {
+		super(source);
+		throwable = thr;
+	}
 
 	
-
+		
 	/**
-	 * @param elementFindType
-	 * @param findByValue
-	 * @return
+	 * @return the throwable
 	 */
-	ITestObjectFinderImpl getIElementFind(EnumElementFindType elementFindType,
-			String findByValue);
+	public Throwable getThrowable() {
+		return throwable;
+	}
 
 
-	/**
-	 * @param elementFindType
-	 * @param findByValue
-	 * @return
-	 */
-	MyWebElement<?> getMyWebElement(EnumElementFindType elementFindType,
-			String findByValue, IMyWebDriver myWd);
 }

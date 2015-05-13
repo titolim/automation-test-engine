@@ -68,7 +68,7 @@ public final class ATEPageFactory implements IATEPageFactory {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MyWebElement getMyWebElement(EnumElementFindType elementFindType,
+	public MyWebElement<?> getMyWebElement(EnumElementFindType elementFindType,
 			String findByValue, IMyWebDriver myWd) {
 		synchronized (this) {
 			return new MyWebElement(getIElementFind(elementFindType,

@@ -34,8 +34,8 @@ public class PopupConfirmationDialog extends PopupAlertDialog {
 	 * @param winHandler
 	 * @param webD
 	 */
-	public PopupConfirmationDialog(String winHandler, WebDriver webD) {
-		super(winHandler, webD);
+	public PopupConfirmationDialog(WebDriver webD) {
+		super( webD);
 	}
 
 	/**

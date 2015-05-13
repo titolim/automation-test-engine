@@ -41,8 +41,7 @@ public abstract class AbstractAlertDialog {
 	/** The my wd. */
 	@XStreamOmitField
 	final private WebDriver myWd;
-	/** The owner handler. */
-	final private String ownerHandler;
+
 	
 	/**
 	 * Gets the my wd.
@@ -60,9 +59,9 @@ public abstract class AbstractAlertDialog {
 	 * @param winHandler the win handler
 	 * @param webD the web d
 	 */
-	public AbstractAlertDialog(String winHandler, WebDriver webD){
+	public AbstractAlertDialog( WebDriver webD){
 		myWd = webD;
-		ownerHandler = winHandler;
+
 	}
 
 	/**
@@ -77,14 +76,6 @@ public abstract class AbstractAlertDialog {
 	 */
 	abstract public void accept();
 
-	/**
-	 * Gets the owner handler.
-	 *
-	 * @return the owner handler
-	 */
-	public String getOwnerHandler() {
-		return ownerHandler;
-	}
 
 	/**
 	 * Gets the alert dialog.
