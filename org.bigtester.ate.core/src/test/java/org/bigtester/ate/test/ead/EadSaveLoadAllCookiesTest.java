@@ -38,85 +38,140 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-// TODO: Auto-generated Javadoc
+
 /**
- * This class EadSaveAllCookiesTest defines ....
+ * This class EadSaveAllCookiesTest testing the save and load cookies
+ * elementaction definition. It is a good example of how to use real spring bean
+ * to unit test or integration test.
+ * 
  * @author Peidong Hu
  *
  */
 @ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/homePageValidation.xml" })
-public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest{
-	
+public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
+
 	/** The Constant FILETOSAVE. */
-	final public static String FILETOSAVE = "myFile"; 
-	
+	final public static String FILETOSAVE = "myFile";
+
 	/** The original cookies. */
 	private transient Set<Cookie> originalCookies = new HashSet<Cookie>();
-	
-	
+
 	/**
 	 * Ead test.
-	 * @throws RuntimeDataException 
-	 * @throws PageValidationException2 
+	 * 
+	 * @throws RuntimeDataException
+	 * @throws PageValidationException2
 	 */
-	@Test (priority = 1)
-	public void eadSaveCookiesTest() throws PageValidationException2, RuntimeDataException{
-		
+	@Test(priority = 1)
+	public void eadSaveCookiesTest() throws PageValidationException2,
+			RuntimeDataException {
+
 		WebDriver webDriver = getMyDriver().getWebDriverInstance();
-		
+
 		webDriver.manage().deleteAllCookies();
 		Set<Cookie> emptyCookies = webDriver.manage().getCookies();
-		Assert.assertEquals (emptyCookies.size(), 0);
-		
-		HomeStep homeStep = (HomeStep) GlobalUtils.getTargetObject( getApplicationContext().getBean("stepOpenBigtesterHomePage"));
+		Assert.assertEquals(emptyCookies.size(), 0);
+
+		HomeStep homeStep = (HomeStep) GlobalUtils
+				.getTargetObject(getApplicationContext().getBean(
+						"stepOpenBigtesterHomePage"));
 		homeStep.doStep();
 
 		Set<Cookie> homepageCookies = webDriver.manage().getCookies();
-		Assert.assertTrue(!homepageCookies.isEmpty()); 	
-		
+		Assert.assertTrue(!homepageCookies.isEmpty());
+
 		originalCookies = homepageCookies;
-		
-		MyWebElement<?> testEad = (MyWebElement<?>) getApplicationContext().getBean("eadSaveCookies");
+
+		MyWebElement<?> testEad = (MyWebElement<?>) getApplicationContext()
+				.getBean("eadSaveCookies");
 		testEad.doAction();
 		File fileSaved = new File(EadSaveLoadAllCookiesTest.FILETOSAVE);
 		Assert.assertTrue(fileSaved.exists());
-		
-		
+
 	}
-	
+
 	/**
 	 * Ead load cookies test.
-	 * @throws RuntimeDataException 
-	 * @throws PageValidationException2 
-	 * @throws StepExecutionException2 
+	 * 
+	 * @throws RuntimeDataException
+	 * @throws PageValidationException2
+	 * @throws StepExecutionException2
 	 */
-	@Test (priority = 2)
-	public void eadLoadCookiesTest() throws PageValidationException2, RuntimeDataException, StepExecutionException2 {
+	@Test(priority = 2)
+	public void eadLoadCookiesTest() throws PageValidationException2,
+			RuntimeDataException, StepExecutionException2 {
 
 		WebDriver webDriver = getMyDriver().getWebDriverInstance();
 		webDriver.manage().deleteAllCookies();
 		Assert.assertTrue(webDriver.manage().getCookies().isEmpty());
-		
-		MyWebElement<?> testEad = (MyWebElement<?>) getApplicationContext().getBean("eadLoadCookies");
+
+		MyWebElement<?> testEad = (MyWebElement<?>) getApplicationContext()
+				.getBean("eadLoadCookies");
 		testEad.doAction();
 
 		Set<Cookie> loadedCookies = webDriver.manage().getCookies();
 		Assert.assertTrue(!originalCookies.isEmpty());
 		Assert.assertEquals(originalCookies, loadedCookies);
-		
-		
-		
-		
-			
+
 	}
 	
 	/**
-	* {@inheritDoc}
-	*/
+	 * Ead load cookies file not exist test.
+	 *
+	 * @throws PageValidationException2 the page validation exception2
+	 * @throws RuntimeDataException the runtime data exception
+	 * @throws StepExecutionException2 the step execution exception2
+	 */
+	@Test(priority = 3)
+	public void eadLoadCookiesFileNotExistErrorRaisedTest() throws PageValidationException2,
+			RuntimeDataException, StepExecutionException2 {
+
+		WebDriver webDriver = getMyDriver().getWebDriverInstance();
+		webDriver.manage().deleteAllCookies();
+		Assert.assertTrue(webDriver.manage().getCookies().isEmpty());
+
+		MyWebElement<?> testEad = (MyWebElement<?>) getApplicationContext()
+				.getBean("eadLoadCookiesFileNotExist");
+		try {
+			testEad.doAction();
+		} catch (IllegalStateException Error) {
+			Assert.assertTrue(true);
+		}
+
+		
+	}
+	
+	/**
+	 * Ead load cookies file not exist no error raise test.
+	 *
+	 * @throws PageValidationException2 the page validation exception2
+	 * @throws RuntimeDataException the runtime data exception
+	 * @throws StepExecutionException2 the step execution exception2
+	 */
+	@Test(priority = 4)
+	public void eadLoadCookiesFileNotExistNoErrorRaiseTest() throws PageValidationException2,
+			RuntimeDataException, StepExecutionException2 {
+
+		WebDriver webDriver = getMyDriver().getWebDriverInstance();
+		webDriver.manage().deleteAllCookies();
+		Assert.assertTrue(webDriver.manage().getCookies().isEmpty());
+
+		MyWebElement<?> testEad = (MyWebElement<?>) getApplicationContext()
+				.getBean("eadLoadCookiesFileNotExistNotRaiseErro");
+		testEad.doAction();
+
+		
+
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@AfterClass
 	public void tearDown() {
 		File fileSaved = new File(EadSaveLoadAllCookiesTest.FILETOSAVE);
-		if (fileSaved.exists()) fileSaved.delete();
+		if (fileSaved.exists())
+			fileSaved.delete();
 	}
 
 	/**

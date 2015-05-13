@@ -30,7 +30,14 @@
 <ate:elementActionDef id="eadLoadCookies" elementFind="efAllCookies" elementAction="eaImportFromFile" />
 	<ate:fileImportAction id="eaImportFromFile"
 		fileNameWithAbsolutePath="myFile" />
-
+		
+		<ate:elementActionDef id="eadLoadCookiesFileNotExist" elementFind="efAllCookies" elementAction="eaImportFromFileNotExist" />
+	<ate:fileImportAction id="eaImportFromFileNotExist"
+		fileNameWithAbsolutePath="myFileNotExist" />
+		
+<ate:elementActionDef id="eadLoadCookiesFileNotExistNotRaiseErro" elementFind="efAllCookies" elementAction="eaImportFromFileNotExistNotRaiseError" />
+	<ate:fileImportAction id="eaImportFromFileNotExistNotRaiseError"
+		fileNameWithAbsolutePath="myFileNotExist" fileNotFoundRaiseError="false"/>
 
 <!-- 	<ate:pagePropertyCorrectnessAsserter -->
 <!-- 	id="homePagePropertyAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/> -->

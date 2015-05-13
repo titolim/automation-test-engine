@@ -709,7 +709,7 @@
 				<xsd:group ref="beans:beanElements" />
 				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
 				<xsd:attribute name="fileNameWithAbsolutePath" type="xsd:string" use="required"/>
-				
+				<xsd:attribute name="fileNotFoundRaiseError" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>

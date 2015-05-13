@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementaction;
 
+import java.io.File;
+
 import org.apache.commons.lang3.StringUtils;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.io.IDiskFileOperation;
@@ -39,6 +41,8 @@ public class ImportFromFileAction extends PageModelBase implements
 	/** The file name with absolute path. */
 	private String fileNameWithAbsolutePath;
 	
+	/** The file not found raise error. */
+	private boolean fileNotFoundRaiseError = true;
 	/**
 	 * Gets the file name with absolute path.
 	 *
@@ -89,9 +93,33 @@ public class ImportFromFileAction extends PageModelBase implements
 	 */
 	@Override
 	public void doAction(IDiskFileOperation fileOpr) {
-		fileOpr.setImportFileNameWithAbsolutePath(getFileNameWithAbsolutePath());
-		fileOpr.importFromSingleFile();
+		File temp = new File(getFileNameWithAbsolutePath());
+		if (temp.exists() ) {
+			
+				fileOpr.setImportFileNameWithAbsolutePath(getFileNameWithAbsolutePath());
+				fileOpr.importFromSingleFile();
+			
+		} else {
+			if (this.fileNotFoundRaiseError) throw GlobalUtils.createNotInitializedException("import file name");
+		}
 		
+		
+	}
+
+
+	/**
+	 * @return the fileNotFoundRaiseError
+	 */
+	public boolean isFileNotFoundRaiseError() {
+		return fileNotFoundRaiseError;
+	}
+
+
+	/**
+	 * @param fileNotFoundRaiseError the fileNotFoundRaiseError to set
+	 */
+	public void setFileNotFoundRaiseError(boolean fileNotFoundRaiseError) {
+		this.fileNotFoundRaiseError = fileNotFoundRaiseError;
 	}
 
 	

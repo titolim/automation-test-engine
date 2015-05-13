@@ -67,6 +67,13 @@ public class FileImportActionBeanDefinitionParser extends
 					bDef.getConstructorArgumentValues().addGenericArgumentValue( fileName);
 				} 
 
+				String flag = element
+						.getAttribute(XsdElementConstants.ATTR_FILEIMPORTACTION_FILENOTFOUNDRAISEERROR);
+				if (StringUtils.hasText(flag)) {
+					bDef.setAttribute(XsdElementConstants.ATTR_FILEIMPORTACTION_FILENOTFOUNDRAISEERROR, Boolean.parseBoolean(flag));
+					bDef.getPropertyValues().addPropertyValue(XsdElementConstants.ATTR_FILEIMPORTACTION_FILENOTFOUNDRAISEERROR, Boolean.parseBoolean(flag));
+				} 
+				
 				bDef.setParentName(XsdElementConstants.ELEMENT_ID_BASEELEMENTACTION);
 							 
 				bDef.setAttribute("id", element.getAttribute("id"));
