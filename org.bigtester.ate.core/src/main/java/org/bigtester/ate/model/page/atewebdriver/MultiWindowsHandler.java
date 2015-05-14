@@ -335,7 +335,8 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 		try {
 			winAlert = webD.switchTo().alert(); //NOPMD
 			if (!alerts.contains(winAlert)) {
-				alerts.add((AbstractAlertDialog) winAlert);
+				if (null == winAlert) throw GlobalUtils.createInternalError("java");
+				alerts.add(new PopupPromptDialog(webD, winAlert));
 			}
 		} catch (NoAlertPresentException noAlert) {
 			winHandlePreserved = webD.getWindowHandle(); //NOPMD
