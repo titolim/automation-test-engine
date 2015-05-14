@@ -26,9 +26,8 @@ import java.util.Set;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.casestep.HomeStep;
-
 import org.bigtester.ate.model.casestep.ElementTestStep;
-
+import org.bigtester.ate.model.casestep.LastStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
@@ -83,6 +82,15 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 						"stepCloseAlertWindow"));
 		
 		closeStep.doStep();
+		ElementTestStep stepAccepAlert = (ElementTestStep) GlobalUtils
+				.getTargetObject(getApplicationContext().getBean(
+						"stepAccepAlert"));
+		stepAccepAlert.doStep();
+		 
+		LastStep stepLastStep = (LastStep) GlobalUtils
+				.getTargetObject(getApplicationContext().getBean(
+						"stepLastStep"));
+		stepLastStep.doStep();
 		
 
 	}
