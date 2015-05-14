@@ -413,9 +413,9 @@ public class MultiWindowsHandler implements IMultiWindowsHandler, WebDriverEvent
 	}
 
 	private void refreshAlerts() {
-		for (AbstractAlertDialog alert : alerts) {
-			if (alert.isClosed())
-				alerts.remove(alert);
+		for (int i=0; i<alerts.size(); i++) {
+			if (alerts.get(i).isClosed())
+				alerts.remove(alerts.get(i));
 		}
 	}
 
@@ -719,6 +719,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler, WebDriverEvent
 			for (int i=0;i<windows.size();i++) {
 				if (windows.get(i).getWindowHandle().equalsIgnoreCase(alertD.getClosingWindowHandle())) {
 					windows.get(i).setClosed(true);
+					refreshWindowsList(this.getDriver(), false);
 				}
 			}
 			
