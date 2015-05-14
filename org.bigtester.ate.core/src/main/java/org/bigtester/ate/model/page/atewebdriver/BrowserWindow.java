@@ -82,7 +82,7 @@ public class BrowserWindow {
 	public BrowserWindow(String winHandle, WebDriver myWd) {
 		this.windowHandle = winHandle;
 		this.myWd = myWd;
-
+		this.closed = false;
 	}
 
 	/**
@@ -108,6 +108,7 @@ public class BrowserWindow {
 	public void close() {
 		obtainWindowFocus();
 		myWd.close();
+		this.setClosed(true);
 	}
 
 	/**
@@ -215,6 +216,20 @@ public class BrowserWindow {
 	 */
 	public static void setDriverPath(@Nullable String driverPath) {
 		BrowserWindow.driverPath = driverPath;
+	}
+
+	/**
+	 * @return the closed
+	 */
+	public boolean isClosed() {
+		return closed;
+	}
+
+	/**
+	 * @param closed the closed to set
+	 */
+	public void setClosed(boolean closed) {
+		this.closed = closed;
 	}
 
 	

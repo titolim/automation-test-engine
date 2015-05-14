@@ -82,9 +82,9 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 		stepAccepAlert.doStep();
 		
 		
-		MyWebElement<?> eadSwitchToMainWindow = (MyWebElement<?>) getApplicationContext()
-		.getBean("eadSwitchToMainWindow");
-		eadSwitchToMainWindow.doAction();
+//		MyWebElement<?> eadSwitchToMainWindow = (MyWebElement<?>) getApplicationContext()
+//		.getBean("eadSwitchToMainWindow");
+//		eadSwitchToMainWindow.doAction();
 
 		
 		LastStep stepLastStep = (LastStep) GlobalUtils

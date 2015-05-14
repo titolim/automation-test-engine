@@ -33,6 +33,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.springframework.util.StringUtils;
 
@@ -53,7 +54,7 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 
 	/** The windows. */
 	final private List<BrowserWindow> windows = new ArrayList<BrowserWindow>();
-	
+
 	/** The alerts. */
 	final private List<AbstractAlertDialog> alerts = new ArrayList<AbstractAlertDialog>();
 
@@ -111,13 +112,40 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	 *            the win handle
 	 */
 	public void closeWindow(String winHandle) {
-		if (winHandle.equals(getWindowOnFocusHandle())) {
-			getDriver().close();
-		} else {
-			getDriver().switchTo().window(winHandle);
-			getDriver().close();
+		boolean winInList = false;// NOPMD
+		for (BrowserWindow win : this.windows) {
+			if (winHandle.equalsIgnoreCase(win.getWindowHandle())) {
+				win.close();
+				winInList = true;// NOPMD
+				break;
+			}
 		}
-		refreshWindowsList(getDriver(), false);
+		if (!winInList) {
+			if (winHandle.equals(getWindowOnFocusHandle())) {
+				getDriver().close();
+			} else {
+				getDriver().switchTo().window(winHandle);
+				getDriver().close();
+			}
+		}
+		try { 
+			//test if there is alert. if no, refresh windows list
+			checkAlert();
+		} catch (NoAlertPresentException noAlert) {
+			if (windows.size()>1)
+				refreshWindowsList(getDriver(), false);
+		}
+	}
+	
+	private void checkAlert() throws NoAlertPresentException {
+		try {
+		Alert alt = getDriver().switchTo().alert();
+		if (alt == null) throw GlobalUtils.createInternalError("web driver");
+		PopupPromptDialog aDialog = new PopupPromptDialog(getDriver(), alt, alerts.size());
+		alerts.add(aDialog);
+		} catch (UnreachableBrowserException error) {
+			if (windows.size() > 1) throw GlobalUtils.createInternalError("ATE multi windows handler");
+		}
 	}
 
 	/**
@@ -152,13 +180,29 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	 * @return true, if successful
 	 */
 	public boolean closeAllOtherWindows(String openWindowHandle) {
-
+		for (BrowserWindow win : this.windows) {
+			if (!openWindowHandle.equalsIgnoreCase(win.getWindowHandle())) {
+				win.close();
+				try { 
+					//test if there is alert. if no, refresh windows list
+					checkAlert();
+				} catch (NoAlertPresentException noAlert) {
+					refreshWindowsList(getDriver(), false);
+				}
+			}
+		}
+		// deal with the windows not in the windows list
 		Set<String> allWindowHandles = driver.getWindowHandles();
 		for (String currentWindowHandle : allWindowHandles) {
 			if (!currentWindowHandle.equals(openWindowHandle)) {
 				driver.switchTo().window(currentWindowHandle);
 				driver.close();
-				refreshWindowsList(getDriver(), false);
+				try { 
+					//test if there is alert. if no, refresh windows list
+					checkAlert();
+				} catch (NoAlertPresentException noAlert) {
+					refreshWindowsList(getDriver(), false);
+				}
 			}
 		}
 
@@ -254,22 +298,26 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	/**
 	 * Obtain focus on alert dialog.
 	 *
-	 * @param openSequence the open sequence, indexed from 0
+	 * @param openSequence
+	 *            the open sequence, indexed from 0
 	 * @return the abstract alert dialog
 	 */
 	@Nullable
 	public AbstractAlertDialog obtainFocusOnAlertDialog(int openSequence) {
 		AbstractAlertDialog retVal;
-		if (alerts.isEmpty()) 
+		if (alerts.isEmpty())
 			retVal = null;
 		else {
-			if (openSequence >= alerts.size()) throw GlobalUtils.createNotInitializedException("this alert, opensequence is too large");
+			if (openSequence >= alerts.size())
+				throw GlobalUtils
+						.createNotInitializedException("this alert, opensequence is too large");
 			retVal = alerts.get(openSequence);
-			if (null == retVal) throw GlobalUtils.createInternalError("java");
+			if (null == retVal)
+				throw GlobalUtils.createInternalError("java");
 		}
 		return retVal;
 	}
-	
+
 	/**
 	 * Obtain focus on latest alert dialog.
 	 *
@@ -278,26 +326,28 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	@Nullable
 	public AbstractAlertDialog obtainFocusOnLatestAlertDialog() {
 		AbstractAlertDialog retVal;
-		if (alerts.isEmpty()) 
+		if (alerts.isEmpty())
 			retVal = null;
 		else {
-			retVal = alerts.get(alerts.size()-1);
-			if (null == retVal) throw GlobalUtils.createInternalError("java");
+			retVal = alerts.get(alerts.size() - 1);
+			if (null == retVal)
+				throw GlobalUtils.createInternalError("java");
 		}
 		return retVal;
 	}
-	
+
 	/**
 	 * Accept alert dialog on focus.
 	 */
 	public void acceptAlertDialogOnFocus() {
 		AbstractAlertDialog alert = obtainFocusOnLatestAlertDialog();
-		if (null == alert) throw GlobalUtils.createNotInitializedException("default alert dialog");
+		if (null == alert)
+			throw GlobalUtils
+					.createNotInitializedException("default alert dialog");
 		alert.accept();
 		this.refreshWindowsList(getDriver(), false);
 	}
-	
-	
+
 	/**
 	 * Focus on open sequence number.
 	 *
@@ -329,11 +379,26 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	}
 
 	private void refreshAlerts() {
-		for (AbstractAlertDialog alert:alerts) {
-			if (alert.isClosed()) alerts.remove(alert);
+		for (AbstractAlertDialog alert : alerts) {
+			if (alert.isClosed())
+				alerts.remove(alert);
 		}
 	}
-	
+
+	private void removeClosedWindows() {
+		boolean winRemoved = false;// NOPMD
+		for (int i=0; i<windows.size(); i++) {
+			if (windows.get(i).isClosed()) {
+				windows.remove(i);
+				winRemoved = true;//NOPMD
+			}
+		}
+		if (winRemoved) {
+			this.getDriver().switchTo()
+					.window(windows.get(windows.size() - 1).getWindowHandle());
+		}
+	}
+
 	/**
 	 * Refresh windows list.
 	 *
@@ -344,26 +409,28 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 			boolean refreshFrameFlag) {
 		if (null == webD)
 			throw GlobalUtils.createNotInitializedException("Web Driver");
-		List<String> newAddedWinHandles = new ArrayList<String>();//NOPMD
-		Alert winAlert = null; //NOPMD
-		String winHandlePreserved = null;//NOPMD
-		 
+		List<String> newAddedWinHandles = new ArrayList<String>();// NOPMD
+		Alert winAlert = null; // NOPMD
+		String winHandlePreserved = null;// NOPMD
+		removeClosedWindows();
 		refreshAlerts();
 		try {
-			winAlert = webD.switchTo().alert(); //NOPMD
+			winAlert = webD.switchTo().alert(); // NOPMD
 			if (!alerts.contains(winAlert)) {
-				if (null == winAlert) throw GlobalUtils.createInternalError("java");
-				PopupPromptDialog alertNew = new PopupPromptDialog(webD, winAlert, alerts.size());
+				if (null == winAlert)
+					throw GlobalUtils.createInternalError("java");
+				PopupPromptDialog alertNew = new PopupPromptDialog(webD,
+						winAlert, alerts.size());
 				alertNew.setClosed(false);
 				alerts.add(alertNew);
 			}
 		} catch (NoAlertPresentException noAlert) {
-			winHandlePreserved = webD.getWindowHandle(); //NOPMD
+			winHandlePreserved = webD.getWindowHandle(); // NOPMD
 		} catch (NoSuchWindowException noWin) {
-			//window has been closed. need to switch webd
-			//TODO
+			// window has been closed. need to switch webd
+			// TODO
 		}
-		 
+
 		Set<String> allWinHandles = webD.getWindowHandles();
 		for (String winH : allWinHandles) {
 			if (null == winH)
