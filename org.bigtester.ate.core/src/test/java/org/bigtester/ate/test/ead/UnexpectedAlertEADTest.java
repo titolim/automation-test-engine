@@ -20,9 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.test.ead;
 
-import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.casestep.HomeStep;
@@ -33,10 +30,7 @@ import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
@@ -65,7 +59,7 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 	public void eadHandleUnexpectedAlertTest() throws PageValidationException2,
 			RuntimeDataException, StepExecutionException2 {
 
-		WebDriver webDriver = getMyDriver().getWebDriverInstance();
+		getMyDriver().getWebDriverInstance();
 
 		HomeStep homeStep = (HomeStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
@@ -86,7 +80,13 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 				.getTargetObject(getApplicationContext().getBean(
 						"stepAccepAlert"));
 		stepAccepAlert.doStep();
-		 
+		
+		
+		MyWebElement<?> eadSwitchToMainWindow = (MyWebElement<?>) getApplicationContext()
+		.getBean("eadSwitchToMainWindow");
+		eadSwitchToMainWindow.doAction();
+
+		
 		LastStep stepLastStep = (LastStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
 						"stepLastStep"));

@@ -68,7 +68,8 @@ public class BrowserWindow {
 	/** The Constant maxFrameRefreshTryCount. */
 	final static private int MAXFRAMEREFRESHTRYCOUNT = 2;
 
-	
+	/** The closed. */
+	private boolean closed;
 
 	/**
 	 * Instantiates a new browser window.

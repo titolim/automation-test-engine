@@ -32,4 +32,10 @@
 	<ate:alertDialogFindInCurrentFocus id="efAlertInFocus"/>
 	<ate:alertDialogAccept id="eaAcceptAlert"/>
     
+    <ate:elementActionDef id="eadSwitchToMainWindow" elementFind="efMainWindow" elementAction="eaWindowSwitch" />
+    <ate:browserWindowFindByOpenSequence id="efMainWindow"
+    	openSequence="0" />
+    <ate:browserWindowClose id="eaWindowSwitch"/>
+    
+    
 </beans>

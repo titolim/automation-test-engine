@@ -35,8 +35,9 @@ public class PopupAlertDialog extends AbstractAlertDialog {
 	 * @param winHandler
 	 * @param webD
 	 */
-	public PopupAlertDialog( WebDriver webD, Alert alt) {
-		super( webD, alt);
+	public PopupAlertDialog( WebDriver webD, Alert alt, int seq) {
+		super( webD, alt, seq);
+		
 	}
 
 	/**
@@ -45,6 +46,7 @@ public class PopupAlertDialog extends AbstractAlertDialog {
 	@Override
 	public void accept() {
 		getAlertDialog().accept();
+		super.setClosed(true);
 	}
 
 }

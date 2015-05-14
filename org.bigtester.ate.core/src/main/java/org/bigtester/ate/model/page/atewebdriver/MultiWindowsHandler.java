@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
@@ -112,13 +113,11 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 	public void closeWindow(String winHandle) {
 		if (winHandle.equals(getWindowOnFocusHandle())) {
 			getDriver().close();
-			refreshWindowsList(getDriver(), false);
 		} else {
 			getDriver().switchTo().window(winHandle);
 			getDriver().close();
-			refreshWindowsList(getDriver(), false);
-
 		}
+		refreshWindowsList(getDriver(), false);
 	}
 
 	/**
@@ -329,6 +328,12 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 		throw GlobalUtils.createInternalError("web driver wrong state");
 	}
 
+	private void refreshAlerts() {
+		for (AbstractAlertDialog alert:alerts) {
+			if (alert.isClosed()) alerts.remove(alert);
+		}
+	}
+	
 	/**
 	 * Refresh windows list.
 	 *
@@ -342,14 +347,21 @@ public class MultiWindowsHandler implements WebDriverEventListener {
 		List<String> newAddedWinHandles = new ArrayList<String>();//NOPMD
 		Alert winAlert = null; //NOPMD
 		String winHandlePreserved = null;//NOPMD
+		 
+		refreshAlerts();
 		try {
 			winAlert = webD.switchTo().alert(); //NOPMD
 			if (!alerts.contains(winAlert)) {
 				if (null == winAlert) throw GlobalUtils.createInternalError("java");
-				alerts.add(new PopupPromptDialog(webD, winAlert));
+				PopupPromptDialog alertNew = new PopupPromptDialog(webD, winAlert, alerts.size());
+				alertNew.setClosed(false);
+				alerts.add(alertNew);
 			}
 		} catch (NoAlertPresentException noAlert) {
 			winHandlePreserved = webD.getWindowHandle(); //NOPMD
+		} catch (NoSuchWindowException noWin) {
+			//window has been closed. need to switch webd
+			//TODO
 		}
 		 
 		Set<String> allWinHandles = webD.getWindowHandles();

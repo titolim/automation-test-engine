@@ -32,16 +32,6 @@ import org.openqa.selenium.NoSuchElementException;
  */
 public class AlertDialogFindCurrentInFocus extends BaseAlertDialogFinderImpl implements IAlertDialogFinder, ITestObjectFinderImpl{
 
-	
-	/**
-	 * Instantiates a new test window find by title.
-	 *
-	 * @param title the title
-	 */
-	public AlertDialogFindCurrentInFocus() {
-		super();
-	}
-	
 	/**
 	 * {@inheritDoc}
 	 */

@@ -22,15 +22,12 @@ package org.bigtester.ate.xmlschema;
 
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.page.elementfind.AlertDialogFindCurrentInFocus;
-import org.bigtester.ate.model.page.elementfind.TestWindowFindByOpenSequence;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
 

@@ -28,7 +28,6 @@ import org.bigtester.ate.annotation.StepLoggable;
 import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
-import org.bigtester.ate.model.casestep.RepeatStepInOutEvent.RepeatStepInOut;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;

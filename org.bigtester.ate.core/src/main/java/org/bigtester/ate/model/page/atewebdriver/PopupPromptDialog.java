@@ -39,8 +39,8 @@ public class PopupPromptDialog extends PopupConfirmationDialog {
 	 * @param winHandler
 	 * @param webD
 	 */
-	public PopupPromptDialog(WebDriver webD, Alert alt) {
-		super(webD, alt);
+	public PopupPromptDialog(WebDriver webD, Alert alt, int seq) {
+		super(webD, alt, seq);
 	}
 	/**
 	 * @return the text

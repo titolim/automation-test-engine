@@ -20,8 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
-import org.bigtester.ate.GlobalUtils;
-import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 
@@ -42,6 +40,11 @@ public abstract class AbstractAlertDialog {
 	@XStreamOmitField
 	final private WebDriver myWd;
 
+	/** The popup index. starting with 0*/
+	final private int popupSequence;
+	
+	/** The closed. */
+	private boolean closed;
 	
 	/**
 	 * Gets the my wd.
@@ -59,9 +62,10 @@ public abstract class AbstractAlertDialog {
 	 * @param winHandler the win handler
 	 * @param webD the web d
 	 */
-	public AbstractAlertDialog(WebDriver webD, Alert alt){
+	public AbstractAlertDialog(WebDriver webD, Alert alt, int popupSeq){
 		myWd = webD;
 		this.alertDialog = alt;
+		this.popupSequence = popupSeq;
 	}
 
 	
@@ -88,4 +92,30 @@ public abstract class AbstractAlertDialog {
 	public void setAlertDialog(Alert alertDialog) {
 		this.alertDialog = alertDialog;
 	}
+
+
+	/**
+	 * @return the popupSequence
+	 */
+	public int getPopupSequence() {
+		return popupSequence;
+	}
+
+
+	/**
+	 * @return the closed
+	 */
+	public boolean isClosed() {
+		return closed;
+	}
+
+
+	/**
+	 * @param closed the closed to set
+	 */
+	public void setClosed(boolean closed) {
+		this.closed = closed;
+	}
+
+
 }

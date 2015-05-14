@@ -35,8 +35,8 @@ public class PopupConfirmationDialog extends PopupAlertDialog {
 	 * @param winHandler
 	 * @param webD
 	 */
-	public PopupConfirmationDialog(WebDriver webD, Alert alt) {
-		super( webD, alt);
+	public PopupConfirmationDialog(WebDriver webD, Alert alt, int seq) {
+		super( webD, alt, seq);
 	}
 
 	/**
@@ -44,6 +44,7 @@ public class PopupConfirmationDialog extends PopupAlertDialog {
 	 */
 	public void reject() {
 		getAlertDialog().dismiss();
+		super.setClosed(true);
 	}
 
 }
