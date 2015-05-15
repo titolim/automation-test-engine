@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -60,6 +61,9 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 	private static final String BROWSERLINUXFILENAME = "operadriver";
 	/** The Constant BROWSERMACFILENAME. */
 	private static final String BROWSEROSXFILENAME = "operadriver";
+	/** The Constant BROWSERMACFILENAME. */
+	private static final String DEFAULTOPERALINUX64PATH = "/usr/lib/x86_64-linux-gnu/opera/opera";
+
 
 	/**
 	 * Instantiates a new my Opera driver.
@@ -105,6 +109,8 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 			EPlatform platform = osinfo.getOSname();
 			String driverPath = GlobalUtils.getDriverPath(); //NOPMD
 			
+			ChromeOptions options = new ChromeOptions();
+                        
 			switch (platform) {
 			case Windows_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/
@@ -138,9 +144,11 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 				if (driverPath == null)
 				    System.setProperty(BROWSERDRVNAME, GlobalUtils.DEFAULT_DRIVER_PATH + GlobalUtils.PATH_DELIMITER 
 					                   + BROWSERLINUX64PATH + BROWSERLINUXFILENAME);
-			else
+			    else
 				    System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
 						               + BROWSERLINUX64PATH + BROWSERLINUXFILENAME);
+				
+				options.setBinary(DEFAULTOPERALINUX64PATH);
 				break;
 			case Mac_OS_X_32:
 				/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "osx", BROWSERNAME, ReadXmlFile.VERSION);*/
@@ -163,7 +171,8 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 			default:
 				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
 			}
-			retVal = new ChromeDriver();
+			
+			retVal = new ChromeDriver(options);
 		}
 		setWebDriver(retVal);
 		return retVal;
