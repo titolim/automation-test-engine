@@ -191,6 +191,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 						.createInternalError("Driver doesn't support alert handling yet");
 		} catch (NoSuchWindowException windClosedAlready) {
 			//do nothing if window closed without alert dialog intervention. for example in Chrome.
+			throw new NoAlertPresentException();
 		}
 	}
 
