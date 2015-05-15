@@ -110,7 +110,12 @@
 			stepDescription="stepCloseApplyWindow" stepName="stepCloseApplyWindow"
 			targetStep="false" elementActionDef="eadCloseApplyWindow">
 		</ate:elementStep>
-		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="1" endStepName="stepCloseApplyWindow" stepName="stepRepeatApplySamePageJobs" targetStep="false"/>
+		<ate:elementStep id="stepAcceptAlertInFocus"
+			stepDescription="stepAcceptAlertInFocus" stepName="stepAcceptAlertInFocus"
+			targetStep="false" optionalStep="true" elementActionDef="eadAcceptAlertInFocus">
+		</ate:elementStep>
+		
+		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="5" endStepName="stepAcceptAlertInFocus" stepName="stepRepeatApplySamePageJobs" targetStep="false"/>
 		<ate:elementStep id="stepClickPagingNumber"
 			stepDescription="stepClickPagingNumber"
 			stepName="stepClickPagingNumber" targetStep="false"

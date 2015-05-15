@@ -50,5 +50,7 @@ public interface IMyWebDriver {
 	 *
 	 * @return the browser windows monitor
 	 */
-	MultiWindowsHandler getMultiWindowsHandler();
+	IMultiWindowsHandler getMultiWindowsHandler();
+	
+
 }

@@ -55,7 +55,7 @@ public class BasePageObject extends PageModelBase {
 	
 	/** The web element list. */
 	@Nullable
-	private Map<Long, MyWebElement> myWebElementList = new HashMap<Long, MyWebElement>();//NOPMD
+	private Map<Long, MyWebElement<?>> myWebElementList = new HashMap<Long, MyWebElement<?>>();//NOPMD
 
 	/** The cookies. */
 	@Nullable
@@ -126,7 +126,7 @@ public class BasePageObject extends PageModelBase {
 	 * @param myWebElementList
 	 *            the myWebElementList to set
 	 */
-	public void setMyWebElementList(Map<Long, MyWebElement> myWebElementList) {
+	public void setMyWebElementList(Map<Long, MyWebElement<?>> myWebElementList) {
 		this.myWebElementList = myWebElementList;
 	}
 
@@ -135,8 +135,8 @@ public class BasePageObject extends PageModelBase {
 	 * 
 	 * @return the web element list
 	 */
-	public Map<Long, MyWebElement> getMyWebElementList() {
-		final Map<Long, MyWebElement> retVal = myWebElementList;
+	public Map<Long, MyWebElement<?>> getMyWebElementList() {
+		final Map<Long, MyWebElement<?>> retVal = myWebElementList;
 		if (null == retVal) {
 			throw new IllegalStateException("mywebelementlist is not correctly populated");
 			

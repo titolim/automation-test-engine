@@ -319,6 +319,19 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_BASETESTSTEP. */
 	public static final String ELEMENT_ELEMENTFINDBYID = "elementFindById";
 	
+	/** The Constant ELEMENT_COOKIESFINDALL. */
+	public static final String ELEMENT_COOKIESFINDALL = "cookiesFindAll";
+	
+	/** The Constant ATTR_COOKIESFINDBYDOMAINNAME_DOMAINNAME. */
+	public static final String ATTR_COOKIESFINDBYDOMAINNAME_DOMAINNAME = "domainName";//NOPMD
+	
+	/** The Constant ELEMENT_COOKIESFINDBYDOMAINNAME. */
+	public static final String ELEMENT_COOKIESFINDBYDOMAINNAME = "cookiesFindByDomainName";
+	
+	/** The Constant ELEMENT_COOKIEFINDBYCOOKIENAMEINDOMAIN. */
+	public static final String ELEMENT_COOKIEFINDBYCOOKIENAMEINDOMAIN = "cookieFindByCookieNameInDomain";//NOPMD
+	
+	
 	/** The Constant ELEMENT_ELEMENTFINDBYXPATH. */
 	public static final String ELEMENT_ELEMENTFINDBYXPATH = "elementFindByXpath";
 	
@@ -327,6 +340,9 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE. */
 	public static final String ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE = "browserWindowFindByOpenSequence";//NOPMD
+
+	/** The Constant ELEMENT_ALERTDIALOGFINDINCURRENTFOCUS. */
+	public static final String ELEMENT_ALERTDIALOGFINDINCURRENTFOCUS = "alertDialogFindInCurrentFocus";//NOPMD
 	
 	/** The Constant ATTR_BROWSERWINDOWFINDBYOPENSEQUENCE_OPENSEQUENCE. */
 	public static final String ATTR_BROWSERWINDOWFINDBYOPENSEQUENCE_OPENSEQUENCE = "openSequence";//NOPMD
@@ -371,6 +387,9 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_BROWSERWINDOWCLOSE. */
 	public static final String ELEMENT_BROWSERWINDOWCLOSE = "browserWindowClose";
+
+	/** The Constant ELEMENT_ALERTDIALOGACCEPT. */
+	public static final String ELEMENT_ALERTDIALOGACCEPT = "alertDialogAccept";
 	
 	/** The Constant ELEMENT_CLICKACTION. */
 	public static final String ELEMENT_CLICKACTION = "clickAction";
@@ -383,6 +402,33 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_SENDKEYSACTION. */
 	public static final String ELEMENT_SENDKEYSACTION = "sendKeysAction";
+	
+	/** The Constant ELEMENT_FILEIMPORTACTION. */
+	public static final String ELEMENT_FILEIMPORTACTION = "fileImportAction";
+	
+	/** The Constant ELEMENT_FILEEXPORTACTION. */
+	public static final String ELEMENT_FILEEXPORTACTION = "fileExportAction";
+	
+	/** The Constant ELEMENT_FILESEXPORTACTION. */
+	public static final String ELEMENT_FILESEXPORTACTION = "filesExportAction";
+	
+	/** The Constant ELEMENT_FILESIMPORTACTION. */
+	public static final String ELEMENT_FILESIMPORTACTION = "filesImportAction";
+	
+	/** The Constant ATTR_FILEIMPORTACTION_FILENAMEWITHABSOLUTEPATH. */
+	public static final String ATTR_FILEIMPORTACTION_FILENAMEWITHABSOLUTEPATH = "fileNameWithAbsolutePath";//NOPMD
+	
+	/** The Constant ATTR_FILEIMPORTACTION_FILENOTFOUNDRAISEERROR. */
+	public static final String ATTR_FILEIMPORTACTION_FILENOTFOUNDRAISEERROR = "fileNotFoundRaiseError";//NOPMD
+	
+	/** The Constant ATTR_FILEEXPORTACTION_FILENAMEWITHABSOLUTEPATH. */
+	public static final String ATTR_FILEEXPORTACTION_FILENAMEWITHABSOLUTEPATH = "fileNameWithAbsolutePath";//NOPMD
+	
+	/** The Constant ATTR_FILESIMPORTACTION_FOLDERNAMEWITHABSOLUTEPATH. */
+	public static final String ATTR_FILESIMPORTACTION_FOLDERNAMEWITHABSOLUTEPATH = "folderNameWithAbsolutePath";//NOPMD
+	
+	/** The Constant ATTR_FILESEXPORTACTION_FOLDERNAMEWITHABSOLUTEPATH. */
+	public static final String ATTR_FILESEXPORTACTION_FOLDERNAMEWITHABSOLUTEPATH = "folderNameWithAbsolutePath";//NOPMD
 	
 	/** The Constant ATTR_SENDKEYSACTION_DATAVALUE. */
 	public static final String ATTR_SENDKEYSACTION_DATAVALUE = "dataValue";

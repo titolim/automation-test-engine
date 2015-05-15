@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Paths;
@@ -612,7 +613,13 @@ public class CaseRunnerGenerator {
 	private static @Nullable URI fixFileURL(URL url) {
 		if (!"file".equals(url.getProtocol()))//NOPMD
 			throw new IllegalArgumentException();// NOPMD
-		return new File(url.getFile()).toURI();
+		File tmp ;
+		try {
+			tmp = new File(url.toURI());//NOPMD
+		} catch (URISyntaxException e) {
+			tmp = new File(url.getFile());
+		}
+		return tmp.toURI();
 	}
 
 	private String getAllJarsClassPathInMavenLocalRepo() {

@@ -24,11 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.casestep.StepUnexpectedAlertEvent;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.context.ApplicationListener;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -47,7 +49,12 @@ public class BrowserWindow {
 	/** The my wd. */
 	@XStreamOmitField
 	final private WebDriver myWd;  //NOPMD
-	
+
+	/** The browser driver path */
+	@Nullable
+	@XStreamOmitField
+	private static String driverPath; // NOPMD
+
 	/** The frames. */
 	final private List<WindowFrame> visibleFrames = new ArrayList<WindowFrame>();
 
@@ -63,6 +70,9 @@ public class BrowserWindow {
 	/** The Constant maxFrameRefreshTryCount. */
 	final static private int MAXFRAMEREFRESHTRYCOUNT = 2;
 
+	/** The closed. */
+	private boolean closed;
+
 	/**
 	 * Instantiates a new browser window.
 	 *
@@ -74,6 +84,7 @@ public class BrowserWindow {
 	public BrowserWindow(String winHandle, WebDriver myWd) {
 		this.windowHandle = winHandle;
 		this.myWd = myWd;
+		this.closed = false;
 	}
 
 	/**
@@ -99,6 +110,7 @@ public class BrowserWindow {
 	public void close() {
 		obtainWindowFocus();
 		myWd.close();
+		this.setClosed(true);
 	}
 
 	/**
@@ -193,4 +205,37 @@ public class BrowserWindow {
 		return currentElementFindFrameChain;
 	}
 
+
+	/**
+	 * @return the browser driver path
+	 */
+	@Nullable
+	public static String getDriverPath() {
+		return driverPath;
+	}
+
+	/**
+	 * @set the browser driver path
+	 */
+	public static void setDriverPath(@Nullable String driverPath) {
+		BrowserWindow.driverPath = driverPath;
+	}
+
+	/**
+	 * @return the closed
+	 */
+	public boolean isClosed() {
+		return closed;
+	}
+
+	/**
+	 * @param closed the closed to set
+	 */
+	public void setClosed(boolean closed) {
+		this.closed = closed;
+	}
+
+	
+
+	
 }

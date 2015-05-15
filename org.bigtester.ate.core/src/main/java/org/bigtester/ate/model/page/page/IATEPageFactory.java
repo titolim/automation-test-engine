@@ -63,6 +63,6 @@ public interface IATEPageFactory {
 	 * @param findByValue
 	 * @return
 	 */
-	MyWebElement getMyWebElement(EnumElementFindType elementFindType,
+	MyWebElement<?> getMyWebElement(EnumElementFindType elementFindType,
 			String findByValue, IMyWebDriver myWd);
 }

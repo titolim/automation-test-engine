@@ -32,7 +32,6 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
-
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -93,6 +92,10 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 					GlobalUtils.findTestCaseBean(getApplicationContext()));
 			pve.initCause(et);
 			throw pve;
+		} catch (Throwable otherE) {//NOPMD
+			getApplicationContext().publishEvent(
+					new StepUnexpectedAlertEvent(this, otherE));
+			throw otherE;
 		}
 
 		List<IExpectedResultAsserter> asserterList = getExpectedResultAsserter();

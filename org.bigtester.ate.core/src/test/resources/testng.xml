@@ -1,12 +1,9 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
- 
-<suite name="TestAll" parallel="methods">
- 
-	<test name="order">
-		<classes>
-			<class name="org.bigtester.ate.DataManager" />
-		</classes>
+<!DOCTYPE suite SYSTEM
+"http://testng.org/testng-1.0.dtd" >
+<suite name="ATESuites">
+	<test name="Regression">
+		<packages>
+			<package name="org.bigtester.ate.test.*" />
+		</packages>
 	</test>
- 
-	 
 </suite>

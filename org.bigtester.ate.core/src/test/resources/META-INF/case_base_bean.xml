@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:ate="http://www.bigtester.org/schema/ate"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		                   http://www.springframework.org/schema/aop 
+		                   http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		                   http://www.bigtester.org/schema/ate 
+		                   http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+	
+	<import resource="classpath:META-INF/testdb-services.xml" />
+	
+	<bean class="org.bigtester.ate.model.data.CaseDataProcessor" />
+	<bean class="org.bigtester.ate.model.page.elementaction.SendKeysActionPostBeanProcessor" />
+	<bean class="org.bigtester.ate.model.page.elementfind.ElementFinderIndexOfSameProcessor"/>
+	<bean id="StepDataLogger" class="org.bigtester.ate.model.casestep.StepDataLogger" />
+	<bean id="repeatStepExecutionLogger" class="org.bigtester.ate.model.casestep.RepeatStepExecutionLogger" />
+	<bean id="globalUtilsForTestCase" class="org.bigtester.ate.GlobalUtils" />
+	<bean id="stepUnexpectedAlertHandler" class="org.bigtester.ate.model.casestep.StepUnexpectedAlertHandler" />
+	<bean id="multiWindowsHandler" class="org.bigtester.ate.model.page.atewebdriver.MultiWindowsHandler" >
+	</bean>
+	
+<!-- 	<ate:TestDatabaseInitializer id="dbInitializer"/> -->
+	
+</beans>

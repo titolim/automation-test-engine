@@ -26,6 +26,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -44,7 +45,8 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 	
 	/** The browser windows monitor. */
 	@Nullable
-	private MultiWindowsHandler multiWindowsHandler;
+	@Autowired
+	private IMultiWindowsHandler multiWindowsHandler;
 	
 	/**
 	 * Gets the web driver.
@@ -70,8 +72,8 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 	public final void setWebDriver(final WebDriver webDriver) {
 		
 		EventFiringWebDriver eDriver  = new EventFiringWebDriver(webDriver);
-		multiWindowsHandler = new MultiWindowsHandler(webDriver);
-		eDriver.register(multiWindowsHandler);
+//		multiWindowsHandler = new MultiWindowsHandler(this);
+		eDriver.register((MultiWindowsHandler)GlobalUtils.getTargetObject(multiWindowsHandler));
 		this.webDriver = eDriver;
 	}
 
@@ -104,8 +106,8 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 	/**
 	 * @return the browserWindowsMonitor
 	 */
-	public MultiWindowsHandler getMultiWindowsHandler() {
-		final MultiWindowsHandler browserWindowsMonitor2 = multiWindowsHandler;
+	public IMultiWindowsHandler getMultiWindowsHandler() {
+		final IMultiWindowsHandler browserWindowsMonitor2 = multiWindowsHandler;
 		if (browserWindowsMonitor2 == null) {
 			throw GlobalUtils.createNotInitializedException("browser Windows monitor");
 		} else {
@@ -116,8 +118,9 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 	/**
 	 * @param browserWindowsMonitor the browserWindowsMonitor to set
 	 */
-	public void setMultiWindowsHandler(MultiWindowsHandler multiWindowsHandler) {
+	public void setMultiWindowsHandler(IMultiWindowsHandler multiWindowsHandler) {
 		this.multiWindowsHandler = multiWindowsHandler;
 	}
+
 
 }

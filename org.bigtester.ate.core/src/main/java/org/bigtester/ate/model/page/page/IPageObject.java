@@ -53,7 +53,7 @@ public interface IPageObject {
 	 *
 	 * @return the web element list
 	 */
-	Map<Long, MyWebElement> getMyWebElementList();
+	Map<Long, MyWebElement<?>> getMyWebElementList();
 	
 	/**
 	 * Gets the cookies.

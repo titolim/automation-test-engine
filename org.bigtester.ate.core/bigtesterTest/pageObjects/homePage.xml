@@ -23,7 +23,13 @@
 	<ate:elementFindByXpath id="efHomePageEnglishLink" findByValue="//img[@alt='English (United Kingdom)']" />
 	<ate:clickAction id="eaHomePageEnglishLinkClick" />
 
-<!-- 	<ate:pagePropertyCorrectnessAsserter -->
+	<ate:elementActionDef id="eadSaveCookies" elementFind="efAllCookies" elementAction="eaExportAsFile" />
+	<ate:cookiesFindAll id="efAllCookies" />
+	<ate:fileExportAction id="eaExportAsFile"
+		fileNameWithAbsolutePath="myFile" />
+
+
+	<!-- 	<ate:pagePropertyCorrectnessAsserter -->
 <!-- 	id="homePagePropertyAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/> -->
 
 	<ate:pageElementExistenceAsserter 

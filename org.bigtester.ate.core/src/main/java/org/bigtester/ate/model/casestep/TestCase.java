@@ -200,14 +200,16 @@ public class TestCase {
 						
 						throw baee;
 				}
-			} catch (Exception e) { //NOPMD
+			} catch (Throwable e) { //NOPMD
 				if (getCurrentTestStep().isOptionalStep()) {
 					getCurrentTestStep().setStepResultStatus(
 							StepResultStatus.SKIP);
 					if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
 						i = currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex();//NOPMD
-						
 					}
+				} else if (getCurrentTestStep().isCorrectedOnTheFly()) {
+					getCurrentTestStep().setStepResultStatus(
+							StepResultStatus.PASS);
 				} else {
 					throw e;
 				}

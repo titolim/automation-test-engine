@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:ate="http://www.bigtester.org/schema/ate"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		                   http://www.springframework.org/schema/aop 
+		                   http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		                   http://www.bigtester.org/schema/ate 
+		                   http://www.bigtester.org/schema/ate/ate.xsd">
+	
+	<import resource="testdb-services.xml" />
+	
+	<ate:baseERValue id="baseERValue" stepERDao="StepERDao" abstract="true"/>
+	<ate:basePageModel id = "myBasePageModel" myWebDriver="MyWebDriver2" abstract="true"/>
+	<ate:basePageObject id="myBasePageObject" parent="myBasePageModel" abstract="true"/>
+	<ate:baseElementAction id="baseElementAction" parent="myBasePageModel" abstract="true"/>
+	<ate:stepInputDataValueParent id="baseInputDataValue" elementDataDao="elementInputDataDao" abstract="true"/>
+
+</beans>

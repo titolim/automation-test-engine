@@ -636,6 +636,13 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	
+	<xsd:complexType name="AlertDialogFindInCurrentFocusType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 	<xsd:complexType name="ElementFindByIdType">
 		<xsd:complexContent>
@@ -652,7 +659,79 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-
+	
+	<!--************************* following for Cookie finder *************************-->
+    
+	<xsd:complexType name="AllCookiesFindByDomainNameType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="domainName" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CookiesFindAllType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CookieFindByCookieNameInDomainType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:attribute name="cookieName" type="xsd:string" use="required"/>
+				<xsd:attribute name="domainName" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<!--************************* following for Non UI Action *************************-->
+    <xsd:complexType name="FileExportActionType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+				<xsd:attribute name="fileNameWithAbsolutePath" type="xsd:string" use="required"/>
+				
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+    
+    <xsd:complexType name="FilesExportActionType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+				<xsd:attribute name="folderNameWithAbsolutePath" type="xsd:string" use="required"/>
+				
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+    
+    <xsd:complexType name="FileImportActionType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+				<xsd:attribute name="fileNameWithAbsolutePath" type="xsd:string" use="required"/>
+				<xsd:attribute name="fileNotFoundRaiseError" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="FilesImportActionType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+				<xsd:attribute name="folderNameWithAbsolutePath" type="xsd:string" use="required"/>
+				
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+		
 <xsd:complexType name="ElementFindByLinkTextType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -769,6 +848,15 @@
 	</xsd:complexType>
 	
 	<xsd:complexType name="TestWindowsCloseActionType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<xsd:group ref="beans:beanElements" />
+				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="AlertDialogAcceptLikeActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:group ref="beans:beanElements" />
@@ -912,15 +1000,25 @@
     <xsd:element name="elementFindByClassName" type="ElementFindByClassNameType" />
     <xsd:element name="elementFindByCss" type="ElementFindByCssType" />
     <xsd:element name="elementFindByTagName" type="ElementFindByTagNameType" />
+    <xsd:element name="alertDialogFindInCurrentFocus" type="AlertDialogFindInCurrentFocusType" />
+    
+	<xsd:element name="cookiesFindByDomainName" type="AllCookiesFindByDomainNameType" />	
+	<xsd:element name="cookiesFindAll" type="CookiesFindAllType" />
+<!-- 	<xsd:element name="cookieFindByCookieNameInDomain" type="CookieFindByCookieNameInDomainType" /> -->
 	
     <xsd:element name="elementActionDef" type="ElementActionDefType"/>
     <xsd:element name="browserWindowClose" type="TestWindowsCloseActionType" />
+    <xsd:element name="alertDialogAccept" type="AlertDialogAcceptLikeActionType" />
     <xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType" />
     <xsd:element name="clickAction" type="ClickActionType" />
     <xsd:element name="clearTextAction" type="ClearTextActionType" />
     <xsd:element name="mouseMoveToAction" type="MouseMoveToActionType" />
     <xsd:element name="sendKeysAction" type="SendKeysActionType" />
     <xsd:element name="uploadFileAction" type="UploadFileActionType" />
+	<xsd:element name="fileExportAction" type="FileExportActionType" />
+	<xsd:element name="filesExportAction" type="FilesExportActionType" />
+	<xsd:element name="filesImportAction" type="FilesImportActionType" />
+	<xsd:element name="fileImportAction" type="FileImportActionType" />
 		
     <xsd:element name="firefoxDriver" type="MyFirefoxDriverType" />
     <xsd:element name="chromeDriver" type="MyChromeDriverType" />
