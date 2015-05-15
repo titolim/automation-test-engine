@@ -151,11 +151,11 @@ public interface IMultiWindowsHandler {
 	@Nullable
 	AbstractAlertDialog obtainFocusOnLatestAlertDialog();
 	
-	/**
-	 * Accept alert dialog on focus.
-	 */
-	void acceptAlertDialogOnFocus();
-	
+//	/**
+//	 * Accept alert dialog on focus.
+//	 */
+//	void acceptAlertDialogOnFocus();
+//	
 	/**
 	 * Focus on open sequence number.
 	 *

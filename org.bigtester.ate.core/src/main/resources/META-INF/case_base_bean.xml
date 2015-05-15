@@ -18,6 +18,8 @@
 	<bean id="StepDataLogger" class="org.bigtester.ate.model.casestep.StepDataLogger" />
 	<bean id="repeatStepExecutionLogger" class="org.bigtester.ate.model.casestep.RepeatStepExecutionLogger" />
 	<bean id="globalUtilsForTestCase" class="org.bigtester.ate.GlobalUtils" />
+	
+	<bean id="multiWindowsHandler" class="org.bigtester.ate.model.page.atewebdriver.MultiWindowsHandler" />
 	<ate:TestDatabaseInitializer id="dbInitializer"/>
 	
 </beans>

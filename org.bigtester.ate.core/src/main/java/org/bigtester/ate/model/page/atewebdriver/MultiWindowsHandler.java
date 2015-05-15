@@ -189,6 +189,8 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 			
 				throw GlobalUtils
 						.createInternalError("Driver doesn't support alert handling yet");
+		} catch (NoSuchWindowException windClosedAlready) {
+			//do nothing if window closed without alert dialog intervention. for example in Chrome.
 		}
 	}
 
@@ -382,18 +384,19 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 		return retVal;
 	}
 
-	/**
-	 * Accept alert dialog on focus.
-	 */
-	public void acceptAlertDialogOnFocus() {
-		AbstractAlertDialog alert = obtainFocusOnLatestAlertDialog();
-		if (null == alert)
-			throw GlobalUtils
-					.createNotInitializedException("default alert dialog");
-		alert.accept();
-		GlobalUtils.getApx().publishEvent(new AlertDialogAcceptedEvent(alert));
-		this.refreshWindowsList(getDriver(), false);
-	}
+//	/**
+//	 * Accept alert dialog on focus.
+//	 */
+//	public void acceptAlertDialogOnFocus() {
+//		AbstractAlertDialog alert = obtainFocusOnLatestAlertDialog();
+//		if (null == alert)
+//			throw GlobalUtils
+//					.createNotInitializedException("default alert dialog");
+//		alert.accept();
+//		alert.setClosingWindowHandle(closingWindowHandle);
+//		GlobalUtils.getApx().publishEvent(new AlertDialogAcceptedEvent(alert));
+//		this.refreshWindowsList(getDriver(), false);
+//	}
 
 	/**
 	 * Focus on open sequence number.

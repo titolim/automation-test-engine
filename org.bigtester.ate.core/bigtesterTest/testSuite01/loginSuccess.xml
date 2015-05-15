@@ -27,7 +27,7 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:IEDriver       />
+	<ate:chromeDriver       />
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="Bigtester home page test case">
