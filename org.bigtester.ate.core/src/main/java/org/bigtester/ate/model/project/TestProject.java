@@ -65,8 +65,13 @@ public class TestProject {
 
 	/** The test project listener. */
 	@Nullable
+	@XStreamOmitField
 	private TestProjectListener testProjectListener;
 
+	/** The testng. */
+	@XStreamOmitField
+	final private TestNG testng = new TestNG();
+	
 	/**
 	 * Instantiates a new test project.
 	 *
@@ -117,7 +122,7 @@ public class TestProject {
 
 		final TestProjectListener tla = new TestProjectListener(this);
 		final TestCaseResultModifier repeatStepResultModifier = new TestCaseResultModifier();
-		final TestNG testng = new TestNG();
+		
 		testng.addListener(tla);
 		testng.addListener(repeatStepResultModifier);
 
@@ -236,6 +241,13 @@ public class TestProject {
 	public void setGlobalInitXmlFile(Resource globalInitXmlFile)
 			throws IOException {
 		this.globalInitXmlFile = globalInitXmlFile;
+	}
+
+	/**
+	 * @return the testng
+	 */
+	public TestNG getTestng() {
+		return testng;
 	}
 
 

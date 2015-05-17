@@ -173,6 +173,8 @@ public class CaseRunner implements IRunTestCase {
 					params.setGlobalAppCtx(((TestProjectListener) ((TestRunner) ctx)
 							.getTestListeners().get(index)).getMytp()
 							.getAppCtx());
+					params.setTestProject(((TestProjectListener) ((TestRunner) ctx)
+							.getTestListeners().get(index)).getMytp());
 					break;
 				}
 			}
@@ -236,6 +238,7 @@ public class CaseRunner implements IRunTestCase {
 			myTestCase = GlobalUtils.findTestCaseBean(getContext());
 			getMyTestCase().setStepThinkTime(testParams.getStepThinkTime());
 			getMyTestCase().setCurrentWebDriver(myWebD);
+			getMyTestCase().setParentTestProject(testParams.getTestProject());
 			getMyTestCase().goSteps();
 
 		} catch (FatalBeanException fbe) {

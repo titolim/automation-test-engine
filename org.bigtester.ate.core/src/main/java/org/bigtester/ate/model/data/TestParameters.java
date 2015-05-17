@@ -22,6 +22,8 @@ package org.bigtester.ate.model.data;
 
 import java.util.List;
 
+import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.project.TestProject;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.context.ApplicationContext;
 
@@ -50,11 +52,15 @@ public class TestParameters
     @XStreamOmitField
     private ApplicationContext globalAppCtx;
     
-    /** The parent app ctx. */
+    /** The test project. */
     @Nullable
-    @XStreamOmitField
-    private ApplicationContext parentAppCtx;
+    private TestProject testProject;
     
+//    /** The parent app ctx. */
+//    @Nullable
+//    @XStreamOmitField
+//    private ApplicationContext parentAppCtx;
+//    
     /** The parent test case data holders. */
     @Nullable
     private List<AbstractRunTimeDataHolder> parentTestCaseDataHolders;
@@ -156,20 +162,20 @@ public class TestParameters
 		this.globalAppCtx = globalAppCtx;
 	}
 
-	/**
-	 * @return the parentAppCtx
-	 */
-	@Nullable
-	public ApplicationContext getParentAppCtx() {
-		return parentAppCtx;
-	}
-
-	/**
-	 * @param parentAppCtx the parentAppCtx to set
-	 */
-	public void setParentAppCtx(ApplicationContext parentAppCtx) {
-		this.parentAppCtx = parentAppCtx;
-	}
+//	/**
+//	 * @return the parentAppCtx
+//	 */
+//	@Nullable
+//	public ApplicationContext getParentAppCtx() {
+//		return parentAppCtx;
+//	}
+//
+//	/**
+//	 * @param parentAppCtx the parentAppCtx to set
+//	 */
+//	public void setParentAppCtx(ApplicationContext parentAppCtx) {
+//		this.parentAppCtx = parentAppCtx;
+//	}
 
 	/**
 	 * @return the parentTestCaseDataHolders
@@ -185,5 +191,24 @@ public class TestParameters
 	public void setParentTestCaseDataHolders(
 			List<AbstractRunTimeDataHolder> parentTestCaseDataHolders) {
 		this.parentTestCaseDataHolders = parentTestCaseDataHolders;
+	}
+
+	/**
+	 * @return the testProject
+	 */
+	public TestProject getTestProject() {
+		final TestProject testProject2 = testProject;
+		if (testProject2 == null) {
+			throw GlobalUtils.createNotInitializedException("testproject parameter");
+		} else {
+			return testProject2;
+		}
+	}
+
+	/**
+	 * @param testProject the testProject to set
+	 */
+	public void setTestProject(TestProject testProject) {
+		this.testProject = testProject;
 	}
 }

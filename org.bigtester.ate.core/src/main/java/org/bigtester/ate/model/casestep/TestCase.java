@@ -22,12 +22,14 @@ package org.bigtester.ate.model.casestep;
 
 import java.util.List;
 
+import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.project.TestProject;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -56,6 +58,10 @@ public class TestCase {
 	@Nullable
 	private List<ITestStep> testStepList;
 
+	/** The parent test project. */
+	@Nullable
+	private TestProject parentTestProject;
+	
 	/**
 	 * Instantiates a new test case.
 	 *
@@ -290,6 +296,25 @@ public class TestCase {
 	 */
 	public void setCurrentWebDriver(IMyWebDriver currentWebDriver) {
 		this.currentWebDriver = currentWebDriver;
+	}
+
+	/**
+	 * @return the parentTestProject
+	 */
+	public TestProject getParentTestProject() {
+		final TestProject parentTestProject2 = parentTestProject;
+		if (parentTestProject2 == null) {
+			throw GlobalUtils.createNotInitializedException("parent test project");
+		} else {
+			return parentTestProject2;
+		}
+	}
+
+	/**
+	 * @param parentTestProject the parentTestProject to set
+	 */
+	public void setParentTestProject(TestProject parentTestProject) {
+		this.parentTestProject = parentTestProject;
 	}
 
 }
