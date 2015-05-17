@@ -20,7 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementfind;
 
-import org.bigtester.ate.model.page.page.CookiesManager;
+import org.bigtester.ate.model.page.atewebdriver.CookiesManager;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -24,8 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.page.atewebdriver.CookiesManager;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.page.CookiesManager;
 import org.eclipse.aether.util.StringUtils;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;

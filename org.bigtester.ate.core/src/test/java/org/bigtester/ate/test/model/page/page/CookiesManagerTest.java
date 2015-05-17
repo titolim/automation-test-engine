@@ -22,7 +22,7 @@ package org.bigtester.ate.test.model.page.page;
 
 import java.io.File;
 
-import org.bigtester.ate.model.page.page.CookiesManager;
+import org.bigtester.ate.model.page.atewebdriver.CookiesManager;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.bigtester.ate.test.data.cookies.CookiesData;
 import org.mockito.Mockito;

@@ -165,6 +165,7 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 			default:
 				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
 			}
+			
 			retVal = new ChromeDriver();
 		}
 		setWebDriver(retVal);

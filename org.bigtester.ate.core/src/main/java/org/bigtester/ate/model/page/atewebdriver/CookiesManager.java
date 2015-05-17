@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.page.page;
+package org.bigtester.ate.model.page.atewebdriver;
 
 import java.io.File;
 import java.io.FileInputStream; 
@@ -34,7 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.io.IDiskFileOperation;
 import org.bigtester.ate.model.page.PageModelBase;
-import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.aether.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Cookie;
@@ -258,7 +257,7 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 		try {
 			ObjectOutput out;
 			out = new ObjectOutputStream(new FileOutputStream(
-					this.getExportFileNameWithAbsolutePath()));
+					this.getExportFileNameWithAbsolutePath(),false));
 			out.writeObject(getCookies());
 			out.close();
 		} catch (IOException e) {
@@ -306,8 +305,9 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 				getMyWd().getWebDriverInstance().manage().deleteAllCookies();
 				for (Map.Entry<String, Cookie> entry : cookies.entrySet()) {
 					
-					getMyWd().getWebDriverInstance().manage()
-							.addCookie(entry.getValue());
+					//getMyWd().getWebDriverInstance().manage()
+						//	.addCookie(entry.getValue());
+					entry.getValue();
 				}
 			} catch (IOException | ClassNotFoundException e) {
 				throw GlobalUtils.createInternalError("File loading operation", e);

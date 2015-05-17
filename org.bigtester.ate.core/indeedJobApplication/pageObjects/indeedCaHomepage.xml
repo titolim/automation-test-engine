@@ -15,7 +15,7 @@
 	<import resource="classpath:META-INF/logger-reporter.xml" />
 	<import resource="classpath:META-INF/page_base_bean.xml" />
 
-	<ate:homePage id="indeedCaHomepage" homeUrl="http://www.indeed.ca"
+	<ate:homePage id="indeedCaHomepage" homeUrl="http://ca.indeed.com"
 		dataFile="indeedJobApplication/pageObjects/indeedCaHomepage.data.xml" />
 
 	<ate:elementActionDef id="eadTypeInSearchKeyWordQA"
@@ -40,7 +40,7 @@
 	<ate:elementActionDef id="eadTypeWindsorInWhere"
 		elementFind="efWhere" elementAction="eaTypeWindsor">
 	</ate:elementActionDef>
-	<ate:sendKeysAction id="eaTypeWindsor" dataValue="Okanagan" />
+	<ate:sendKeysAction id="eaTypeWindsor" dataValue="Vancouver,bc" />
 	
 <!-- 	<ate:runTimeDataHolder id="Montreal1, QC" -->
 <!-- 		dataHolderType="ManualAssigned" dataType="Text" dataValue="Montreal, QC" /> -->
@@ -51,5 +51,19 @@
 	<ate:elementFindById id="efFindJobsButton"
 		findByValue="fj" />
 	<ate:clickAction id="eaFindJobsButtonClick" />
+
+	<ate:elementActionDef id="eadImportCookies"
+		elementFind="efFindAllCookies" elementAction="eaImportFromFile">
+	</ate:elementActionDef>
+	<ate:cookiesFindAll id="efFindAllCookies"
+		 />
+	<ate:fileImportAction id="eaImportFromFile"
+		fileNameWithAbsolutePath="cookies" fileNotFoundRaiseError="false" />
+
+	<ate:elementActionDef id="eadExportCookies"
+		elementFind="efFindAllCookies" elementAction="eaExportToFile">
+	</ate:elementActionDef>
+	<ate:fileExportAction id="eaExportToFile"
+		fileNameWithAbsolutePath="cookies" />
 
 </beans>

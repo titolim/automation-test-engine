@@ -22,8 +22,8 @@ package org.bigtester.ate.test.model.page.elementfind;
 
 import static org.mockito.Mockito.when;
 
+import org.bigtester.ate.model.page.atewebdriver.CookiesManager;
 import org.bigtester.ate.model.page.elementfind.CookiesFindAll;
-import org.bigtester.ate.model.page.page.CookiesManager;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.bigtester.ate.test.data.cookies.CookiesData;
 import org.openqa.selenium.Cookie;

@@ -22,7 +22,7 @@
 		elementFind="efApplyNowButton" elementAction="eaApplyNowClick">
 	</ate:elementActionDef>
 	<ate:elementFindByXpath id="efApplyNowButton"
-		findByValue="//span[@class='indeed-apply-button-label']" indexOfSameElements="0" />
+		findByValue="//span[@class='indeed-apply-widget indeed-apply-button-container indeed-apply-status-not-applied']" indexOfSameElements="0" />
 	<ate:clickAction id="eaApplyNowClick" />
 	
 	<ate:elementActionDef id="eadFilloutApplicantName"
@@ -44,7 +44,7 @@
 	</ate:elementActionDef>
 	<ate:elementFindById id="efApplicantPhoneNumber"
 		findByValue="applicant.phoneNumber"  />
-	<ate:sendKeysAction id="eaFilloutApplicantPhoneNumber" dataValue="5148036657"/>
+	<ate:sendKeysAction id="eaFilloutApplicantPhoneNumber" dataValue="5148036688"/>
 	
 	<ate:elementActionDef id="eadApplyChooseFile"
 		elementFind="efApplyNowChooseFile" elementAction="eaApplyChooseFile">

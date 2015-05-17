@@ -23,8 +23,8 @@ package org.bigtester.ate.model.page.elementfind;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bigtester.ate.model.page.atewebdriver.CookiesManager;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.page.CookiesManager;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
