@@ -20,9 +20,9 @@
  *******************************************************************************/
 package org.bigtester.ate.xmlschema;
 
-
 import org.apache.commons.lang3.StringUtils;
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.page.atewebdriver.MyChromeDriver;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
@@ -31,7 +31,6 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
-
 
 // TODO: Auto-generated Javadoc
 /**
@@ -47,35 +46,39 @@ public class ChromeDriverBeanDefinitionParser extends
 	 * {@inheritDoc}
 	 */
 	protected Class<MyChromeDriver> getBeanClass(@Nullable Element element) {
-	        return MyChromeDriver.class; 
-    }
+		return MyChromeDriver.class;
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	protected void doParse(@Nullable Element element, @Nullable BeanDefinitionBuilder bean) {
-		// this will never be null since the schema explicitly requires that a value be supplied
-	    if (bean ==null || element == null ) throw GlobalUtils.createNotInitializedException("element and bean");
-		    String profileName = element.getAttribute("profileName");
-		    if (!StringUtils.isEmpty(profileName)) {
-		       	bean.addConstructorArgValue(profileName);
+	protected void doParse(@Nullable Element element,
+			@Nullable BeanDefinitionBuilder bean) {
+		// this will never be null since the schema explicitly requires that a
+		// value be supplied
+		if (bean == null || element == null)
+			throw GlobalUtils.createNotInitializedException("element and bean");
+		String preserveCookies = element
+				.getAttribute(XsdElementConstants.ATTR_CHROMEDRIVER_PRESERVECOOKIES);
+		if (!StringUtils.isEmpty(preserveCookies)) {
+			bean.addConstructorArgValue(Boolean.parseBoolean(preserveCookies));
+		}
+
 	}
-//
-//        // this however is an optional property
-//        String lenient = element.getAttribute("list-class");
-//        if (StringUtils.hasText(lenient)) {
-//            bean.addPropertyValue("lenient", Boolean.valueOf(lenient));
-//        }
-    }
-	/** (non-Javadoc)
+
+	/**
+	 * (non-Javadoc)
+	 * 
 	 * @see org.springframework.beans.factory
-	 * .xml.AbstractBeanDefinitionParser#resolveId(org.w3c.dom.Element,
-	 *  org.springframework.beans.factory.support.AbstractBeanDefinition,
-	 *   org.springframework.beans.factory.xml.ParserContext)
+	 *      .xml.AbstractBeanDefinitionParser#resolveId(org.w3c.dom.Element,
+	 *      org.springframework.beans.factory.support.AbstractBeanDefinition,
+	 *      org.springframework.beans.factory.xml.ParserContext)
 	 */
-	protected String resolveId(@Nullable Element element, @Nullable AbstractBeanDefinition definition, @Nullable ParserContext parserContext)
+	protected String resolveId(@Nullable Element element,
+			@Nullable AbstractBeanDefinition definition,
+			@Nullable ParserContext parserContext)
 			throws BeanDefinitionStoreException {
 
 		return "MyWebDriver2";
-}
+	}
 }

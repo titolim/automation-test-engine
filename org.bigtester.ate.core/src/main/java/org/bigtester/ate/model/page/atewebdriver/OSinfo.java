@@ -384,7 +384,21 @@ public final class OSinfo {
             instance.platform = EPlatform.Others;  
         }  
          return instance.platform;  
-        }  
+        }
+
+	/**
+	 * @return the instance
+	 */
+	public static OSinfo getInstance() {
+		return instance;
+	}
+
+	/**
+	 * @param instance the instance to set
+	 */
+	public static void setInstance(OSinfo instance) {
+		OSinfo.instance = instance;
+	}  
 }  
 
 

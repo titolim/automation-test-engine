@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
-import org.bigtester.ate.browser.BrowserProfile;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
@@ -33,10 +32,10 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Jun Yang
  */
 public class MySafariDriver extends AbstractWebDriverBase implements IMyWebDriver {
-
+	final public static String BROWSERTYPENAME = "Safari"; 
 	/** The browser profile. */
 	@Nullable
-	final private BrowserProfile<SafariOptions> browserProfile;
+	final private SafariFeatureProfile browserProfile;
 
 	// /** The Constant BROWSERNAME. */
 	// final static private String BROWSERNAME = "webdriver.safari.driver";
@@ -58,8 +57,7 @@ public class MySafariDriver extends AbstractWebDriverBase implements IMyWebDrive
 	 */
 	public MySafariDriver(String profileName) {
 		super();
-		browserProfile = new BrowserProfile<SafariOptions>(SafariOptions.class,
-				profileName);
+		browserProfile = new SafariFeatureProfile (  );
 		// setWebDriver(new SafariDriver(browserProfile.getProfile()));
 	}
 
@@ -67,9 +65,9 @@ public class MySafariDriver extends AbstractWebDriverBase implements IMyWebDrive
 	 * @return the browserProfile
 	 */
 
-	public BrowserProfile<SafariOptions> getBrowserProfile() {
+	public SafariFeatureProfile getBrowserProfile() {
 
-		final BrowserProfile<SafariOptions> retVal = browserProfile;
+		final  SafariFeatureProfile retVal = browserProfile;
 		if (null == retVal) {
 			throw new IllegalStateException(
 					"browserProfile is not correctly populated");

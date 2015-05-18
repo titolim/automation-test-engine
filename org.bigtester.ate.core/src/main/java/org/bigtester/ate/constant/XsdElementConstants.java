@@ -456,6 +456,9 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_CHROMEDRIVER. */
 	public static final String ELEMENT_CHROMEDRIVER = "chromeDriver";
 	
+	/** The Constant ATTR_CHROMEDRIVER_PRESERVECOOKIES. */
+	public static final String ATTR_CHROMEDRIVER_PRESERVECOOKIES = "preserveCookies";
+	
 	/** The Constant ELEMENT_IEDRIVER. */
 	public static final String ELEMENT_IEDRIVER = "IEDriver";
 	

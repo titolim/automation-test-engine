@@ -20,7 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
-import org.bigtester.ate.browser.BrowserProfile;
+import java.io.File;
+
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
@@ -33,43 +34,47 @@ import org.openqa.selenium.firefox.FirefoxProfile;
  * 
  * @author Peidong Hu
  */
-public class MyFirefoxDriver extends AbstractWebDriverBase implements IMyWebDriver{
-	
+public class MyFirefoxDriver extends AbstractWebDriverBase implements
+		IMyWebDriver {
+
 	/** The browser profile. */
 	@Nullable
-	final private BrowserProfile<FirefoxProfile> browserProfile;
-	
+	final private FirefoxFeatureProfile browserProfile;
+	final public static String BROWSERTYPENAME = "Firefox"; 
 	/**
 	 * Instantiates a new my firefox driver.
 	 */
 	public MyFirefoxDriver() {
-		//TODO create multi browsers and remote web driver handler
+		// TODO create multi browsers and remote web driver handler
 		super();
-		
-		//setWebDriver(new FirefoxDriver());
-		//TODO need to re-code to use null pattern object.
+
+		// setWebDriver(new FirefoxDriver());
+		// TODO need to re-code to use null pattern object.
 		browserProfile = null;
 	}
 
 	/**
 	 * Instantiates a new my firefox driver.
 	 *
-	 * @param profileName the profile name
+	 * @param profileName
+	 *            the profile name
 	 */
 	public MyFirefoxDriver(String profileName) {
 		super();
-		browserProfile = new BrowserProfile<FirefoxProfile>(FirefoxProfile.class, profileName);
-		//setWebDriver(new FirefoxDriver(browserProfile.getProfile()));
+//		String diverFeatureProfilePath = AbstractBrowserFeatureProfile.WEBDRIVERFEATUREPROFILEBASEPATH
+//				+ File.separator + OSinfo.getInstance().getOSname().toString() + File.separator + "Firefox" + File.separator;
+		browserProfile = new FirefoxFeatureProfile(  profileName);
+		// setWebDriver(new FirefoxDriver(browserProfile.getProfile()));
 	}
-	
-	
+
 	/**
 	 * @return the browserProfile
 	 */
 	@Nullable
-	public BrowserProfile<FirefoxProfile> getBrowserProfile() {
+	public FirefoxFeatureProfile getBrowserProfile() {
 		return browserProfile;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -78,25 +83,26 @@ public class MyFirefoxDriver extends AbstractWebDriverBase implements IMyWebDriv
 	public WebDriver getWebDriver() {
 		return super.getWebDriver();
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public WebDriver getWebDriverInstance() {
 		WebDriver retVal = super.getWebDriver();
-		if ( null == retVal) {
-			BrowserProfile<FirefoxProfile> bPro = getBrowserProfile();
+		if (null == retVal) {
+			FirefoxFeatureProfile bPro = getBrowserProfile();
 			if (null == bPro) {
 				retVal = new FirefoxDriver();
 			} else {
-				FirefoxBinary binary=new FirefoxBinary();
+				FirefoxBinary binary = new FirefoxBinary();
 				binary.addCommandLineOptions("-no-remote");
 				retVal = new FirefoxDriver(binary, bPro.getProfile());
 			}
 			setWebDriver(retVal);
-			
+
 		}
 		return retVal;
 	}
-	
+
 }

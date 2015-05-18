@@ -21,10 +21,9 @@
 package org.bigtester.ate.model.page.atewebdriver;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriver; 
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.browser.BrowserProfile;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -37,8 +36,10 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 
 	/** The browser profile. */
 	@Nullable
-	final private BrowserProfile<ChromeOptions> browserProfile; //NOPMD
-
+	final private ChromeFeatureProfile browserProfile = new ChromeFeatureProfile(); //NOPMD
+	
+	/** The browsertypename. */
+	final public static String BROWSERTYPENAME = "Chrome"; 
 	/** The Constant BROWSERNAME. */
 /*	private static final String BROWSERNAME = "googlechrome";*/
 	/** The Constant BROWSERDRVNAME. */
@@ -66,18 +67,29 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 	/**
 	 * Instantiates a new my Chrome driver.
 	 */
-	public MyChromeDriver() {
-		// TODO create Chrome browsers and remote web driver handler
+	public MyChromeDriver(boolean preserveCookiesOnExecutions) {
+		
 		super();
-		browserProfile = null;
+		getBrowserProfile().setPreserveCookiesOnExecutions(preserveCookiesOnExecutions);
+		
+	}
+	
+	/**
+	 * Instantiates a new my Chrome driver.
+	 */
+	public MyChromeDriver() {
+		
+		super();
+		 
+		 
 	}
 
 	/**
 	 * @return the browserProfile
 	 */
 
-	public @Nullable BrowserProfile<ChromeOptions> getBrowserProfile() {
-		final BrowserProfile<ChromeOptions> retVal = browserProfile;
+	public   ChromeFeatureProfile  getBrowserProfile() {
+		final ChromeFeatureProfile  retVal = browserProfile;
 		if (null == retVal) {
 			throw new IllegalStateException(
 					"browserProfile is not correctly populated");
@@ -165,8 +177,14 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 			default:
 				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
 			}
-			
-			retVal = new ChromeDriver();
+			if (getBrowserProfile().isPreserveCookiesOnExecutions()) {
+				ChromeOptions ops = new ChromeOptions();
+				
+				ops.addArguments("--user-data-dir=" + getBrowserProfile().getTestCaseChromeUserDataDir());
+				retVal = new ChromeDriver(ops);
+			} else {
+				retVal = new ChromeDriver();
+			}
 		}
 		setWebDriver(retVal);
 		return retVal;

@@ -648,7 +648,7 @@ public class CaseRunnerGenerator {
 			pathSep = ":";
 		}
 
-		retVal = "target" + System.getProperty("file.separator") + "classes"
+		retVal = "target" + File.separator + "classes"
 				+ pathSep + "target" + System.getProperty("file.separator")
 				+ "*.jar" + pathSep + "dist"
 				+ System.getProperty("file.separator") + "InlineCompiler.jar";

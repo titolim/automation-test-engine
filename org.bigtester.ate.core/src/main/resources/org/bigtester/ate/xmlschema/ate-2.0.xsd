@@ -922,7 +922,7 @@
 	<xsd:complexType name="MyChromeDriverType">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractWebDriverBaseType">
-				<!-- <xsd:attribute name="profileName" type="xsd:string"/> -->
+				<xsd:attribute name="preserveCookies" type="xsd:boolean"/>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>

@@ -25,7 +25,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.browser.BrowserProfile;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -35,10 +34,10 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Jun Yang
  */
 public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver {
-
+	final public static String BROWSERTYPENAME = "Opera"; 
 	/** The browser profile. */
 	@Nullable
-	final private BrowserProfile<ChromeOptions> browserProfile; //NOPMD
+	final private OperaFeatureProfile browserProfile; //NOPMD
 	/** The Constant BROWSERNAME. */
 	/*private static final String BROWSERNAME = "operachromium";*/
 	/** The Constant BROWSERDRVNAME. */
@@ -78,8 +77,8 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 	 * @return the browserProfile
 	 */
 
-	public BrowserProfile<ChromeOptions> getBrowserProfile() {
-		final BrowserProfile<ChromeOptions> retVal = browserProfile;
+	public OperaFeatureProfile getBrowserProfile() {
+		final OperaFeatureProfile retVal = browserProfile;
 		if (null == retVal) {
 			throw new IllegalStateException(
 					"browserProfile is not correctly populated");

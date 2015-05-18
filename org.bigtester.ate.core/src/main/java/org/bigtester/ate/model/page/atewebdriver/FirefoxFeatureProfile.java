@@ -18,107 +18,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.browser;
+package org.bigtester.ate.model.page.atewebdriver;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.springframework.util.StringUtils;
 
-
 // TODO: Auto-generated Javadoc
 /**
- * This class ProfileSelector defines ....
- *
+ * This class FirefoxFeatureProfile defines ....
+ * 
  * @author Peidong Hu
- * @param <T> the generic type
+ *
  */
-public class BrowserProfile<T> {
-	//TODO add portable profile feature here, refer to web page, http://stackoverflow.com/questions/7328494/selenium2-firefox-use-the-default-profile
+public class FirefoxFeatureProfile extends AbstractBrowserFeatureProfile {
+	// TODO add portable profile feature here, refer to web page,
+	// http://stackoverflow.com/questions/7328494/selenium2-firefox-use-the-default-profile
 	/** The profile name. */
 	final private String profileName;
-	
+
 	/** The ff profile. */
 	@Nullable
-	final private T profile;
-	
-	/** The persistent class. */
-	protected Class<T> profileType;
+	final private FirefoxProfile profile;
+
 	
 	
-	
-	/**
-	 * @return the profileType
-	 */
-	public Class<T> getProfileType() {
-		return profileType;
-	}
-
-
-
-	/**
-	 * @param profileType the profileType to set
-	 */
-	public void setProfileType(Class<T> profileType) {
-		this.profileType = profileType;
-	}
-
-
-
-	/**
-	 * @return the driverType
-	 */
-	public Class<T> getDriverType() {
-		return profileType;
-	}
-
-
-
-	/**
-	 * @param driverType the driverType to set
-	 */
-	public void setDriverType(Class<T> profileType) {
-		this.profileType = profileType;
-	}
-
-
-
 	/**
 	 * Instantiates a new profile creator.
 	 *
-	 * @param profileName the profile name
+	 * @param profileName
+	 *            the profile name
 	 */
-	@SuppressWarnings("unchecked")
-	public BrowserProfile(Class<T> profileType, String profileName) {
+ 
+	public FirefoxFeatureProfile(   String profileName) {
+		super(); 
 		if (StringUtils.isEmpty(profileName)) {
 			throw new IllegalArgumentException();
 		}
 		this.profileName = profileName;
-		this.profileType = profileType;
-		if (this.profileType == FirefoxProfile.class) {
-			
-			ProfilesIni profileIni = new ProfilesIni();
-			T tmpProfile = (T) profileIni.getProfile(profileName); 
-			if (null == tmpProfile) {
-				throw new IllegalArgumentException("Could not find the browser profile.");
-			} else {
-				this.profile = tmpProfile;
-			}
-		} else {
-			//TODO set default profile type to firefox profile type
-			ProfilesIni profileIni = new ProfilesIni();
 
-			T tmpProfile = (T) profileIni.getProfile(profileName); 
-			if (null == tmpProfile) {
-				throw new IllegalArgumentException();
-			} else {
-				this.profile = tmpProfile;
-			}
+		ProfilesIni profileIni = new ProfilesIni();
+		FirefoxProfile tmpProfile = profileIni.getProfile(profileName);
+		if (null == tmpProfile) {
+			throw new IllegalArgumentException(
+					"Could not find the browser profile.");
+		} else {
+			this.profile = tmpProfile;
 		}
+
 	}
-	
-	
-	
+
 	/**
 	 * Gets the profile name.
 	 *
@@ -128,17 +78,22 @@ public class BrowserProfile<T> {
 		return profileName;
 	}
 
-	
 	/**
 	 * Gets the profile.
 	 *
 	 * @return the profile
 	 */
 	@Nullable
-	public T getProfile() {
+	public FirefoxProfile getProfile() {
 		return profile;
 	}
 
-	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getBrowserTypeString() {
+		return MyFirefoxDriver.BROWSERTYPENAME;
+	}
 
 }
