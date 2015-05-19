@@ -22,7 +22,6 @@ package org.bigtester.ate.model.page.atewebdriver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.safari.SafariOptions;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -32,6 +31,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Jun Yang
  */
 public class MySafariDriver extends AbstractWebDriverBase implements IMyWebDriver {
+	
+	/** The Constant BROWSERTYPENAME. */
 	final public static String BROWSERTYPENAME = "Safari"; 
 	/** The browser profile. */
 	@Nullable
@@ -40,14 +41,7 @@ public class MySafariDriver extends AbstractWebDriverBase implements IMyWebDrive
 	// /** The Constant BROWSERNAME. */
 	// final static private String BROWSERNAME = "webdriver.safari.driver";
 
-	/**
-	 * Instantiates a new my safari driver.
-	 */
-	public MySafariDriver() {
-		// TODO create Safari browsers and remote web driver handler
-		super();
-		browserProfile = null;
-	}
+
 
 	/**
 	 * Instantiates a new my Safari driver.
@@ -55,10 +49,9 @@ public class MySafariDriver extends AbstractWebDriverBase implements IMyWebDrive
 	 * @param profileName
 	 *            the profile name
 	 */
-	public MySafariDriver(String profileName) {
+	public MySafariDriver() {
 		super();
 		browserProfile = new SafariFeatureProfile (  );
-		// setWebDriver(new SafariDriver(browserProfile.getProfile()));
 	}
 
 	/**

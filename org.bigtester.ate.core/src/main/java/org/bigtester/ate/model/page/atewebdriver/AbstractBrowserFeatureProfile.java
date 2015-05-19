@@ -22,12 +22,7 @@ package org.bigtester.ate.model.page.atewebdriver;
 
 import java.io.File;
 
-import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.GlobalConstants;
-import org.eclipse.jdt.annotation.Nullable;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.springframework.util.StringUtils;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -97,6 +92,11 @@ abstract public class AbstractBrowserFeatureProfile {
 		this.webDriverFeatureProfilePath = webDriverFeatureProfilePath;
 	}
 
+	/**
+	 * Gets the browser type string.
+	 *
+	 * @return the browser type string
+	 */
 	abstract public String getBrowserTypeString();
 
 }

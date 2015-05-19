@@ -24,13 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.casestep.StepUnexpectedAlertEvent;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.springframework.context.ApplicationListener;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 

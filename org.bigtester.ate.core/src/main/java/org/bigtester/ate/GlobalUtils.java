@@ -31,7 +31,6 @@ import org.bigtester.ate.model.casestep.StepDataLogger;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.data.AbstractRunTimeDataHolder;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
-import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.Homepage;
 import org.bigtester.ate.model.page.page.Lastpage;

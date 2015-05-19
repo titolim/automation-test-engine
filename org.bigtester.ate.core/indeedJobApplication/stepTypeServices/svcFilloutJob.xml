@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:ate="http://www.bigtester.org/schema/ate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                           http://www.bigtester.org/schema/ate 
+                           http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+
+	<!-- this registers beans annotated with @Aspect -->
+	<aop:aspectj-autoproxy />
+
+
+	<import resource="../pageObjects/applyNowPage.xml" />
+	
+	<ate:stepTypeServiceDefinition id="svcFilloutJob" stepName="svcFilloutJob" targetStep="false">
+
+		<ate:elementStep id="stepFilloutApplicantName"
+			stepDescription="stepFilloutApplicantName" stepName="stepFilloutApplicantName"
+			targetStep="false" elementActionDef="eadFilloutApplicantName"
+			>
+		</ate:elementStep>
+
+		<ate:elementStep id="stepFilloutApplicantEmail"
+			stepDescription="stepFilloutApplicantEmail" stepName="stepFilloutApplicantEmail"
+			targetStep="false" elementActionDef="eadFilloutApplicantEmail"
+			>
+		</ate:elementStep>
+
+		<ate:elementStep id="stepFilloutApplicantPHoneNumber"
+			stepDescription="stepFilloutApplicantPHoneNumber" stepName="stepFilloutApplicantPHoneNumber"
+			targetStep="false" elementActionDef="eadFilloutApplicantPhoneNumber"
+			>
+		</ate:elementStep>
+
+		<ate:elementStep id="stepChooseFile"
+			stepDescription="stepChooseFile" stepName="stepChooseFile"
+			targetStep="false" elementActionDef="eadApplyChooseFile"
+			>
+		</ate:elementStep>
+
+		<ate:elementStep id="stepSubmitResume"
+			stepDescription="stepSubmitResume" stepName="stepSubmitResume"
+			targetStep="false" elementActionDef="eadSubmitResume"
+			>
+		</ate:elementStep>
+			
+		
+		
+		
+	</ate:stepTypeServiceDefinition>
+
+</beans>

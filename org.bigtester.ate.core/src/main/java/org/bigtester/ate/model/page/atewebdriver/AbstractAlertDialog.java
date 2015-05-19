@@ -47,6 +47,7 @@ public abstract class AbstractAlertDialog {
 	/** The closed. */
 	private boolean closed;
 	
+	/** The closing window handle. */
 	@Nullable
 	private String closingWindowHandle;
 	

@@ -20,11 +20,9 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
-import java.io.File;
 import java.net.ProxySelector;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.constant.GlobalConstants;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;

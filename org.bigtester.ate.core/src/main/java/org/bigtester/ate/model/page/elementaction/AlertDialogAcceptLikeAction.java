@@ -26,7 +26,6 @@ import org.bigtester.ate.model.page.atewebdriver.AbstractAlertDialog;
 import org.bigtester.ate.model.page.atewebdriver.AlertDialogAcceptedEvent;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.jdt.annotation.Nullable;
-import org.openqa.selenium.WebDriver;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -20,31 +20,10 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver; //NOPMD
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.casestep.StepUnexpectedAlertEvent;
 import org.eclipse.jdt.annotation.Nullable;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.UnreachableBrowserException;
-import org.openqa.selenium.support.events.WebDriverEventListener;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationListener;
-import org.springframework.util.StringUtils;
-import org.springframework.context.annotation.Bean;
-
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,6 +47,12 @@ public interface IMultiWindowsHandler {
 	@Nullable
 	String getWindowOnFocusHandle();
 	
+	/**
+	 * Gets the window by handle.
+	 *
+	 * @param winHandle the win handle
+	 * @return the window by handle
+	 */
 	@Nullable
 	BrowserWindow getWindowByHandle(String winHandle);
 	/**
@@ -150,12 +135,7 @@ public interface IMultiWindowsHandler {
 	 */
 	@Nullable
 	AbstractAlertDialog obtainFocusOnLatestAlertDialog();
-	
-//	/**
-//	 * Accept alert dialog on focus.
-//	 */
-//	void acceptAlertDialogOnFocus();
-//	
+
 	/**
 	 * Focus on open sequence number.
 	 *

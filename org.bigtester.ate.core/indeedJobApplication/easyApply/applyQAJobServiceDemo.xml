@@ -17,7 +17,8 @@
 	<import resource="../pageObjects/indeedCaHomepage.xml" />
 	<import resource="../pageObjects/jobSearchResult.xml" />
 	<import resource="../pageObjects/applyNowPage.xml" />
-	<import resource="../stepTypeServices/srcQaJobSearch.xml"/>
+	<import resource="../stepTypeServices/svcQaJobSearch.xml"/>
+	<import resource="../stepTypeServices/svcFilloutJob.xml"/>
 	<import resource="../pageObjects/lastPage.xml" />
 	
 	<!-- 
@@ -49,50 +50,35 @@
 			stepDescription="stepSwitchToApplyWindow" stepName="stepSwitchToApplyWindow"
 			targetStep="false" elementActionDef="eadSwitchToApplyWindow">
 		</ate:elementStep>
+		
 		<ate:elementStep id="stepClickApplyNow"
 			stepDescription="stepClickApplyNow" stepName="stepClickApplyNow"
 			targetStep="false" elementActionDef="eadClickApplyNow"
 			optionalStep="true"
-			correlatedOptionalStepsUtilInclusive="stepSubmitResume">
+			correlatedOptionalStepsUtilInclusive="stepSvcFilloutJob">
 		</ate:elementStep>
-		<ate:elementStep id="stepFilloutApplicantName"
-			stepDescription="stepFilloutApplicantName" stepName="stepFilloutApplicantName"
-			targetStep="false" elementActionDef="eadFilloutApplicantName"
-			>
-		</ate:elementStep>
-		<ate:elementStep id="stepFilloutApplicantEmail"
-			stepDescription="stepFilloutApplicantEmail" stepName="stepFilloutApplicantEmail"
-			targetStep="false" elementActionDef="eadFilloutApplicantEmail"
-			>
-		</ate:elementStep>
-		<ate:elementStep id="stepFilloutApplicantPHoneNumber"
-			stepDescription="stepFilloutApplicantPHoneNumber" stepName="stepFilloutApplicantPHoneNumber"
-			targetStep="false" elementActionDef="eadFilloutApplicantPhoneNumber"
-			>
-		</ate:elementStep>
-		<ate:elementStep id="stepChooseFile"
-			stepDescription="stepChooseFile" stepName="stepChooseFile"
-			targetStep="false" elementActionDef="eadApplyChooseFile"
-			>
-		</ate:elementStep>
-		<ate:elementStep id="stepSubmitResume"
-			stepDescription="stepSubmitResume" stepName="stepSubmitResume"
-			targetStep="false" elementActionDef="eadSubmitResume"
-			>
-		</ate:elementStep>
-			
 		
+		<ate:stepTypeServiceReference id="stepSvcFilloutJob" stepTypeServiceDefinitionID="svcFilloutJob"/>
+			
 		<ate:elementStep id="stepCloseApplyWindow"
 			stepDescription="stepCloseApplyWindow" stepName="stepCloseApplyWindow"
 			targetStep="false" elementActionDef="eadCloseApplyWindow">
 		</ate:elementStep>
+		
+		<ate:elementStep id="stepAcceptAlertInFocus"
+			stepDescription="stepAcceptAlertInFocus" stepName="stepAcceptAlertInFocus"
+			targetStep="false" optionalStep="true" elementActionDef="eadAcceptAlertInFocus">
+		</ate:elementStep>
+		
 		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="5" endStepName="stepCloseApplyWindow" stepName="stepRepeatApplySamePageJobs" targetStep="false"/>
+		
 		<ate:elementStep id="stepClickPagingNumber"
 			stepDescription="stepClickPagingNumber"
 			stepName="stepClickPagingNumber" targetStep="false"
 			optionalStep="true" elementActionDef="eadClickPagingNumber"
 			correlatedOptionalStepsUtilInclusive="stepRepeatApplyOtherPageJobs">
 		</ate:elementStep>
+		
 		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="5" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>
 		
 

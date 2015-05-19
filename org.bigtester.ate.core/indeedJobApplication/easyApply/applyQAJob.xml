@@ -27,7 +27,7 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:firefoxDriver  />
+	<ate:chromeDriver  preserveCookies="true" />
 
 	<ate:testCase id="testcase" testCaseName="apply easily-apply job.">
 
@@ -46,15 +46,15 @@
 			>
 		</ate:elementStep>
 
-		<ate:elementStep id="stepTypeInMontrealQC"
-			stepDescription="type in search location, Montreal QC" stepName="typeInMontrealQC"
-			targetStep="false" elementActionDef="eadTypeLocationInWhere">
-		</ate:elementStep>
-		
-<!-- 		<ate:elementStep id="stepTypeInWindsorOn" -->
-<!-- 			stepDescription="type in search location, Windsor" stepName="stepTypeInWindsorOn" -->
-<!-- 			targetStep="false" elementActionDef="eadTypeWindsorInWhere"> -->
+<!-- 		<ate:elementStep id="stepTypeInMontrealQC" -->
+<!-- 			stepDescription="type in search location, Montreal QC" stepName="typeInMontrealQC" -->
+<!-- 			targetStep="false" elementActionDef="eadTypeLocationInWhere"> -->
 <!-- 		</ate:elementStep> -->
+		
+		<ate:elementStep id="stepTypeInWindsorOn"
+			stepDescription="type in search location, Windsor" stepName="stepTypeInWindsorOn"
+			targetStep="false" elementActionDef="eadTypeWindsorInWhere">
+		</ate:elementStep>
 		
 		<ate:elementStep id="stepClickFindJobsButton"
 			stepDescription="stepClickFindJobsButton" stepName="clickFindJobsButton"
@@ -69,36 +69,43 @@
 			correlatedOptionalStepsUtilInclusive="stepRepeatApplyOtherPageJobs"
 			pageObject="jobSearchResult">
 		</ate:elementStep>
+
 		<ate:elementStep id="stepSwitchToApplyWindow"
 			stepDescription="stepSwitchToApplyWindow" stepName="stepSwitchToApplyWindow"
 			targetStep="false" elementActionDef="eadSwitchToApplyWindow">
 		</ate:elementStep>
+
 		<ate:elementStep id="stepClickApplyNow"
 			stepDescription="stepClickApplyNow" stepName="stepClickApplyNow"
 			targetStep="false" elementActionDef="eadClickApplyNow"
 			optionalStep="true"
 			correlatedOptionalStepsUtilInclusive="stepSubmitResume">
 		</ate:elementStep>
+
 		<ate:elementStep id="stepFilloutApplicantName"
 			stepDescription="stepFilloutApplicantName" stepName="stepFilloutApplicantName"
 			targetStep="false" elementActionDef="eadFilloutApplicantName"
 			>
 		</ate:elementStep>
+
 		<ate:elementStep id="stepFilloutApplicantEmail"
 			stepDescription="stepFilloutApplicantEmail" stepName="stepFilloutApplicantEmail"
 			targetStep="false" elementActionDef="eadFilloutApplicantEmail"
 			>
 		</ate:elementStep>
+
 		<ate:elementStep id="stepFilloutApplicantPHoneNumber"
 			stepDescription="stepFilloutApplicantPHoneNumber" stepName="stepFilloutApplicantPHoneNumber"
 			targetStep="false" elementActionDef="eadFilloutApplicantPhoneNumber"
 			>
 		</ate:elementStep>
-<!-- 		<ate:elementStep id="stepChooseFile" -->
-<!-- 			stepDescription="stepChooseFile" stepName="stepChooseFile" -->
-<!-- 			targetStep="false" elementActionDef="eadApplyChooseFile" -->
-<!-- 			> -->
-<!-- 		</ate:elementStep> -->
+
+		<ate:elementStep id="stepChooseFile"
+			stepDescription="stepChooseFile" stepName="stepChooseFile"
+			targetStep="false" elementActionDef="eadApplyChooseFile"
+			>
+		</ate:elementStep>
+
 		<ate:elementStep id="stepSubmitResume"
 			stepDescription="stepSubmitResume" stepName="stepSubmitResume"
 			targetStep="false" elementActionDef="eadSubmitResume"
@@ -110,27 +117,30 @@
 			stepDescription="stepCloseApplyWindow" stepName="stepCloseApplyWindow"
 			targetStep="false" elementActionDef="eadCloseApplyWindow">
 		</ate:elementStep>
+		
 		<ate:elementStep id="stepAcceptAlertInFocus"
 			stepDescription="stepAcceptAlertInFocus" stepName="stepAcceptAlertInFocus"
 			targetStep="false" optionalStep="true" elementActionDef="eadAcceptAlertInFocus">
 		</ate:elementStep>
 		
-		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="5" endStepName="stepAcceptAlertInFocus" stepName="stepRepeatApplySamePageJobs" targetStep="false"/>
+		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="2" endStepName="stepAcceptAlertInFocus" stepName="stepRepeatApplySamePageJobs" targetStep="false"/>
+		
 		<ate:elementStep id="stepClickPagingNumber"
 			stepDescription="stepClickPagingNumber"
 			stepName="stepClickPagingNumber" targetStep="false"
 			optionalStep="true" elementActionDef="eadClickPagingNumber"
 			correlatedOptionalStepsUtilInclusive="stepRepeatApplyOtherPageJobs">
 		</ate:elementStep>
-		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="1" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>
 		
-		<ate:repeatStep id="stepRepeatApplyOtherKeywordsJobs" startStepName="stepOpenHomePage" numberOfIterations="3" endStepName="stepRepeatApplyOtherPageJobs" stepName="stepRepeatApplyOtherKeywordsJobs" targetStep="false"/>
+		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="2" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>
 		
-
+		<ate:repeatStep id="stepRepeatApplyOtherKeywordsJobs" startStepName="stepOpenHomePage" numberOfIterations="2" endStepName="stepRepeatApplyOtherPageJobs" stepName="stepRepeatApplyOtherKeywordsJobs" targetStep="false"/>
+		
 		<ate:lastStep id="mylaststep" stepName="mylaststep"
 			stepDescription="last step close browser" targetStep="false"
 			pageObject="myLastPage">
 		</ate:lastStep>
+
 	</ate:testCase>
 
 </beans>

@@ -20,13 +20,10 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
-import java.io.File;
-
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -40,16 +37,15 @@ public class MyFirefoxDriver extends AbstractWebDriverBase implements
 	/** The browser profile. */
 	@Nullable
 	final private FirefoxFeatureProfile browserProfile;
+	
+	/** The Constant BROWSERTYPENAME. */
 	final public static String BROWSERTYPENAME = "Firefox"; 
 	/**
 	 * Instantiates a new my firefox driver.
 	 */
 	public MyFirefoxDriver() {
-		// TODO create multi browsers and remote web driver handler
 		super();
 
-		// setWebDriver(new FirefoxDriver());
-		// TODO need to re-code to use null pattern object.
 		browserProfile = null;
 	}
 
@@ -61,10 +57,7 @@ public class MyFirefoxDriver extends AbstractWebDriverBase implements
 	 */
 	public MyFirefoxDriver(String profileName) {
 		super();
-//		String diverFeatureProfilePath = AbstractBrowserFeatureProfile.WEBDRIVERFEATUREPROFILEBASEPATH
-//				+ File.separator + OSinfo.getInstance().getOSname().toString() + File.separator + "Firefox" + File.separator;
 		browserProfile = new FirefoxFeatureProfile(  profileName);
-		// setWebDriver(new FirefoxDriver(browserProfile.getProfile()));
 	}
 
 	/**

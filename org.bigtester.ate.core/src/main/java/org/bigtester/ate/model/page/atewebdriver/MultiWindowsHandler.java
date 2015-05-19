@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.casestep.StepUnexpectedAlertEvent;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -36,13 +35,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.openqa.selenium.support.events.WebDriverEventListener;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.StringUtils;
-import org.springframework.context.annotation.Bean;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -56,11 +51,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 public class MultiWindowsHandler implements IMultiWindowsHandler,
 		WebDriverEventListener, ApplicationListener<AlertDialogAcceptedEvent> {
 
-	/** The my web d. */
-	@XStreamOmitField
-	@Nullable
-	private WebDriver driver;
-
+	
+	/** The my wd. */
 	@XStreamOmitField
 	@Nullable
 	@Autowired
@@ -79,16 +71,6 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	/** The main window title. */
 	@Nullable
 	private String mainWindowTitle;
-
-	/**
-	 * Instantiates a new multi windows handler.
-	 *
-	 * @param myWebD
-	 *            the my web d
-	 */
-	public MultiWindowsHandler() {
-		// this.driver = myWebD.getWebDriverInstance();
-	}
 
 	/**
 	 * @return the mainWindowTitle
@@ -119,9 +101,12 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 		return retVal;
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
 	@Nullable
 	public BrowserWindow getWindowByHandle(String winHandle) {
-		BrowserWindow retVal = null;
+		BrowserWindow retVal = null;//NOPMD
 		for (BrowserWindow win : this.windows) {
 			if (winHandle.equalsIgnoreCase(win.getWindowHandle())) {
 				retVal = win;
@@ -163,7 +148,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	}
 
 	private int getNumberOfOpenWindows() {
-		int retVal = 0;
+		int retVal = 0;//NOPMD
 		for (BrowserWindow win : windows) {
 			if (!win.isClosed())
 				retVal = retVal + 1;
@@ -184,14 +169,14 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 		} catch (UnreachableBrowserException error) {
 			if (getNumberOfOpenWindows() > 0)
 				throw GlobalUtils
-						.createInternalError("ATE multi windows handler");
+						.createInternalError("ATE multi windows handler", error);
 		} catch (UnsupportedOperationException e) {
 			
 				throw GlobalUtils
-						.createInternalError("Driver doesn't support alert handling yet");
+						.createInternalError("Driver doesn't support alert handling yet", e);
 		} catch (NoSuchWindowException windClosedAlready) {
 			//do nothing if window closed without alert dialog intervention. for example in Chrome.
-			throw new NoAlertPresentException();
+			throw new NoAlertPresentException(windClosedAlready);
 		}
 	}
 
@@ -355,7 +340,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	public AbstractAlertDialog obtainFocusOnAlertDialog(int openSequence) {
 		AbstractAlertDialog retVal;
 		if (alerts.isEmpty())
-			retVal = null;
+			retVal = null;//NOPMD
 		else {
 			if (openSequence >= alerts.size())
 				throw GlobalUtils
@@ -376,7 +361,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	public AbstractAlertDialog obtainFocusOnLatestAlertDialog() {
 		AbstractAlertDialog retVal;
 		if (alerts.isEmpty())
-			retVal = null;
+			retVal = null;//NOPMD
 		else {
 			retVal = alerts.get(alerts.size() - 1);
 			if (null == retVal)
@@ -384,20 +369,6 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 		}
 		return retVal;
 	}
-
-//	/**
-//	 * Accept alert dialog on focus.
-//	 */
-//	public void acceptAlertDialogOnFocus() {
-//		AbstractAlertDialog alert = obtainFocusOnLatestAlertDialog();
-//		if (null == alert)
-//			throw GlobalUtils
-//					.createNotInitializedException("default alert dialog");
-//		alert.accept();
-//		alert.setClosingWindowHandle(closingWindowHandle);
-//		GlobalUtils.getApx().publishEvent(new AlertDialogAcceptedEvent(alert));
-//		this.refreshWindowsList(getDriver(), false);
-//	}
 
 	/**
 	 * Focus on open sequence number.
@@ -732,7 +703,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 
 		if (null == event)
 			throw GlobalUtils.createInternalError("spring event");
-		AbstractAlertDialog alertD = (AbstractAlertDialog) event.getSource();
+		AbstractAlertDialog alertD = (AbstractAlertDialog) event.getSource();//NOPMD
 		for (int i = 0; i < windows.size(); i++) {
 			if (windows.get(i).getWindowHandle()
 					.equalsIgnoreCase(alertD.getClosingWindowHandle())) {
@@ -761,7 +732,6 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 */
 	public void setMyWd(IMyWebDriver myWd) {
 		this.myWd = myWd;
-		driver = myWd.getWebDriverInstance();
 	}
 
 }

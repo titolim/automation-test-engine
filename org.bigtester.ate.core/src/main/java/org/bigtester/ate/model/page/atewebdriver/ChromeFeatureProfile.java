@@ -31,14 +31,18 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public class ChromeFeatureProfile extends AbstractBrowserFeatureProfile {
 
-	private static final String defaultUserDataDir = "tmpUserDataDir";
+	/** The Constant defaultUserDataDir. */
+	private static final String DEFAULTUSERDATADIR = "tmpUserDataDir";
 	/** The user data dir. */
 	@Nullable
 	 private String testCaseChromeUserDataDir;
 
+	/**
+	 * Instantiates a new chrome feature profile.
+	 */
 	public ChromeFeatureProfile() {
 		super();
-		setTestCaseChromeUserDataDir(getWebDriverFeatureProfilePath() + defaultUserDataDir);
+		setTestCaseChromeUserDataDir(getWebDriverFeatureProfilePath() + DEFAULTUSERDATADIR);
 	}
 	/**
 	 * {@inheritDoc}
@@ -71,7 +75,7 @@ public class ChromeFeatureProfile extends AbstractBrowserFeatureProfile {
 	 * @return the defaultuserdatadir
 	 */
 	public static String getDefaultuserdatadir() {
-		return defaultUserDataDir;
+		return DEFAULTUSERDATADIR;
 	}
 
 	

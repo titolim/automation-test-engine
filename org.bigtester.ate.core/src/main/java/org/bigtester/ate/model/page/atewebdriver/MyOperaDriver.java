@@ -34,6 +34,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Jun Yang
  */
 public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver {
+	
+	/** The Constant BROWSERTYPENAME. */
 	final public static String BROWSERTYPENAME = "Opera"; 
 	/** The browser profile. */
 	@Nullable
@@ -175,12 +177,6 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 		}
 		setWebDriver(retVal);
 		return retVal;
-		/*
-		 * if ( null == retVal) { if (null == getBrowserProfile().getProfile())
-		 * { retVal = new ChromeDriver(); } else { retVal = new
-		 * ChromeDriver(getBrowserProfile().getProfile()); }
-		 * setWebDriver(retVal); } return retVal;
-		 */
 	}
 
 }
