@@ -98,7 +98,11 @@ public class WindowFrame {
 		// } else {
 		// myWd.switchTo().frame(parentFrameTmp.getFrame());
 		// }
-		myWd.switchTo().frame(this.getFrame());
+		try {
+			myWd.switchTo().frame(this.getFrame());
+		} catch (Throwable thr) {
+			System.out.println("exception place marker: " + thr.getStackTrace());
+		}
 
 	}
 

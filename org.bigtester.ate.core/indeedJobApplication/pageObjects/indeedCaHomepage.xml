@@ -15,7 +15,7 @@
 	<import resource="classpath:META-INF/logger-reporter.xml" />
 	<import resource="classpath:META-INF/page_base_bean.xml" />
 
-	<ate:homePage id="indeedCaHomepage" homeUrl="http://ca.indeed.com"
+	<ate:homePage id="indeedCaHomepage" homeUrl="http://www.indeed.com/l-United-States-jobs.html"
 		dataFile="indeedJobApplication/pageObjects/indeedCaHomepage.data.xml" />
 
 	<ate:elementActionDef id="eadTypeInSearchKeyWordQA"
@@ -40,7 +40,7 @@
 	<ate:elementActionDef id="eadTypeWindsorInWhere"
 		elementFind="efWhere" elementAction="eaTypeWindsor">
 	</ate:elementActionDef>
-	<ate:sendKeysAction id="eaTypeWindsor" dataValue="Vancouver,bc" />
+	<ate:sendKeysAction id="eaTypeWindsor" dataValue="United States" />
 	
 <!-- 	<ate:runTimeDataHolder id="Montreal1, QC" -->
 <!-- 		dataHolderType="ManualAssigned" dataType="Text" dataValue="Montreal, QC" /> -->

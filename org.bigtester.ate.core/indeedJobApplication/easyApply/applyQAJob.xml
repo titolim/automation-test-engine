@@ -105,6 +105,11 @@
 			targetStep="false" elementActionDef="eadApplyChooseFile"
 			>
 		</ate:elementStep>
+		<ate:elementStep id="stepFilloutMessage"
+			stepDescription="stepFilloutMessage" stepName="stepFilloutMessage"
+			targetStep="false" elementActionDef="eadFilloutMessage"
+			>
+		</ate:elementStep>
 
 		<ate:elementStep id="stepSubmitResume"
 			stepDescription="stepSubmitResume" stepName="stepSubmitResume"
