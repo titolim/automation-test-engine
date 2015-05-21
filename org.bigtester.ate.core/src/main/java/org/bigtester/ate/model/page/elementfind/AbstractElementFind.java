@@ -28,6 +28,7 @@ import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.atewebdriver.WindowFrame;
+import org.bigtester.ate.model.page.exception.PageFrameRefreshException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -216,7 +217,11 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 	protected WebElement findThroughFrames(BrowserWindow win,
 			WindowFrame winFrame, Wait<WebDriver> wait, final By findByValue) {
 		win.getCurrentElementFindFrameChain().add(winFrame);
-		winFrame.obtainFrameFocus();
+		try {
+			winFrame.obtainFrameFocus();
+		} catch (PageFrameRefreshException e) {
+			throw GlobalUtils.createNotInitializedException("web driver frame");
+		}
 		WebElement retValWE = null;// NOPMD
 		try {
 			retValWE = wait.until( // NOPMD
@@ -302,7 +307,12 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 			if (!winOnFocus.getLastSuccessElementFindFrameChain().isEmpty()) {
 				for (WindowFrame lastSuccessWFrame : winOnFocus
 						.getLastSuccessElementFindFrameChain()) {
-					lastSuccessWFrame.obtainFrameFocus();
+					try {
+						lastSuccessWFrame.obtainFrameFocus();
+					} catch (PageFrameRefreshException e) {
+						//throw GlobalUtils.createNotInitializedException("frame chain");
+						break;
+					}
 				}
 			}
 			WebElement retValWE = null;// NOPMD

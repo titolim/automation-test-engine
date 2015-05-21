@@ -101,8 +101,8 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 	 * {@inheritDoc}
 	 */
 	@AfterClass
-	public void tearDown() {
-	
+	public void tearDown() { //NOPMD
+	//nothing to do here.
 	}
 
 	

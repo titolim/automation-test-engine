@@ -32,6 +32,20 @@ import org.openqa.selenium.Cookie;
  *
  */
 public class CookiesData {//NOPMD
+
+	/** The cookie1. */
+	private Cookie cookie1 = new Cookie("cookie1", "cookie1value");
+
+	/** The cookie2. */
+	private Cookie cookie2 = new Cookie("cookie2", "cookie2value");
+
+	/** The cookie3. */
+	private Cookie cookie3 = new Cookie("cookie3", "cookie3value");
+	
+	/** The cookie4. */
+	private Cookie cookie4 = new Cookie("cookie3", "cookie4value");
+	
+	
 	/** The cookies. */
 
 	private Set<Cookie> cookies = new HashSet<Cookie>();
@@ -106,18 +120,6 @@ public class CookiesData {//NOPMD
 		this.cookie4 = cookie4;
 	}
 
-	/** The cookie1. */
-	private Cookie cookie1 = new Cookie("cookie1", "cookie1value");
-
-	/** The cookie2. */
-	private Cookie cookie2 = new Cookie("cookie2", "cookie2value");
-
-	/** The cookie3. */
-	private Cookie cookie3 = new Cookie("cookie3", "cookie3value");
-	
-	/** The cookie4. */
-	private Cookie cookie4 = new Cookie("cookie3", "cookie4value");
-	
 	/**
 	 * Instantiates a new cookies data.
 	 */

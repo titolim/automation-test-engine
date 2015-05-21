@@ -66,7 +66,7 @@
 			stepDescription="stepClickJobLink" stepName="stepClickJobLink"
 			targetStep="false" elementActionDef="eadClickNonAdsJobLink"
 			optionalStep="true"
-			correlatedOptionalStepsUtilInclusive="stepRepeatApplyOtherPageJobs"
+			correlatedOptionalStepsUtilInclusive="stepRepeatApplySamePageJobs"
 			pageObject="jobSearchResult">
 		</ate:elementStep>
 
@@ -113,7 +113,7 @@
 
 		<ate:elementStep id="stepSubmitResume"
 			stepDescription="stepSubmitResume" stepName="stepSubmitResume"
-			targetStep="false" elementActionDef="eadSubmitResume"
+			targetStep="false" elementActionDef="eadSubmitResume" optionalStep="true"
 			>
 		</ate:elementStep>
 			
@@ -128,7 +128,7 @@
 			targetStep="false" optionalStep="true" elementActionDef="eadAcceptAlertInFocus">
 		</ate:elementStep>
 		
-		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="2" endStepName="stepAcceptAlertInFocus" stepName="stepRepeatApplySamePageJobs" targetStep="false"/>
+		<ate:repeatStep id="stepRepeatApplySamePageJobs" startStepName="stepClickJobLink" numberOfIterations="9" endStepName="stepAcceptAlertInFocus" stepName="stepRepeatApplySamePageJobs" targetStep="false"/>
 		
 		<ate:elementStep id="stepClickPagingNumber"
 			stepDescription="stepClickPagingNumber"

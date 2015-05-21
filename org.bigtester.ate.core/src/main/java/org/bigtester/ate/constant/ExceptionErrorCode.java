@@ -51,6 +51,9 @@ public final class ExceptionErrorCode {
 	/** The Constant REPEATTESTDATA_DUPLICATED. */
 	public static final String REPEATTESTDATA_DUPLICATED = "0007";
 	
+	/** The Constant WINDOWFRAME_REFRESH. */
+	public static final String WINDOWFRAME_REFRESH = "0008";
+	
 	/**
 	 * Instantiates a new exception error code.
 	 */

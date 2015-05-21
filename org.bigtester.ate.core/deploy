@@ -1,2 +1,2 @@
-mvn clean deploy -Dmaven.test.skip=true
+mvn -e clean deploy -Dmaven.test.skip=true
 

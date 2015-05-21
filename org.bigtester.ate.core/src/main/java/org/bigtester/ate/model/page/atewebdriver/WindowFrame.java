@@ -24,9 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.constant.ExceptionErrorCode;
+import org.bigtester.ate.model.page.exception.PageFrameRefreshException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -90,8 +93,9 @@ public class WindowFrame {
 
 	/**
 	 * Obtain focus.
+	 * @throws PageFrameRefreshException 
 	 */
-	public void obtainFrameFocus() {
+	public void obtainFrameFocus() throws PageFrameRefreshException {
 		// WindowFrame parentFrameTmp = getParentFrame();
 		// if (parentFrameTmp == null) {
 		// myWd.switchTo().defaultContent();
@@ -100,8 +104,15 @@ public class WindowFrame {
 		// }
 		try {
 			myWd.switchTo().frame(this.getFrame());
-		} catch (Throwable thr) {
-			System.out.println("exception place marker: " + thr.getStackTrace());
+		} catch (WebDriverException thr) {
+			String msg = thr.getMessage();
+			if (null!=msg && msg.contains("is not attached")) { 
+				throw new PageFrameRefreshException(msg, ExceptionErrorCode.WINDOWFRAME_REFRESH, this);
+			} else {
+				throw GlobalUtils.createInternalError("obtainFrameFocus", thr);
+			}
+		} catch (Throwable thr2) {
+			throw GlobalUtils.createInternalError("obtainFrameFocus", thr2);
 		}
 
 	}
@@ -143,9 +154,14 @@ public class WindowFrame {
 
 	/**
 	 * Refresh child frames.
+	 * @throws PageFrameRefreshException 
 	 */
 	public void refreshChildFrames() {
-		obtainFrameFocus();
+		try {
+			obtainFrameFocus();
+		} catch (PageFrameRefreshException e) {
+			return;
+		}
 		List<WebElement> iframes = myWd.findElements(By.tagName("iframe"));
 		int index;
 		this.childFrames.clear();

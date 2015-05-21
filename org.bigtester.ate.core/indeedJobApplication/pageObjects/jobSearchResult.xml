@@ -22,7 +22,7 @@
 		elementFind="efNonAdsJobLink" elementAction="eaNonAdsJobLinkClick">
 	</ate:elementActionDef>
 	<ate:elementFindByXpath id="efNonAdsJobLink"
-		findByValue="//a[contains(@onclick, 'return rclk')]" indexOfSameElements="aidhNonAdsJobLinkIndex" />
+		findByValue="//div[contains(.,'Easily')]//h2/a[contains(@onclick, 'return rclk')]" indexOfSameElements="aidhNonAdsJobLinkIndex" />
 	<ate:clickAction id="eaNonAdsJobLinkClick" />
 	<ate:autoIncrementalDataHolder id="aidhNonAdsJobLinkIndex"
 		startValue="0" pacing="1" />
