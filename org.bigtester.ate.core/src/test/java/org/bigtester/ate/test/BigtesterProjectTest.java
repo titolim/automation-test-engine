@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.test;
 
+import java.io.File;
+
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.jdt.annotation.Nullable;
@@ -91,7 +93,9 @@ public class BigtesterProjectTest extends BaseATETest {
 	 * @return the test page absolute path
 	 */
 	private String getTestPageAbsolutePath(String pageRelativePathName) {
-		return pageRelativePathName;
+		String executionPath = getTestCaseExecutionPath() + File.separator;
+		return "File:///" + executionPath + pageRelativePathName;
+		
 	}
 
 	/**
@@ -101,7 +105,7 @@ public class BigtesterProjectTest extends BaseATETest {
 	 * @return the test page
 	 */
 	public void getTestPage(String pageRelativePathName) {
-
+		
 		getMyDriver().getWebDriverInstance().get(
 				getTestPageAbsolutePath(pageRelativePathName));
 		getMyDriver().getMultiWindowsHandler().refreshWindowsList(getMyDriver().getWebDriverInstance(), true);

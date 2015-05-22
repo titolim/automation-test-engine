@@ -20,6 +20,10 @@
  *******************************************************************************/
 package org.bigtester.ate;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -134,6 +138,24 @@ public class GlobalUtils implements ApplicationContextAware {
 				return retVal;
 			}
 		}
+	}
+	
+	/**
+	 * Fix file url.
+	 *
+	 * @param url the url
+	 * @return the uri
+	 */
+	public static @Nullable URI fixFileURL(URL url) {
+		if (!"file".equals(url.getProtocol()))//NOPMD
+			throw new IllegalArgumentException();// NOPMD
+		File tmp ;
+		try {
+			tmp = new File(url.toURI());//NOPMD
+		} catch (URISyntaxException e) {
+			tmp = new File(url.getFile());
+		}
+		return tmp.toURI();
 	}
 	
 	/**

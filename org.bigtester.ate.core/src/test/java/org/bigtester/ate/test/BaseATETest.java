@@ -21,6 +21,9 @@
 package org.bigtester.ate.test;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.nio.file.Paths;
 
 import static org.mockito.Mockito.mock;
 
@@ -69,6 +72,19 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		return mockedDriver;
 	}
 
+	/**
+	 * Gets the test case execution path.
+	 *
+	 * @return the test case execution path
+	 */
+	protected String getTestCaseExecutionPath() {
+		URL thisPath = ClassLoader.getSystemClassLoader().getResource(".");
+		  if (thisPath == null) throw GlobalUtils.createInternalError("jvm");
+		  URI fileURI = GlobalUtils.fixFileURL(thisPath);
+		  String retVal = Paths.get(fileURI).toString();// NOPMD
+		  if (null == retVal) throw GlobalUtils.createInternalError("jvm");
+		  return retVal;
+	}
 	/**
 	 * ATE mock. Use ate mock to avoid null pointer check warning in your code.
 	 *
