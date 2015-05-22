@@ -62,8 +62,9 @@ public class SendKeysAction extends BaseElementAction implements
 			} else {
 				// workaround for issue, chrome can't correctly hanle slash in
 				// string
-				if (getMyWd().getWebDriverInstance() instanceof ChromeDriver
-						&& getMyWd().getWebDriverInstance() instanceof JavascriptExecutor
+				String tagName = webElm.getTagName();
+				
+				if (tagName.equalsIgnoreCase("textarea") && getMyWd().getWebDriverInstance() instanceof JavascriptExecutor
 						&& inputData.getStrDataValue().contains("/")) {
 
 					JavascriptExecutor jst = (JavascriptExecutor) getMyWd()

@@ -220,7 +220,7 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 		try {
 			winFrame.obtainFrameFocus();
 		} catch (PageFrameRefreshException e) {
-			throw GlobalUtils.createNotInitializedException("web driver frame");
+			throw GlobalUtils.createNotInitializedException("web driver frame", e);
 		}
 		WebElement retValWE = null;// NOPMD
 		try {

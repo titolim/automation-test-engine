@@ -32,6 +32,7 @@ import org.bigtester.ate.model.page.atewebdriver.WindowFrame;
  */
 public class PageFrameRefreshException extends AbstractATEException {
 
+	/** The frame. */
 	final private WindowFrame frame;
 	/**
 	 * 
