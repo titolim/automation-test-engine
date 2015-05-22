@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns="http://www.bigtester.org/schema/ate"
-	        xmlns:tool="http://www.springframework.org/schema/tool" 
-	        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	        xmlns:beans="http://www.springframework.org/schema/beans"
-	        xmlns:tns="http://www.bigtester.org/schema/ate"
-	        targetNamespace="http://www.bigtester.org/schema/ate" 
-	        elementFormDefault="qualified" attributeFormDefault="unqualified">
-<xsd:import namespace="http://www.springframework.org/schema/beans"
-		    schemaLocation="http://www.springframework.org/schema/beans/spring-beans-4.0.xsd" />
+	xmlns:tool="http://www.springframework.org/schema/tool" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:tns="http://www.bigtester.org/schema/ate"
+	targetNamespace="http://www.bigtester.org/schema/ate"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.springframework.org/schema/beans"
+		schemaLocation="http://www.springframework.org/schema/beans/spring-beans-4.0.xsd" />
 
-    <!--************************* following for testproject *************************-->
-    
+	<!--************************* following for testproject ************************* -->
+
 	<xsd:element name="TestProject">
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -38,7 +36,7 @@
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	
+
 	<xsd:element name="XmlTestCase">
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -51,7 +49,7 @@
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	
+
 	<xsd:element name="CaseDependencies">
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -63,7 +61,7 @@
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	
+
 	<xsd:element name="CaseDependency">
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -82,7 +80,7 @@
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	
+
 	<xsd:element name="GenericSystemLogger">
 		<xsd:complexType>
 			<xsd:complexContent>
@@ -104,9 +102,9 @@
 		</xsd:complexType>
 	</xsd:element>
 
-	<!--************************* following for TestCase *************************-->
-	
-    <xsd:complexType name="TestCaseType">
+	<!--************************* following for TestCase ************************* -->
+
+	<xsd:complexType name="TestCaseType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<!-- Here we re-use Spring elements and attributes -->
@@ -152,9 +150,9 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-    <!--************************* following for Test Step *************************-->
-    
-    <xsd:complexType name="BaseTestStepType" abstract="true">
+	<!--************************* following for Test Step ************************* -->
+
+	<xsd:complexType name="BaseTestStepType" abstract="true">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<!-- Here we re-use Spring elements and attributes -->
@@ -198,18 +196,19 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="StepTypeServiceRefType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
-<!-- 				<xsd:group ref="beans:beanElements"/> -->
-<!-- 				<xsd:attributeGroup ref="beans:beanAttributes"/> -->
-				<xsd:attribute name="stepTypeServiceDefinitionID" type="xsd:string"
-					use="required">
+				<!-- <xsd:group ref="beans:beanElements"/> -->
+				<!-- <xsd:attributeGroup ref="beans:beanAttributes"/> -->
+				<xsd:attribute name="stepTypeServiceDefinitionID"
+					type="xsd:string" use="required">
 					<xsd:annotation>
 						<xsd:appinfo>
 							<tool:annotation kind="ref">
-								<tool:expected-type type="org.bigtester.ate.model.casestep.StepTypeService" />
+								<tool:expected-type
+									type="org.bigtester.ate.model.casestep.StepTypeService" />
 							</tool:annotation>
 						</xsd:appinfo>
 					</xsd:annotation>
@@ -217,11 +216,11 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="StepTypeServiceDefType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
-				
+
 				<xsd:choice maxOccurs="unbounded">
 
 					<xsd:element ref="homeStep" minOccurs="0" maxOccurs="unbounded" />
@@ -238,7 +237,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="HomeStepType">
 		<xsd:complexContent>
 			<xsd:extension base="BaseTestStepType">
@@ -266,7 +265,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="RepeatStepType">
 		<xsd:complexContent>
 			<xsd:extension base="BaseTestStepType">
@@ -316,7 +315,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-        
+
 	<xsd:complexType name="BaseERValueType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -336,7 +335,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="StepExpectedResultValueType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -346,10 +345,10 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	    
-    <!--************************* following for Test Page *************************-->
-    
-    <xsd:complexType name="PageModelBaseType" abstract="false">
+
+	<!--************************* following for Test Page ************************* -->
+
+	<xsd:complexType name="PageModelBaseType" abstract="false">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<!-- Here we re-use Spring elements and attributes -->
@@ -415,7 +414,7 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-    <xsd:complexType name="BaseElementActionType">
+	<xsd:complexType name="BaseElementActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:group ref="beans:beanElements" />
@@ -496,9 +495,9 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<!--************************* following for Test Data *************************-->
-	
-    <xsd:complexType name="BaseInputDataValueType">
+	<!--************************* following for Test Data ************************* -->
+
+	<xsd:complexType name="BaseInputDataValueType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<!-- Here we re-use Spring elements and attributes -->
@@ -601,10 +600,10 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
-    <!--************************* following for Element Find *************************-->
-    
-    <xsd:complexType name="GenericElementFindType">
+
+	<!--************************* following for Element Find ************************* -->
+
+	<xsd:complexType name="GenericElementFindType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="findByValue" type="xsd:string" />
@@ -624,19 +623,19 @@
 	<xsd:complexType name="BrowserWindowFindByTitleType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
-				<xsd:attribute name="title" type="xsd:string" use="required"/>
+				<xsd:attribute name="title" type="xsd:string" use="required" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
 
-    <xsd:complexType name="BrowserWindowFindByOpenSequence">
+	<xsd:complexType name="BrowserWindowFindByOpenSequence">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
-				<xsd:attribute name="openSequence" type="xsd:int" use="required"/>
+				<xsd:attribute name="openSequence" type="xsd:int" use="required" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="AlertDialogFindInCurrentFocusType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -659,9 +658,9 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
-	<!--************************* following for Cookie finder *************************-->
-    
+
+	<!--************************* following for Cookie finder ************************* -->
+
 	<xsd:complexType name="AllCookiesFindByDomainNameType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -669,136 +668,141 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="CookiesFindAllType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
-				
+
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="CookieFindByCookieNameInDomainType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
-				<xsd:attribute name="cookieName" type="xsd:string" use="required"/>
+				<xsd:attribute name="cookieName" type="xsd:string"
+					use="required" />
 				<xsd:attribute name="domainName" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
-	<!--************************* following for Non UI Action *************************-->
-    <xsd:complexType name="FileExportActionType">
+
+	<!--************************* following for Non UI Action ************************* -->
+	<xsd:complexType name="FileExportActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:group ref="beans:beanElements" />
 				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
-				<xsd:attribute name="fileNameWithAbsolutePath" type="xsd:string" use="required"/>
-				
+				<xsd:attribute name="fileNameWithAbsolutePath" type="xsd:string"
+					use="required" />
+
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-    
-    <xsd:complexType name="FilesExportActionType">
+
+	<xsd:complexType name="FilesExportActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:group ref="beans:beanElements" />
 				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
-				<xsd:attribute name="folderNameWithAbsolutePath" type="xsd:string" use="required"/>
-				
+				<xsd:attribute name="folderNameWithAbsolutePath" type="xsd:string"
+					use="required" />
+
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-    
-    <xsd:complexType name="FileImportActionType">
+
+	<xsd:complexType name="FileImportActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:group ref="beans:beanElements" />
 				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
-				<xsd:attribute name="fileNameWithAbsolutePath" type="xsd:string" use="required"/>
+				<xsd:attribute name="fileNameWithAbsolutePath" type="xsd:string"
+					use="required" />
 				<xsd:attribute name="fileNotFoundRaiseError" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="FilesImportActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:group ref="beans:beanElements" />
 				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
-				<xsd:attribute name="folderNameWithAbsolutePath" type="xsd:string" use="required"/>
-				
+				<xsd:attribute name="folderNameWithAbsolutePath" type="xsd:string"
+					use="required" />
+
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-		
-<xsd:complexType name="ElementFindByLinkTextType">
+
+	<xsd:complexType name="ElementFindByLinkTextType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="findByValue" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
 
 
-<xsd:complexType name="ElementFindByPartialLinkTextType">
+
+	<xsd:complexType name="ElementFindByPartialLinkTextType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="findByValue" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
 
 
-<xsd:complexType name="ElementFindByNameType">
+
+	<xsd:complexType name="ElementFindByNameType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="findByValue" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
 
 
-<xsd:complexType name="ElementFindByClassNameType">
+
+	<xsd:complexType name="ElementFindByClassNameType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="findByValue" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
 
 
-<xsd:complexType name="ElementFindByCssType">
+
+	<xsd:complexType name="ElementFindByCssType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="findByValue" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
 
 
 
 
-<xsd:complexType name="ElementFindByTagNameType">
+
+	<xsd:complexType name="ElementFindByTagNameType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:attribute name="findByValue" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
 
 
 
 
-    <!--************************* following for Element Action *************************-->
-    
-    <xsd:complexType name="ElementActionDefType">
+
+	<!--************************* following for Element Action ************************* -->
+
+	<xsd:complexType name="ElementActionDefType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:group ref="beans:beanElements" />
@@ -810,7 +814,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="ClickActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -846,7 +850,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="TestWindowsCloseActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -855,7 +859,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="AlertDialogAcceptLikeActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -880,16 +884,26 @@
 						</xsd:appinfo>
 					</xsd:annotation>
 				</xsd:attribute>
+				<xsd:attribute name="assignMethod">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="REPLACE" />
+							<xsd:enumeration value="APPEND" />
+							<xsd:enumeration value="PREPEND" />
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
+
 	<xsd:complexType name="UploadFileActionType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
 				<xsd:group ref="beans:beanElements" />
 				<xsd:attributeGroup ref="beans:beanAttributes"></xsd:attributeGroup>
-				<xsd:attribute name="fileNameWithAbsolutePath" type="xsd:string" use="required">
+				<xsd:attribute name="fileNameWithAbsolutePath" type="xsd:string"
+					use="required">
 					<xsd:annotation>
 						<xsd:appinfo>
 							<tool:annotation kind="ref">
@@ -902,16 +916,17 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-	
-	<!--************************* following for Webdriver *************************-->
-	  
-    <xsd:complexType name="AbstractWebDriverBaseType" abstract="true">
+
+	<!--************************* following for Webdriver ************************* -->
+
+	<xsd:complexType name="AbstractWebDriverBaseType"
+		abstract="true">
 		<xsd:complexContent>
-			<xsd:extension base="beans:identifiedType"/>
+			<xsd:extension base="beans:identifiedType" />
 		</xsd:complexContent>
-    </xsd:complexType>
-   
-    <xsd:complexType name="MyFirefoxDriverType">
+	</xsd:complexType>
+
+	<xsd:complexType name="MyFirefoxDriverType">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractWebDriverBaseType">
 				<xsd:attribute name="profileName" type="xsd:string" />
@@ -922,7 +937,7 @@
 	<xsd:complexType name="MyChromeDriverType">
 		<xsd:complexContent>
 			<xsd:extension base="AbstractWebDriverBaseType">
-				<xsd:attribute name="preserveCookies" type="xsd:boolean"/>
+				<xsd:attribute name="preserveCookies" type="xsd:boolean" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
@@ -959,72 +974,74 @@
 		</xsd:complexContent>
 	</xsd:complexType>
 
-	<!--************************* following elements definition *************************-->
-	
-    <xsd:element name="testCase" type="TestCaseType" />
-    <xsd:element name="caseTypeService" type="CaseTypeServiceType" />
-    
-    <xsd:element name="elementStep" type="ElementStepType" />
-    <xsd:element name="homeStep" type="HomeStepType" />
-    <xsd:element name="lastStep" type="LastStepType" />
-    <xsd:element name="repeatStep" type="RepeatStepType" />
-    <xsd:element name="stepTypeServiceDefinition" type="StepTypeServiceDefType" />
-    <xsd:element name="stepTypeServiceReference" type="StepTypeServiceRefType" />
-	
-    <xsd:element name="baseERValue" type="BaseERValueType" />
-    <xsd:element name="stepExpectedResultValue" type="StepExpectedResultValueType" />
-		
-    <xsd:element name="basePageModel" type="PageModelBaseType" />
-    <xsd:element name="basePageObject" type="BasePageObjectType" />
-    <xsd:element name="lastPage" type="LastpageType" />
-    <xsd:element name="homePage" type="HomepageType" />
-    <xsd:element name="regularPage" type="RegularPageType" />
-		
-    <xsd:element name="baseElementAction" type="BaseElementActionType" />
-    <xsd:element name="pagePropertyCorrectnessAsserter" type="PagePropertyCorrectnessAsserterType" />
-    <xsd:element name="pageElementExistenceAsserter" type="PageElementExistenceAsserterType" />
-	
-    <xsd:element name="baseInputDataValue" type="BaseInputDataValueType" />
-    <xsd:element name="stepInputDataValueParent" type="InputDataValueParentType" />
-    <xsd:element name="runTimeDataHolder" type="RunTimeDataHolderType" />
-    <xsd:element name="fileDataHolder" type="StepInputDataValueType" />
-    <xsd:element name="autoIncrementalDataHolder" type="AutoIncrementalDataHolderType" />
-	
-    <xsd:element name="elementFindById" type="ElementFindByIdType" />
-    <xsd:element name="elementFindByXpath" type="GenericElementFindType" />
-    <xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />
-    <xsd:element name="browserWindowFindByOpenSequence" type="BrowserWindowFindByOpenSequence" />
-    <xsd:element name="elementFindByLinkText" type="ElementFindByLinkTextType" />
-    <xsd:element name="elementFindByPartialLinkText" type="ElementFindByPartialLinkTextType" />
-    <xsd:element name="elementFindByName" type="ElementFindByNameType" />
-    <xsd:element name="elementFindByClassName" type="ElementFindByClassNameType" />
-    <xsd:element name="elementFindByCss" type="ElementFindByCssType" />
-    <xsd:element name="elementFindByTagName" type="ElementFindByTagNameType" />
-    <xsd:element name="alertDialogFindInCurrentFocus" type="AlertDialogFindInCurrentFocusType" />
-    
-	<xsd:element name="cookiesFindByDomainName" type="AllCookiesFindByDomainNameType" />	
+	<!--************************* following elements definition ************************* -->
+
+	<xsd:element name="testCase" type="TestCaseType" />
+	<xsd:element name="caseTypeService" type="CaseTypeServiceType" />
+
+	<xsd:element name="elementStep" type="ElementStepType" />
+	<xsd:element name="homeStep" type="HomeStepType" />
+	<xsd:element name="lastStep" type="LastStepType" />
+	<xsd:element name="repeatStep" type="RepeatStepType" />
+	<xsd:element name="stepTypeServiceDefinition" type="StepTypeServiceDefType" />
+	<xsd:element name="stepTypeServiceReference" type="StepTypeServiceRefType" />
+
+	<xsd:element name="baseERValue" type="BaseERValueType" />
+	<xsd:element name="stepExpectedResultValue" type="StepExpectedResultValueType" />
+
+	<xsd:element name="basePageModel" type="PageModelBaseType" />
+	<xsd:element name="basePageObject" type="BasePageObjectType" />
+	<xsd:element name="lastPage" type="LastpageType" />
+	<xsd:element name="homePage" type="HomepageType" />
+	<xsd:element name="regularPage" type="RegularPageType" />
+
+	<xsd:element name="baseElementAction" type="BaseElementActionType" />
+	<xsd:element name="pagePropertyCorrectnessAsserter" type="PagePropertyCorrectnessAsserterType" />
+	<xsd:element name="pageElementExistenceAsserter" type="PageElementExistenceAsserterType" />
+
+	<xsd:element name="baseInputDataValue" type="BaseInputDataValueType" />
+	<xsd:element name="stepInputDataValueParent" type="InputDataValueParentType" />
+	<xsd:element name="runTimeDataHolder" type="RunTimeDataHolderType" />
+	<xsd:element name="fileDataHolder" type="StepInputDataValueType" />
+	<xsd:element name="autoIncrementalDataHolder" type="AutoIncrementalDataHolderType" />
+
+	<xsd:element name="elementFindById" type="ElementFindByIdType" />
+	<xsd:element name="elementFindByXpath" type="GenericElementFindType" />
+	<xsd:element name="browserWindowFindByTitle" type="BrowserWindowFindByTitleType" />
+	<xsd:element name="browserWindowFindByOpenSequence" type="BrowserWindowFindByOpenSequence" />
+	<xsd:element name="elementFindByLinkText" type="ElementFindByLinkTextType" />
+	<xsd:element name="elementFindByPartialLinkText" type="ElementFindByPartialLinkTextType" />
+	<xsd:element name="elementFindByName" type="ElementFindByNameType" />
+	<xsd:element name="elementFindByClassName" type="ElementFindByClassNameType" />
+	<xsd:element name="elementFindByCss" type="ElementFindByCssType" />
+	<xsd:element name="elementFindByTagName" type="ElementFindByTagNameType" />
+	<xsd:element name="alertDialogFindInCurrentFocus" type="AlertDialogFindInCurrentFocusType" />
+
+	<xsd:element name="cookiesFindByDomainName" type="AllCookiesFindByDomainNameType" />
 	<xsd:element name="cookiesFindAll" type="CookiesFindAllType" />
-<!-- 	<xsd:element name="cookieFindByCookieNameInDomain" type="CookieFindByCookieNameInDomainType" /> -->
-	
-    <xsd:element name="elementActionDef" type="ElementActionDefType"/>
-    <xsd:element name="browserWindowClose" type="TestWindowsCloseActionType" />
-    <xsd:element name="alertDialogAccept" type="AlertDialogAcceptLikeActionType" />
-    <xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType" />
-    <xsd:element name="clickAction" type="ClickActionType" />
-    <xsd:element name="clearTextAction" type="ClearTextActionType" />
-    <xsd:element name="mouseMoveToAction" type="MouseMoveToActionType" />
-    <xsd:element name="sendKeysAction" type="SendKeysActionType" />
-    <xsd:element name="uploadFileAction" type="UploadFileActionType" />
+	<!-- <xsd:element name="cookieFindByCookieNameInDomain" type="CookieFindByCookieNameInDomainType" 
+		/> -->
+
+	<xsd:element name="elementActionDef" type="ElementActionDefType" />
+	<xsd:element name="browserWindowClose" type="TestWindowsCloseActionType" />
+	<xsd:element name="alertDialogAccept" type="AlertDialogAcceptLikeActionType" />
+	<xsd:element name="browserWindowSwitch" type="TestWindowsSwitchActionType" />
+	<xsd:element name="clickAction" type="ClickActionType" />
+	<xsd:element name="clearTextAction" type="ClearTextActionType" />
+	<xsd:element name="mouseMoveToAction" type="MouseMoveToActionType" />
+	<xsd:element name="sendKeysAction" type="SendKeysActionType" />
+	<xsd:element name="assignValueAction" type="SendKeysActionType" />
+	<xsd:element name="uploadFileAction" type="UploadFileActionType" />
 	<xsd:element name="fileExportAction" type="FileExportActionType" />
 	<xsd:element name="filesExportAction" type="FilesExportActionType" />
 	<xsd:element name="filesImportAction" type="FilesImportActionType" />
 	<xsd:element name="fileImportAction" type="FileImportActionType" />
-		
-    <xsd:element name="firefoxDriver" type="MyFirefoxDriverType" />
-    <xsd:element name="chromeDriver" type="MyChromeDriverType" />
-    <xsd:element name="IEDriver" type="MyIEDriverType" />
-    <xsd:element name="safariDriver" type="MySafariDriverType" />
-    <xsd:element name="operaDriver" type="MyOperaDriverType" />
-    <xsd:element name="htmlUnitDriver" type="MyHtmlUnitDriverType" />
+
+	<xsd:element name="firefoxDriver" type="MyFirefoxDriverType" />
+	<xsd:element name="chromeDriver" type="MyChromeDriverType" />
+	<xsd:element name="IEDriver" type="MyIEDriverType" />
+	<xsd:element name="safariDriver" type="MySafariDriverType" />
+	<xsd:element name="operaDriver" type="MyOperaDriverType" />
+	<xsd:element name="htmlUnitDriver" type="MyHtmlUnitDriverType" />
 
 </xsd:schema>

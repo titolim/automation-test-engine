@@ -20,6 +20,9 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementaction;
 
+
+import jodd.util.ArraysUtil;
+
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.EnumRunTimeDataType;
 import org.bigtester.ate.constant.XsdElementConstants;
@@ -35,6 +38,8 @@ import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+
+import com.jcabi.aspects.Immutable.Array;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -78,6 +83,10 @@ public class SendKeysActionPostBeanProcessor implements
 		// beanFactory.getBeanNamesForType(IStepInputData.class, true, false);
 		String[] allSendKeysActions = beanFactory.getBeanNamesForType(
 				SendKeysAction.class, true, false);
+		String[] allAssignValueActs = beanFactory.getBeanNamesForType(
+				AssignValueAction.class, true, false);
+		allSendKeysActions = ArraysUtil.join(allSendKeysActions, allAssignValueActs);
+		
 		for (int index = 0; index < allSendKeysActions.length; index++) {
 			BeanDefinition sendKeyActDef = beanFactory
 					.getBeanDefinition(allSendKeysActions[index]);

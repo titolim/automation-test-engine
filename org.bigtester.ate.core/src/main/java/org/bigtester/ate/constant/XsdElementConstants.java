@@ -28,7 +28,7 @@ package org.bigtester.ate.constant;
  */
 public final class XsdElementConstants {
 	
-	/******************************* following for Test Project ******************************/
+	/** ***************************** following for Test Project *****************************. */
 	
 	/** The Constant ELEMENT_TESTPROJECT. */
 	public static final String ELEMENT_TESTPROJECT = "TestProject";
@@ -78,7 +78,7 @@ public final class XsdElementConstants {
 	/** The Constant PROP_TESTSUITE_TESTCASELIST. */
 	public static final String PROP_TESTSUITE_TESTCASELIST = "testCaseList";
 
-	/******************************* following for Test Case ******************************/
+	/** ***************************** following for Test Case *****************************. */
 	
     /** The Constant ELEMENT_TESTCASE. */
     public static final String ELEMENT_TESTCASE = "testCase";
@@ -104,7 +104,7 @@ public final class XsdElementConstants {
     /** The Constant PROP_TESTCASE_TESTSTEPLIST. */
 	public static final String PROP_TESTCASE_TESTSTEPLIST = "testStepList";
 	
-    /******************************* following for Test Step ******************************/
+    /** ***************************** following for Test Step *****************************. */
 	
 	/** The Constant ELEMENT_MYWEBELEMENT. */
 	public static final String ELEMENT_MYWEBELEMENT = "myWebElement";
@@ -196,7 +196,7 @@ public final class XsdElementConstants {
 	/** The Constant ATTR_ELEMENTSTEP_MYWEBELEMENT. */
 	public static final String ATTR_ELEMENTSTEP_MYWEBELEMENT = "myWebElement";
 	
-	/******************************* following for Test Page ******************************/
+	/** ***************************** following for Test Page *****************************. */
 	
 	/** The Constant ELEMENT_ID_MYBASEPAGEMODEL. */
 	public static final String ELEMENT_ID_MYBASEPAGEMODEL = "myBasePageModel";
@@ -249,7 +249,7 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_PAGEELEMENTEXISTENCE. */
 	public static final String ELEMENT_PAGEELEMENTEXISTENCE = "pageElementExistenceAsserter";
 	
-    /******************************* following for Test Data ****************************/
+    /** ***************************** following for Test Data ***************************. */
 	
 	/** The Constant ELEMENT_ID_BASEINPUTDATAVALUE. */
 	public static final String ELEMENT_ID_BASEINPUTDATAVALUE = "baseInputDataValue";
@@ -314,7 +314,7 @@ public final class XsdElementConstants {
 	/** The Constant ATTR_RUNTIMEDATAHOLDER_PAGE. */
 	public static final String ATTR_RUNTIMEDATAHOLDER_PAGE = "page"; //NOPMD
 			
-	/******************************* following for Element Find ******************************/	
+	/** ***************************** following for Element Find *****************************. */	
 	
 	/** The Constant ELEMENT_BASETESTSTEP. */
 	public static final String ELEMENT_ELEMENTFINDBYID = "elementFindById";
@@ -377,7 +377,7 @@ public final class XsdElementConstants {
 	/** The Constant ATTR_GENERICELEMENTFIND_INDEXOFSAMEELEMENTS. */
 	public static final String ATTR_GENERICELEMENTFIND_INDEXOFSAMEELEMENTS = "indexOfSameElements"; //NOPMD
 
-	/******************************* following for Element Action ******************************/
+	/** ***************************** following for Element Action *****************************. */
 	
 	/** The Constant ELEMENT_MYWEBELEMENT. */
 	public static final String ELEMENT_ELEMENTACTIONDEF = "elementActionDef";
@@ -402,6 +402,19 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_SENDKEYSACTION. */
 	public static final String ELEMENT_SENDKEYSACTION = "sendKeysAction";
+	
+	/** The Constant ELEMENT_ASSIGNVALUEACTION. */
+	public static final String ELEMENT_ASSIGNVALUEACTION = "assignValueAction";
+	
+	
+	/** The Constant ATTR_ASSIGNVALUEACTION_ASSIGNMETHOD. */
+	public static final String ATTR_ASSIGNVALUEACTION_ASSIGNMETHOD = "assignMethod";//NOPMD
+	
+	/** The Constant ATTR_ASSIGNVALUEACTION_APPEND. */
+	public static final String ATTR_ASSIGNVALUEACTION_APPEND = "appendExistingValue";
+	
+	/** The Constant ATTR_ASSIGNVALUEACTION_PREPEND. */
+	public static final String ATTR_ASSIGNVALUEACTION_PREPEND = "prependExistingValue";
 	
 	/** The Constant ELEMENT_FILEIMPORTACTION. */
 	public static final String ELEMENT_FILEIMPORTACTION = "fileImportAction";
@@ -448,7 +461,7 @@ public final class XsdElementConstants {
 	/** The Constant ATTR_ELEMENTACTIONDEF_ELEMENTACTION. */
 	public static final String ATTR_ELEMENTACTIONDEF_ELEMENTACTION = "elementAction"; //NOPMD
 	
-	/******************************* following for Webdriver ******************************/
+	/** ***************************** following for Webdriver *****************************. */
 	
 	/** The Constant ELEMENT_FIREFOXDRIVER. */
 	public static final String ELEMENT_FIREFOXDRIVER = "firefoxDriver";

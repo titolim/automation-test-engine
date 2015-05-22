@@ -30,23 +30,25 @@ import org.testng.annotations.BeforeClass;
 // TODO: Auto-generated Javadoc
 /**
  * This class BigtesterTest defines ....
+ * 
  * @author Peidong Hu
  *
  */
-@ContextConfiguration(locations = {"classpath:bigtesterTestNG/testproject.xml"})
+@ContextConfiguration(locations = { "classpath:bigtesterTestNG/testproject.xml" })
 public class BigtesterProjectTest extends BaseATETest {
-	
+
 	/** The my driver. */
 	@Nullable
 	private IMyWebDriver myDriver;
 
 	/**
-	 * @param myDriver the myDriver to set
+	 * @param myDriver
+	 *            the myDriver to set
 	 */
 	public final void setMyDriver(IMyWebDriver myDriver) {
 		this.myDriver = myDriver;
 	}
-	
+
 	/**
 	 * @return the myDriver
 	 */
@@ -56,10 +58,10 @@ public class BigtesterProjectTest extends BaseATETest {
 			throw GlobalUtils.createNotInitializedException("web driver");
 		} else {
 			return myDriver2;
-			
+
 		}
 	}
-	
+
 	/**
 	 * Inits the test objects.
 	 */
@@ -71,7 +73,7 @@ public class BigtesterProjectTest extends BaseATETest {
 		}
 		myDriver = (IMyWebDriver) obj;
 	}
-	
+
 	/**
 	 * Tear down.
 	 */
@@ -79,6 +81,30 @@ public class BigtesterProjectTest extends BaseATETest {
 	public void tearDown() {
 		if (getMyDriver().getWebDriver() != null)
 			getMyDriver().getWebDriverInstance().quit();
-		
+
+	}
+
+	/**
+	 * Gets the test page absolute path.
+	 *
+	 * @param pageRelativePathName the page relative path name
+	 * @return the test page absolute path
+	 */
+	private String getTestPageAbsolutePath(String pageRelativePathName) {
+		return pageRelativePathName;
+	}
+
+	/**
+	 * Gets the test page.
+	 *
+	 * @param pageRelativePathName the page relative path name
+	 * @return the test page
+	 */
+	public void getTestPage(String pageRelativePathName) {
+
+		getMyDriver().getWebDriverInstance().get(
+				getTestPageAbsolutePath(pageRelativePathName));
+		getMyDriver().getMultiWindowsHandler().refreshWindowsList(getMyDriver().getWebDriverInstance(), true);
+
 	}
 }
