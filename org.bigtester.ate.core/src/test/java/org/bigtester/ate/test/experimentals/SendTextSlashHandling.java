@@ -20,13 +20,13 @@
  *******************************************************************************/
 package org.bigtester.ate.test.experimentals;
 
+import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.MyChromeDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.Test;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -149,6 +149,8 @@ public class SendTextSlashHandling {
    */
   public static int count(final String string, final char c)//NOPMD
   {
-     return count(string, String.valueOf(c));
+	 String ccc = String.valueOf(c);
+	 if (null == ccc) throw GlobalUtils.createInternalError("jvm");
+     return count(string, ccc);
   }
 }

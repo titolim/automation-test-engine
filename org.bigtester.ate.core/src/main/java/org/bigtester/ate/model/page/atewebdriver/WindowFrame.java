@@ -107,11 +107,11 @@ public class WindowFrame {
 		} catch (WebDriverException thr) {
 			String msg = thr.getMessage();
 			if (null!=msg && msg.contains("is not attached")) { 
-				throw new PageFrameRefreshException(msg, ExceptionErrorCode.WINDOWFRAME_REFRESH, this);
+				throw new PageFrameRefreshException(msg, ExceptionErrorCode.WINDOWFRAME_REFRESH, this);//NOPMD
 			} else {
 				throw GlobalUtils.createInternalError("obtainFrameFocus", thr);
 			}
-		} catch (Throwable thr2) {
+		} catch (Throwable thr2) {//NOPMD
 			throw GlobalUtils.createInternalError("obtainFrameFocus", thr2);
 		}
 

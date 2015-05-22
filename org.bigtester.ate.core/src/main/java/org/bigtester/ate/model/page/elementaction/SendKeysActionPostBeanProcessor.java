@@ -39,7 +39,6 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 
-import com.jcabi.aspects.Immutable.Array;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -81,7 +80,7 @@ public class SendKeysActionPostBeanProcessor implements
 					"Spring Container initialization error");
 		// String[] homePageNames =
 		// beanFactory.getBeanNamesForType(IStepInputData.class, true, false);
-		String[] allSendKeysActions = beanFactory.getBeanNamesForType(
+		String[] allSendKeysActions = beanFactory.getBeanNamesForType(//NOPMD
 				SendKeysAction.class, true, false);
 		String[] allAssignValueActs = beanFactory.getBeanNamesForType(
 				AssignValueAction.class, true, false);

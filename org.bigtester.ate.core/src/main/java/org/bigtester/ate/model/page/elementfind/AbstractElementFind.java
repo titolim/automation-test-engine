@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.page.elementfind;
+package org.bigtester.ate.model.page.elementfind;//NOPMD
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

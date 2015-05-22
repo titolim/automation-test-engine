@@ -21,13 +21,8 @@
 package org.bigtester.ate.test.ead;
 
 
-import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
-import org.bigtester.ate.model.page.elementfind.IElementFind;
-import org.bigtester.ate.model.casestep.HomeStep;
-import org.bigtester.ate.model.casestep.ElementTestStep;
-import org.bigtester.ate.model.casestep.LastStep;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
@@ -37,7 +32,6 @@ import org.bigtester.ate.test.BigtesterProjectTest;
 import org.openqa.selenium.By;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 

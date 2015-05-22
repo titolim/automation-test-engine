@@ -29,7 +29,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class SendKeysAction defines ....
@@ -39,14 +38,32 @@ import org.openqa.selenium.WebElement;
 public class AssignValueAction extends BaseElementAction implements
 		IElementAction, ITestObjectActionImpl {
 
-	public enum ValueAssignmentMethod{
-		APPEND, REPLACE, PREPEND
+	/**
+	 * The Enum ValueAssignmentMethod.
+	 *
+	 * @author Peidong Hu
+	 */
+	public enum ValueAssignmentMethod {
+
+		/** The append. */
+		APPEND,
+		/** The replace. */
+		REPLACE,
+		/** The prepend. */
+		PREPEND
 	}
+
 	/** The append. */
 	@Nullable
-	private  ValueAssignmentMethod assignMethod=ValueAssignmentMethod.REPLACE;
+	private ValueAssignmentMethod assignMethod = ValueAssignmentMethod.REPLACE;
+
 	/**
+	 * Instantiates a new assign value action.
+	 *
 	 * @param myWd
+	 *            the my wd
+	 * @param dataValue
+	 *            the data value
 	 */
 	public AssignValueAction(IMyWebDriver myWd, IStepInputData dataValue) {
 		super(myWd);
@@ -65,23 +82,24 @@ public class AssignValueAction extends BaseElementAction implements
 		} else {
 			// workaround for issue, chrome can't correctly handle slash in
 			// send keys
-			if (getMyWd().getWebDriverInstance() instanceof JavascriptExecutor
-					) {
+			if (getMyWd().getWebDriverInstance() instanceof JavascriptExecutor) {
 
-				JavascriptExecutor jst = (JavascriptExecutor) getMyWd()//NOPMD
+				JavascriptExecutor jst = (JavascriptExecutor) getMyWd()// NOPMD
 						.getWebDriverInstance();
 				if (getAssignMethod() == ValueAssignmentMethod.REPLACE)
 					jst.executeScript("arguments[1].value = arguments[0]; ",
-						inputData.getStrDataValue(), webElm);
+							inputData.getStrDataValue(), webElm);
 				else if (getAssignMethod() == ValueAssignmentMethod.APPEND)
-					jst.executeScript("arguments[1].value = arguments[1].value + arguments[0]; ",
+					jst.executeScript(
+							"arguments[1].value = arguments[1].value + arguments[0]; ",
 							inputData.getStrDataValue(), webElm);
 				else if (getAssignMethod() == ValueAssignmentMethod.PREPEND)
-					jst.executeScript("arguments[1].value = arguments[0] + arguments[1].value; ",
+					jst.executeScript(
+							"arguments[1].value = arguments[0] + arguments[1].value; ",
 							inputData.getStrDataValue(), webElm);
 
 			} else {
-				if (getAssignMethod() == ValueAssignmentMethod.REPLACE) 
+				if (getAssignMethod() == ValueAssignmentMethod.REPLACE)
 					webElm.clear();
 				else if (getAssignMethod() == ValueAssignmentMethod.APPEND)
 					webElm.sendKeys(Keys.CONTROL, Keys.END);
@@ -96,6 +114,8 @@ public class AssignValueAction extends BaseElementAction implements
 	}
 
 	/**
+	 * Gets the assign method.
+	 *
 	 * @return the assignMethod
 	 */
 	public ValueAssignmentMethod getAssignMethod() {
@@ -108,7 +128,10 @@ public class AssignValueAction extends BaseElementAction implements
 	}
 
 	/**
-	 * @param assignMethod the assignMethod to set
+	 * Sets the assign method.
+	 *
+	 * @param assignMethod
+	 *            the assignMethod to set
 	 */
 	public void setAssignMethod(ValueAssignmentMethod assignMethod) {
 		this.assignMethod = assignMethod;
