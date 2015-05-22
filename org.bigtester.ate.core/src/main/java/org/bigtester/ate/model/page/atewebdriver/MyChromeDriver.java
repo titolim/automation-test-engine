@@ -99,6 +99,9 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 		}
 	}
 
+	/**
+	 * Sets the chrome driver system env.
+	 */
 	public static void setChromeDriverSystemEnv() {
 		OSinfo osinfo = new OSinfo();
 		EPlatform platform = osinfo.getOSname();
