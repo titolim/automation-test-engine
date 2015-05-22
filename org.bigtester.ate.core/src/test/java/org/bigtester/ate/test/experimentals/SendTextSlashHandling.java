@@ -1,35 +1,75 @@
+/*******************************************************************************
+ * ATE, Automation Test Engine
+ *
+ * Copyright 2015, Montreal PROT, or individual contributors as
+ * indicated by the @author tags or express copyright attribution
+ * statements applied by the authors.  All third-party contributions are
+ * distributed under license by Montreal PROT.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *******************************************************************************/
 package org.bigtester.ate.test.experimentals;
 
-import org.apache.commons.lang3.StringUtils;
 import org.bigtester.ate.model.page.atewebdriver.MyChromeDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SendTextSlashHandling.
+ *
+ * @author Peidong Hu
+ */
 public class SendTextSlashHandling {
-	/** An empty string constant */
+	
+	/**  An empty string constant. */
 	  public static final String EMPTY = "";
-  @Test
-  public void f() throws InterruptedException {
+  
+  /**
+   * F.
+   *
+   * @throws InterruptedException the interrupted exception
+   */
+  //@Test
+  public void func() throws InterruptedException {
 	  MyChromeDriver.setChromeDriverSystemEnv();
 	  WebDriver driver = new ChromeDriver();
-	  driver.get("http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_textarea");
-	  driver.switchTo().frame(driver.findElement(new By.ById("iframeResult")));
+	  driver.get("file:///C:/index.html");
+	  //driver.switchTo().frame(driver.findElement(new By.ById("iframeResult")));
 	  WebElement textbox = driver.findElement(new By.ByTagName("textarea"));
 	  //textbox.clear();
+	  textbox.getAttribute("name");
+	  
 	  String text = "abcdikdkdkdkdkkdkdkdkdkdkkdkdkdkkdkdkdkdkdkdk https://github.com/bigtester/automation-test-engine";
-	  JavascriptExecutor js = (JavascriptExecutor) driver;
-	  js.executeScript("return (function() {document.getElementsByTagName('textarea')[0].value='"+text+"'})();" );
-	  //js.executeScript("return (function() {alert(arguments);})();", text, textbox);
+	  JavascriptExecutor jst = (JavascriptExecutor) driver;
+	  jst.executeScript("arguments[1].value = arguments[0]; ", text, textbox );
 	  
 	  Thread.sleep(6000);
-	  //driver.quit();
+	  driver.quit();
   }
   
+  /**
+   * Split.
+   *
+   * @param string the string
+   * @param delim the delim
+   * @param limit the limit
+   * @return the string[]
+   */
   public static String[] split(final String string, final String delim,
 		     final int limit)
 		  {
@@ -42,8 +82,8 @@ public class SendTextSlashHandling {
 		        count = limit;
 		     }
 
-		     String strings[] = new String[count];
-		     int begin = 0;
+		     String strings[] = new String[count];//NOPMD
+		     int begin = 0;//NOPMD
 
 		     for (int i = 0; i < count; i++)
 		     {
@@ -57,12 +97,12 @@ public class SendTextSlashHandling {
 
 		        // if end is 0, then the first element is empty
 		        if (end == 0)
-		           strings[i] = EMPTY;
+		           strings[i] = EMPTY;//NOPMD
 		        else
-		           strings[i] = string.substring(begin, end);
+		           strings[i] = string.substring(begin, end);//NOPMD
 
 		        // update the begining index
-		        begin = end + 1;
+		        begin = end + 1;//NOPMD
 		     }
 
 		     return strings;
@@ -88,13 +128,13 @@ public class SendTextSlashHandling {
    */
   public static int count(final String string, final String substring)
   {
-     int count = 0;
-     int idx = 0;
+     int count = 0;//NOPMD
+     int idx = 0;//NOPMD
 
-     while ((idx = string.indexOf(substring, idx)) != -1)
+     while ((idx = string.indexOf(substring, idx)) != -1)//NOPMD
      {
-        idx++;
-        count++;
+        idx++;//NOPMD
+        count++;//NOPMD
      }
 
      return count;
@@ -107,7 +147,7 @@ public class SendTextSlashHandling {
    * @param c          Character to look for.
    * @return           Count of substrings in string.
    */
-  public static int count(final String string, final char c)
+  public static int count(final String string, final char c)//NOPMD
   {
      return count(string, String.valueOf(c));
   }

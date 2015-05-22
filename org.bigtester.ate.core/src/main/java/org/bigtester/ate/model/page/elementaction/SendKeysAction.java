@@ -23,8 +23,10 @@ package org.bigtester.ate.model.page.elementaction;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.systemlogger.LogbackWriter;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,7 +35,7 @@ import org.openqa.selenium.WebElement;
  * @author Peidong Hu
  */
 public class SendKeysAction extends BaseElementAction implements
-		IElementAction, ITestObjectActionImpl  {
+		IElementAction, ITestObjectActionImpl {
 
 	/**
 	 * @param myWd
@@ -50,20 +52,34 @@ public class SendKeysAction extends BaseElementAction implements
 	public void doAction(final WebElement webElm) {
 		IStepInputData inputData = getDataValue();
 		if (null == inputData) {
-			throw new IllegalStateException("inputDatavalue is not correctly populated.");
+			throw new IllegalStateException(
+					"inputDatavalue is not correctly populated.");
 		} else {
 			if (inputData.getStrDataValue().equals("[TAB]")) {
 				webElm.sendKeys(Keys.TAB);
 			} else if (inputData.getStrDataValue().equals("[ENTER]")) {
 				webElm.sendKeys(Keys.ENTER);
 			} else {
-				webElm.sendKeys(inputData.getStrDataValue());
+				// workaround for issue, chrome can't correctly hanle slash in
+				// string
+				if (getMyWd().getWebDriverInstance() instanceof ChromeDriver
+						&& getMyWd().getWebDriverInstance() instanceof JavascriptExecutor
+						&& inputData.getStrDataValue().contains("/")) {
+
+					JavascriptExecutor jst = (JavascriptExecutor) getMyWd()
+							.getWebDriverInstance();
+					//TODO find javascript eqevalant function for sendkeys
+					jst.executeScript("arguments[1].value += arguments[0]; ",
+							inputData.getStrDataValue(), webElm);
+
+				} else {
+					webElm.sendKeys(inputData.getStrDataValue());
+				}
 			}
-			LogbackWriter.writeAppInfo("action tracing: send keys to browser: " + inputData.getStrDataValue());
+			LogbackWriter.writeAppInfo("action tracing: send keys to browser: "
+					+ inputData.getStrDataValue());
 		}
 
 	}
-
-	
 
 }
