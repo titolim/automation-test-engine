@@ -47,6 +47,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.Resource;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -304,6 +305,41 @@ public class GlobalUtils implements ApplicationContextAware {
 	}
 
 	/**
+	 * Gets the case data files.
+	 *
+	 * @param appCtx
+	 *            the app ctx
+	 * @return the case data files
+	 */
+	@Nullable
+	public static List<Resource> getCaseDataFiles() {
+		Map<String, Homepage> homepages = GlobalUtils.getApx().getBeansOfType(Homepage.class,
+				true, true);
+		Map<String, Lastpage> lastpages = GlobalUtils.getApx().getBeansOfType(Lastpage.class);
+		Map<String, RegularPage> regularpages = GlobalUtils.getApx()
+				.getBeansOfType(RegularPage.class);
+
+		List<Resource> dataFiles = new ArrayList<Resource>();
+		for (int i = 0; i < homepages.size(); i++) {
+			if (null != homepages.values().iterator().next().getDataFile())
+				dataFiles.add(homepages.values().iterator().next()
+						.getDataFile());
+		}
+		for (int i = 0; i < lastpages.size(); i++) {
+			if (null != lastpages.values().iterator().next().getDataFile())
+				dataFiles.add(lastpages.values().iterator().next()
+						.getDataFile());
+		}
+		for (int i = 0; i < regularpages.size(); i++) {
+			if (null != regularpages.values().iterator().next().getDataFile())
+				dataFiles.add(regularpages.values().iterator().next()
+						.getDataFile());
+		}
+		return dataFiles;
+
+	}
+	
+	/**
 	 * Find test project bean.
 	 *
 	 * @param appCtx
@@ -356,6 +392,37 @@ public class GlobalUtils implements ApplicationContextAware {
 		}
 
 	}
+	
+	/**
+	 * Find data source bean.
+	 *
+	 * 
+	 * @return the data source
+	 * @throws NoSuchBeanDefinitionException
+	 *             the no such bean definition exception
+	 */
+	public static DataSource findDataSourceBean()
+			throws NoSuchBeanDefinitionException {
+		Map<String, DataSource> testcases = GlobalUtils.getApx().
+				getBeansOfType(DataSource.class);
+
+		DataSource retVal;
+		if (testcases.isEmpty()) {
+			DataSource dbs = ((ConfigurableApplicationContext)GlobalUtils.getApx()).getBeanFactory().getBean(DataSource.class);
+			if (null == dbs) 
+			throw new NoSuchBeanDefinitionException(DataSource.class);
+			retVal = dbs;
+		} else {
+			DataSource dataSource = testcases.values().iterator().next();
+			if (null == dataSource) {
+				throw new NoSuchBeanDefinitionException(DataSource.class);
+			} else {
+				retVal = dataSource;
+			}
+		}
+		return retVal;
+
+	}
 
 	/**
 	 * Find data source bean.
@@ -383,7 +450,35 @@ public class GlobalUtils implements ApplicationContextAware {
 		}
 
 	}
+	/**
+	 * Find data source bean.
+	 *
+	 * @param appCtx
+	 *            the app ctx
+	 * @return the data source
+	 * @throws NoSuchBeanDefinitionException
+	 *             the no such bean definition exception
+	 */
+	public static IMyWebDriver findMyWebDriver()
+			throws NoSuchBeanDefinitionException {
+		Map<String, IMyWebDriver> drivers = GlobalUtils.getApx()
+				.getBeansOfType(IMyWebDriver.class);
 
+		if (drivers.isEmpty()) {
+			throw new NoSuchBeanDefinitionException(DataSource.class);
+		} else {
+			IMyWebDriver retDriver = drivers.values().iterator().next();
+			if (null == retDriver) {
+				throw new NoSuchBeanDefinitionException(DataSource.class);
+			} else {
+				return retDriver;
+			}
+		}
+
+	}
+
+	
+	
 	/**
 	 * Find data source bean.
 	 *
