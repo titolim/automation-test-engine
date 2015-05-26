@@ -59,7 +59,7 @@
 	</ate:elementActionDef>
 	<ate:elementFindById id="efMessage"
 		findByValue="applicant.applicationMessage"  />
-	<ate:assignValueAction id="eaMessageSent" dataValue=" 1) Relocation Statement: I am now living in Eastern Time zone. I can not relocate, only accept remote working offer available to Canadian legal worker =====> 2) Career Objective: A challenging and rewarding position as a software test automation engineer using Selenium WebDriver =====> 3) Automation Skill Quick Proof: This job application was automatically submitted by my Selenium ATE automation test framework and scripts running against Indeed.com. The source code of ATE framework and the scripts could be found through this link, https://github.com/bigtester/automation-test-engine"/>
+	<ate:assignValueAction id="eaMessageSent" dataValue=" 1) Relocation Statement: I am now living in Eastern Time zone. I can not relocate, only accept remote working offer available to Canadian legal worker =====> 2) Career Objective: A challenging and rewarding position as a software test automation engineer using Selenium WebDriver =====> 3) Automation Skill Quick Proof: This job application was automatically submitted by my Selenium ATE automation test framework and scripts running against Indeed.com. The source code of ATE framework and the scripts could be found through this link, https://github.com/bigtester/automation-test-engine    "/>
 
 	<ate:elementActionDef id="eadSubmitResume"
 		elementFind="efResumeSubmitButton" elementAction="eaClickSubmitButton">
@@ -74,6 +74,26 @@
 	<ate:elementFindByXpath id="efContinueAppButton"
 		findByValue="//a[@href='#next']"  />
 	<ate:clickAction id="eaClickContinueButton"/>
+	
+	<ate:elementActionDef id="eadAnswerYesForQ0"
+		elementFind="efQ0" elementAction="eaSelectYes">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efQ0"
+		findByValue="q_0"  />
+	<ate:dropdownListSelectAction id="eaSelectYes" selections="Yes"/>
+	
+	<ate:elementActionDef id="eadAnswerYesForQ1"
+		elementFind="efQ1" elementAction="eaSelectYes">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efQ1"
+		findByValue="q_1"  />
+	
+	<ate:elementActionDef id="eadAnswerYesForQ2"
+		elementFind="efQ2" elementAction="eaSelectYes">
+	</ate:elementActionDef>
+	<ate:elementFindById id="efQ2"
+		findByValue="q_2"  />
+	
 
 	<ate:elementActionDef id="eadAcceptAlertInFocus" elementFind="efAlertInFocus" elementAction="eaAcceptAlert" />
 	<ate:alertDialogFindInCurrentFocus id="efAlertInFocus"/>

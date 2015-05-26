@@ -104,6 +104,8 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CLEARTEXTACTION, new ClearTextActionBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_MOUSEMOVETOACTION, new CursorMoveActionBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_SENDKEYSACTION, new SendKeysActionBeanDefinitionParser());
+		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_DROPDOWNLISTSELECTACTION, new DropdownListSelectActionBeanDefinitionParser());
+		
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ASSIGNVALUEACTION, new AssignValueActionBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_UPLOADFILEACTION, new UploadFileActionBeanDefinitionParser());
 				

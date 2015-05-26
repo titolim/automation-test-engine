@@ -406,6 +406,11 @@ public final class XsdElementConstants {
 	/** The Constant ELEMENT_ASSIGNVALUEACTION. */
 	public static final String ELEMENT_ASSIGNVALUEACTION = "assignValueAction";
 	
+	/** The Constant ELEMENT_DROPDOWNLISTSELECTACTION. */
+	public static final String ELEMENT_DROPDOWNLISTSELECTACTION = "dropdownListSelectAction";
+	
+	/** The Constant ATTR_DROPDOWNLISTSELECTACTION_SELECTIONS. */
+	public static final String ATTR_DROPDOWNLISTSELECTACTION_SELECTIONS = "selections";//NOPMD
 	
 	/** The Constant ATTR_ASSIGNVALUEACTION_ASSIGNMETHOD. */
 	public static final String ATTR_ASSIGNVALUEACTION_ASSIGNMETHOD = "assignMethod";//NOPMD

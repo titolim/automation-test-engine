@@ -20,14 +20,11 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementaction;
 
-import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.data.IStepInputData;
+
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.systemlogger.LogbackWriter;
-import org.eclipse.jdt.annotation.Nullable;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,10 +36,12 @@ public class DropdownListSelectAction extends BaseElementAction implements
 		IElementAction, ITestObjectActionImpl {
 
 	
-	/** The append. */
-	@Nullable
-	private ValueAssignmentMethod assignMethod = ValueAssignmentMethod.REPLACE;
+	
+	
+	/** The selections. */
+	final private String selections;
 
+	
 	/**
 	 * Instantiates a new assign value action.
 	 *
@@ -51,9 +50,9 @@ public class DropdownListSelectAction extends BaseElementAction implements
 	 * @param dataValue
 	 *            the data value
 	 */
-	public DropdownListSelectAction(IMyWebDriver myWd, IStepInputData dataValue) {
+	public DropdownListSelectAction(IMyWebDriver myWd, String selections) {
 		super(myWd);
-		setDataValue(dataValue);
+		this.selections = selections;
 	}
 
 	/**
@@ -61,66 +60,25 @@ public class DropdownListSelectAction extends BaseElementAction implements
 	 */
 	@Override
 	public void doAction(final WebElement webElm) {
-		IStepInputData inputData = getDataValue();
-		if (null == inputData) {
-			throw new IllegalStateException(
-					"inputDatavalue is not correctly populated.");
-		} else {
-			// workaround for issue, chrome can't correctly handle slash in
-			// send keys
-			if (getMyWd().getWebDriverInstance() instanceof JavascriptExecutor) {
+		String multipleSel[] = selections.split(",");
 
-				JavascriptExecutor jst = (JavascriptExecutor) getMyWd()// NOPMD
-						.getWebDriverInstance();
-				if (getAssignMethod() == ValueAssignmentMethod.REPLACE)
-					jst.executeScript("arguments[1].value = arguments[0]; ",
-							inputData.getStrDataValue(), webElm);
-				else if (getAssignMethod() == ValueAssignmentMethod.APPEND)
-					jst.executeScript(
-							"arguments[1].value = arguments[1].value + arguments[0]; ",
-							inputData.getStrDataValue(), webElm);
-				else if (getAssignMethod() == ValueAssignmentMethod.PREPEND)
-					jst.executeScript(
-							"arguments[1].value = arguments[0] + arguments[1].value; ",
-							inputData.getStrDataValue(), webElm);
+		   for (String valueToBeSelected : multipleSel) {
 
-			} else {
-				if (getAssignMethod() == ValueAssignmentMethod.REPLACE)
-					webElm.clear();
-				else if (getAssignMethod() == ValueAssignmentMethod.APPEND)
-					webElm.sendKeys(Keys.CONTROL, Keys.END);
-				else if (getAssignMethod() == ValueAssignmentMethod.PREPEND)
-					webElm.sendKeys(Keys.CONTROL, Keys.HOME);
-				webElm.sendKeys(inputData.getStrDataValue());
-			}
-			LogbackWriter.writeAppInfo("action tracing: set value: "
-					+ inputData.getStrDataValue());
+			   new Select(webElm).selectByVisibleText(valueToBeSelected);
+			   if (multipleSel.length > 1) //NOPMD
+				   webElm.sendKeys(Keys.CONTROL);
+
 		}
+
 
 	}
 
+	
 	/**
-	 * Gets the assign method.
-	 *
-	 * @return the assignMethod
+	 * @return the selections
 	 */
-	public ValueAssignmentMethod getAssignMethod() {
-		final ValueAssignmentMethod assignMethod2 = assignMethod;
-		if (assignMethod2 == null) {
-			throw GlobalUtils.createNotInitializedException("assign method");
-		} else {
-			return assignMethod2;
-		}
-	}
-
-	/**
-	 * Sets the assign method.
-	 *
-	 * @param assignMethod
-	 *            the assignMethod to set
-	 */
-	public void setAssignMethod(ValueAssignmentMethod assignMethod) {
-		this.assignMethod = assignMethod;
+	public String getSelections() {
+		return selections;
 	}
 
 }
