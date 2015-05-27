@@ -21,7 +21,6 @@
 package org.bigtester.ate.test;
 
 import java.io.IOException;
-
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -31,6 +30,7 @@ import static org.mockito.Mockito.mock;
 import java.sql.SQLException;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.TestProjectRunner;
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -115,6 +115,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		mockedDriver = ateMock(WebDriver.class);
 		myMockedDriver = ateMock(IMyWebDriver.class);
 		options = ateMock(Options.class);
+		TestProjectRunner.registerXsdNameSpaceParsers();
 	}
 	
 	/**

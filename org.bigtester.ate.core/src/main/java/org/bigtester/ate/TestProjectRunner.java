@@ -104,6 +104,7 @@ public final class TestProjectRunner {
 	 * @throws ParseException 
 	 */
 	public static void runTest(@Nullable final String testProjectXml) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
+		registerXsdNameSpaceParsers();
 		ApplicationContext context;
 		if (StringUtils.isEmpty(testProjectXml)) {
 			context = new ClassPathXmlApplicationContext(
@@ -132,9 +133,17 @@ public final class TestProjectRunner {
 		Set<Class<? extends IXsdBeanDefinitionParser>> subTypes = reflections.getSubTypesOf(IXsdBeanDefinitionParser.class);
 		for (Class<? extends IXsdBeanDefinitionParser> parser:subTypes) {
 			try {
+				Object ins = parser.newInstance();
+//				Class[] argTypes = new Class[] { String.class };
+				
 				Method getParser = parser.getDeclaredMethod("getParser");
-				BeanDefinitionParser bDef =  (BeanDefinitionParser) getParser.invoke(null, ( Object[]) null);
-				XsdNameSpaceParserRegistry.registerNameSpaceHandler(parser);
+				Method getElementName = parser.getDeclaredMethod("getXsdElementTag");
+				String[] args= new String[]{"abc"};
+				BeanDefinitionParser bDef =  (BeanDefinitionParser) getParser.invoke(ins,(Object[]) null);
+				String elementName = (String) getElementName.invoke(ins, (Object[])  null);
+				if (elementName == null || null == bDef) throw GlobalUtils.createNotInitializedException("elementname or beandefinition parser");
+				XsdNameSpaceParserRegistry.registerNameSpaceHandler(elementName, bDef);
+				
 			} catch (NoSuchMethodException | SecurityException e) {
 				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);//NOPMD
 			} catch (IllegalAccessException e) {
@@ -143,6 +152,9 @@ public final class TestProjectRunner {
 				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);
 			} catch (InvocationTargetException e) {
 				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		

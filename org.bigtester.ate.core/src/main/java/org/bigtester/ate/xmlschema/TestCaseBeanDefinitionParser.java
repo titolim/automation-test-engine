@@ -24,6 +24,8 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.XsdElementConstants;
+import org.bigtester.ate.model.casestep.JavaCodedStep;
+import org.bigtester.ate.model.casestep.JavaCodedStep.JavaCodedStepNameSpaceParser;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -31,6 +33,7 @@ import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
+import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.StringUtils;
 import org.springframework.util.xml.DomUtils;
@@ -82,29 +85,33 @@ public class TestCaseBeanDefinitionParser extends AbstractBeanDefinitionParser {
 			ManagedList<BeanDefinition> children = new ManagedList<BeanDefinition>(//NOPMD
 					childElements.size());
 			for (Element element : childElements) {
-				if (element.getTagName() == "ate:" // NOPMD
-						+ XsdElementConstants.ELEMENT_HOMESTEP) {
+				if (element.getTagName().equalsIgnoreCase("ate:" // NOPMD
+						+ XsdElementConstants.ELEMENT_HOMESTEP)) {
 					HomeStepBeanDefinitionParser homeStep = new HomeStepBeanDefinitionParser();
 					children.add(homeStep.parse(element, parserContext));
-				} else if (element.getTagName() == "ate:"
-						+ XsdElementConstants.ELEMENT_ELEMENTSTEP) {
+				} else if (element.getTagName().equalsIgnoreCase("ate:"
+						+ XsdElementConstants.ELEMENT_ELEMENTSTEP)) {
 					ElementStepBeanDefinitionParser elementStep = new ElementStepBeanDefinitionParser();
 					children.add(elementStep.parse(element, parserContext));
-				} else if (element.getTagName() == "ate:"
-						+ XsdElementConstants.ELEMENT_REPEATSTEP) {
+				} else if (element.getTagName().equalsIgnoreCase("ate:"
+						+ JavaCodedStep.XSD_ELEMENT_JAVACODEDSTEP)) {
+					BeanDefinitionParser javastep = (new JavaCodedStep()).getParser();
+					children.add(javastep.parse(element, parserContext));
+				} else if (element.getTagName().equalsIgnoreCase("ate:"
+						+ XsdElementConstants.ELEMENT_REPEATSTEP)) {
 					RepeatStepBeanDefinitionParser repeatStep = new RepeatStepBeanDefinitionParser();
 					children.add(repeatStep.parse(element, parserContext));
-				} else if (element.getTagName() == "ate:"
-						+ XsdElementConstants.ELEMENT_LASTSTEP) {
+				} else if (element.getTagName().equalsIgnoreCase("ate:"
+						+ XsdElementConstants.ELEMENT_LASTSTEP)) {
 					LastStepBeanDefinitionParser lastStep = new LastStepBeanDefinitionParser();
 					children.add(lastStep.parse(element, parserContext));
-				} else if (element.getTagName() == "ate:"
-						+ XsdElementConstants.ELEMENT_CASETYPESERVICE) {
+				} else if (element.getTagName().equalsIgnoreCase("ate:"
+						+ XsdElementConstants.ELEMENT_CASETYPESERVICE)) {
 					CaseTypeServiceBeanDefinitionParser caseService = new CaseTypeServiceBeanDefinitionParser();
 					children.add(caseService.parse(element, parserContext));
 				} else if (element
 						.getTagName()
-						.equals("ate:"
+						.equalsIgnoreCase("ate:"
 								+ XsdElementConstants.ELEMENT_STEPTYPESERVICEREFERENCE)) {
 					String stepServiceDefRef = element
 							.getAttribute(XsdElementConstants.ATTR_STEPTYPESERVICEREFERENCE_STEPTYPESERVICEDEFINITIONID);
