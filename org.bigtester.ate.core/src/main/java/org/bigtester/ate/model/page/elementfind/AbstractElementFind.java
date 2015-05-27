@@ -251,15 +251,7 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 							}
 						}
 					});
-			if (null != retValWE) {
-				if (!win.getLastSuccessElementFindFrameChain().equals(
-						win.getCurrentElementFindFrameChain())) {
-					win.getLastSuccessElementFindFrameChain().clear();
-					win.getLastSuccessElementFindFrameChain().addAll(
-							win.getCurrentElementFindFrameChain());
-				}
-
-			}
+			
 		} catch (NoSuchElementException | TimeoutException error) {
 			List<WindowFrame> childFrames = winFrame.getChildFrames();
 			for (WindowFrame gChildF : childFrames) {
@@ -356,12 +348,22 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 							throw GlobalUtils.createInternalError(
 									"arraylist error", error);
 						winfr.focusDefautContent();
+						winOnFocus.getCurrentElementFindFrameChain().clear();
 						retValWE = findThroughFrames(winOnFocus, winfr,
 								getWait(), findBy);
 
 						if (null == retValWE)
 							winfr.focusDefautContent();
 						else {
+							
+								if (!winOnFocus.getLastSuccessElementFindFrameChain().equals(
+										winOnFocus.getCurrentElementFindFrameChain())) {
+									winOnFocus.getLastSuccessElementFindFrameChain().clear();
+									winOnFocus.getLastSuccessElementFindFrameChain().addAll(
+											winOnFocus.getCurrentElementFindFrameChain());
+								}
+
+							
 							break;
 						}
 					} catch (NoSuchElementException | TimeoutException error1) {
