@@ -27,7 +27,7 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:htmlUnitDriver  />
+	<ate:firefoxDriver  />
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="assignValue">
