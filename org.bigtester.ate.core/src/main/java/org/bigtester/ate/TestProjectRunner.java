@@ -22,13 +22,20 @@
 package org.bigtester.ate;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.util.Set;
 
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.project.TestProject;
+import org.bigtester.ate.xmlschema.IXsdBeanDefinitionParser;
+import org.bigtester.ate.xmlschema.XsdNameSpaceParserRegistry;
 import org.dbunit.DatabaseUnitException;
 import org.eclipse.jdt.annotation.Nullable;
+import org.reflections.Reflections;
+import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -118,6 +125,29 @@ public final class TestProjectRunner {
 		runTest(context);
 		
 	  	((ConfigurableApplicationContext)context).close();
+	}
+	
+	public static void registerXsdNameSpaceParsers() {
+		Reflections reflections = new Reflections("org.bigtester.ate");
+		Set<Class<? extends IXsdBeanDefinitionParser>> subTypes = reflections.getSubTypesOf(IXsdBeanDefinitionParser.class);
+		for (Class<? extends IXsdBeanDefinitionParser> parser:subTypes) {
+			try {
+				Method getParser = parser.getDeclaredMethod("getParser");
+				BeanDefinitionParser bDef =  (BeanDefinitionParser) getParser.invoke(null, ( Object[]) null);
+				XsdNameSpaceParserRegistry.registerNameSpaceHandler(parser);
+			} catch (NoSuchMethodException | SecurityException e) {
+				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);//NOPMD
+			} catch (IllegalAccessException e) {
+				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);
+			} catch (IllegalArgumentException e) {
+				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);
+			} catch (InvocationTargetException e) {
+				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);
+			}
+		}
+		
+		
+		
 	}
 
 }

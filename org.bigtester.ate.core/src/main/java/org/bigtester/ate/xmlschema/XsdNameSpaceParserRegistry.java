@@ -20,16 +20,36 @@
  *******************************************************************************/
 package org.bigtester.ate.xmlschema;
 
-import org.springframework.beans.factory.xml.BeanDefinitionParser;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class IXsdBeanDefinitionParser defines ....
+ * This class XsdNameSpaceHandlerRegistry defines ....
  * @author Peidong Hu
  *
  */
-public interface IXsdBeanDefinitionParser {
+public class XsdNameSpaceParserRegistry {
+	private static List<IXsdBeanDefinitionParser> nameSpaceHandlerRegistry = new ArrayList<IXsdBeanDefinitionParser>();
+
+	/**
+	 * @return the nameSpaceHandlerRegistry
+	 */
+	public static List<IXsdBeanDefinitionParser> getNameSpaceHandlerRegistry() {
+		return nameSpaceHandlerRegistry;
+	}
+
+	/**
+	 * @param nameSpaceHandlerRegistry the nameSpaceHandlerRegistry to set
+	 */
+	public static void setNameSpaceHandlerRegistry(
+			List<IXsdBeanDefinitionParser> nameSpaceHandlerRegistry) {
+		XsdNameSpaceParserRegistry.nameSpaceHandlerRegistry = nameSpaceHandlerRegistry;
+	}
 	
-	public String getXsdElementTag();
-	public BeanDefinitionParser getParser();
+	public static void registerNameSpaceHandler(IXsdBeanDefinitionParser parser) {
+		XsdNameSpaceParserRegistry.getNameSpaceHandlerRegistry().add(parser);
+	}
+
+
 }

@@ -21,6 +21,8 @@
  *******************************************************************************/
 package org.bigtester.ate.xmlschema;
 
+import java.util.List;
+
 import org.bigtester.ate.constant.XsdElementConstants;
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
@@ -38,7 +40,8 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 	 */
 	@Override
 	public void init() {
-		 
+		
+		
 		/******************************* following for Test Project ******************************/
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_TESTPROJECT, new TestProjectBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_TESTSUITE, new TestSuiteBeanDefinitionParser());
@@ -128,6 +131,10 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_OPERADRIVER, new OperaDriverBeanDefinitionParser());
 		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_HTMLUNITDRIVER, new HtmlUnitDriverBeanDefinitionParser());
 		
+		List<IXsdBeanDefinitionParser> userParsers = XsdNameSpaceParserRegistry.getNameSpaceHandlerRegistry();
+		for (IXsdBeanDefinitionParser parser : userParsers) {
+			registerBeanDefinitionParser(parser.getXsdElementTag(), parser.getParser());
+		}
 	}
 
 }
