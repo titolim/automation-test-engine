@@ -32,7 +32,16 @@ import org.bigtester.ate.model.page.exception.StepExecutionException2;
  *
  */
 public interface IJavaCodedStep extends ITestStep {
-	public void doStep(IMyWebDriver myWebDriver) throws StepExecutionException2,
+	
+	/**
+	 * Do step.
+	 *
+	 * @param myWebDriver the my web driver
+	 * @throws StepExecutionException2 the step execution exception2
+	 * @throws PageValidationException2 the page validation exception2
+	 * @throws RuntimeDataException the runtime data exception
+	 */
+	void doStep(IMyWebDriver myWebDriver) throws StepExecutionException2,
 	PageValidationException2, RuntimeDataException;
 
 }

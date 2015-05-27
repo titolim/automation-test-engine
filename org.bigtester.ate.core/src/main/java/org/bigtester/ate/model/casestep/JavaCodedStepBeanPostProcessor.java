@@ -20,44 +20,16 @@
  *******************************************************************************/
 package org.bigtester.ate.model.casestep;
 
-import jodd.util.ArraysUtil;
-
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.annotation.XsdBeanDefinitionParser;
-import org.bigtester.ate.constant.EnumRunTimeDataType;
-import org.bigtester.ate.constant.XsdElementConstants;
-import org.bigtester.ate.model.data.ManualAssignedValueDataHolder;
-import org.bigtester.ate.model.data.RandomAlphaTextValueDataHolder;
-import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.elementaction.AssignValueAction;
-import org.bigtester.ate.model.page.elementaction.SendKeysAction;
-import org.bigtester.ate.model.page.elementaction.AssignValueAction.ValueAssignmentMethod;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
-import org.bigtester.ate.model.page.page.MyWebElement;
-import org.bigtester.ate.xmlschema.BaseTestStepBeanDefinitionParser;
-import org.bigtester.ate.xmlschema.IXsdBeanDefinitionParser;
 import org.eclipse.jdt.annotation.Nullable;
-import org.reflections.Reflections;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
-import org.springframework.beans.factory.xml.BeanDefinitionParser;
-import org.springframework.beans.factory.xml.NamespaceHandler;
-import org.springframework.beans.factory.xml.NamespaceHandlerResolver;
-import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.util.StringUtils;
-import org.w3c.dom.Element;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -68,6 +40,7 @@ import org.w3c.dom.Element;
 
 public class JavaCodedStepBeanPostProcessor implements BeanDefinitionRegistryPostProcessor{
 	
+	/** The bd reg. */
 	@Nullable
 	transient private BeanDefinitionRegistry bdReg;
 	
@@ -120,7 +93,7 @@ public class JavaCodedStepBeanPostProcessor implements BeanDefinitionRegistryPos
 										new RuntimeBeanReference(idstr));
 
 						} catch (ClassNotFoundException e) {
-							throw GlobalUtils.createNotInitializedException("user java step class: " + userJavaClassName);
+							throw GlobalUtils.createNotInitializedException("user java step class: " + userJavaClassName, e);//NOPMD
 						}
 				}
 			}

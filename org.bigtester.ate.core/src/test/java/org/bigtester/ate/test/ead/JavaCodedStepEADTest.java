@@ -20,15 +20,15 @@
  *******************************************************************************/
 package org.bigtester.ate.test.ead;
 
-
-import org.bigtester.ate.model.casestep.JavaCodedStep;
+import org.bigtester.ate.model.casestep.IJavaCodedStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
 import org.bigtester.ate.test.BigtesterProjectTest;
+import org.openqa.selenium.By;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.Assert;
 import org.testng.annotations.Test;
-
 
 /**
  * 
@@ -43,41 +43,24 @@ public class JavaCodedStepEADTest extends BigtesterProjectTest {
 	 * 
 	 * @throws RuntimeDataException
 	 * @throws PageValidationException2
-	 * @throws StepExecutionException2 
-	 * @throws InterruptedException 
+	 * @throws StepExecutionException2
+	 * @throws InterruptedException
 	 */
 	@Test(priority = 1)
 	public void javaCodedStepTest() throws PageValidationException2,
 			RuntimeDataException, StepExecutionException2, InterruptedException {
 		getTestPage("bigtesterTestNG/aut/textarea.html");
-		
-		JavaCodedStep assignV = (JavaCodedStep) getApplicationContext()
+
+		IJavaCodedStep assignV = (IJavaCodedStep) getApplicationContext()
 				.getBean("javaStep1");
 		assignV.doStep();
-		
-//		ITestObjectAction<?> prependActObj = (ITestObjectAction<?>) prependAssignV.getTestObjectAction();
-//		
-//		ITestObjectAction<?> appendActObj = (ITestObjectAction<?>) appendAssignV.getTestObjectAction();
-//		
-//		ITestObjectAction<?> replaceActObj = (ITestObjectAction<?>) assignV.getTestObjectAction();
-//		if (prependActObj == null || appendActObj == null || replaceActObj == null) {
-//			Assert.assertTrue(false);
-//		} else {
-//			IStepInputData prependInp = ((IElementAction) prependActObj).getDataValue();
-//			IStepInputData appendInp = ((IElementAction) appendActObj).getDataValue();
-//			IStepInputData replaceInp = ((IElementAction) replaceActObj).getDataValue();
-//			
-//			 if (prependInp == null || appendInp == null || replaceInp == null) {
-//				 Assert.assertTrue(false);
-//			 } else {
-//				 String expectedVal = prependInp.getStrDataValue()  + replaceInp.getStrDataValue() + appendInp.getStrDataValue();
-//				 String actualVal = getMyDriver().getWebDriverInstance().findElements(new By.ByTagName("textarea")).get(0).getAttribute("value");
-//				 Assert.assertTrue(expectedVal.equals(actualVal));
-//			 }
-//		
-//		}
-		
-		
+
+		String actualVal = getMyDriver().getWebDriverInstance()
+				.findElements(By.tagName("textarea")).get(0)
+				.getAttribute("value");
+		Assert.assertTrue(JavaCodedStepFilloutTextArea.TESTVALUE
+				.equals(actualVal));
+
 	}
 
 }

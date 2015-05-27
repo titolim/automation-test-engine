@@ -128,6 +128,9 @@ public final class TestProjectRunner {
 	  	((ConfigurableApplicationContext)context).close();
 	}
 	
+	/**
+	 * Register xsd name space parsers.
+	 */
 	public static void registerXsdNameSpaceParsers() {
 		Reflections reflections = new Reflections("org.bigtester.ate");
 		Set<Class<? extends IXsdBeanDefinitionParser>> subTypes = reflections.getSubTypesOf(IXsdBeanDefinitionParser.class);
@@ -138,7 +141,7 @@ public final class TestProjectRunner {
 				
 				Method getParser = parser.getDeclaredMethod("getParser");
 				Method getElementName = parser.getDeclaredMethod("getXsdElementTag");
-				String[] args= new String[]{"abc"};
+				
 				BeanDefinitionParser bDef =  (BeanDefinitionParser) getParser.invoke(ins,(Object[]) null);
 				String elementName = (String) getElementName.invoke(ins, (Object[])  null);
 				if (elementName == null || null == bDef) throw GlobalUtils.createNotInitializedException("elementname or beandefinition parser");
@@ -153,8 +156,7 @@ public final class TestProjectRunner {
 			} catch (InvocationTargetException e) {
 				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw GlobalUtils.createNotInitializedException("class needs to provide a no argument constructor.", e);
 			}
 		}
 		

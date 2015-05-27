@@ -25,7 +25,6 @@ import java.util.List;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.casestep.JavaCodedStep;
-import org.bigtester.ate.model.casestep.JavaCodedStep.JavaCodedStepNameSpaceParser;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -95,7 +94,7 @@ public class TestCaseBeanDefinitionParser extends AbstractBeanDefinitionParser {
 					children.add(elementStep.parse(element, parserContext));
 				} else if (element.getTagName().equalsIgnoreCase("ate:"
 						+ JavaCodedStep.XSD_ELEMENT_JAVACODEDSTEP)) {
-					BeanDefinitionParser javastep = (new JavaCodedStep()).getParser();
+					BeanDefinitionParser javastep = new JavaCodedStep().getParser();
 					children.add(javastep.parse(element, parserContext));
 				} else if (element.getTagName().equalsIgnoreCase("ate:"
 						+ XsdElementConstants.ELEMENT_REPEATSTEP)) {

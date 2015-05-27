@@ -20,26 +20,17 @@
  *******************************************************************************/
 package org.bigtester.ate.model.casestep;
 
-import jodd.util.ArraysUtil;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.XsdBeanDefinitionParser;
-import org.bigtester.ate.constant.EnumRunTimeDataType;
 import org.bigtester.ate.constant.XsdElementConstants;
-import org.bigtester.ate.model.data.ManualAssignedValueDataHolder;
-import org.bigtester.ate.model.data.RandomAlphaTextValueDataHolder;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.elementaction.AssignValueAction;
-import org.bigtester.ate.model.page.elementaction.SendKeysAction;
-import org.bigtester.ate.model.page.elementaction.AssignValueAction.ValueAssignmentMethod;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
-import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.xmlschema.BaseTestStepBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.IXsdBeanDefinitionParser;
 import org.eclipse.jdt.annotation.Nullable;
-import org.reflections.Reflections;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +41,7 @@ import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
-import org.springframework.beans.factory.xml.NamespaceHandler;
-import org.springframework.beans.factory.xml.NamespaceHandlerResolver;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
@@ -66,16 +53,24 @@ import org.w3c.dom.Element;
  *
  */
 @XsdBeanDefinitionParser
-public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdBeanDefinitionParser, BeanDefinitionRegistryPostProcessor{
+public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdBeanDefinitionParser{
+	
+	/** The my web driver. */
 	@Autowired
 	@Nullable
-	IMyWebDriver myWebDriver;
-	@Nullable
-	IJavaCodedStep userJavaStep;
+	private IMyWebDriver myWebDriver;
 	
+	/** The user java step. */
+	@Nullable
+	private IJavaCodedStep userJavaStep;
+	
+	/** The bd reg. */
 	@Nullable
 	transient private BeanDefinitionRegistry bdReg;
+	
 	/**
+	 * Gets the user java step.
+	 *
 	 * @return the userJavaStep
 	 */
 	public final IJavaCodedStep getUserJavaStep() {
@@ -86,17 +81,28 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 			return userJavaStep2; 
 		}
 	}
+	
 	/**
+	 * Sets the user java step.
+	 *
 	 * @param userJavaStep the userJavaStep to set
 	 */
 	public final void setUserJavaStep(IJavaCodedStep userJavaStep) {
 		this.userJavaStep = userJavaStep;
 	}
-	public static String XSD_ELEMENT_JAVACODEDSTEP = "javaCodedStep";
 	
+	/** The xsd element javacodedstep. */
+	final public static String XSD_ELEMENT_JAVACODEDSTEP = "javaCodedStep";
+	
+	/** The name space parser. */
 	@Nullable
 	private static JavaCodedStepNameSpaceParser nameSpaceParser;
 
+	/**
+	 * The Class JavaCodedStepNameSpaceParser.
+	 *
+	 * @author Peidong Hu
+	 */
 	public class JavaCodedStepNameSpaceParser extends BaseTestStepBeanDefinitionParser {
 		
 		/**
@@ -131,11 +137,21 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 	
 	}
 	
+	/**
+	 * Instantiates a new java coded step.
+	 *
+	 * @param userJavaStep the user java step
+	 */
 	public JavaCodedStep(IJavaCodedStep userJavaStep) {
+		super();
 		this.userJavaStep = userJavaStep;
 	}
+	
+	/**
+	 * Instantiates a new java coded step.
+	 */
 	public JavaCodedStep() {
-		
+		super();
 	}
 	/**
 	* {@inheritDoc}
@@ -146,6 +162,11 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 		return myWebDriver;
 	}
 	
+	/**
+	 * Sets the my web driver.
+	 *
+	 * @param myD the new my web driver
+	 */
 	public void setMyWebDriver(IMyWebDriver myD) {
 		myWebDriver = myD;
 	}
@@ -176,10 +197,11 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 	@Override
 	public BeanDefinitionParser getParser() {
 			final JavaCodedStepNameSpaceParser nameSpaceParser2 = nameSpaceParser;
-			if (nameSpaceParser2 != null) {
-				return nameSpaceParser2;
+			if (nameSpaceParser2 == null) {
+				return new JavaCodedStepNameSpaceParser();//NOPMD
 			} else {
-				return new JavaCodedStepNameSpaceParser();
+				return nameSpaceParser2;
+				
 			}
 	}
 	/**
@@ -195,7 +217,6 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 	/**
 	* {@inheritDoc}
 	*/
-	@Override
 	public void postProcessBeanFactory(@Nullable ConfigurableListableBeanFactory beanFactory)
 			throws BeansException {
 		if (beanFactory == null)
@@ -241,7 +262,7 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 										new RuntimeBeanReference(idstr));
 
 						} catch (ClassNotFoundException e) {
-							throw GlobalUtils.createNotInitializedException("user java step class: " + userJavaClassName);
+							throw GlobalUtils.createNotInitializedException("user java step class: " + userJavaClassName, e);//NOPMD
 						}
 				}
 			}
@@ -252,7 +273,6 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 	/**
 	* {@inheritDoc}
 	*/
-	@Override
 	public void postProcessBeanDefinitionRegistry(@Nullable BeanDefinitionRegistry arg0)
 			throws BeansException {
 		if (arg0 == null)
@@ -263,12 +283,17 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 	}
 	
 	/**
+	 * Sets the bd reg.
+	 *
 	 * @param bdReg the bdReg to set
 	 */
 	public void setBdReg(BeanDefinitionRegistry bdReg) {
 		this.bdReg = bdReg;
 	}
+	
 	/**
+	 * Gets the bd reg.
+	 *
 	 * @return the bdReg
 	 */
 

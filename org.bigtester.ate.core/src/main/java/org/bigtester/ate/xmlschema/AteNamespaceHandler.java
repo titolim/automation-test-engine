@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.bigtester.ate.xmlschema;
 
-import java.util.List;
 import java.util.Map;
 
 import org.bigtester.ate.constant.XsdElementConstants;

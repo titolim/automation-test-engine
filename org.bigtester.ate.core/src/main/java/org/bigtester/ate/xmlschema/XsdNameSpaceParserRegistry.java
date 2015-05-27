@@ -20,8 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.xmlschema;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,11 +28,18 @@ import org.springframework.beans.factory.xml.BeanDefinitionParser;
 // TODO: Auto-generated Javadoc
 /**
  * This class XsdNameSpaceHandlerRegistry defines ....
+ * 
  * @author Peidong Hu
  *
  */
-public class XsdNameSpaceParserRegistry {
-	final private static Map<String, BeanDefinitionParser> nameSpaceHandlerRegistry = new ConcurrentHashMap<String, BeanDefinitionParser>();
+final public class XsdNameSpaceParserRegistry {
+
+	/** The Constant nameSpaceHandlerRegistry. */
+	private static Map<String, BeanDefinitionParser> nameSpaceHandlerRegistry = new ConcurrentHashMap<String, BeanDefinitionParser>();//NOPMD
+
+	private XsdNameSpaceParserRegistry() {
+
+	}
 
 	/**
 	 * @return the nameSpaceHandlerRegistry
@@ -43,10 +48,16 @@ public class XsdNameSpaceParserRegistry {
 		return nameSpaceHandlerRegistry;
 	}
 
-		
-	public static void registerNameSpaceHandler(String elementName, BeanDefinitionParser parser) {
-		XsdNameSpaceParserRegistry.getNameSpaceHandlerRegistry().put(elementName, parser);
+	/**
+	 * Register name space handler.
+	 *
+	 * @param elementName the element name
+	 * @param parser the parser
+	 */
+	public static void registerNameSpaceHandler(String elementName,
+			BeanDefinitionParser parser) {
+		XsdNameSpaceParserRegistry.getNameSpaceHandlerRegistry().put(
+				elementName, parser);
 	}
-
 
 }

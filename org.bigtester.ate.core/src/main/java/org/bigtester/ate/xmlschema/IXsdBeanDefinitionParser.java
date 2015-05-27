@@ -30,6 +30,17 @@ import org.springframework.beans.factory.xml.BeanDefinitionParser;
  */
 public interface IXsdBeanDefinitionParser {
 	
-	public String getXsdElementTag();
-	public BeanDefinitionParser getParser();
+	/**
+	 * Gets the xsd element tag.
+	 *
+	 * @return the xsd element tag
+	 */
+	String getXsdElementTag();
+	
+	/**
+	 * Gets the parser.
+	 *
+	 * @return the parser
+	 */
+	BeanDefinitionParser getParser();
 }

@@ -21,6 +21,7 @@
 package org.bigtester.ate.test;
 
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -32,7 +33,6 @@ import java.sql.SQLException;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.TestProjectRunner;
 import org.bigtester.ate.constant.GlobalConstants;
-import org.bigtester.ate.model.casestep.JavaCodedStepBeanPostProcessor;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.project.TestProject;
@@ -44,7 +44,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.PriorityOrdered;
@@ -59,30 +58,11 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
  */
 
 public class BaseATETest extends AbstractTestNGSpringContextTests implements
-		ApplicationContextAware, BeanFactoryPostProcessor, BeanDefinitionRegistryPostProcessor, PriorityOrdered {
+		ApplicationContextAware, BeanFactoryPostProcessor, PriorityOrdered {
 
-	@Nullable
-	transient private JavaCodedStepBeanPostProcessor jcs = new JavaCodedStepBeanPostProcessor(); 
 	
-	/**
-	 * @return the jcs
-	 */
-	public final JavaCodedStepBeanPostProcessor getJcs() {
-		final JavaCodedStepBeanPostProcessor jcs2 = jcs;
-		if (jcs2 == null) {
-			throw GlobalUtils.createNotInitializedException("java coded step bean");
-		} else {
-			return jcs2;
-		}
-	}
 
-	/**
-	 * @param jcs the jcs to set
-	 */
-	public final void setJcs(JavaCodedStepBeanPostProcessor jcs) {
-		this.jcs = jcs;
-	}
-
+	/** The bd reg. */
 	@Nullable
 	transient private BeanDefinitionRegistry bdReg;
 	/** The mocked driver. */
@@ -184,7 +164,6 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 			throws BeansException {
 		try {
 			initDB();
-			getJcs().postProcessBeanFactory(arg0);
 		} catch (IOException | DatabaseUnitException | SQLException e) {
 			throw GlobalUtils.createInternalError("initDB", e);
 		}
@@ -215,17 +194,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		return getOptions();
 	}
 
-	/**
-	* {@inheritDoc}
-	*/
-	@Override
-	public void postProcessBeanDefinitionRegistry(@Nullable BeanDefinitionRegistry arg0)
-			throws BeansException {
-		if (null == arg0) throw GlobalUtils.createInternalError("spring bdr");
-		setBdReg(arg0);
-		getJcs().postProcessBeanDefinitionRegistry(getBdReg());
-		
-	}
+
 
 	/**
 	 * @return the bdReg

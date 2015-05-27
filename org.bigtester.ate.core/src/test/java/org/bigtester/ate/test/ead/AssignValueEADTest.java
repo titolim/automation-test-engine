@@ -23,7 +23,6 @@ package org.bigtester.ate.test.ead;
 
 import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
-import org.bigtester.ate.model.casestep.JavaCodedStep;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
@@ -59,10 +58,6 @@ public class AssignValueEADTest extends BigtesterProjectTest {
 		//getTestPage("file:///c:/index.html");
 		getTestPage("bigtesterTestNG/aut/textarea.html");
 
-		JavaCodedStep assignV1 = (JavaCodedStep) getApplicationContext()
-				.getBean("javaStep1");
-		assignV1.doStep();
-	
 		MyWebElement<?> assignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValue");
 		assignV.doAction();

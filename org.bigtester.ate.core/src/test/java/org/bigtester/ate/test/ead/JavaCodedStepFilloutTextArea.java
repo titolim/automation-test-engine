@@ -21,6 +21,7 @@
 package org.bigtester.ate.test.ead;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.bigtester.ate.constant.StepResultStatus;
@@ -35,7 +36,6 @@ import org.bigtester.ate.model.page.page.IPageObject;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.Test;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -45,6 +45,8 @@ import org.testng.annotations.Test;
  */
 public class JavaCodedStepFilloutTextArea implements IJavaCodedStep {
 
+	/** The testvalue. */
+	final public static String TESTVALUE = "ABCD";
 	/**
 	 * {@inheritDoc}
 	 */
@@ -224,6 +226,6 @@ public class JavaCodedStepFilloutTextArea implements IJavaCodedStep {
 			RuntimeDataException {
 		WebElement webE = myWebDriver.getWebDriverInstance().findElement(By.tagName("textarea"));
 		webE.clear();
-		webE.sendKeys("abc");
+		webE.sendKeys(TESTVALUE);
 	}
 }
