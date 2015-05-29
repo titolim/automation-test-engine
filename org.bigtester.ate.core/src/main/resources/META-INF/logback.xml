@@ -90,7 +90,7 @@
 		</filter>
 	</appender>
 
-	<logger name="org.bigtester.ate" level="ALL" >
+	<logger name="org.bigtester" level="ALL" >
 		
 	</logger>
 	<root level="ALL">
