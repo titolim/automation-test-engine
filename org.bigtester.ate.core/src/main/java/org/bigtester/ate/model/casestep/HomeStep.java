@@ -33,6 +33,8 @@ import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.page.IHomepage;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class HomeStep defines ....
@@ -42,6 +44,7 @@ import org.bigtester.ate.model.page.page.IHomepage;
 public class HomeStep extends BaseTestStep implements ITestStep {
 
 	/** The homepg. */
+	@XStreamOmitField
 	private IHomepage homePage;
 
 	/**

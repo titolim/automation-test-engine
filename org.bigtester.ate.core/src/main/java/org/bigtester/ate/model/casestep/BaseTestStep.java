@@ -64,9 +64,11 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 
 	/** The step logger. */
 	@Nullable
+	@XStreamOmitField
 	private IRepeatStepExecutionLogger repeatStepLogger;
 
 	/** The data holders. */
+	@XStreamOmitField
 	private List<IDataParser> dataHolders = new ArrayList<IDataParser>();
 
 	// /** The on the fly data holders. */
@@ -78,6 +80,7 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	private transient boolean elementStepFlag;
 
 	/** The i expected result asserter. */
+	@XStreamOmitField
 	private List<IExpectedResultAsserter> expectedResultAsserter = new ArrayList<IExpectedResultAsserter>();
 
 	/** The forced page validation. */
@@ -94,6 +97,7 @@ public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	private int correlatedOptionalStepsUtilInclusiveIndex = -1;// NOPMD
 	/** The page object. */
 	@Nullable
+	@XStreamOmitField
 	private IPageObject pageObject;
 
 	/** The step description. */

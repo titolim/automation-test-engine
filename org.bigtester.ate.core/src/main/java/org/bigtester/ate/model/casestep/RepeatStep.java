@@ -42,6 +42,8 @@ import org.bigtester.ate.model.utils.ThinkTime;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.aop.support.AopUtils;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 // TODO: Auto-generated Javadoc
 /**
  * This class RepeatStep defines ....
@@ -82,9 +84,11 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	final private List<IRepeatIncrementalIndex> refreshIndexValues = new ArrayList<IRepeatIncrementalIndex>();
 
 	/** The external repeat node of this step. */
+	@XStreamOmitField
 	private transient @Nullable RepeatStepExecutionLoggerNode externalRepeatNodeOfThisStep;
 
 	/** The current repeat node of this step. */
+	@XStreamOmitField
 	private transient @Nullable RepeatStepExecutionLoggerNode currentRepeatNodeOfThisStep;
 
 	// /** The input data holders. */

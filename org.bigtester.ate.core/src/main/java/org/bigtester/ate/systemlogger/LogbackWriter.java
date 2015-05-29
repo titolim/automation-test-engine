@@ -37,7 +37,7 @@ public final class LogbackWriter {
 
 	/** The Constant MYLOGGER. */
 	@Nullable
-	private static final Logger MYLOGGER = LoggerFactory
+	public static final Logger MYLOGGER = LoggerFactory
 			.getLogger(LogbackWriter.class);
 
 	/**
@@ -140,7 +140,7 @@ public final class LogbackWriter {
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
-			if (mylogger2.isInfoEnabled()) {
+			if (mylogger2.isErrorEnabled()) {
 				mylogger2.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO + msg); // NOPMD
 			} else {
 				throw new UnsupportedOperationException(
@@ -162,7 +162,7 @@ public final class LogbackWriter {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
 			
-			if (mylogger2.isInfoEnabled()) {
+			if (mylogger2.isErrorEnabled()) {
 				mylogger2.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_UNITTEST_INFO + msg); // NOPMD
 			} else {
 				throw new UnsupportedOperationException(

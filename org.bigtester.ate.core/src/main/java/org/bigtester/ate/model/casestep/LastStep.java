@@ -25,6 +25,8 @@ import org.bigtester.ate.annotation.StepLoggable;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.ILastpage;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class LastStep defines ....
@@ -34,7 +36,7 @@ import org.bigtester.ate.model.page.page.ILastpage;
 public class LastStep extends BaseTestStep implements ITestStep {
 
 	/** The last page. */
-
+	@XStreamOmitField
 	private ILastpage lastPage;
 
 	
