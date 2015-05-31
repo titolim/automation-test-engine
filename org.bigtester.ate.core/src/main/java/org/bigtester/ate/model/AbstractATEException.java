@@ -55,4 +55,15 @@ public abstract class AbstractATEException extends Exception {
 		this.errorCode = errorCode;
 	}
 	
+	/**
+	 * Instantiates a new abstract ate exception.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 */
+	public AbstractATEException(final String message, final String errorCode, Throwable thr) {
+		super(message, thr);
+		this.errorCode = errorCode;
+	}
+	
 }

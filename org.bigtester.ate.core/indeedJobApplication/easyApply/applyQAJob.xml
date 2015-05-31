@@ -75,6 +75,10 @@
 			targetStep="false" elementActionDef="eadSwitchToApplyWindow">
 		</ate:elementStep>
 
+		<ate:javaCodedStep id="javaStep1" stepName="javaStep1" elementActionDef="com.bigtester.casestep.SaveAppliedJobReference" targetStep="false"
+		optionalStep="true"
+			correlatedOptionalStepsUtilInclusive="stepSubmitResume"/>
+
 		<ate:elementStep id="stepClickApplyNow"
 			stepDescription="stepClickApplyNow" stepName="stepClickApplyNow"
 			targetStep="false" elementActionDef="eadClickApplyNow"
@@ -84,9 +88,25 @@
 
 		<ate:elementStep id="stepFilloutApplicantName"
 			stepDescription="stepFilloutApplicantName" stepName="stepFilloutApplicantName"
+			optionalStep="true"
 			targetStep="false" elementActionDef="eadFilloutApplicantName"
 			>
 		</ate:elementStep>
+
+		<ate:elementStep id="stepFilloutApplicantFirstName"
+			stepDescription="stepFilloutApplicantFirstName" stepName="stepFilloutApplicantFirstName"
+			targetStep="false" elementActionDef="eadFilloutApplicantFirstName"
+			optionalStep="true"
+			correlatedOptionalStepsUtilInclusive="stepFilloutApplicantLastName"
+			>
+		</ate:elementStep>
+		
+		<ate:elementStep id="stepFilloutApplicantLastName"
+			stepDescription="stepFilloutApplicantLastName" stepName="stepFilloutApplicantLastName"
+			targetStep="false" elementActionDef="eadFilloutApplicantLastName"
+			>
+		</ate:elementStep>
+		
 
 		<ate:elementStep id="stepFilloutApplicantEmail"
 			stepDescription="stepFilloutApplicantEmail" stepName="stepFilloutApplicantEmail"

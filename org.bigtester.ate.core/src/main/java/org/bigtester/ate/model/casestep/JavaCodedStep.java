@@ -116,9 +116,11 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 						throw GlobalUtils
 								.createNotInitializedException("element and parserContext");
 					// Here we parse the Spring elements such as < property>
-					BeanDefinitionHolder holder = parserContext.getDelegate()
-							.parseBeanDefinitionElement(element);
-					BeanDefinition bDef = holder.getBeanDefinition();
+					//BeanDefinitionHolder holder = parserContext.getDelegate()
+					//		.parseBeanDefinitionElement(element);
+					//BeanDefinition bDef = holder.getBeanDefinition();
+					BeanDefinition bDef = super.parseInternal(element, parserContext);
+
 					bDef.setBeanClassName(JavaCodedStep.class.getName());
 
 					String ead = element

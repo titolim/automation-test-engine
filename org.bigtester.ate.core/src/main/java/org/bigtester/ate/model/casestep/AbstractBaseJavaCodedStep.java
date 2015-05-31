@@ -52,64 +52,22 @@ import org.w3c.dom.Element;
  * @author Peidong Hu
  *
  */
-@XsdBeanDefinitionParser
-public class BaseJavaCodedStep extends BaseTestStep{
-	
-	/** The my web driver. */
+
+abstract public class AbstractBaseJavaCodedStep extends BaseTestStep{
 	@Autowired
 	@Nullable
 	private IMyWebDriver myWebDriver;
 	
-	/** The user java step. */
-	@Nullable
-	private IJavaCodedStep userJavaStep;
 	
-	
-	/**
-	 * Gets the user java step.
-	 *
-	 * @return the userJavaStep
-	 */
-	public final IJavaCodedStep getUserJavaStep() {
-		final IJavaCodedStep userJavaStep2 = userJavaStep;
-		if (userJavaStep2 == null) {
-			throw GlobalUtils.createNotInitializedException("user java step");
+	public IMyWebDriver getMyWebDriver() {
+		final IMyWebDriver myWebDriver2 = myWebDriver;
+		if (myWebDriver2== null) {
+			throw GlobalUtils.createNotInitializedException("my web driver");
 		} else {
-			return userJavaStep2; 
+			return myWebDriver2;
 		}
 	}
-	
-	/**
-	 * Sets the user java step.
-	 *
-	 * @param userJavaStep the userJavaStep to set
-	 */
-	public final void setUserJavaStep(IJavaCodedStep userJavaStep) {
-		this.userJavaStep = userJavaStep;
-	}
-	
-	/**
-	 * Instantiates a new java coded step.
-	 *
-	 * @param userJavaStep the user java step
-	 */
-	public BaseJavaCodedStep(IJavaCodedStep userJavaStep) {
-		super();
-		this.userJavaStep = userJavaStep;
-	}
-	
-	/**
-	 * Instantiates a new java coded step.
-	 */
-	public BaseJavaCodedStep() {
-		super();
-	}
-
-	
-	@Nullable
-	public IMyWebDriver getMyWebDriver() {
-		return myWebDriver;
-	}
+		
 	
 	/**
 	 * Sets the my web driver.

@@ -40,5 +40,9 @@ public class RuntimeDataException extends TestDataException {
 	public RuntimeDataException(String message, String errorCode) {
 		super(message, errorCode);
 	}
+	
+	public RuntimeDataException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
+	}
 
 }
