@@ -18,6 +18,14 @@
 	<ate:regularPage id="jobSearchResult"
 		dataFile="indeedJobApplication/pageObjects/jobSearchResult.data.xml" />
 
+	<ate:elementActionDef id="eadClickSortByDate"
+		elementFind="efDateSortingLink" elementAction="eaDateClick">
+	</ate:elementActionDef>
+	<ate:elementFindByXpath id="efDateSortingLink"
+		findByValue="//a[contains(@href,'sort=date')]"/>
+	<ate:clickAction id="eaDateClick" />
+
+
 	<ate:elementActionDef id="eadClickNonAdsJobLink"
 		elementFind="efNonAdsJobLink" elementAction="eaNonAdsJobLinkClick">
 	</ate:elementActionDef>
