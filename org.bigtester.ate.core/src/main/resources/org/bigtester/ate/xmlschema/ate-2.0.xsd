@@ -116,6 +116,7 @@
 						maxOccurs="unbounded" />
 					<xsd:element ref="homeStep" minOccurs="1" maxOccurs="unbounded" />
 					<xsd:element ref="elementStep" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element ref="javaCodedStep" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element ref="repeatStep" minOccurs="0" maxOccurs="unbounded" />
 					<xsd:element ref="lastStep" minOccurs="1" maxOccurs="unbounded" />
 				</xsd:choice>
@@ -196,6 +197,27 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
+<xsd:complexType name="JavaCodedStepType">
+		<xsd:complexContent>
+			<xsd:extension base="BaseTestStepType">
+				<xsd:attribute name="elementActionDef" type="xsd:string"
+					use="required">
+				</xsd:attribute>
+				<xsd:attribute name="pageObject" type="xsd:string">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<tool:annotation kind="ref">
+								<tool:expected-type
+									type="org.bigtester.ate.model.page.page.IPageObject" />
+							</tool:annotation>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 
 	<xsd:complexType name="StepTypeServiceRefType">
 		<xsd:complexContent>
@@ -999,6 +1021,7 @@
 	<xsd:element name="caseTypeService" type="CaseTypeServiceType" />
 
 	<xsd:element name="elementStep" type="ElementStepType" />
+	<xsd:element name="javaCodedStep" type="JavaCodedStepType" />
 	<xsd:element name="homeStep" type="HomeStepType" />
 	<xsd:element name="lastStep" type="LastStepType" />
 	<xsd:element name="repeatStep" type="RepeatStepType" />

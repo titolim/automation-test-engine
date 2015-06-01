@@ -4,7 +4,7 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	                       http://www.springframework.org/schema/aop 
 	                       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 	                       http://www.bigtester.org/schema/ate 
@@ -16,13 +16,27 @@
 	<import resource="classpath:META-INF/logger-reporter.xml" />
 	<import resource="classpath:META-INF/page_base_bean.xml" />
 	<import resource="classpath:META-INF/case_base_bean.xml" />
+	
+	<import resource="../pageObjects/lastPage.xml" />
+	
+	<!-- 
+	<ate:firefoxDriver  />  
+	<ate:chromeDriver   />
+	<ate:IEDriver       />
+	<ate:safariDriver   />
+	<ate:operaDriver    />
+	<ate:htmlUnitDriver />
+      -->
 	<ate:htmlUnitDriver  />
 	
-	<ate:elementActionDef id="eadTestDropdownListSelect" elementFind="efDropdown" elementAction="eaSelect" />
-	<ate:elementFindByTagName id="efDropdown"
-		findByValue="select" />
-	<ate:dropdownListSelectAction id="eaSelect"
-		selections="Saab" />
+	<!-- here test case id has to be "testcase" -->
+	<ate:testCase id="testcase" testCaseName="assignValue">
+	
+		<ate:javaCodedStep id="javaStep1" stepName="javaStep1" elementActionDef="org.bigtester.ate.test.ead.JavaCodedStepFilloutTextArea" targetStep="false"></ate:javaCodedStep>
+		<ate:lastStep id="stepLastStep" stepName="stepLastStep" 
+			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
+		</ate:lastStep>
 
-<!-- 	<ate:javaCodedStep /> -->
+	</ate:testCase>
+	
 </beans>

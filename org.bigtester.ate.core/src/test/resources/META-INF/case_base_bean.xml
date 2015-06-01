@@ -13,6 +13,8 @@
 	<import resource="classpath:META-INF/testdb-services.xml" />
 	
 	<bean class="org.bigtester.ate.model.data.CaseDataProcessor" />
+	<bean class="org.bigtester.ate.model.casestep.JavaCodedStepBeanPostProcessor" />
+	<bean class="org.bigtester.ate.model.data.CaseDataProcessor" />
 	<bean class="org.bigtester.ate.model.page.elementaction.SendKeysActionPostBeanProcessor" />
 	<bean class="org.bigtester.ate.model.page.elementfind.ElementFinderIndexOfSameProcessor"/>
 	<bean id="StepDataLogger" class="org.bigtester.ate.model.casestep.StepDataLogger" />

@@ -115,4 +115,11 @@ public class TestDataException extends AbstractATEException {
 		this.message = message;
 		
 	}
+	
+	public TestDataException(String message, String errorCode, Throwable cause) {
+		super(message, errorCode, cause);
+		this.message = message;
+		
+	}
+	
 }

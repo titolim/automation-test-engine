@@ -57,7 +57,7 @@ public class AssignValueEADTest extends BigtesterProjectTest {
 //here, we need portable file path handling for different system
 		//getTestPage("file:///c:/index.html");
 		getTestPage("bigtesterTestNG/aut/textarea.html");
-		
+
 		MyWebElement<?> assignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValue");
 		assignV.doAction();

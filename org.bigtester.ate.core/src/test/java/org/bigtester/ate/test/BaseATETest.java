@@ -21,6 +21,7 @@
 package org.bigtester.ate.test;
 
 import java.io.IOException;
+
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -30,6 +31,7 @@ import static org.mockito.Mockito.mock;
 import java.sql.SQLException;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.TestProjectRunner;
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -41,6 +43,7 @@ import org.openqa.selenium.WebDriver.Options;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.PriorityOrdered;
@@ -58,6 +61,10 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		ApplicationContextAware, BeanFactoryPostProcessor, PriorityOrdered {
 
 	
+
+	/** The bd reg. */
+	@Nullable
+	transient private BeanDefinitionRegistry bdReg;
 	/** The mocked driver. */
 	final private WebDriver mockedDriver;
 	/** The my mocked driver. */
@@ -114,6 +121,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		mockedDriver = ateMock(WebDriver.class);
 		myMockedDriver = ateMock(IMyWebDriver.class);
 		options = ateMock(Options.class);
+		TestProjectRunner.registerXsdNameSpaceParsers();
 	}
 	
 	/**
@@ -142,6 +150,8 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
 
 		dbinit.initializeGlobalDataFile(getApplicationContext());
+		
+		
 
 	}
 
@@ -182,6 +192,27 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 	 */
 	public Options getWebDriverManage() {
 		return getOptions();
+	}
+
+
+
+	/**
+	 * @return the bdReg
+	 */
+	public BeanDefinitionRegistry getBdReg() {
+		final BeanDefinitionRegistry bdReg2 = bdReg;
+		if (bdReg2 == null) {
+			throw GlobalUtils.createNotInitializedException("beaddefregistry");
+		} else {
+			return bdReg2;
+		}
+	}
+
+	/**
+	 * @param bdReg the bdReg to set
+	 */
+	public void setBdReg(BeanDefinitionRegistry bdReg) {
+		this.bdReg = bdReg;
 	}
 	
 }

@@ -1,7 +1,7 @@
 /*******************************************************************************
  * ATE, Automation Test Engine
  *
- * Copyright 2015, Montreal PROT, or individual contributors as
+ * Copyright 2014, Montreal PROT, or individual contributors as
  * indicated by the @author tags or express copyright attribution
  * statements applied by the authors.  All third-party contributions are
  * distributed under license by Montreal PROT.
@@ -18,31 +18,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.data.exception;
+package org.bigtester.ate.annotation;
 
-// TODO: Auto-generated Javadoc
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.ElementType;
+
+
 /**
- * This class RuntimeDataException defines ....
+ * This class StepLoggable defines ....
  * @author Peidong Hu
  *
  */
-public class RuntimeDataException extends TestDataException {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7062627112068817356L;
-
-	/**
-	 * @param message
-	 * @param errorCode
-	 */
-	public RuntimeDataException(String message, String errorCode) {
-		super(message, errorCode);
-	}
-	
-	public RuntimeDataException(String message, String errorCode, Throwable cause) {
-		super(message, errorCode, cause);
-	}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(
+{
+    ElementType.TYPE
+})
+public @interface XsdBeanDefinitionParser {
 
 }

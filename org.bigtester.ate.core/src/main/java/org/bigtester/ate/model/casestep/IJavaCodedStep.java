@@ -18,31 +18,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.data.exception;
+package org.bigtester.ate.model.casestep;
+
+import org.bigtester.ate.model.data.exception.RuntimeDataException;
+import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException2;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class RuntimeDataException defines ....
+ * This class IElementStep defines ....
  * @author Peidong Hu
  *
  */
-public class RuntimeDataException extends TestDataException {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7062627112068817356L;
-
-	/**
-	 * @param message
-	 * @param errorCode
-	 */
-	public RuntimeDataException(String message, String errorCode) {
-		super(message, errorCode);
-	}
+public interface IJavaCodedStep extends ITestStep {
 	
-	public RuntimeDataException(String message, String errorCode, Throwable cause) {
-		super(message, errorCode, cause);
-	}
+	/**
+	 * Do step.
+	 *
+	 * @param myWebDriver the my web driver
+	 * @throws StepExecutionException2 the step execution exception2
+	 * @throws PageValidationException2 the page validation exception2
+	 * @throws RuntimeDataException the runtime data exception
+	 */
+	void doStep(IMyWebDriver myWebDriver) throws StepExecutionException2,
+	PageValidationException2, RuntimeDataException;
 
 }
