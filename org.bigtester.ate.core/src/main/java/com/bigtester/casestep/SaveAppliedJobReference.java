@@ -22,21 +22,17 @@ package com.bigtester.casestep;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
+import java.util.HashSet; 
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
-import org.bigtester.ate.GlobalUtils;
+import org.apache.commons.io.FileUtils; 
 import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.casestep.AbstractBaseJavaCodedStep;
 import org.bigtester.ate.model.casestep.IJavaCodedStep;
-import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.data.exception.RuntimeDataException; 
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
-import org.eclipse.jdt.annotation.Nullable;
+import org.bigtester.ate.model.page.exception.StepExecutionException2; 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -49,6 +45,7 @@ import org.openqa.selenium.WebElement;
 public class SaveAppliedJobReference extends AbstractBaseJavaCodedStep
 		implements IJavaCodedStep {
 
+	/** The Constant JOBREFERENCESSAVEFILE. */
 	final public static String JOBREFERENCESSAVEFILE = "temp_data/jobReferencesSaveFile"; 
 	
 	/**
@@ -79,14 +76,6 @@ public class SaveAppliedJobReference extends AbstractBaseJavaCodedStep
 
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void doStep(IMyWebDriver myWebDriver)
-			throws StepExecutionException2, PageValidationException2,
-			RuntimeDataException {
-		// TODO Auto-generated method stub
-
-	}
+	 
 
 }

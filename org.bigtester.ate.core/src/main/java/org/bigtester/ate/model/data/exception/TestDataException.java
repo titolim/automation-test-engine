@@ -116,6 +116,13 @@ public class TestDataException extends AbstractATEException {
 		
 	}
 	
+	/**
+	 * Instantiates a new test data exception.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 * @param cause the cause
+	 */
 	public TestDataException(String message, String errorCode, Throwable cause) {
 		super(message, errorCode, cause);
 		this.message = message;

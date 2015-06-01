@@ -41,6 +41,13 @@ public class RuntimeDataException extends TestDataException {
 		super(message, errorCode);
 	}
 	
+	/**
+	 * Instantiates a new runtime data exception.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 * @param cause the cause
+	 */
 	public RuntimeDataException(String message, String errorCode, Throwable cause) {
 		super(message, errorCode, cause);
 	}

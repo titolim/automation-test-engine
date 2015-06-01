@@ -61,6 +61,9 @@ public class AssignValueEADTest extends BigtesterProjectTest {
 		MyWebElement<?> assignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValue");
 		assignV.doAction();
+		MyWebElement<?> enterV = (MyWebElement<?>) getApplicationContext()
+				.getBean("eadEnter");
+		enterV.doAction();
 		
 		MyWebElement<?> prependAssignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValuePrepend");

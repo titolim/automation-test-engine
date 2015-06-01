@@ -22,29 +22,12 @@ package org.bigtester.ate.model.casestep;
 
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.annotation.XsdBeanDefinitionParser;
-import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
-import org.bigtester.ate.xmlschema.BaseTestStepBeanDefinitionParser;
-import org.bigtester.ate.xmlschema.IXsdBeanDefinitionParser;
-import org.eclipse.jdt.annotation.Nullable;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanDefinitionHolder;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.xml.BeanDefinitionParser;
-import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.util.StringUtils;
-import org.w3c.dom.Element;
+import org.bigtester.ate.model.page.exception.StepExecutionException2; 
+import org.eclipse.jdt.annotation.Nullable; 
+import org.springframework.beans.factory.annotation.Autowired;   
 
 // TODO: Auto-generated Javadoc
 /**
@@ -54,11 +37,18 @@ import org.w3c.dom.Element;
  */
 
 abstract public class AbstractBaseJavaCodedStep extends BaseTestStep{
+	
+	/** The my web driver. */
 	@Autowired
 	@Nullable
 	private IMyWebDriver myWebDriver;
 	
 	
+	/**
+	 * Gets the my web driver.
+	 *
+	 * @return the my web driver
+	 */
 	public IMyWebDriver getMyWebDriver() {
 		final IMyWebDriver myWebDriver2 = myWebDriver;
 		if (myWebDriver2== null) {
@@ -77,6 +67,17 @@ abstract public class AbstractBaseJavaCodedStep extends BaseTestStep{
 	public void setMyWebDriver(IMyWebDriver myD) {
 		myWebDriver = myD;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 * if user wants to use different webdriver than the default system one, please override this method.
+	 */
+	public void doStep(IMyWebDriver myWebDriver)
+			throws StepExecutionException2, PageValidationException2,
+			RuntimeDataException {
+		
+		return;//NOPMD
 
+	}
 	
 }

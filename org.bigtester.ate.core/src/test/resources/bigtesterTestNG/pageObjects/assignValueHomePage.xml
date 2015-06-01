@@ -21,7 +21,15 @@
 	<ate:elementFindByTagName id="efTextArea"
 		findByValue="textarea" />
 	<ate:assignValueAction id="eaAssginValue"
-		dataValue="helloworld /abc" />
+		dataValue="helloworld /abcddde" />
+		
+		<ate:elementActionDef id="eadEnter" elementFind="efTextArea" elementAction="eaEnter" />
+		<ate:sendKeysAction id="eaEnter" dataValue="\n"
+		/>
+		
+		
+		
+		
 
 <ate:elementActionDef id="eadAssignValuePrepend" elementFind="efTextArea" elementAction="eaAssginValuePrepend" />
 	<ate:assignValueAction id="eaAssginValuePrepend"

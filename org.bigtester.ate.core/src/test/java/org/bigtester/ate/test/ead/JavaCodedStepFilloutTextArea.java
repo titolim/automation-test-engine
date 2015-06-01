@@ -20,20 +20,11 @@
  *******************************************************************************/
 package org.bigtester.ate.test.ead;
 
-import java.util.ArrayList;
-
-import java.util.List;
-
-import org.bigtester.ate.constant.StepResultStatus;
-import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
+import org.bigtester.ate.model.casestep.AbstractBaseJavaCodedStep;
 import org.bigtester.ate.model.casestep.IJavaCodedStep;
-import org.bigtester.ate.model.data.IDataParser;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
-import org.bigtester.ate.model.page.page.IPageObject;
-import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -43,134 +34,11 @@ import org.openqa.selenium.WebElement;
  * @author Peidong Hu
  *
  */
-public class JavaCodedStepFilloutTextArea implements IJavaCodedStep {
+public class JavaCodedStepFilloutTextArea extends AbstractBaseJavaCodedStep implements IJavaCodedStep {
 
 	/** The testvalue. */
 	final public static String TESTVALUE = "ABCD";
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isTargetStep() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getCorrelatedOptionalStepsUtilInclusiveName() {
-		// TODO Auto-generated method stub
-		return "";
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int getCorrelatedOptionalStepsUtilInclusiveIndex() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOptionalStep() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setOptionalStep(boolean optionalStep) {
-		
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isPageValidation() {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Nullable
-	public IPageObject getPageObject() {
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Nullable
-	public IMyWebDriver getMyWebDriver() {
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getStepName() {
-		return "unitTestingJavaStep";
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Nullable
-	public String getStepDescription() {
-		
-		return "unit testing java step";
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setStepDescription(String stepDescription) {
-		
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<IExpectedResultAsserter> getExpectedResultAsserter() {
-		return  new ArrayList<IExpectedResultAsserter>();
-		
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@Nullable
-	public List<IDataParser> getDataHolders() {
-		
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isElementStepFlag() {
-		
-		return false;
-	}
+	
 
 	/**
 	 * {@inheritDoc}
@@ -179,53 +47,9 @@ public class JavaCodedStepFilloutTextArea implements IJavaCodedStep {
 	public void doStep() throws StepExecutionException2,
 			PageValidationException2, RuntimeDataException {
 		
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setStepResultStatus(StepResultStatus stepResultStatus) {
-		
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public StepResultStatus getStepResultStatus() {
-
-		return StepResultStatus.PASS;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isCorrectedOnTheFly() {
-
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setCorrectedOnTheFly(boolean correctedOnTheFly) {
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void doStep(IMyWebDriver myWebDriver)
-			throws StepExecutionException2, PageValidationException2,
-			RuntimeDataException {
-		WebElement webE = myWebDriver.getWebDriverInstance().findElement(By.tagName("textarea"));
+		WebElement webE = getMyWebDriver().getWebDriverInstance().findElement(By.tagName("textarea"));
 		webE.clear();
 		webE.sendKeys(TESTVALUE);
 	}
+
 }

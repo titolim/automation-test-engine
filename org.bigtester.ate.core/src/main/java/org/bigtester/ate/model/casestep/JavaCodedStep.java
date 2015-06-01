@@ -21,8 +21,7 @@
 package org.bigtester.ate.model.casestep;
 
 
-import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.annotation.XsdBeanDefinitionParser;
+import org.bigtester.ate.GlobalUtils; 
 import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -34,8 +33,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanDefinitionHolder;
+import org.springframework.beans.factory.config.BeanDefinition; 
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -52,7 +50,7 @@ import org.w3c.dom.Element;
  * @author Peidong Hu
  *
  */
-@XsdBeanDefinitionParser
+ 
 public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdBeanDefinitionParser{
 	
 	/** The my web driver. */
