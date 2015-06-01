@@ -33,6 +33,8 @@ import org.bigtester.ate.model.project.TestProject;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.eclipse.jdt.annotation.Nullable;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TestCase defines ....
@@ -60,6 +62,7 @@ public class TestCase {
 
 	/** The parent test project. */
 	@Nullable
+	@XStreamOmitField
 	private TestProject parentTestProject;
 	
 	/**

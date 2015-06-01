@@ -39,6 +39,8 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 // TODO: Auto-generated Javadoc
 /**
  * This class CaseTypeService defines ....
@@ -60,6 +62,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	final private TestCase parentTestCase;
 
 	/** The data holders. */
+	@XStreamOmitField
 	private List<IDataParser> dataHolders = new ArrayList<IDataParser>();
 
 //	/** The on the fly data holders. */
