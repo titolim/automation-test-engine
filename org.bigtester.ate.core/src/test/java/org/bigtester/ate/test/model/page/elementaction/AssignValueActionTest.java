@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.test.ead;
+package org.bigtester.ate.test.model.page.elementaction;
 
 
 import org.bigtester.ate.model.page.elementaction.IElementAction;
@@ -41,7 +41,7 @@ import org.testng.annotations.Test;
  *
  */
 @ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/assignValueAction.xml" })
-public class AssignValueEADTest extends BigtesterProjectTest {
+public class AssignValueActionTest extends BigtesterProjectTest {
 
 	/**
 	 * Ead test.
@@ -61,9 +61,6 @@ public class AssignValueEADTest extends BigtesterProjectTest {
 		MyWebElement<?> assignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValue");
 		assignV.doAction();
-		MyWebElement<?> enterV = (MyWebElement<?>) getApplicationContext()
-				.getBean("eadEnter");
-		enterV.doAction();
 		
 		MyWebElement<?> prependAssignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValuePrepend");

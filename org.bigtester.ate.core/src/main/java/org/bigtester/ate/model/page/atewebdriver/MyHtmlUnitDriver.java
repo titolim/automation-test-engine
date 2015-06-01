@@ -48,7 +48,7 @@ public class MyHtmlUnitDriver extends AbstractWebDriverBase implements IMyWebDri
 	public WebDriver getWebDriverInstance() {
 		WebDriver retVal = getWebDriver();
 		if (null == retVal) {
-			retVal = new HtmlUnitDriver();
+			retVal = new HtmlUnitDriver(true); //enable js by default
 		}
 		setWebDriver(retVal);
 		return retVal;

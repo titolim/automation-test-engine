@@ -27,12 +27,11 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:firefoxDriver  />
+	<ate:htmlUnitDriver  />
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="assignValue">
-	<ate:javaCodedStep id="javaStep1" stepName="javaStep1" elementActionDef="org.bigtester.ate.test.ead.JavaCodedStepFilloutTextArea" targetStep="false"></ate:javaCodedStep>
-		
+	 	
 		<ate:lastStep id="stepLastStep" stepName="stepLastStep"
 			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
 		</ate:lastStep>

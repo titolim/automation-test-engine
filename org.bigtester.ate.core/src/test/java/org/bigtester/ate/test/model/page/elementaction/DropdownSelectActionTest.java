@@ -18,14 +18,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.test.ead;
+package org.bigtester.ate.test.model.page.elementaction;
 
-import org.bigtester.ate.model.casestep.IJavaCodedStep;
+import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.page.elementaction.DropdownListSelectAction;
+import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -35,8 +39,8 @@ import org.testng.annotations.Test;
  * @author Peidong Hu
  *
  */
-@ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/javaCodedStep.xml" })
-public class JavaCodedStepEADTest extends BigtesterProjectTest {
+@ContextConfiguration(locations = { "classpath:bigtesterTestNG/pageObjects/dropdownListHomePage.xml" })
+public class DropdownSelectActionTest extends BigtesterProjectTest {
 
 	/**
 	 * Ead test.
@@ -47,19 +51,32 @@ public class JavaCodedStepEADTest extends BigtesterProjectTest {
 	 * @throws InterruptedException
 	 */
 	@Test(priority = 1)
-	public void javaCodedStepTest() throws PageValidationException2,
+	public void mainTest() throws PageValidationException2,
 			RuntimeDataException, StepExecutionException2, InterruptedException {
-		getTestPage("bigtesterTestNG/aut/textarea.html");
+		getTestPage("bigtesterTestNG/aut/dropdownList.html");
 
-		IJavaCodedStep assignV = (IJavaCodedStep) getApplicationContext()
-				.getBean("javaStep1");
-		assignV.doStep();
+		MyWebElement<?> ead = (MyWebElement<?>) getApplicationContext()
+				.getBean("eadTestDropdownListSelect");
+		ead.doAction();
 
-		String actualVal = getMyDriver().getWebDriverInstance()
-				.findElements(By.tagName("textarea")).get(0)
-				.getAttribute("value");
-		Assert.assertTrue(JavaCodedStepFilloutTextArea.TESTVALUE
-				.equals(actualVal));
+		Thread.sleep(3000);
+
+		ITestObjectAction<?> testobj = (ITestObjectAction<?>) ead
+				.getTestObjectAction();
+
+		if (testobj == null) {
+			Assert.assertTrue(false);
+		} else {
+			String selections = ((DropdownListSelectAction) GlobalUtils
+					.getTargetObject(testobj)).getSelections();
+
+			Select actualVal = new Select(getMyDriver().getWebDriverInstance()
+					.findElements(new By.ByTagName("select")).get(0));
+
+			Assert.assertTrue(selections.equals(actualVal
+					.getFirstSelectedOption().getText()));
+
+		}
 
 	}
 

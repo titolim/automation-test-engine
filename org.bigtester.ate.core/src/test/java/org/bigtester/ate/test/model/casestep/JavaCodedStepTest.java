@@ -18,38 +18,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.test.ead;
+package org.bigtester.ate.test.model.casestep;
 
-import org.bigtester.ate.model.casestep.AbstractBaseJavaCodedStep;
 import org.bigtester.ate.model.casestep.IJavaCodedStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.test.BigtesterProjectTest;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.springframework.test.context.ContextConfiguration;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-// TODO: Auto-generated Javadoc
 /**
- * This class JavaCodedStepTest defines ....
+ * 
  * @author Peidong Hu
  *
  */
-public class JavaCodedStepFilloutTextArea extends AbstractBaseJavaCodedStep implements IJavaCodedStep {
-
-	/** The testvalue. */
-	final public static String TESTVALUE = "ABCD";
-	
+@ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/javaCodedStep.xml" })
+public class JavaCodedStepTest extends BigtesterProjectTest {
 
 	/**
-	 * {@inheritDoc}
+	 * Ead test.
+	 * 
+	 * @throws RuntimeDataException
+	 * @throws PageValidationException2
+	 * @throws StepExecutionException2
+	 * @throws InterruptedException
 	 */
-	@Override
-	public void doStep() throws StepExecutionException2,
-			PageValidationException2, RuntimeDataException {
-		
-		WebElement webE = getMyWebDriver().getWebDriverInstance().findElement(By.tagName("textarea"));
-		webE.clear();
-		webE.sendKeys(TESTVALUE);
+	@Test(priority = 1)
+	public void javaCodedStepTest() throws PageValidationException2,
+			RuntimeDataException, StepExecutionException2, InterruptedException {
+		getTestPage("bigtesterTestNG/aut/textarea.html");
+
+		IJavaCodedStep assignV = (IJavaCodedStep) getApplicationContext()
+				.getBean("javaStep1");
+		assignV.doStep();
+
+		String actualVal = getMyDriver().getWebDriverInstance()
+				.findElements(By.tagName("textarea")).get(0)
+				.getAttribute("value");
+		Assert.assertTrue(JavaCodedStepFilloutTextArea.TESTVALUE
+				.equals(actualVal));
+
 	}
 
 }
