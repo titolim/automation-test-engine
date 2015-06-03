@@ -130,8 +130,11 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 			if (obj == null)
 				throw GlobalUtils.createInternalError("GenericTestCaseLogger");
 			prb = (Problem) ((IATEProblemCreator<?>) error).getAteProblem();
-			//TODO
-			if (null == prb) 
+			
+			if (null == prb) {
+				((IATEProblemCreator<?>) error).initAteProblemInstance(obj);
+				prb = (Problem) ((IATEProblemCreator<?>) error).getAteProblem();
+			}
 			ProblemLogbackHandler plbh = new ProblemLogbackHandler();
 
 			Problomatic.addProblemHandlerForProblem(prb, plbh);

@@ -74,11 +74,7 @@ public final class ATEProblemFactory implements IATEProblemFactory {
 		//TODO add more exception and problem type
 		synchronized (this) {
 			Problem retVal;
-			if (ateException instanceof StepExecutionException) {
-				retVal = new StepExecutionProblem(source,
-						(StepExecutionException) ateException);
-
-			} else if (ateException instanceof PageValidationException2) {
+			 if (ateException instanceof PageValidationException2) {
 				retVal = new PageValidationProblem2(source,
 						(PageValidationException2) ateException);
 			} else {
@@ -97,11 +93,7 @@ public final class ATEProblemFactory implements IATEProblemFactory {
 		//TODO add more exception and problem type
 		synchronized (this) {
 			IATECaseExecProblem retVal;
-			if (ateException instanceof StepExecutionException) {
-				retVal = (IATECaseExecProblem) new StepExecutionProblem(source,
-						(StepExecutionException) ateException);
-
-			} else if (ateException instanceof PageValidationException2) {
+			  if (ateException instanceof PageValidationException2) {
 				retVal = (IATECaseExecProblem) new PageValidationProblem2(source,
 						(PageValidationException2) ateException);
 			} else {

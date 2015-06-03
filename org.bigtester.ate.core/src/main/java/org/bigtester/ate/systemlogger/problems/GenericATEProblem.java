@@ -45,6 +45,8 @@ public class GenericATEProblem extends RawProblem {
 	
 	/** The fatal problem. */
 	private boolean fatalProblem;
+	
+	private int stepIndexJumpTo = -1;
 	/**
 	 * Instantiates a new generic ate problem.
 	 *
@@ -151,5 +153,19 @@ public class GenericATEProblem extends RawProblem {
 	 */
 	public void setFatalProblem(boolean fatalProblem) {
 		this.fatalProblem = fatalProblem;
+	}
+
+	/**
+	 * @return the stepIndexJumpTo
+	 */
+	public int getStepIndexJumpTo() {
+		return stepIndexJumpTo;
+	}
+
+	/**
+	 * @param stepIndexJumpTo the stepIndexJumpTo to set
+	 */
+	public void setStepIndexJumpTo(int stepIndexJumpTo) {
+		this.stepIndexJumpTo = stepIndexJumpTo;
 	}
 }

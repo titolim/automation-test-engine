@@ -65,7 +65,7 @@ public class StepExecExpectionTest extends BigtesterProjectTest {
 				.getBean("testStepException");
 		
 		assignStep.doStep();
-		
+		//TODO Use  stub to evaluate if the logging function has been invoked.
 	}
 
 }
