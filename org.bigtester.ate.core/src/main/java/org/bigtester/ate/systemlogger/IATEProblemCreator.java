@@ -18,38 +18,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.test.model.casestep;
+package org.bigtester.ate.systemlogger;
 
-import org.bigtester.ate.model.casestep.AbstractBaseJavaCodedStep;
-import org.bigtester.ate.model.casestep.IJavaCodedStep;
-import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.eclipse.jdt.annotation.Nullable;
+
 
 // TODO: Auto-generated Javadoc
 /**
- * This class JavaCodedStepTest defines ....
+ * This class IProblemCreator defines ....
  * @author Peidong Hu
  *
  */
-public class JavaCodedStepFilloutTextArea extends AbstractBaseJavaCodedStep implements IJavaCodedStep {
-
-	/** The testvalue. */
-	final public static String TESTVALUE = "ABCD";
+public interface IATEProblemCreator<T> {
 	
-
+	
 	/**
-	 * {@inheritDoc}
+	 * @param source
+	 * @param see
+	 * @return
 	 */
-	@Override
-	public void doStep() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
-		
-		WebElement webE = getMyWebDriver().getWebDriverInstance().findElement(By.tagName("textarea"));
-		webE.clear();
-		webE.sendKeys(TESTVALUE);
-	}
-
+	T initAteProblemInstance(Object source);
+	
+	/**
+	 * Gets the problem.
+	 *
+	 * @return the problem
+	 */
+	@Nullable
+	T getAteProblem();
 }

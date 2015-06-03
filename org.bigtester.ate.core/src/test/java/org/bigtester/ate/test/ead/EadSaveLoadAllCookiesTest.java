@@ -28,7 +28,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.casestep.HomeStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.openqa.selenium.Cookie;
@@ -97,11 +97,11 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	 * 
 	 * @throws RuntimeDataException
 	 * @throws PageValidationException2
-	 * @throws StepExecutionException2
+	 * @throws StepExecutionException
 	 */
 	@Test(priority = 2)
 	public void eadLoadCookiesTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2 {
+			RuntimeDataException, StepExecutionException {
 
 		WebDriver webDriver = getMyDriver().getWebDriverInstance();
 		webDriver.manage().deleteAllCookies();
@@ -122,11 +122,11 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	 *
 	 * @throws PageValidationException2 the page validation exception2
 	 * @throws RuntimeDataException the runtime data exception
-	 * @throws StepExecutionException2 the step execution exception2
+	 * @throws StepExecutionException the step execution exception2
 	 */
 	@Test(priority = 3)
 	public void eadLoadCookiesFileNotExistErrorRaisedTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2 {
+			RuntimeDataException, StepExecutionException {
 
 		WebDriver webDriver = getMyDriver().getWebDriverInstance();
 		webDriver.manage().deleteAllCookies();
@@ -148,11 +148,11 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	 *
 	 * @throws PageValidationException2 the page validation exception2
 	 * @throws RuntimeDataException the runtime data exception
-	 * @throws StepExecutionException2 the step execution exception2
+	 * @throws StepExecutionException the step execution exception2
 	 */
 	@Test(priority = 4)
 	public void eadLoadCookiesFileNotExistNoErrorRaiseTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2 {
+			RuntimeDataException, StepExecutionException {
 
 		WebDriver webDriver = getMyDriver().getWebDriverInstance();
 		webDriver.manage().deleteAllCookies();

@@ -27,7 +27,7 @@ import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -47,7 +47,7 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void doStep() throws StepExecutionException2,
+	public void doStep() throws StepExecutionException,
 			PageValidationException2, RuntimeDataException {
 
 		runSteps();
@@ -61,7 +61,7 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 	 * @throws StepExecutionException
 	 * @throws PageValidationException
 	 */
-	private void runSteps() throws StepExecutionException2,
+	private void runSteps() throws StepExecutionException,
 			PageValidationException2, RuntimeDataException {
 		
 		for (int i = 0; i < getStepSet().size(); i++) {

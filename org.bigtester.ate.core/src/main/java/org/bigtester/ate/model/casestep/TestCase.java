@@ -28,9 +28,11 @@ import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.project.TestProject;
 import org.bigtester.ate.model.utils.ThinkTime;
+import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.problems.IAteProblemImpl;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -174,7 +176,7 @@ public class TestCase {
 	 * @throws StepExecutionException
 	 * @throws PageValidationException
 	 */
-	public void goSteps() throws StepExecutionException2,
+	public void goSteps() throws StepExecutionException,
 			PageValidationException2, IllegalStateException,
 			RuntimeDataException {
 
@@ -206,7 +208,10 @@ public class TestCase {
 						
 					}
 				} else {
-						
+//						if (baee instanceof IATEProblemCreator) {
+//							IAteProblemImpl prob = ((IAteProblemImpl)((IATEProblemCreator<?>) baee).getAteProblem());
+//							prob.getCapability(type)
+//						}
 						throw baee;
 				}
 			} catch (Throwable e) { //NOPMD

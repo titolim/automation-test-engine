@@ -27,7 +27,7 @@ import org.bigtester.ate.model.casestep.ElementTestStep;
 import org.bigtester.ate.model.casestep.LastStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -53,11 +53,11 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 	 * 
 	 * @throws RuntimeDataException
 	 * @throws PageValidationException2
-	 * @throws StepExecutionException2 
+	 * @throws StepExecutionException 
 	 */
 	@Test(priority = 1)
 	public void eadHandleUnexpectedAlertTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2 {
+			RuntimeDataException, StepExecutionException {
 
 		getMyDriver().getWebDriverInstance();
 

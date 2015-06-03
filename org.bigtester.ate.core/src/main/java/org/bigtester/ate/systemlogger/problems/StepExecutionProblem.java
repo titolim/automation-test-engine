@@ -21,10 +21,11 @@
 package org.bigtester.ate.systemlogger.problems;
 
 import org.bigtester.ate.model.IATECaseExecException;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.elementfind.IElementFind;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.casestep.TestCase;
-
+import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -33,36 +34,36 @@ import org.bigtester.ate.model.casestep.TestCase;
  * @author Peidong Hu
  * 
  */
-public class StepExecutionProblem2 extends GenericATEProblem implements IATECaseExecProblem{
-	
-	
-	
+public class StepExecutionProblem extends GenericATEProblem implements
+		IATECaseExecProblem, IAteProblemImpl {
+
 	/** The problem test case. */
-	private final TestCase problemTestCase;	
+	private final TestCase problemTestCase;
 	/** The step exec exception. */
-	private final StepExecutionException2 stepExecException;
-	
+	private final StepExecutionException stepExecException;
+
 	/**
 	 * Instantiates a new page validation problem.
 	 *
-	 * @param source the source
-	 * @param see the see
-	 * @param pTc the tc
+	 * @param source
+	 *            the source
+	 * @param see
+	 *            the see
+	 * @param pTc
+	 *            the tc
 	 */
-	public StepExecutionProblem2(Object source, StepExecutionException2 see) {
+	public StepExecutionProblem(Object source, StepExecutionException see) {
 		super(source, see);
 		stepExecException = see;
 		problemTestCase = see.getCurrentTestCase();
 	}
-	
-	
 
 	/**
 	 * Gets the step exec exception.
 	 *
 	 * @return the stepExecException
 	 */
-	public StepExecutionException2 getStepExecException() {
+	public StepExecutionException getStepExecException() {
 		return stepExecException;
 	}
 
@@ -75,8 +76,6 @@ public class StepExecutionProblem2 extends GenericATEProblem implements IATECase
 		return problemTestCase;
 	}
 
-
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -85,9 +84,6 @@ public class StepExecutionProblem2 extends GenericATEProblem implements IATECase
 		return this.stepExecException.getCurrentTestCase();
 	}
 
-
-
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -96,19 +92,17 @@ public class StepExecutionProblem2 extends GenericATEProblem implements IATECase
 		return this.getCurrentTestCase().getCurrentTestStep();
 	}
 
-
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String getProblemMessage() {
-		String tmpStr =  this.getATECaseExecException().getMessage();
-		if (null == tmpStr) return "exception error meesage is not populated."; //NOPMD
-		else return tmpStr;
+		String tmpStr = this.getATECaseExecException().getMessage();
+		if (null == tmpStr)
+			return "exception error meesage is not populated."; // NOPMD
+		else
+			return tmpStr;
 	}
-
-
 
 	/**
 	 * {@inheritDoc}
@@ -117,6 +111,7 @@ public class StepExecutionProblem2 extends GenericATEProblem implements IATECase
 	public IATECaseExecException getATECaseExecException() {
 		return this.getStepExecException();
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -125,5 +120,17 @@ public class StepExecutionProblem2 extends GenericATEProblem implements IATECase
 		return this.getStepExecException().getErrorCode();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Nullable
+	public <T> T getCapability(Class<T> type) {
+		if (this instanceof IATECaseExecProblem) {
+			return (T) this; // NOPMD
+		} else {
+			return null;
+		}
+	}
 
 }

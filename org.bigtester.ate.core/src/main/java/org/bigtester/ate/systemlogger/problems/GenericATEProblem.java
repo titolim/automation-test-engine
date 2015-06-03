@@ -20,8 +20,11 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger.problems;
 
+import org.bigtester.ate.GlobalUtils;
 import org.bigtester.problomatic2.problems.RawProblem;
 import org.testng.internal.Utils;
+
+import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,6 +40,11 @@ public class GenericATEProblem extends RawProblem {
 	/** The short stack trace. */
 	private final String shortStackTrace;
 
+	/** The log level. */
+	private Level logLevel;
+	
+	/** The fatal problem. */
+	private boolean fatalProblem;
 	/**
 	 * Instantiates a new generic ate problem.
 	 *
@@ -59,6 +67,13 @@ public class GenericATEProblem extends RawProblem {
 			shortStackTrace = "shortstacktrace Internal error.";
 		else
 			shortStackTrace = tmp0;
+		final Level warn2 = Level.WARN;
+		if (warn2 == null) {
+			throw GlobalUtils.createInternalError("jvm");
+		} else {
+			this.logLevel = warn2;
+		}
+		this.fatalProblem = false;
 	}
 
 	/**
@@ -83,6 +98,13 @@ public class GenericATEProblem extends RawProblem {
 			shortStackTrace = "shortstacktrace Internal error.";
 		else
 			shortStackTrace = tmp0;
+		final Level warn2 = Level.WARN;
+		if (warn2 == null) {
+			throw GlobalUtils.createInternalError("jvm");
+		} else {
+			this.logLevel = warn2;
+		}
+		this.fatalProblem = false;
 	}
 
 	/**
@@ -101,5 +123,33 @@ public class GenericATEProblem extends RawProblem {
 	 */
 	public String getFullStackTrace() {
 		return fullStackTrace;
+	}
+
+	/**
+	 * @return the logLevel
+	 */
+	public Level getLogLevel() {
+		return logLevel;
+	}
+
+	/**
+	 * @param logLevel the logLevel to set
+	 */
+	public void setLogLevel(Level logLevel) {
+		this.logLevel = logLevel;
+	}
+
+	/**
+	 * @return the fatalProblem
+	 */
+	public boolean isFatalProblem() {
+		return fatalProblem;
+	}
+
+	/**
+	 * @param fatalProblem the fatalProblem to set
+	 */
+	public void setFatalProblem(boolean fatalProblem) {
+		this.fatalProblem = fatalProblem;
 	}
 }

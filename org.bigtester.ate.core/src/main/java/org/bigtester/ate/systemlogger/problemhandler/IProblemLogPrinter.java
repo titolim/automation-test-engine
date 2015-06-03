@@ -18,38 +18,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.test.model.casestep;
+package org.bigtester.ate.systemlogger.problemhandler;
 
-import org.bigtester.ate.model.casestep.AbstractBaseJavaCodedStep;
-import org.bigtester.ate.model.casestep.IJavaCodedStep;
-import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class JavaCodedStepTest defines ....
+ * This class IProblemLogPrinter defines ....
  * @author Peidong Hu
  *
  */
-public class JavaCodedStepFilloutTextArea extends AbstractBaseJavaCodedStep implements IJavaCodedStep {
-
-	/** The testvalue. */
-	final public static String TESTVALUE = "ABCD";
-	
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void doStep() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
-		
-		WebElement webE = getMyWebDriver().getWebDriverInstance().findElement(By.tagName("textarea"));
-		webE.clear();
-		webE.sendKeys(TESTVALUE);
-	}
-
+public interface IProblemLogPrinter {
+	void logging(Level logLevel);
 }

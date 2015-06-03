@@ -43,15 +43,17 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class GenericTestCaseLogger will handle errors happened inside of a
- * specific test case execution
+ * This class GenericTestCaseLogger will handle throwables created by ATE
+ * application These throwables are considered as application level throwables
+ * which is understoodable by ate 
+ * The name GenericTestCaseLogger is a bad name. Need to be changed
  * 
  * @author Peidong Hu
  * 
  */
 @Aspect
 public class GenericTestCaseLogger implements ApplicationContextAware {
-
+//TODO change the name to AteApplicationLevelLogger
 	/** The app context. */
 	@Nullable
 	@XStreamOmitField
@@ -121,29 +123,19 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 		Problem prb;
 
 		setAlreadyCasePointCut(error);
-
-		if (error instanceof AbstractATEException
-				&& error instanceof BaseATECaseExecE) {
+		// Only handle application logs
+		if (error instanceof IATEProblemCreator) {
 
 			Object obj = joinPoint.getTarget();
 			if (obj == null)
 				throw GlobalUtils.createInternalError("GenericTestCaseLogger");
-			{
-				IATEProblemFactory ipf = ATEProblemFactory.getInstance();
-				prb = ipf.getATEProblem(obj, (BaseATECaseExecE) error);
-				
-			}
+			prb = (Problem) ((IATEProblemCreator<?>) error).getAteProblem();
 
-		} else {
-			Object obj = joinPoint.getTarget();
-			if (obj == null)
-				throw GlobalUtils.createInternalError("GenericTestCaseLogger");
-			prb = new GenericATEProblem(obj, error); // NOPMD
+			ProblemLogbackHandler plbh = new ProblemLogbackHandler();
+
+			Problomatic.addProblemHandlerForProblem(prb, plbh);
+			Problomatic.handleProblem(prb);
 		}
-		ProblemLogbackHandler plbh = new ProblemLogbackHandler();
-
-		Problomatic.addProblemHandlerForProblem(prb, plbh);
-		Problomatic.handleProblem(prb);
 
 	}
 

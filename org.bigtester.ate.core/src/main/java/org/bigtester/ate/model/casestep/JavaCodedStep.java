@@ -26,7 +26,7 @@ import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.xmlschema.BaseTestStepBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.IXsdBeanDefinitionParser;
 import org.eclipse.jdt.annotation.Nullable;
@@ -175,7 +175,7 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 	* {@inheritDoc}
 	*/
 	@Override
-	public void doStep() throws StepExecutionException2,
+	public void doStep() throws StepExecutionException,
 			PageValidationException2, RuntimeDataException {
 		IMyWebDriver myWebDriver2 = myWebDriver;
 		if (myWebDriver2 == null ) throw GlobalUtils.createNotInitializedException("my web driver");
@@ -209,7 +209,7 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep, IXsdB
 	*/
 	@Override
 	public void doStep(IMyWebDriver myWebDriver)
-			throws StepExecutionException2, PageValidationException2,
+			throws StepExecutionException, PageValidationException2,
 			RuntimeDataException {
 		getUserJavaStep().doStep();
 		getUserJavaStep().doStep(myWebDriver);

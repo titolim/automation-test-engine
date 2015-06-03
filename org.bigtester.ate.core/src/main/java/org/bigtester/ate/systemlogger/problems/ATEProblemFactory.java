@@ -22,7 +22,7 @@ package org.bigtester.ate.systemlogger.problems;
 
 import org.bigtester.ate.model.AbstractATEException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.problomatic2.Problem;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -74,9 +74,9 @@ public final class ATEProblemFactory implements IATEProblemFactory {
 		//TODO add more exception and problem type
 		synchronized (this) {
 			Problem retVal;
-			if (ateException instanceof StepExecutionException2) {
-				retVal = new StepExecutionProblem2(source,
-						(StepExecutionException2) ateException);
+			if (ateException instanceof StepExecutionException) {
+				retVal = new StepExecutionProblem(source,
+						(StepExecutionException) ateException);
 
 			} else if (ateException instanceof PageValidationException2) {
 				retVal = new PageValidationProblem2(source,
@@ -97,9 +97,9 @@ public final class ATEProblemFactory implements IATEProblemFactory {
 		//TODO add more exception and problem type
 		synchronized (this) {
 			IATECaseExecProblem retVal;
-			if (ateException instanceof StepExecutionException2) {
-				retVal = (IATECaseExecProblem) new StepExecutionProblem2(source,
-						(StepExecutionException2) ateException);
+			if (ateException instanceof StepExecutionException) {
+				retVal = (IATECaseExecProblem) new StepExecutionProblem(source,
+						(StepExecutionException) ateException);
 
 			} else if (ateException instanceof PageValidationException2) {
 				retVal = (IATECaseExecProblem) new PageValidationProblem2(source,

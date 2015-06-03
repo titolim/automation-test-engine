@@ -28,7 +28,7 @@ import org.bigtester.ate.model.data.IDataParser;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.IPageObject; 
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -154,7 +154,7 @@ public interface ITestStep {
 	 * @throws PageValidationException 
 	 */
 
-	void doStep () throws StepExecutionException2, PageValidationException2, RuntimeDataException;
+	void doStep () throws StepExecutionException, PageValidationException2, RuntimeDataException;
 	
 	/**
 	 * Sets the step result status.

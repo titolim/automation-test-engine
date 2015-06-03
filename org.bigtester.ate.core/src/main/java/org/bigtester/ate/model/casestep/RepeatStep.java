@@ -36,7 +36,7 @@ import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.eclipse.jdt.annotation.Nullable;
@@ -193,7 +193,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void doStep() throws StepExecutionException2,
+	public void doStep() throws StepExecutionException,
 			PageValidationException2, RuntimeDataException {
 
 		repeatSteps();
@@ -243,7 +243,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 * @throws StepExecutionException
 	 * @throws PageValidationException
 	 */
-	private void repeatSteps() throws StepExecutionException2,
+	private void repeatSteps() throws StepExecutionException,
 			PageValidationException2, RuntimeDataException {
 		buildRepeatStepContext();
 		getApplicationContext().publishEvent(

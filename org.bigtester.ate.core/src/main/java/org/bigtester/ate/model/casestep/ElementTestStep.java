@@ -31,7 +31,7 @@ import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -64,7 +64,7 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 	 * @throws PageValidationException
 	 */
 	@StepLoggable
-	public void doStep() throws StepExecutionException2,
+	public void doStep() throws StepExecutionException,
 			PageValidationException2, RuntimeDataException {
 		try {
 			getMyWebElement().doAction();
@@ -75,22 +75,24 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 			// }
 			super.parseDataHolder();
 		} catch (NoSuchElementException e) {
-			StepExecutionException2 pve = new StepExecutionException2(
+			StepExecutionException pve = new StepExecutionException(
 					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
 							+ ExceptionMessage.MSG_SEPERATOR + e.getMessage(),
 					ExceptionErrorCode.WEBELEMENT_NOTFOUND,
 					this.getMyWebElement(), this.getMyWebDriver(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()));
 			pve.initCause(e);
+			pve.initAteProblemInstance(this);
 			throw pve;
 		} catch (TimeoutException et) {
-			StepExecutionException2 pve = new StepExecutionException2(
+			StepExecutionException pve = new StepExecutionException(
 					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
 							+ ExceptionMessage.MSG_SEPERATOR + et.getMessage(),
 					ExceptionErrorCode.WEBELEMENT_NOTFOUND,
 					this.getMyWebElement(), this.getMyWebDriver(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()));
 			pve.initCause(et);
+			pve.initAteProblemInstance(this);
 			throw pve;
 		} catch (Throwable otherE) {//NOPMD
 			getApplicationContext().publishEvent(

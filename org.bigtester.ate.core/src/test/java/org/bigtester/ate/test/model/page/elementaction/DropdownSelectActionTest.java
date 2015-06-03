@@ -25,7 +25,7 @@ import org.bigtester.ate.model.page.elementaction.DropdownListSelectAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.openqa.selenium.By;
@@ -47,12 +47,12 @@ public class DropdownSelectActionTest extends BigtesterProjectTest {
 	 * 
 	 * @throws RuntimeDataException
 	 * @throws PageValidationException2
-	 * @throws StepExecutionException2
+	 * @throws StepExecutionException
 	 * @throws InterruptedException
 	 */
 	@Test(priority = 1)
 	public void mainTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2, InterruptedException {
+			RuntimeDataException, StepExecutionException, InterruptedException {
 		getTestPage("bigtesterTestNG/aut/dropdownList.html");
 
 		MyWebElement<?> ead = (MyWebElement<?>) getApplicationContext()

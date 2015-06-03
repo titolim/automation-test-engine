@@ -18,11 +18,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.test.model.page.elementaction;
+package org.bigtester.ate.test.model.casestep;
 
 
 import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
+import org.bigtester.ate.model.casestep.ElementTestStep;
+import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
@@ -40,8 +42,8 @@ import org.testng.annotations.Test;
  * @author Peidong Hu
  *
  */
-@ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/assignValueAction.xml" })
-public class AssignValueActionTest extends BigtesterProjectTest {
+@ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/stepExecutionException.xml" })
+public class StepExecExpectionTest extends BigtesterProjectTest {
 
 	/**
 	 * Ead test.
@@ -56,42 +58,13 @@ public class AssignValueActionTest extends BigtesterProjectTest {
 			RuntimeDataException, StepExecutionException, InterruptedException {
 //here, we need portable file path handling for different system
 		//getTestPage("file:///c:/index.html");
-		getTestPage("bigtesterTestNG/aut/textarea.html");
+		getTestPage("bigtesterTestNG/aut/textarea_stepExecution.html");
 
-		MyWebElement<?> assignV = (MyWebElement<?>) getApplicationContext()
-				.getBean("eadAssignValue");
-		assignV.doAction();
 		
-		MyWebElement<?> prependAssignV = (MyWebElement<?>) getApplicationContext()
-				.getBean("eadAssignValuePrepend");
-		prependAssignV.doAction();
+		ITestStep assignStep = (ITestStep) getApplicationContext()
+				.getBean("testStepException");
 		
-		MyWebElement<?> appendAssignV = (MyWebElement<?>) getApplicationContext()
-				.getBean("eadAssignValueAppend");
-		appendAssignV.doAction();
-		
-		ITestObjectAction<?> prependActObj = (ITestObjectAction<?>) prependAssignV.getTestObjectAction();
-		
-		ITestObjectAction<?> appendActObj = (ITestObjectAction<?>) appendAssignV.getTestObjectAction();
-		
-		ITestObjectAction<?> replaceActObj = (ITestObjectAction<?>) assignV.getTestObjectAction();
-		if (prependActObj == null || appendActObj == null || replaceActObj == null) {
-			Assert.assertTrue(false);
-		} else {
-			IStepInputData prependInp = ((IElementAction) prependActObj).getDataValue();
-			IStepInputData appendInp = ((IElementAction) appendActObj).getDataValue();
-			IStepInputData replaceInp = ((IElementAction) replaceActObj).getDataValue();
-			
-			 if (prependInp == null || appendInp == null || replaceInp == null) {
-				 Assert.assertTrue(false);
-			 } else {
-				 String expectedVal = prependInp.getStrDataValue()  + replaceInp.getStrDataValue() + appendInp.getStrDataValue();
-				 String actualVal = getMyDriver().getWebDriverInstance().findElements(new By.ByTagName("textarea")).get(0).getAttribute("value");
-				 Assert.assertTrue(expectedVal.equals(actualVal));
-			 }
-		
-		}
-		
+		assignStep.doStep();
 		
 	}
 
