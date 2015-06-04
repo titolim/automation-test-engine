@@ -32,6 +32,7 @@ import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.project.TestProject;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.bigtester.ate.systemlogger.problems.IAteProblemImpl;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -66,7 +67,7 @@ public class TestCase {
 	@Nullable
 	@XStreamOmitField
 	private TestProject parentTestProject;
-	
+
 	/**
 	 * Instantiates a new test case.
 	 *
@@ -135,39 +136,40 @@ public class TestCase {
 	}
 
 	/**
-	 * Optional step population.
-	 * return the endindex;
+	 * Optional step population. return the endindex;
 	 */
-//	private int optionalStepPopulation(@Nullable ITestStep currentStep) {
-//		if (null == currentStep)
-//			throw GlobalUtils.createNotInitializedException("currentStep");
-//		int retVal = -1;//NOPMD
-//		if (!StringUtils.isEmpty(currentStep.getCorrelatedOptionalStepsUtilInclusiveName())) {
-//			currentStep.setOptionalStep(true);
-//			int startIndex = -1;//NOPMD
-//			int endIndex = -1;//NOPMD
-//			for (int index = 0; index < getTestStepList().size(); index++) {
-//				if (getTestStepList().get(index).getStepName() == currentStep
-//						.getStepName()) {
-//					startIndex = index;//NOPMD
-//				}
-//				if (getTestStepList().get(index).getStepName() == currentStep
-//						.getCorrelatedOptionalStepsUtilInclusiveName()) {
-//					endIndex = index;
-//					break;
-//				}
-//			}
-//			if (startIndex == -1 || endIndex == -1 || endIndex < startIndex)
-//				throw GlobalUtils
-//						.createInternalError("Optional Step util inclusive");
-//			for (int index2 = startIndex; index2 <= endIndex; index2++) {
-//				getTestStepList().get(index2).setOptionalStep(true);
-//			}
-//			retVal = endIndex;
-//		}
-//		return retVal;
-//		
-//	}
+	// private int optionalStepPopulation(@Nullable ITestStep currentStep) {
+	// if (null == currentStep)
+	// throw GlobalUtils.createNotInitializedException("currentStep");
+	// int retVal = -1;//NOPMD
+	// if
+	// (!StringUtils.isEmpty(currentStep.getCorrelatedOptionalStepsUtilInclusiveName()))
+	// {
+	// currentStep.setOptionalStep(true);
+	// int startIndex = -1;//NOPMD
+	// int endIndex = -1;//NOPMD
+	// for (int index = 0; index < getTestStepList().size(); index++) {
+	// if (getTestStepList().get(index).getStepName() == currentStep
+	// .getStepName()) {
+	// startIndex = index;//NOPMD
+	// }
+	// if (getTestStepList().get(index).getStepName() == currentStep
+	// .getCorrelatedOptionalStepsUtilInclusiveName()) {
+	// endIndex = index;
+	// break;
+	// }
+	// }
+	// if (startIndex == -1 || endIndex == -1 || endIndex < startIndex)
+	// throw GlobalUtils
+	// .createInternalError("Optional Step util inclusive");
+	// for (int index2 = startIndex; index2 <= endIndex; index2++) {
+	// getTestStepList().get(index2).setOptionalStep(true);
+	// }
+	// retVal = endIndex;
+	// }
+	// return retVal;
+	//
+	// }
 
 	/**
 	 * run steps.
@@ -183,7 +185,7 @@ public class TestCase {
 		for (int i = 0; i < getTestStepList().size(); i++) {
 
 			ITestStep currentTestStepTmp = getTestStepList().get(i);
-			
+
 			if (null == currentTestStepTmp) {
 				throw new IllegalStateException(
 						"Test Step List was not successfully initialized by ApplicationContext at list index"
@@ -195,40 +197,75 @@ public class TestCase {
 			try {
 				getCurrentTestStep().doStep();// NOPMD
 				getCurrentTestStep().setStepResultStatus(StepResultStatus.PASS);
-				//if (i == correlatedOptionlStepsEndIndex) correlatedOptionlStepsEndIndex = -1;//NOPMD
-			} catch (BaseATECaseExecE baee) {
-				
-				if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1) { //NOPMD
-					i = ((BaseATECaseExecE) baee).getStepIndexJumpTo(); //NOPMD
-				} else if (getCurrentTestStep().isOptionalStep()) {
-					getCurrentTestStep().setStepResultStatus(
-							StepResultStatus.SKIP);
-					if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
-						i = currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex();//NOPMD
-						
+				// if (i == correlatedOptionlStepsEndIndex)
+				// correlatedOptionlStepsEndIndex = -1;//NOPMD
+//			} catch (BaseATECaseExecE baee) {
+//
+//				if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1) { // NOPMD
+//					i = ((BaseATECaseExecE) baee).getStepIndexJumpTo(); // NOPMD
+//				} else if (getCurrentTestStep().isOptionalStep()) {
+//					getCurrentTestStep().setStepResultStatus(
+//							StepResultStatus.SKIP);
+//					if (currentTestStepTmp
+//							.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
+//						i = currentTestStepTmp
+//								.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
+//
+//					}
+//				} else {
+//					if (baee instanceof IATEProblemCreator) {
+//						IATEProblem prob = ((IATEProblemCreator) baee)
+//								.getAteProblem();
+//						if (prob == null)
+//							throw GlobalUtils
+//									.createNotInitializedException("exception problem.");
+//						prob.setFatality(false);
+//
+//					}
+//					throw baee;
+//				}
+			} catch (Throwable e) { // NOPMD
+				IATEProblem prob;
+				if (e instanceof IATEProblemCreator) {
+					prob = ((IATEProblemCreator) e).getAteProblem();
+					if (prob == null) {
+						prob = ((IATEProblemCreator) e)
+								.initAteProblemInstance(getCurrentTestStep());
+					}
+					if (prob.getStepIndexJumpTo() > -1) { // NOPMD
+						i = prob.getStepIndexJumpTo(); // NOPMD
+						prob.setFatalProblem(false);
+					} else if (getCurrentTestStep().isOptionalStep()) {
+						getCurrentTestStep().setStepResultStatus(
+								StepResultStatus.SKIP);
+						if (currentTestStepTmp
+								.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
+							i = currentTestStepTmp
+									.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
+
+						}
+						prob.setFatalProblem(false);
+					} else {
+						throw e;
 					}
 				} else {
-//						if (baee instanceof IATEProblemCreator) {
-//							IAteProblemImpl prob = ((IAteProblemImpl)((IATEProblemCreator<?>) baee).getAteProblem());
-//							prob.getCapability(type)
-//						}
-						throw baee;
-				}
-			} catch (Throwable e) { //NOPMD
-				if (getCurrentTestStep().isOptionalStep()) {
-					getCurrentTestStep().setStepResultStatus(
-							StepResultStatus.SKIP);
-					if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
-						i = currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex();//NOPMD
+					if (getCurrentTestStep().isOptionalStep()) {
+						getCurrentTestStep().setStepResultStatus(
+								StepResultStatus.SKIP);
+						if (currentTestStepTmp
+								.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
+							i = currentTestStepTmp
+									.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
+						}
+					} else if (getCurrentTestStep().isCorrectedOnTheFly()) {
+						getCurrentTestStep().setStepResultStatus(
+								StepResultStatus.PASS);
+					} else {
+						throw e;
 					}
-				} else if (getCurrentTestStep().isCorrectedOnTheFly()) {
-					getCurrentTestStep().setStepResultStatus(
-							StepResultStatus.PASS);
-				} else {
-					throw e;
 				}
 			}
-			
+
 			if (stepThinkTime > 0) {
 				ThinkTime thinkTimer = new ThinkTime(stepThinkTime);
 				thinkTimer.setTimer();
@@ -312,14 +349,16 @@ public class TestCase {
 	public TestProject getParentTestProject() {
 		final TestProject parentTestProject2 = parentTestProject;
 		if (parentTestProject2 == null) {
-			throw GlobalUtils.createNotInitializedException("parent test project");
+			throw GlobalUtils
+					.createNotInitializedException("parent test project");
 		} else {
 			return parentTestProject2;
 		}
 	}
 
 	/**
-	 * @param parentTestProject the parentTestProject to set
+	 * @param parentTestProject
+	 *            the parentTestProject to set
 	 */
 	public void setParentTestProject(TestProject parentTestProject) {
 		this.parentTestProject = parentTestProject;

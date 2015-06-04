@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger;
 
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 
 
@@ -29,7 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peidong Hu
  *
  */
-public interface IATEProblemCreator<T> {
+public interface IATEProblemCreator {
 	
 	
 	/**
@@ -37,7 +38,7 @@ public interface IATEProblemCreator<T> {
 	 * @param see
 	 * @return
 	 */
-	T initAteProblemInstance(Object source);
+	IATEProblem initAteProblemInstance(Object source);
 	
 	/**
 	 * Gets the problem.
@@ -45,5 +46,5 @@ public interface IATEProblemCreator<T> {
 	 * @return the problem
 	 */
 	@Nullable
-	T getAteProblem();
+	IATEProblem getAteProblem();
 }

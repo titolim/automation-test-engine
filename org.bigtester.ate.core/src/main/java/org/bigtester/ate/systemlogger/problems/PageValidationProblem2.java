@@ -22,9 +22,12 @@ package org.bigtester.ate.systemlogger.problems;
 
 
 import org.bigtester.ate.model.IATECaseExecException;
+import org.bigtester.ate.model.IATEException;
 import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
+
+import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**

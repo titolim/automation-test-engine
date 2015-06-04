@@ -20,9 +20,10 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger.problems;
 
-import org.bigtester.ate.model.IATECaseExecException;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.IATEException;
+import org.eclipse.jdt.annotation.Nullable;
+
+import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,42 +31,27 @@ import org.bigtester.ate.model.casestep.TestCase;
  * @author Peidong Hu
  *
  */
-public interface IATECaseExecProblem extends IATEProblem{
+public interface IATEProblem {
 	
 	/**
-	 * Gets the current test case.
+	 * Gets the problem message.
 	 *
-	 * @return the current test case
+	 * @return the problem message
 	 */
-	TestCase getCurrentTestCase();
+	@Nullable
+	String getProblemMessage();
 	
-	/**
-	 * Gets the current test step.
-	 *
-	 * @return the current test step
-	 */
-	ITestStep getCurrentTestStep();
+	boolean isFatalProblem();
 	
+	Level getLoggingLevel();
 	
-	/**
-	 * Gets the short problem message.
-	 *
-	 * @return the short problem message
-	 */
-	String getShortStackTrace();
+	void setLoggingLevel(Level loggingLevel);
 	
-	/**
-	 * Gets the ATE case exec exception.
-	 *
-	 * @return the ATE case exec exception
-	 */
-	IATECaseExecException getATECaseExecException();
+	void setFatalProblem(boolean fatal);
+	@Nullable
+	IATEException getAteException();
 	
-	/**
-	 * Gets the error code.
-	 *
-	 * @return the error code
-	 */
-	String getErrorCode();
-
+	void setAteException(IATEException ateE);
+	int getStepIndexJumpTo();
+	void setStepIndexJumpTo(int stepIndex);
 }

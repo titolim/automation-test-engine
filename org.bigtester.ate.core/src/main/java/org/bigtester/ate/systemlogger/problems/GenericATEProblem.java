@@ -21,7 +21,9 @@
 package org.bigtester.ate.systemlogger.problems;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.IATEException;
 import org.bigtester.problomatic2.problems.RawProblem;
+import org.eclipse.jdt.annotation.Nullable;
 import org.testng.internal.Utils;
 
 import ch.qos.logback.classic.Level;
@@ -33,7 +35,7 @@ import ch.qos.logback.classic.Level;
  * @author Peidong Hu
  *
  */
-public class GenericATEProblem extends RawProblem {
+public class GenericATEProblem extends RawProblem implements IATEProblem{
 	/** The full stack trace. */
 	private final String fullStackTrace;
 
@@ -41,12 +43,25 @@ public class GenericATEProblem extends RawProblem {
 	private final String shortStackTrace;
 
 	/** The log level. */
-	private Level logLevel;
+	private Level loggingLevel;
 	
 	/** The fatal problem. */
 	private boolean fatalProblem;
 	
 	private int stepIndexJumpTo = -1;
+	
+	@Nullable
+	private IATEException ateException;
+	@Nullable
+	private String problemMessage; 
+	
+	/**
+	 * @param problemMessage the problemMessage to set
+	 */
+	public final void setProblemMessage(String problemMessage) {
+		this.problemMessage = problemMessage;
+	}
+
 	/**
 	 * Instantiates a new generic ate problem.
 	 *
@@ -73,9 +88,10 @@ public class GenericATEProblem extends RawProblem {
 		if (warn2 == null) {
 			throw GlobalUtils.createInternalError("jvm");
 		} else {
-			this.logLevel = warn2;
+			this.loggingLevel = warn2;
 		}
-		this.fatalProblem = false;
+		this.fatalProblem = true;
+		this.problemMessage = exception.getMessage();
 	}
 
 	/**
@@ -104,7 +120,7 @@ public class GenericATEProblem extends RawProblem {
 		if (warn2 == null) {
 			throw GlobalUtils.createInternalError("jvm");
 		} else {
-			this.logLevel = warn2;
+			this.loggingLevel = warn2;
 		}
 		this.fatalProblem = false;
 	}
@@ -127,19 +143,6 @@ public class GenericATEProblem extends RawProblem {
 		return fullStackTrace;
 	}
 
-	/**
-	 * @return the logLevel
-	 */
-	public Level getLogLevel() {
-		return logLevel;
-	}
-
-	/**
-	 * @param logLevel the logLevel to set
-	 */
-	public void setLogLevel(Level logLevel) {
-		this.logLevel = logLevel;
-	}
 
 	/**
 	 * @return the fatalProblem
@@ -168,4 +171,51 @@ public class GenericATEProblem extends RawProblem {
 	public void setStepIndexJumpTo(int stepIndexJumpTo) {
 		this.stepIndexJumpTo = stepIndexJumpTo;
 	}
+	
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public Level getLoggingLevel() {
+		// TODO Auto-generated method stub
+		return loggingLevel;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public void setLoggingLevel(Level loggingLevel) {
+		this.loggingLevel = loggingLevel;
+	}
+
+	
+	/**
+	* {@inheritDoc}
+	*/
+	@Nullable
+	public IATEException getAteException() {
+		return ateException;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	
+	public void setAteException(IATEException ateE) {
+		this.ateException = ateE;
+		
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	@Nullable
+	public String getProblemMessage() {
+		// TODO Auto-generated method stub
+		return problemMessage;
+	}
+
+
 }

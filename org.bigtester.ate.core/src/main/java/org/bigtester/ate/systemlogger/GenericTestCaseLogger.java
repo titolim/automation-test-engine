@@ -120,8 +120,7 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 		if (isAlreadyCasePointCut(error)) {
 			return;
 		}
-		Problem prb;
-
+		
 		setAlreadyCasePointCut(error);
 		// Only handle application logs
 		if (error instanceof IATEProblemCreator) {
@@ -129,15 +128,14 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 			Object obj = joinPoint.getTarget();
 			if (obj == null)
 				throw GlobalUtils.createInternalError("GenericTestCaseLogger");
-			prb = (Problem) ((IATEProblemCreator<?>) error).getAteProblem();
+			Problem prb = (Problem) ((IATEProblemCreator) error).getAteProblem();
 			
 			if (null == prb) {
-				((IATEProblemCreator<?>) error).initAteProblemInstance(obj);
-				prb = (Problem) ((IATEProblemCreator<?>) error).getAteProblem();
+				prb = (Problem) GlobalUtils.getTargetObject(((IATEProblemCreator) error).initAteProblemInstance(obj));
 			}
 			ProblemLogbackHandler plbh = new ProblemLogbackHandler();
-
 			Problomatic.addProblemHandlerForProblem(prb, plbh);
+			//TODO customize handler, use reflection to register the handler in global static variable
 			Problomatic.handleProblem(prb);
 		}
 

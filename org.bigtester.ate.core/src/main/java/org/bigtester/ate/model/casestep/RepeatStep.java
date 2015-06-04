@@ -39,6 +39,8 @@ import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.model.utils.ThinkTime;
+import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.aop.support.AopUtils;
 
@@ -201,42 +203,6 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	}
 
 	/**
-	 * Optional step population. return the endindex;
-	 */
-//	private int optionalStepPopulation(@Nullable ITestStep currentStep) {
-//		if (null == currentStep)
-//			throw GlobalUtils.createNotInitializedException("currentStep");
-//		int retVal = -1; // NOPMD
-//		if (!StringUtils.isEmpty(currentStep
-//				.getCorrelatedOptionalStepsUtilInclusiveName())) {
-//			currentStep.setOptionalStep(true);
-//			int startIndex = -1;// NOPMD
-//			int endIndex = -1;// NOPMD
-//			for (int index = 0; index < getTestCase().getTestStepList().size(); index++) {
-//				if (getTestCase().getTestStepList().get(index).getStepName() == currentStep
-//						.getStepName()) {
-//					startIndex = index;// NOPMD
-//				}
-//				if (getTestCase().getTestStepList().get(index).getStepName() == currentStep
-//						.getCorrelatedOptionalStepsUtilInclusiveName()) {
-//					endIndex = index;
-//					break;
-//				}
-//			}
-//			if (startIndex == -1 || endIndex == -1 || endIndex < startIndex)
-//				throw GlobalUtils
-//						.createInternalError("Optional Step util inclusive");
-//			for (int index2 = startIndex; index2 <= endIndex; index2++) {
-//				getTestCase().getTestStepList().get(index2)
-//						.setOptionalStep(true);
-//			}
-//			retVal = endIndex;
-//		}
-//		return retVal;
-//
-//	}
-
-	/**
 	 * run steps.
 	 * 
 	 * @throws RuntimeDataException
@@ -288,38 +254,96 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 					getTestCase().getCurrentTestStep().doStep();// NOPMD
 					getTestCase().getCurrentTestStep().setStepResultStatus(
 							StepResultStatus.PASS);
-				} catch (BaseATECaseExecE baee) {
-					
-					if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1) { //NOPMD
-						i = ((BaseATECaseExecE) baee).getStepIndexJumpTo(); //NOPMD
-					} else if (getTestCase().getCurrentTestStep().isOptionalStep()) {
-						getTestCase().getCurrentTestStep().setStepResultStatus(
-								StepResultStatus.SKIP);
-						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
-							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
-							if (-1 == i) {
-								baee.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
-								thr = baee;//NOPMD
-							}
-						}
-					} else {
-						if (!this.continueOnFailure)
-						thr = baee;//NOPMD
-					}
-								
+//				} catch (BaseATECaseExecE baee) {
+//					
+//					if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1) { //NOPMD
+//						i = ((BaseATECaseExecE) baee).getStepIndexJumpTo(); //NOPMD
+//					} else if (getTestCase().getCurrentTestStep().isOptionalStep()) {
+//						getTestCase().getCurrentTestStep().setStepResultStatus(
+//								StepResultStatus.SKIP);
+//						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
+//							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+//							if (-1 == i) {
+//								baee.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
+//								thr = baee;//NOPMD
+//							}
+//						}
+//					} else {
+//						if (!this.continueOnFailure)
+//						thr = baee;//NOPMD
+//					}
 				} catch (Throwable e) { // NOPMD
-					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
-						getTestCase().getCurrentTestStep().setStepResultStatus(
-								StepResultStatus.SKIP);
-						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
-							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+					IATEProblem prob;
+					if (e instanceof IATEProblemCreator) {
+						prob = ((IATEProblemCreator) e).getAteProblem();
+						if (prob == null) {
+							prob = ((IATEProblemCreator) e)
+									.initAteProblemInstance(getTestCase().getCurrentTestStep());
 						}
-					} else if (getTestCase().getCurrentTestStep().isCorrectedOnTheFly()) {
-						getTestCase().getCurrentTestStep().setStepResultStatus(
-								StepResultStatus.PASS);
+//						if (prob.getStepIndexJumpTo() > -1) { // NOPMD
+//							i = prob.getStepIndexJumpTo(); // NOPMD
+//						} else if (getCurrentTestStep().isOptionalStep()) {
+//							getCurrentTestStep().setStepResultStatus(
+//									StepResultStatus.SKIP);
+//							if (currentTestStepTmp
+//									.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
+//								i = currentTestStepTmp
+//										.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
+//
+//							}
+//						} else {
+//							prob.setFatality(false);
+//							throw e;
+//						}
+						if (prob.getStepIndexJumpTo() > -1) { //NOPMD
+							i = prob.getStepIndexJumpTo(); //NOPMD
+							prob.setFatalProblem(false);
+						} else if (getTestCase().getCurrentTestStep().isOptionalStep()) {
+							getTestCase().getCurrentTestStep().setStepResultStatus(
+									StepResultStatus.SKIP);
+							if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
+								i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+								if (-1 == i) {
+									prob.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
+									thr = e;//NOPMD
+								}
+							}
+							prob.setFatalProblem(false);
+						} else {
+							if (!this.continueOnFailure)
+								thr = e;//NOPMD
+							else
+								prob.setFatalProblem(false);
+						}
 					} else {
-						thr = e;
+						if (getTestCase().getCurrentTestStep().isOptionalStep()) {
+							getTestCase().getCurrentTestStep().setStepResultStatus(
+									StepResultStatus.SKIP);
+							if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
+								i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+							}
+						} else if (getTestCase().getCurrentTestStep().isCorrectedOnTheFly()) {
+							getTestCase().getCurrentTestStep().setStepResultStatus(
+									StepResultStatus.PASS);
+						} else {
+							thr = e;
+						}
 					}
+					
+					/////
+//					if (getTestCase().getCurrentTestStep().isOptionalStep()) {
+//						getTestCase().getCurrentTestStep().setStepResultStatus(
+//								StepResultStatus.SKIP);
+//						if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
+//							i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+//						}
+//					} else if (getTestCase().getCurrentTestStep().isCorrectedOnTheFly()) {
+//						getTestCase().getCurrentTestStep().setStepResultStatus(
+//								StepResultStatus.PASS);
+//					} else {
+//						thr = e;
+//					}
+					
 				}
 
 				if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class) {

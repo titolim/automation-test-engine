@@ -43,7 +43,7 @@ import ch.qos.logback.classic.Level;
  * @author Peidong Hu
  * 
  */
-public class StepExecutionException extends BaseATECaseExecE implements IATEProblemCreator<IATECaseExecProblem>{
+public class StepExecutionException extends BaseATECaseExecE implements IATEProblemCreator{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 6019919237360483689L;
