@@ -30,8 +30,11 @@ import java.util.Set;
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.project.TestProject;
+import org.bigtester.ate.systemlogger.problemhandler.IATEProblemHandler;
+import org.bigtester.ate.systemlogger.problemhandler.ProblemHandlerRegistry;
 import org.bigtester.ate.xmlschema.IXsdBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.XsdNameSpaceParserRegistry;
+import org.bigtester.problomatic2.ProblemHandler;
 import org.dbunit.DatabaseUnitException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.reflections.Reflections;
@@ -41,7 +44,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.util.StringUtils;
-
 
 import com.github.javaparser.ParseException;
 
@@ -106,6 +108,7 @@ public final class TestProjectRunner {
 	 */
 	public static void runTest(@Nullable final String testProjectXml) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
 		registerXsdNameSpaceParsers();
+		registerProblemHandlers();
 		ApplicationContext context;
 		if (StringUtils.isEmpty(testProjectXml)) {
 			context = new ClassPathXmlApplicationContext(
@@ -138,7 +141,6 @@ public final class TestProjectRunner {
 		for (Class<? extends IXsdBeanDefinitionParser> parser:subTypes) {
 			try {
 				Object ins = parser.newInstance();
-//				Class[] argTypes = new Class[] { String.class };
 				
 				Method getParser = parser.getDeclaredMethod("getParser");
 				Method getElementName = parser.getDeclaredMethod("getXsdElementTag");
@@ -147,6 +149,43 @@ public final class TestProjectRunner {
 				String elementName = (String) getElementName.invoke(ins, (Object[])  null);
 				if (elementName == null || null == bDef) throw GlobalUtils.createNotInitializedException("elementname or beandefinition parser");
 				XsdNameSpaceParserRegistry.registerNameSpaceHandler(elementName, bDef);
+				
+			} catch (NoSuchMethodException | SecurityException e) {
+				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);//NOPMD
+			} catch (IllegalAccessException e) {
+				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);
+			} catch (IllegalArgumentException e) {
+				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);
+			} catch (InvocationTargetException e) {
+				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);
+			} catch (InstantiationException e) {
+				throw GlobalUtils.createNotInitializedException("class needs to provide a no argument constructor.", e);
+			}
+		}
+		
+		
+		
+	}
+
+	public static void registerProblemHandlers() {
+		Reflections reflections = new Reflections("org.bigtester.ate");
+		Set<Class<? extends IATEProblemHandler>> handlers = reflections.getSubTypesOf(IATEProblemHandler.class);
+		for (Class<? extends IATEProblemHandler> handler:handlers) {
+			try {
+				Object ins = handler.newInstance();
+				
+				Method getAttachedClassMethod = handler.getDeclaredMethod("getAttachedClass");
+				
+				Class<?> cls =  (Class<?>) getAttachedClassMethod.invoke(ins,(Object[]) null);
+				if (null == cls) {
+					ProblemHandler hlr = (ProblemHandler) ins;
+					if (hlr == null) throw GlobalUtils.createInternalError("object conversion");
+					ProblemHandlerRegistry.registerGenericProblemHandler(hlr);
+				} else {
+					ProblemHandler hlr = (ProblemHandler) ins;
+					if (hlr == null) throw GlobalUtils.createInternalError("object conversion");
+					ProblemHandlerRegistry.registerAttachedProblemHandler(cls, hlr);
+				}
 				
 			} catch (NoSuchMethodException | SecurityException e) {
 				throw GlobalUtils.createNotInitializedException("xsd name space parser", e);//NOPMD

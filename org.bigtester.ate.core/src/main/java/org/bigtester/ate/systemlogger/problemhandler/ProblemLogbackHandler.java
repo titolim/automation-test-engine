@@ -25,6 +25,7 @@ import java.util.Properties;
  
  
 
+
 import org.bigtester.ate.constant.LogbackTag;
 import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.casestep.TestCase;
@@ -46,7 +47,7 @@ import ch.qos.logback.classic.Level;
  * 
  */
 public class ProblemLogbackHandler extends AbstractProblemHandler implements
-		ProblemHandler {
+		IATEProblemHandler {
 
 	/** The Constant slf4jLogger. */
 
@@ -99,6 +100,15 @@ public class ProblemLogbackHandler extends AbstractProblemHandler implements
 	public void init(@Nullable Properties properties) throws InitException {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	@Nullable
+	public Class<?> getAttachedClass() {
+		return null;
 	}
 
 }

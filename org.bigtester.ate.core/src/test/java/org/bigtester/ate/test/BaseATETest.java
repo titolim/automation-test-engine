@@ -122,6 +122,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		myMockedDriver = ateMock(IMyWebDriver.class);
 		options = ateMock(Options.class);
 		TestProjectRunner.registerXsdNameSpaceParsers();
+		TestProjectRunner.registerProblemHandlers();
 	}
 	
 	/**

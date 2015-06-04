@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger;
 
+import java.util.List;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,11 +30,14 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.AbstractATEException;
+import org.bigtester.ate.systemlogger.problemhandler.ProblemHandlerRegistry;
 import org.bigtester.ate.systemlogger.problemhandler.ProblemLogbackHandler;
 import org.bigtester.ate.systemlogger.problems.ATEProblemFactory;
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.bigtester.ate.systemlogger.problems.IATEProblemFactory;
 import org.bigtester.problomatic2.Problem;
+import org.bigtester.problomatic2.ProblemHandler;
 import org.bigtester.problomatic2.Problomatic;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.BeansException;
@@ -128,13 +133,16 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 			Object obj = joinPoint.getTarget();
 			if (obj == null)
 				throw GlobalUtils.createInternalError("GenericTestCaseLogger");
-			Problem prb = (Problem) ((IATEProblemCreator) error).getAteProblem();
-			
-			if (null == prb) {
+			IATEProblem iPrb = ((IATEProblemCreator) error).getAteProblem();
+			Problem prb;
+			if (null == iPrb) {
 				prb = (Problem) GlobalUtils.getTargetObject(((IATEProblemCreator) error).initAteProblemInstance(obj));
+			} else {
+				prb = (Problem) GlobalUtils.getTargetObject(iPrb);
 			}
-			ProblemLogbackHandler plbh = new ProblemLogbackHandler();
-			Problomatic.addProblemHandlerForProblem(prb, plbh);
+			List<ProblemHandler> plbh = ProblemHandlerRegistry.getGenericProblemHandlers();
+			for (ProblemHandler hlr : plbh)
+				Problomatic.addProblemHandlerForProblem(prb, hlr);
 			//TODO customize handler, use reflection to register the handler in global static variable
 			Problomatic.handleProblem(prb);
 		}
