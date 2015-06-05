@@ -21,6 +21,7 @@
 package org.bigtester.ate.model.page.elementfind;
 
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.openqa.selenium.NoSuchElementException;
 
 // TODO: Auto-generated Javadoc
@@ -37,6 +38,6 @@ public interface ITestObjectFinder<T> {
 	 *            the find by value
 	 * @return the web element
 	 */
-	T doFind(IMyWebDriver myWebDriver) throws NoSuchElementException;
+	T doFind(IMyWebDriver myWebDriver) throws NoSuchElementException, BrowserUnexpectedException;
 	
 }

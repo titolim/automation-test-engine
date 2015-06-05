@@ -30,6 +30,7 @@ import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
@@ -74,7 +75,7 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 			// }
 			// }
 			super.parseDataHolder();
-		} catch (NoSuchElementException e) {
+		} catch (NoSuchElementException | BrowserUnexpectedException e) {
 			StepExecutionException pve = new StepExecutionException(
 					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
 							+ ExceptionMessage.MSG_SEPERATOR + e.getMessage(),

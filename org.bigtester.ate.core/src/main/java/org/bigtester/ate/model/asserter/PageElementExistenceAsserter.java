@@ -26,6 +26,7 @@ import org.bigtester.ate.model.data.IStepERValue;
 import org.bigtester.ate.model.data.ItemCompareResult;
 import org.bigtester.ate.model.data.StepErElementExistenceValue;
 import org.bigtester.ate.model.data.dbtable.StepErElementExistence;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.elementfind.IElementFind;
 import org.bigtester.ate.model.page.page.ATEPageFactory;
 import org.bigtester.ate.model.page.page.IATEPageFactory;
@@ -84,7 +85,7 @@ public class PageElementExistenceAsserter extends
 				getExecResult().getComparedItemResults().put(
 						sErEE.getIdColumn(), icr);
 				super.appendAssertReportMSG(icr);
-			} catch (NoSuchElementException | TimeoutException et) {
+			} catch (NoSuchElementException | TimeoutException |BrowserUnexpectedException et) {
 				ItemCompareResult icr = new ItemCompareResult(sErEE
 						.getElementFindBy().toString(),
 						sErEE.getElementFindByValue(),

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -46,7 +47,7 @@ public class BrowserWindow {
 	
 	/** The my wd. */
 	@XStreamOmitField
-	final private WebDriver myWd;  //NOPMD
+	final private IMyWebDriver myWd;  //NOPMD
 
 	/** The browser driver path */
 	@Nullable
@@ -79,7 +80,7 @@ public class BrowserWindow {
 	 * @param myWd
 	 *            the my wd
 	 */
-	public BrowserWindow(String winHandle, WebDriver myWd) {
+	public BrowserWindow(String winHandle, IMyWebDriver myWd) {
 		this.windowHandle = winHandle;
 		this.myWd = myWd;
 		this.closed = false;
@@ -87,12 +88,17 @@ public class BrowserWindow {
 
 	/**
 	 * Switch to main frame.
+	 * @throws BrowserUnexpectedException 
 	 */
-	public void switchToDefaultContent() {
+	public void switchToDefaultContent() throws BrowserUnexpectedException {
 		try {
-		myWd.switchTo().defaultContent();
+		myWd.getWebDriverInstance().switchTo().defaultContent();
+		}
 		catch (Throwable thr) {
-			throw 
+			
+			String msg = thr.getMessage();
+			if (null == msg) msg = "Can't switch to DefaultContent";
+			throw new BrowserUnexpectedException(thr,msg);
 		}
 		// }
 	}
@@ -102,7 +108,7 @@ public class BrowserWindow {
 	 */
 	public void maximize() {
 		obtainWindowFocus();
-		myWd.manage().window().maximize();
+		myWd.getWebDriverInstance().manage().window().maximize();
 	}
 
 	/**
@@ -110,20 +116,21 @@ public class BrowserWindow {
 	 */
 	public void close() {
 		obtainWindowFocus();
-		myWd.close();
+		myWd.getWebDriverInstance().close();
 		this.setClosed(true);
 	}
 
 	/**
 	 * Refresh frames.
+	 * @throws BrowserUnexpectedException 
 	 */
-	public void refreshFrames() {
+	public void refreshFrames() throws BrowserUnexpectedException {
 		obtainWindowFocus();
 
 		for (int i = 0; i < BrowserWindow.MAXFRAMEREFRESHTRYCOUNT; i++) {
 			try {
 				switchToDefaultContent();
-				List<WebElement> iframes = myWd.findElements(By
+				List<WebElement> iframes = myWd.getWebDriverInstance().findElements(By
 						.tagName("iframe"));
 				int index;
 				this.visibleFrames.clear();
@@ -134,13 +141,13 @@ public class BrowserWindow {
 					if (!iframe.isDisplayed()) {
 						continue;
 					}
-					WindowFrame winF = new WindowFrame(index, this.myWd, iframe);
+					WindowFrame winF = new WindowFrame(index, myWd.getWebDriverInstance(), iframe);
 					this.visibleFrames.add(winF);
 					switchToDefaultContent();
 					winF.refreshChildFrames();
 				}
 
-				List<WebElement> frames = myWd
+				List<WebElement> frames = myWd.getWebDriverInstance()
 						.findElements(By.tagName("frame"));
 				for (int indexj = 0; indexj < frames.size(); indexj++) {
 					WebElement frame = frames.get(indexj);
@@ -150,7 +157,7 @@ public class BrowserWindow {
 						continue;
 					}
 					WindowFrame winF = new WindowFrame(indexj + index,
-							this.myWd, frame);
+							myWd.getWebDriverInstance(), frame);
 					this.visibleFrames.add(winF);
 					switchToDefaultContent();
 					winF.refreshChildFrames();
@@ -168,7 +175,7 @@ public class BrowserWindow {
 	 * Obtain focus.
 	 */
 	public void obtainWindowFocus() {
-		myWd.switchTo().window(getWindowHandle());
+		myWd.getWebDriverInstance().switchTo().window(getWindowHandle());
 	}
 
 	/**
@@ -182,7 +189,7 @@ public class BrowserWindow {
 	 * @return the myWd
 	 */
 	public WebDriver getMyWd() {
-		return myWd;
+		return myWd.getWebDriverInstance();
 	}
 
 	/**

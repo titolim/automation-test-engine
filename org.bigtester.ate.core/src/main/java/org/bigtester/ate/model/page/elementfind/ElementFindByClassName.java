@@ -22,6 +22,7 @@ package org.bigtester.ate.model.page.elementfind;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -45,10 +46,11 @@ public class ElementFindByClassName extends AbstractElementFind implements
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BrowserUnexpectedException 
 	 */
 	@Override
 	public WebElement doFind(IMyWebDriver myWebDriver, final String findByValue)
-			throws NoSuchElementException {
+			throws NoSuchElementException, BrowserUnexpectedException {
 		final By findBy = By.className(findByValue);
 		if (null == findBy)
 			throw GlobalUtils.createInternalError("selenium By creation");

@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementaction;
 
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,6 +36,7 @@ public interface ITestWindowAction extends ITestObjectAction<String>{
 	 * 
 	 * @param we
 	 *            the we
+	 * @throws BrowserUnexpectedException 
 	 */
-	void doAction(String winHandle);
+	void doAction(String winHandle) throws BrowserUnexpectedException;
 }

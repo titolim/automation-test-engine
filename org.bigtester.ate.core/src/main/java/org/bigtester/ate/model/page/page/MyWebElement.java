@@ -23,6 +23,7 @@ package org.bigtester.ate.model.page.page;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectActionImpl;
 import org.bigtester.ate.model.page.elementaction.TestObjectAction;
@@ -30,6 +31,7 @@ import org.bigtester.ate.model.page.elementfind.ITestObjectFinder;
 import org.bigtester.ate.model.page.elementfind.ITestObjectFinderImpl;
 import org.bigtester.ate.model.page.elementfind.TestObjectFinder;
 import org.eclipse.jdt.annotation.Nullable;
+import org.openqa.selenium.NoSuchElementException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -87,8 +89,10 @@ public class MyWebElement<T> extends PageModelBase {
 	
 	/**
 	 * Do action.
+	 * @throws BrowserUnexpectedException 
+	 * @throws NoSuchElementException 
 	 */
-	public void doAction() {
+	public void doAction() throws NoSuchElementException, BrowserUnexpectedException {
 
 		final ITestObjectAction<T> testObjectAction2 = testObjectAction;
 		if (testObjectAction2 == null) {

@@ -26,6 +26,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
+import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -50,8 +54,9 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  */
 public class MultiWindowsHandler implements IMultiWindowsHandler,
 		WebDriverEventListener, ApplicationListener<AlertDialogAcceptedEvent> {
-
-	
+	@Nullable
+	@Autowired
+	private TestCase testCase;
 	/** The my wd. */
 	@XStreamOmitField
 	@Nullable
@@ -72,6 +77,12 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Nullable
 	private String mainWindowTitle;
 
+	private void resetWindows() {
+		windows.clear();
+		alerts.clear();
+		this.mainWindowHandler = null;
+		this.mainWindowTitle = null;
+	}
 	/**
 	 * @return the mainWindowTitle
 	 */
@@ -121,8 +132,9 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 *
 	 * @param winHandle
 	 *            the win handle
+	 * @throws BrowserUnexpectedException 
 	 */
-	public void closeWindow(String winHandle) {
+	public void closeWindow(String winHandle) throws BrowserUnexpectedException {
 		BrowserWindow closingWindow = getWindowByHandle(winHandle);
 		if (null == closingWindow) {
 			// if (winHandle.equals(getWindowOnFocusHandle())) {
@@ -182,8 +194,9 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 
 	/**
 	 * Close all windows except main window.
+	 * @throws BrowserUnexpectedException 
 	 */
-	public void closeAllWindowsExceptMainWindow() {
+	public void closeAllWindowsExceptMainWindow() throws BrowserUnexpectedException {
 
 		closeAllOtherWindows(getMainWindowHandler());
 
@@ -210,14 +223,15 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 * @param openWindowHandle
 	 *            the open window handle
 	 * @return true, if successful
+	 * @throws BrowserUnexpectedException 
 	 */
-	public boolean closeAllOtherWindows(String openWindowHandle) {
+	public boolean closeAllOtherWindows(String openWindowHandle) throws BrowserUnexpectedException {
 		for (BrowserWindow win : this.windows) {
 			if (!openWindowHandle.equalsIgnoreCase(win.getWindowHandle())) {
 				win.close();
 				try {
-					// test if there is alert. if no, refresh windows list
-					checkCloseWindowAlert(win.getWindowHandle());
+					
+					checkCloseWindowAlert(win.getWindowHandle());// test if there is alert. if no, refresh windows list
 				} catch (NoAlertPresentException noAlert) {
 					refreshWindowsList(getDriver(), false);
 				}
@@ -426,9 +440,10 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 *
 	 * @param webD
 	 *            the web d
+	 * @throws BrowserUnexpectedException 
 	 */
 	public void refreshWindowsList(@Nullable WebDriver webD,
-			boolean refreshFrameFlag) {
+			boolean refreshFrameFlag) throws BrowserUnexpectedException {
 		if (null == webD)
 			throw GlobalUtils.createNotInitializedException("Web Driver");
 		List<String> newAddedWinHandles = new ArrayList<String>();// NOPMD
@@ -465,7 +480,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 				}
 			}
 			if (!winAlreadyStored) {
-				BrowserWindow temp = new BrowserWindow(winH, getDriver());
+				BrowserWindow temp = new BrowserWindow(winH, getMyWd());
 				windows.add(temp);
 				newAddedWinHandles.add(winH);
 			}
@@ -511,16 +526,32 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Override
 	public void afterChangeValueOf(@Nullable WebElement arg0,
 			@Nullable WebDriver arg1) {
-		refreshWindowsList(arg1, true);
+		try {
+			refreshWindowsList(arg1, true);
+		} catch (BrowserUnexpectedException e) {
+			retryRefreshWindows(getMyWd().getWebDriverInstance());
+		}
 
 	}
 
+	private void retryRefreshWindows(WebDriver driver) {
+		this.resetWindows();
+		try {
+			refreshWindowsList(driver, true);
+		} catch (BrowserUnexpectedException e1) {
+			throw GlobalUtils.createInternalError("browser fatal error.", e1);//NOPMD
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterClickOn(@Nullable WebElement arg0, @Nullable WebDriver arg1) {
-		refreshWindowsList(arg1, true);
+		try {
+			refreshWindowsList(arg1, true);
+		} catch (BrowserUnexpectedException e) {
+			retryRefreshWindows(getMyWd().getWebDriverInstance());
+		}
 
 	}
 
@@ -539,8 +570,11 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 */
 	@Override
 	public void afterNavigateBack(@Nullable WebDriver arg0) {
-		refreshWindowsList(arg0, true);
-
+		try {
+			refreshWindowsList(arg0, true);
+		} catch (BrowserUnexpectedException e) {
+			retryRefreshWindows(getMyWd().getWebDriverInstance());
+		}
 	}
 
 	/**
@@ -548,7 +582,11 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 */
 	@Override
 	public void afterNavigateForward(@Nullable WebDriver arg0) {
-		refreshWindowsList(arg0, true);
+		try {
+			refreshWindowsList(arg0, true);
+		} catch (BrowserUnexpectedException e) {
+			retryRefreshWindows(getMyWd().getWebDriverInstance());
+		}
 
 	}
 
@@ -557,7 +595,11 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 */
 	@Override
 	public void afterNavigateTo(@Nullable String arg0, @Nullable WebDriver arg1) {
-		refreshWindowsList(arg1, true);
+		try {
+			refreshWindowsList(arg1, true);
+		} catch (BrowserUnexpectedException e) {
+			retryRefreshWindows(getMyWd().getWebDriverInstance());
+		}
 
 	}
 
@@ -566,7 +608,11 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 */
 	@Override
 	public void afterScript(@Nullable String arg0, @Nullable WebDriver arg1) {
-		refreshWindowsList(arg1, true);
+		try {
+			refreshWindowsList(arg1, true);
+		} catch (BrowserUnexpectedException e) {
+			retryRefreshWindows(getMyWd().getWebDriverInstance());
+		}
 
 	}
 
@@ -708,7 +754,12 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 			if (windows.get(i).getWindowHandle()
 					.equalsIgnoreCase(alertD.getClosingWindowHandle())) {
 				windows.get(i).setClosed(true);
-				refreshWindowsList(this.getDriver(), false);
+				try {
+					refreshWindowsList(this.getDriver(), false);
+				} catch (BrowserUnexpectedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 
@@ -732,6 +783,25 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 */
 	public void setMyWd(IMyWebDriver myWd) {
 		this.myWd = myWd;
+	}
+
+	/**
+	 * @return the testCase
+	 */
+	public TestCase getTestCase() {
+		final TestCase testCase2 = testCase;
+		if (testCase2 == null) {
+			throw GlobalUtils.createNotInitializedException("test case");
+		} else {
+			return testCase2;
+		}
+	}
+
+	/**
+	 * @param testCase the testCase to set
+	 */
+	public void setTestCase(TestCase testCase) {
+		this.testCase = testCase;
 	}
 
 }

@@ -28,6 +28,7 @@ import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.atewebdriver.WindowFrame;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.exception.PageFrameRefreshException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
@@ -80,9 +81,11 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 	 * @param findByValue
 	 *            the find by value
 	 * @return the web element
+	 * @throws BrowserUnexpectedException 
+	 * @throws NoSuchElementException 
 	 */
 	public abstract WebElement doFind(IMyWebDriver myWebDriver,
-			String findByValue);
+			String findByValue) throws NoSuchElementException, BrowserUnexpectedException;
 
 	/**
 	 * Instantiates a new abstract element find.
@@ -159,9 +162,10 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 	 * @return the web element
 	 * @throws NoSuchElementException
 	 *             the no such element exception
+	 * @throws BrowserUnexpectedException 
 	 */
 	public WebElement doFind(IMyWebDriver myWebDriver)
-			throws NoSuchElementException {
+			throws NoSuchElementException, BrowserUnexpectedException {
 
 		return doFind(myWebDriver, findByValue);
 	}
@@ -284,8 +288,9 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 	 * @param myWebDriver
 	 *            the my web driver
 	 * @return the web element
+	 * @throws BrowserUnexpectedException 
 	 */
-	protected WebElement findElement(final By findBy, IMyWebDriver myWebDriver) {
+	protected WebElement findElement(final By findBy, IMyWebDriver myWebDriver) throws BrowserUnexpectedException {
 		WebDriver webD = myWebDriver.getWebDriver();
 		if (null == webD) {
 			throw new IllegalStateException(

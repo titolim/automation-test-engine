@@ -49,7 +49,8 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	private static final long serialVersionUID = 6019919237360483689L;
 
 	/** The my web element. */
-	private final MyWebElement<?> myWebElement;
+	@Nullable
+	private MyWebElement<?> myWebElement;
 	
 	/** The ate problem. */
 	@Nullable
@@ -70,6 +71,13 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		this.myWebElement = myWebElement;
+		setMyWebDriver(myWebDriver);
+		setCurrentTestCase(currentTestCase);
+	}
+	
+	public StepExecutionException(String message, String errorCode,
+			IMyWebDriver myWebDriver, TestCase currentTestCase) {
+		super(message, errorCode, currentTestCase, myWebDriver);
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
 	}
@@ -97,9 +105,9 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	 * 
 	 * @return the myWebElement
 	 */
-	public MyWebElement<?> getMyWebElement() {
-		return myWebElement;
-	}
+//	public MyWebElement<?> getMyWebElement() {
+//		return myWebElement;
+//	}
 
 	/**
 	* {@inheritDoc}

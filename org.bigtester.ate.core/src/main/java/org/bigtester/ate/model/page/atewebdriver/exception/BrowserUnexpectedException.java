@@ -20,21 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver.exception;
 
-import org.bigtester.ate.model.BaseATECaseExecE;
-import org.bigtester.ate.model.IATECaseExecException;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
-import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.page.MyWebElement;
-import org.bigtester.ate.systemlogger.IATEProblemCreator;
-import org.bigtester.ate.systemlogger.LogbackWriter;
-import org.bigtester.ate.systemlogger.problemhandler.IProblemLogPrinter;
-import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
-import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
-import org.bigtester.ate.systemlogger.problems.IAteProblemImpl;
+import org.bigtester.ate.model.AbstractATEException;
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -43,17 +30,19 @@ import ch.qos.logback.classic.Level;
  * @author Peidong Hu
  * 
  */
-public class BrowserUnexpectedException extends BaseATECaseExecE implements IATEProblemCreator{
-
+public class BrowserUnexpectedException extends AbstractATEException{
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6192054488554647486L;
-
-	/** The ate problem. */
+	
+	/** The error code. */
+	public static String errorCode = "6192054488554647486L";
+	
+	/** The super cause. */
 	@Nullable
-	private BrowserUnexpectedProblem ateProblem; 
-
+	private Throwable superCause;
 
 	
 	/**
@@ -65,184 +54,26 @@ public class BrowserUnexpectedException extends BaseATECaseExecE implements IATE
 	 * @param myWebDriver the my web driver
 	 * @param currentTestCase the current test case
 	 */
-	public BrowserUnexpectedException(String message, String errorCode,
-			IMyWebDriver myWebDriver, TestCase currentTestCase) {
-		super(message, errorCode, currentTestCase, myWebDriver);
-		setMyWebDriver(myWebDriver);
-		setCurrentTestCase(currentTestCase);
+	public BrowserUnexpectedException(Throwable cause, String message) {
+		super(message, errorCode);
+		setSuperCause(cause);
 	}
 	
+	
+	
 	/**
-	 * Instantiates a new step execution exception2.
-	 *
-	 * @param message the message
-	 * @param errorCode the error code
-	 * @param myWebElement the my web element
-	 * @param myWebDriver the my web driver
-	 * @param currentTestCase the current test case
+	 * @return the superCause
 	 */
-	public BrowserUnexpectedException(String message, String errorCode,
-			IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo) {
-		super(message, errorCode, currentTestCase, myWebDriver);
-		setMyWebDriver(myWebDriver);
-		setCurrentTestCase(currentTestCase);
-		super.setStepIndexJumpTo(stepIndexJumpTo);
-	}
-
-	
-	/**
-	* {@inheritDoc}
-	*/
-	@Override
-	public IATECaseExecProblem initAteProblemInstance(Object ateProblemLocatin) {
-		StepExecutionProblem retVal = ateProblem;
-		if (null == retVal) {
-			retVal = new StepExecutionProblem(ateProblemLocatin, this);
-			ateProblem = retVal;
-		}
-		return retVal;
-	}
-	
-	
-
-	/**
-	 * This class StepExecutionProblem defines ....
-	 * 
-	 * @author Peidong Hu
-	 * 
-	 */
-	public class BrowserUnexpectedProblem extends GenericATEProblem implements IATECaseExecProblem, IProblemLogPrinter{
-		
-		
-		
-		/** The problem test case. */
-		private final TestCase problemTestCase;
-		
-		/** The step exec exception. */
-		private final BrowserUnexpectedException stepExecException;
-		
-		/**
-		 * Instantiates a new page validation problem.
-		 *
-		 * @param source the source
-		 * @param see the see
-		 * @param pTc the tc
-		 */
-		public BrowserUnexpectedProblem(Object source, BrowserUnexpectedException see) {
-			super(source, see);
-			stepExecException = see;
-			problemTestCase = see.getCurrentTestCase();
-		}
-		
-		
-
-		/**
-		 * Gets the step exec exception.
-		 *
-		 * @return the stepExecException
-		 */
-		public BrowserUnexpectedException getStepExecException() {
-			return stepExecException;
-		}
-
-		/**
-		 * Gets the problem test case.
-		 *
-		 * @return the problemTestCase
-		 */
-		public TestCase getProblemTestCase() {
-			return problemTestCase;
-		}
-
-
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public TestCase getCurrentTestCase() {
-			return this.stepExecException.getCurrentTestCase();
-		}
-
-
-
-		
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public ITestStep getCurrentTestStep() {
-			return this.getCurrentTestCase().getCurrentTestStep();
-		}
-
-
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public String getProblemMessage() {
-			String tmpStr =  this.getATECaseExecException().getMessage();
-			if (null == tmpStr) return "exception error meesage is not populated."; //NOPMD
-			else return tmpStr;
-		}
-
-
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public IATECaseExecException getATECaseExecException() {
-			return this.getStepExecException();
-		}
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public String getErrorCode() {
-			return this.getStepExecException().getErrorCode();
-		}
-
-
-
-		/**
-		* {@inheritDoc}
-		*/
-		@Override
-		@Nullable
-		public <T> T getCapability(Class<T> type) {
-			if (this instanceof IATECaseExecProblem) {
-				return (T) this; // NOPMD
-			} else {
-				return null;
-			}
-
-		}
-
-
-
-		/**
-		* {@inheritDoc}
-		*/
-		@Override
-		public void logging(Level logLevel) {
-			LogbackWriter.writeAppError("test printer interface.");
-			
-		}
-
-
-	}
-
-
-
-	/**
-	* {@inheritDoc}
-	*/
-	@Override
 	@Nullable
-	public StepExecutionProblem getAteProblem() {
-		return ateProblem;
+	public Throwable getSuperCause() {
+		return superCause;
+	}
+
+	/**
+	 * @param superCause the superCause to set
+	 */
+	public void setSuperCause(Throwable superCause) {
+		this.superCause = superCause;
 	}
 
 
