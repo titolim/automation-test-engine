@@ -89,8 +89,11 @@ public class BrowserWindow {
 	 * Switch to main frame.
 	 */
 	public void switchToDefaultContent() {
-		// if (!frames.isEmpty()) {
+		try {
 		myWd.switchTo().defaultContent();
+		catch (Throwable thr) {
+			throw 
+		}
 		// }
 	}
 
