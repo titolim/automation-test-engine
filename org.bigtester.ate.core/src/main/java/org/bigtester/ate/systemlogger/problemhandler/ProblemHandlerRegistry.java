@@ -20,10 +20,9 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger.problemhandler;
 
-import java.util.ArrayList;
-
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bigtester.problomatic2.Problem;
@@ -39,13 +38,13 @@ import org.bigtester.problomatic2.ProblemHandler;
 final public class ProblemHandlerRegistry {
 
 	/** The throwable attached problem handler registry. */
-	private static Map<Class<?>, List<ProblemHandler>> throwableAttachedProblemHandlerRegistry = new ConcurrentHashMap<Class<?>, List<ProblemHandler>>();// NOPMD
+	private static Map<Class<?>, Set<ProblemHandler>> throwableAttachedProblemHandlerRegistry = new ConcurrentHashMap<Class<?>, Set<ProblemHandler>>();// NOPMD
 
 	/** The problem attached problem handler registry. */
-	private static Map<Class<?>, List<ProblemHandler>> problemAttachedProblemHandlerRegistry = new ConcurrentHashMap<Class<?>, List<ProblemHandler>>();// NOPMD
+	private static Map<Class<?>, Set<ProblemHandler>> problemAttachedProblemHandlerRegistry = new ConcurrentHashMap<Class<?>, Set<ProblemHandler>>();// NOPMD
 
 	/** The generic problem handler registry. */
-	private static List<ProblemHandler> genericProblemHandlerRegistry = new ArrayList<ProblemHandler>();
+	private static Set<ProblemHandler> genericProblemHandlerRegistry = new HashSet<ProblemHandler>();
 
 	private ProblemHandlerRegistry() {
 
@@ -56,15 +55,15 @@ final public class ProblemHandlerRegistry {
 	 *
 	 * @return the all problem handlers
 	 */
-	public static List<ProblemHandler> getAllProblemHandlers() {
-		List<ProblemHandler> retVal = new ArrayList<ProblemHandler>();
-		for (Map.Entry<Class<?>, List<ProblemHandler>> entry : throwableAttachedProblemHandlerRegistry
+	public static Set<ProblemHandler> getAllProblemHandlers() {
+		Set<ProblemHandler> retVal = new HashSet<ProblemHandler>();
+		for (Map.Entry<Class<?>, Set<ProblemHandler>> entry : throwableAttachedProblemHandlerRegistry
 				.entrySet()) {
 			if (entry.getValue() != null) {
 				retVal.addAll(entry.getValue());
 			}
 		}
-		for (Map.Entry<Class<?>, List<ProblemHandler>> entry : problemAttachedProblemHandlerRegistry
+		for (Map.Entry<Class<?>, Set<ProblemHandler>> entry : problemAttachedProblemHandlerRegistry
 				.entrySet()) {
 			if (entry.getValue() != null) {
 				retVal.addAll(entry.getValue());
@@ -82,9 +81,9 @@ final public class ProblemHandlerRegistry {
 	 *            the attached prob
 	 * @return the problem attached problem handlers
 	 */
-	public static List<ProblemHandler> getProblemAttachedProblemHandlers(
+	public static Set<ProblemHandler> getProblemAttachedProblemHandlers(
 			Problem attachedProb) {
-		List<ProblemHandler> retVal = new ArrayList<ProblemHandler>();
+		Set<ProblemHandler> retVal = new HashSet<ProblemHandler>();
 		if (problemAttachedProblemHandlerRegistry.get(attachedProb.getClass()) != null) {
 			retVal.addAll(problemAttachedProblemHandlerRegistry
 					.get(attachedProb.getClass()));
@@ -99,7 +98,7 @@ final public class ProblemHandlerRegistry {
 	 *            the attached prob
 	 * @return the problem attached problem handlers
 	 */
-	public static List<ProblemHandler> getGenericProblemHandlers() {
+	public static Set<ProblemHandler> getGenericProblemHandlers() {
 		return genericProblemHandlerRegistry;
 	}
 	/**
@@ -109,9 +108,9 @@ final public class ProblemHandlerRegistry {
 	 *            the attached thr
 	 * @return the throwable attached problem handler
 	 */
-	public static List<ProblemHandler> getThrowableAttachedProblemHandler(
+	public static Set<ProblemHandler> getThrowableAttachedProblemHandler(
 			Throwable attachedThr) {
-		List<ProblemHandler> retVal = new ArrayList<ProblemHandler>();
+		Set<ProblemHandler> retVal = new HashSet<ProblemHandler>();
 		if (throwableAttachedProblemHandlerRegistry.get(attachedThr.getClass()) != null) {
 			retVal.addAll(throwableAttachedProblemHandlerRegistry
 					.get(attachedThr.getClass()));
@@ -130,8 +129,8 @@ final public class ProblemHandlerRegistry {
 	public static void registerAttachedProblemHandler(Class<?> cls,
 			ProblemHandler hlr) {
 		Class<?> superCls = cls.getSuperclass();
-		boolean throwableCls = false;
-		boolean problemCls = false;
+		boolean throwableCls = false;//NOPMD
+		boolean problemCls = false;//NOPMD
 		while (superCls != null) {
 			if (superCls.equals(Throwable.class)) {
 				throwableCls = true;
@@ -144,21 +143,23 @@ final public class ProblemHandlerRegistry {
 			superCls = superCls.getSuperclass();
 		}
 		if (throwableCls) {
-			if (throwableAttachedProblemHandlerRegistry.get(cls) == null) {
-				List<ProblemHandler> addit = new ArrayList<ProblemHandler>();
-				addit.add(hlr);
+			Set<ProblemHandler> probHs = throwableAttachedProblemHandlerRegistry.get(cls); 
+			if ( probHs  == null) {
+				Set<ProblemHandler> addit = new HashSet<ProblemHandler>();
+				addUniqueHandler(addit, hlr);
 				throwableAttachedProblemHandlerRegistry.put(cls, addit);
 			} else {
-				throwableAttachedProblemHandlerRegistry.get(cls).add(hlr);
+				addUniqueHandler(probHs, hlr);
 			}
 		}
 		if (problemCls) {
-			if (problemAttachedProblemHandlerRegistry.get(cls) == null) {
-				List<ProblemHandler> addit = new ArrayList<ProblemHandler>();
-				addit.add(hlr);
+			Set<ProblemHandler> probHs = problemAttachedProblemHandlerRegistry.get(cls);
+			if (probHs == null) {
+				Set<ProblemHandler> addit = new HashSet<ProblemHandler>();
+				addUniqueHandler(addit, hlr);
 				problemAttachedProblemHandlerRegistry.put(cls, addit);
 			} else {
-				problemAttachedProblemHandlerRegistry.get(cls).add(hlr);
+				addUniqueHandler(probHs, hlr);
 			}
 		}
 	}
@@ -170,7 +171,22 @@ final public class ProblemHandlerRegistry {
 	 *            the hlr
 	 */
 	public static void registerGenericProblemHandler(ProblemHandler hlr) {
-		genericProblemHandlerRegistry.add(hlr);
+		addUniqueHandler(genericProblemHandlerRegistry, hlr);
+	}
+	
+	private static void addUniqueHandler(Set<ProblemHandler> probHlrs, ProblemHandler hlr ) {
+		if (probHlrs.isEmpty()) probHlrs.add(hlr);
+		else {
+			boolean haveIt = false;//NOPMD
+			for (ProblemHandler pHlr : probHlrs) {
+				if (!pHlr.equals(hlr)) {
+					haveIt = true;
+					break;
+				}
+			}
+			if (!haveIt)
+				probHlrs.add(hlr);
+		}
 	}
 
 }

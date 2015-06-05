@@ -21,19 +21,11 @@
 package org.bigtester.ate.systemlogger.problemhandler;
 
 import java.util.Properties;
-
- 
- 
-
-
-import org.bigtester.ate.constant.LogbackTag;
+import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.casestep.TestCase;
-import org.bigtester.ate.systemlogger.LogbackWriter;
-import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
 import org.bigtester.problomatic2.InitException;
 import org.bigtester.problomatic2.Problem;
-import org.bigtester.problomatic2.ProblemHandler;
 import org.bigtester.problomatic2.handlers.AbstractProblemHandler;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -70,10 +62,10 @@ public class ProblemLogbackHandler extends AbstractProblemHandler implements
 
 		if (aProblem instanceof IProblemLogPrinter) {
 			final Level warn2 = Level.WARN;
-			if (warn2 != null) {
-				((IProblemLogPrinter) aProblem).logging(warn2);
+			if (warn2 == null) {
+				GlobalUtils.createInternalError("jvm logback level enum.");
 			} else {
-				
+				((IProblemLogPrinter) aProblem).logging(warn2);
 			}
 		}
 		//non application level error is not logged in application.log

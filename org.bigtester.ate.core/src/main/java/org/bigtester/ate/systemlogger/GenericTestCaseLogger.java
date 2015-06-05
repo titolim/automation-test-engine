@@ -21,6 +21,7 @@
 package org.bigtester.ate.systemlogger;
 
 import java.util.List;
+import java.util.Set;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -140,10 +141,10 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 			} else {
 				prb = (Problem) GlobalUtils.getTargetObject(iPrb);
 			}
-			List<ProblemHandler> plbh = ProblemHandlerRegistry.getGenericProblemHandlers();
+			Set<ProblemHandler> plbh = ProblemHandlerRegistry.getGenericProblemHandlers();
 			for (ProblemHandler hlr : plbh)
 				Problomatic.addProblemHandlerForProblem(prb, hlr);
-			//TODO customize handler, use reflection to register the handler in global static variable
+			
 			Problomatic.handleProblem(prb);
 		}
 
