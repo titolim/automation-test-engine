@@ -21,6 +21,7 @@
 package org.bigtester.ate.test.model.page.elementaction;
 
 
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.data.IStepInputData;
@@ -50,12 +51,11 @@ public class AssignValueActionTest extends BigtesterProjectTest {
 	 * @throws PageValidationException2
 	 * @throws StepExecutionException 
 	 * @throws InterruptedException 
+	 * @throws BrowserUnexpectedException 
 	 */
 	@Test(priority = 1)
 	public void assignValueEADTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException, InterruptedException {
-//here, we need portable file path handling for different system
-		//getTestPage("file:///c:/index.html");
+			RuntimeDataException, StepExecutionException, InterruptedException, BrowserUnexpectedException {
 		getTestPage("bigtesterTestNG/aut/textarea.html");
 
 		MyWebElement<?> assignV = (MyWebElement<?>) getApplicationContext()
@@ -69,6 +69,7 @@ public class AssignValueActionTest extends BigtesterProjectTest {
 		MyWebElement<?> appendAssignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValueAppend");
 		appendAssignV.doAction();
+		
 		
 		ITestObjectAction<?> prependActObj = (ITestObjectAction<?>) prependAssignV.getTestObjectAction();
 		

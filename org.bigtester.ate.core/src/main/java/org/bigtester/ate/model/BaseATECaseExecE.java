@@ -56,6 +56,13 @@ public class BaseATECaseExecE extends AbstractATEException implements IATECaseEx
 		this.myWebDriver = myWebDriver;
 		// TODO Auto-generated constructor stub
 	}
+	
+	public BaseATECaseExecE(final String message, final String errorCode, final TestCase currentTestCase, final IMyWebDriver myWebDriver, Throwable cause) {
+		super(message, errorCode, cause);
+		this.currentTestCase = currentTestCase;
+		this.myWebDriver = myWebDriver;
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * Gets the current test case.
 	 *

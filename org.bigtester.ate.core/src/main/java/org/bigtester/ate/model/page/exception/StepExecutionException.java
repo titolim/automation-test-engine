@@ -45,6 +45,10 @@ import ch.qos.logback.classic.Level;
  */
 public class StepExecutionException extends BaseATECaseExecE implements IATEProblemCreator{
 
+	public static final String MSG = "Step execution throwable";
+	
+	public static final String CODE = "6019919237360483689L";
+	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 6019919237360483689L;
 
@@ -74,9 +78,25 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
 	}
+
+	public StepExecutionException(String message, String errorCode,
+			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase, Throwable cause) {
+		super(message, errorCode, currentTestCase, myWebDriver, cause);
+		this.myWebElement = myWebElement;
+		setMyWebDriver(myWebDriver);
+		setCurrentTestCase(currentTestCase);
+	}
+
 	
 	public StepExecutionException(String message, String errorCode,
 			IMyWebDriver myWebDriver, TestCase currentTestCase) {
+		super(message, errorCode, currentTestCase, myWebDriver);
+		setMyWebDriver(myWebDriver);
+		setCurrentTestCase(currentTestCase);
+	}
+	
+	public StepExecutionException(String message, String errorCode,
+			IMyWebDriver myWebDriver, TestCase currentTestCase, Throwable cause) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
@@ -94,6 +114,15 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	public StepExecutionException(String message, String errorCode,
 			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo) {
 		super(message, errorCode, currentTestCase, myWebDriver);
+		this.myWebElement = myWebElement;
+		setMyWebDriver(myWebDriver);
+		setCurrentTestCase(currentTestCase);
+		super.setStepIndexJumpTo(stepIndexJumpTo);
+	}
+	
+	public StepExecutionException(String message, String errorCode,
+			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo, Throwable cause) {
+		super(message, errorCode, currentTestCase, myWebDriver, cause);
 		this.myWebElement = myWebElement;
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);

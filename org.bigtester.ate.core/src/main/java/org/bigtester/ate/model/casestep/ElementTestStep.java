@@ -69,36 +69,29 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 			PageValidationException2, RuntimeDataException {
 		try {
 			getMyWebElement().doAction();
-			// if (getExpectedResultAsserter() != null) {
-			// for (int i=0; i < getExpectedResultAsserter().size(); i++) {
-			// getExpectedResultAsserter().get(i).assertER();
-			// }
-			// }
 			super.parseDataHolder();
-		} catch (NoSuchElementException | BrowserUnexpectedException e) {
+		} catch (NoSuchElementException | BrowserUnexpectedException | TimeoutException e) {
 			StepExecutionException pve = new StepExecutionException(
 					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
 							+ ExceptionMessage.MSG_SEPERATOR + e.getMessage(),
 					ExceptionErrorCode.WEBELEMENT_NOTFOUND,
 					this.getMyWebElement(), this.getMyWebDriver(),
-					GlobalUtils.findTestCaseBean(getApplicationContext()));
+					GlobalUtils.findTestCaseBean(getApplicationContext()), e);
 			pve.initCause(e);
-			pve.initAteProblemInstance(this);
-			throw pve;
-		} catch (TimeoutException et) {
-			StepExecutionException pve = new StepExecutionException(
-					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
-							+ ExceptionMessage.MSG_SEPERATOR + et.getMessage(),
-					ExceptionErrorCode.WEBELEMENT_NOTFOUND,
-					this.getMyWebElement(), this.getMyWebDriver(),
-					GlobalUtils.findTestCaseBean(getApplicationContext()));
-			pve.initCause(et);
 			pve.initAteProblemInstance(this);
 			throw pve;
 		} catch (Throwable otherE) {//NOPMD
 			getApplicationContext().publishEvent(
 					new StepUnexpectedAlertEvent(this, otherE));
-			throw otherE;
+			StepExecutionException pve = new StepExecutionException(
+					StepExecutionException.MSG
+							+ ExceptionMessage.MSG_SEPERATOR + otherE.getMessage(),
+							StepExecutionException.CODE,
+					this.getMyWebElement(), this.getMyWebDriver(),
+					GlobalUtils.findTestCaseBean(getApplicationContext()), otherE);
+			pve.initCause(otherE);
+			pve.initAteProblemInstance(this);
+			throw pve;
 		}
 
 		List<IExpectedResultAsserter> asserterList = getExpectedResultAsserter();

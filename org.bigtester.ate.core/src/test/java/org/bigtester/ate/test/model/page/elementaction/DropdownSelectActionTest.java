@@ -21,6 +21,7 @@
 package org.bigtester.ate.test.model.page.elementaction;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.elementaction.DropdownListSelectAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
@@ -49,10 +50,11 @@ public class DropdownSelectActionTest extends BigtesterProjectTest {
 	 * @throws PageValidationException2
 	 * @throws StepExecutionException
 	 * @throws InterruptedException
+	 * @throws BrowserUnexpectedException 
 	 */
 	@Test(priority = 1)
 	public void mainTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException, InterruptedException {
+			RuntimeDataException, StepExecutionException, InterruptedException, BrowserUnexpectedException {
 		getTestPage("bigtesterTestNG/aut/dropdownList.html");
 
 		MyWebElement<?> ead = (MyWebElement<?>) getApplicationContext()

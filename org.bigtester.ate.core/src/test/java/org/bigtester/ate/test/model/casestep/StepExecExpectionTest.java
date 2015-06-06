@@ -21,19 +21,13 @@
 package org.bigtester.ate.test.model.casestep;
 
 
-import org.bigtester.ate.model.page.elementaction.IElementAction;
-import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
-import org.bigtester.ate.model.casestep.ElementTestStep;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
-import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
-import org.openqa.selenium.By;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
@@ -52,10 +46,11 @@ public class StepExecExpectionTest extends BigtesterProjectTest {
 	 * @throws PageValidationException2
 	 * @throws StepExecutionException 
 	 * @throws InterruptedException 
+	 * @throws BrowserUnexpectedException 
 	 */
 	@Test(priority = 1)
 	public void assignValueEADTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException, InterruptedException {
+			RuntimeDataException, StepExecutionException, InterruptedException, BrowserUnexpectedException {
 //here, we need portable file path handling for different system
 		//getTestPage("file:///c:/index.html");
 		getTestPage("bigtesterTestNG/aut/textarea_stepExecution.html");

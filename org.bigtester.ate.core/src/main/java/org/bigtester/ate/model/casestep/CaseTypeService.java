@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.ICaseServiceParsedDataParser;
@@ -176,7 +177,15 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 			//CaseTypeservice is considered as atomic step. We don't do step jump inside of the casetypeservice
 			//if error appears, directly, we exit the service and throw error.
 			mainDriver.quit();
-			throw t;
+			StepExecutionException pve = new StepExecutionException(
+					StepExecutionException.MSG
+							+ ExceptionMessage.MSG_SEPERATOR + t.getMessage(),
+							StepExecutionException.CODE,
+					this.getMyWebDriver(),
+					getParentTestCase(), t);
+			pve.initCause(t);
+			pve.initAteProblemInstance(this);
+			throw pve;
 		}
 
 	}
