@@ -56,9 +56,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	@Nullable
 	private MyWebElement<?> myWebElement;
 	
-	/** The ate problem. */
-	@Nullable
-	private StepExecutionProblem ateProblem; 
+	
 
 
 	
@@ -143,7 +141,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	*/
 	@Override
 	public IATECaseExecProblem initAteProblemInstance(Object ateProblemLocatin) {
-		StepExecutionProblem retVal = ateProblem;
+		StepExecutionProblem retVal = (StepExecutionProblem) ateProblem;
 		if (null == retVal) {
 			retVal = new StepExecutionProblem(ateProblemLocatin, this);
 			ateProblem = retVal;
@@ -289,7 +287,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	@Override
 	@Nullable
 	public StepExecutionProblem getAteProblem() {
-		return ateProblem;
+		return (StepExecutionProblem) ateProblem;
 	}
 
 

@@ -35,6 +35,8 @@ import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.IPageObject; 
+import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.springframework.context.ApplicationContext;
@@ -183,8 +185,12 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 							StepExecutionException.CODE,
 					this.getMyWebDriver(),
 					getParentTestCase(), t);
-			pve.initCause(t);
-			pve.initAteProblemInstance(this);
+			IATEProblem caseProb = pve.initAteProblemInstance(this);
+			if (t instanceof IATEProblemCreator) {
+				IATEProblem prob = ((IATEProblemCreator) t).getAteProblem();
+				if (null != prob)
+					caseProb.setFatalProblem(prob.isFatalProblem());
+			}
 			throw pve;
 		}
 

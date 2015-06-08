@@ -34,6 +34,8 @@ import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedExce
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
+import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 
@@ -70,15 +72,15 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 		try {
 			getMyWebElement().doAction();
 			super.parseDataHolder();
-		} catch (NoSuchElementException | BrowserUnexpectedException | TimeoutException e) {
+		} catch (NoSuchElementException | TimeoutException e) {
 			StepExecutionException pve = new StepExecutionException(
 					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
 							+ ExceptionMessage.MSG_SEPERATOR + e.getMessage(),
 					ExceptionErrorCode.WEBELEMENT_NOTFOUND,
 					this.getMyWebElement(), this.getMyWebDriver(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()), e);
-			pve.initCause(e);
-			pve.initAteProblemInstance(this);
+			IATECaseExecProblem prb =pve.initAteProblemInstance(this);
+			prb.setFatalProblem(false);
 			throw pve;
 		} catch (Throwable otherE) {//NOPMD
 			getApplicationContext().publishEvent(
@@ -89,8 +91,8 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 							StepExecutionException.CODE,
 					this.getMyWebElement(), this.getMyWebDriver(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()), otherE);
-			pve.initCause(otherE);
-			pve.initAteProblemInstance(this);
+			IATECaseExecProblem prb = pve.initAteProblemInstance(this);
+			prb.setFatalProblem(true);
 			throw pve;
 		}
 

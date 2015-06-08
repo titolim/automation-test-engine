@@ -295,10 +295,9 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 //							prob.setFatality(false);
 //							throw e;
 //						}
-						if (prob.getStepIndexJumpTo() > -1) { //NOPMD
+						if (!prob.isFatalProblem() && prob.getStepIndexJumpTo() > -1) { //NOPMD
 							i = prob.getStepIndexJumpTo(); //NOPMD
-							prob.setFatalProblem(false);
-						} else if (getTestCase().getCurrentTestStep().isOptionalStep()) {
+						} else if (!prob.isFatalProblem() && getTestCase().getCurrentTestStep().isOptionalStep()) {
 							getTestCase().getCurrentTestStep().setStepResultStatus(
 									StepResultStatus.SKIP);
 							if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
@@ -308,26 +307,23 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 									thr = e;//NOPMD
 								}
 							}
-							prob.setFatalProblem(false);
 						} else {
 							if (!this.continueOnFailure)
 								thr = e;//NOPMD
-							else
-								prob.setFatalProblem(false);
 						}
 					} else {
-						if (getTestCase().getCurrentTestStep().isOptionalStep()) {
-							getTestCase().getCurrentTestStep().setStepResultStatus(
-									StepResultStatus.SKIP);
-							if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
-								i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
-							}
-						} else if (getTestCase().getCurrentTestStep().isCorrectedOnTheFly()) {
-							getTestCase().getCurrentTestStep().setStepResultStatus(
-									StepResultStatus.PASS);
-						} else {
-							thr = e;
-						}
+//						if (getTestCase().getCurrentTestStep().isOptionalStep()) {
+//							getTestCase().getCurrentTestStep().setStepResultStatus(
+//									StepResultStatus.SKIP);
+//							if (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes().get(i)) {
+//								i = getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+//							}
+//						} else if (getTestCase().getCurrentTestStep().isCorrectedOnTheFly()) {
+//							getTestCase().getCurrentTestStep().setStepResultStatus(
+//									StepResultStatus.PASS);
+//						} else {
+							thr = e;//If exception was not handled, we don't know what the exception/throwable could cause in the ate, so we just stop the testcase.
+//						}
 					}
 					
 					/////

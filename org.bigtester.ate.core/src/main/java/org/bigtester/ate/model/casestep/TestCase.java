@@ -232,10 +232,9 @@ public class TestCase {
 						prob = ((IATEProblemCreator) e)
 								.initAteProblemInstance(getCurrentTestStep());
 					}
-					if (prob.getStepIndexJumpTo() > -1) { // NOPMD
+					if (!prob.isFatalProblem() && prob.getStepIndexJumpTo() > -1) { // NOPMD
 						i = prob.getStepIndexJumpTo(); // NOPMD
-						prob.setFatalProblem(false);
-					} else if (getCurrentTestStep().isOptionalStep()) {
+					} else if (!prob.isFatalProblem() && getCurrentTestStep().isOptionalStep()) {
 						getCurrentTestStep().setStepResultStatus(
 								StepResultStatus.SKIP);
 						if (currentTestStepTmp
@@ -244,25 +243,24 @@ public class TestCase {
 									.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
 
 						}
-						prob.setFatalProblem(false);
 					} else {
 						throw e;
 					}
 				} else {
-					if (getCurrentTestStep().isOptionalStep()) {
-						getCurrentTestStep().setStepResultStatus(
-								StepResultStatus.SKIP);
-						if (currentTestStepTmp
-								.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
-							i = currentTestStepTmp
-									.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
-						}
-					} else if (getCurrentTestStep().isCorrectedOnTheFly()) {
-						getCurrentTestStep().setStepResultStatus(
-								StepResultStatus.PASS);
-					} else {
+//					if (getCurrentTestStep().isOptionalStep()) {
+//						getCurrentTestStep().setStepResultStatus(
+//								StepResultStatus.SKIP);
+//						if (currentTestStepTmp
+//								.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
+//							i = currentTestStepTmp
+//									.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
+//						}
+//					} else if (getCurrentTestStep().isCorrectedOnTheFly()) {
+//						getCurrentTestStep().setStepResultStatus(
+//								StepResultStatus.PASS);
+//					} else {
 						throw e;
-					}
+//					}
 				}
 			}
 

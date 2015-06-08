@@ -21,7 +21,21 @@
 package org.bigtester.ate.model.data.exception;
 
 import org.bigtester.ate.model.AbstractATEException;
+import org.bigtester.ate.model.IATECaseExecException;
+import org.bigtester.ate.model.IATEException;
+import org.bigtester.ate.model.casestep.ITestStep;
+import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.page.exception.StepExecutionException.StepExecutionProblem;
+import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.LogbackWriter;
+import org.bigtester.ate.systemlogger.problemhandler.IProblemLogPrinter;
+import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
+import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
+import org.bigtester.ate.systemlogger.problems.IAteProblemImpl;
 import org.eclipse.jdt.annotation.Nullable;
+
+import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peidong Hu
  * 
  */
-public class TestDataException extends AbstractATEException {
+public class TestDataException extends AbstractATEException implements IATEProblemCreator{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -2675548817712757408L;
@@ -128,5 +142,73 @@ public class TestDataException extends AbstractATEException {
 		this.message = message;
 		
 	}
+	
+	/**
+	 * This class StepExecutionProblem defines ....
+	 * 
+	 * @author Peidong Hu
+	 * 
+	 */
+	public class TestDataProblem extends GenericATEProblem implements IATEProblem, IProblemLogPrinter{
+
+		/** The test data exception. */
+		private final transient TestDataException testDataException;
+
+		/**
+		 * Instantiates a new page validation problem.
+		 * 
+		 * @param source
+		 *            the source
+		 * @param tde
+		 *            the see
+		 */
+		public TestDataProblem(Object source, TestDataException tde) {
+			super(source, tde);
+			testDataException = tde;
+		}
+
+		/**
+		 * Gets the step exec exception.
+		 * 
+		 * @return the step exec exception
+		 */
+		public TestDataException getStepExecException() {
+			return testDataException;
+		}
+
+		/**
+		* {@inheritDoc}
+		*/
+		@Override
+		public void logging(Level logLevel) {
+			
+			LogbackWriter.writeAppError("test data test printer interface.");
+		}
+
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public IATEProblem initAteProblemInstance(Object ateProblemLocatin) {
+		TestDataProblem retVal = (TestDataProblem) ateProblem;
+		if (null == retVal) {
+			retVal = new TestDataProblem(ateProblemLocatin, this);
+			ateProblem = retVal;
+		}
+		return retVal;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	@Nullable
+	public IATEProblem getAteProblem() {
+		return (TestDataProblem) ateProblem;
+	}
+
+
 	
 }

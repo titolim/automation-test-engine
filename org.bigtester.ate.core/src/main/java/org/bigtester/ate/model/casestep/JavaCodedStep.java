@@ -29,6 +29,8 @@ import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
+import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.bigtester.ate.xmlschema.BaseTestStepBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.IXsdBeanDefinitionParser;
 import org.eclipse.jdt.annotation.Nullable;
@@ -200,10 +202,15 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 							+ ExceptionMessage.MSG_SEPERATOR + e.getMessage(),
 					ExceptionErrorCode.WEBELEMENT_NOTFOUND, myWebDriver2,
 					GlobalUtils.findTestCaseBean(getApplicationContext()), e);
-			pve.initCause(e);
-			pve.initAteProblemInstance(this);
+			
+			IATEProblem prob = pve.initAteProblemInstance(this);
+			prob.setFatalProblem(false);
 			throw pve;
+		
 		} catch (Throwable otherE) {// NOPMD
+			if (otherE instanceof IATEProblemCreator) {//NOPMD
+				throw otherE;
+			}
 			getApplicationContext().publishEvent(
 					new StepUnexpectedAlertEvent(this, otherE));
 			StepExecutionException pve = new StepExecutionException(
@@ -212,8 +219,9 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 					myWebDriver2,
 					GlobalUtils.findTestCaseBean(getApplicationContext()),
 					otherE);
-			pve.initCause(otherE);
-			pve.initAteProblemInstance(this);
+			
+			IATEProblem prob = pve.initAteProblemInstance(this);
+			prob.setFatalProblem(true);
 			throw pve;
 		}
 

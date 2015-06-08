@@ -20,6 +20,10 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
+import org.bigtester.ate.model.page.exception.StepExecutionException.StepExecutionProblem;
+import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
+import org.eclipse.jdt.annotation.Nullable;
+
 // TODO: Auto-generated Javadoc
 /**
  * This class Abstract defines ....
@@ -34,6 +38,9 @@ public abstract class AbstractATEException extends Exception {
 	/** The error code. */
 	private final String errorCode;
 
+	/** The ate problem. */
+	@Nullable
+	protected GenericATEProblem ateProblem; 
 		
 	/**
 	 * Gets the error code.
