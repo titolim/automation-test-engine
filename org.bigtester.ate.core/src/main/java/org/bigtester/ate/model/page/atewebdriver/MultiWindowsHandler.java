@@ -757,8 +757,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 				try {
 					refreshWindowsList(this.getDriver(), false);
 				} catch (BrowserUnexpectedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					retryRefreshWindows(getMyWd().getWebDriverInstance());
 				}
 			}
 		}

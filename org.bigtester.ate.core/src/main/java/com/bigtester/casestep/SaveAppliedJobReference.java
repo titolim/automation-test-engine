@@ -63,15 +63,19 @@ public class SaveAppliedJobReference extends AbstractBaseJavaCodedStep
 			
 			Set<String> lines = new HashSet<String>(FileUtils.readLines(new File(JOBREFERENCESSAVEFILE), "utf-8"));
 			if (lines.contains(jobApplyID)) {
-				throw new RuntimeDataException(ExceptionMessage.MSG_TESTDATA_DUPLICATED, ExceptionErrorCode.REPEATTESTDATA_DUPLICATED);
+				
+				RuntimeDataException rde = new RuntimeDataException(ExceptionMessage.MSG_TESTDATA_DUPLICATED, ExceptionErrorCode.REPEATTESTDATA_DUPLICATED);
+				rde.initAteProblemInstance(this).setFatalProblem(false);
+				throw rde;
 			}
 			else {
 				lines.add(jobApplyID);
 				FileUtils.writeLines(new File(JOBREFERENCESSAVEFILE), lines);
 			}
 		} catch (IOException e) {
-			//TODO change runtimedataexception to include originating error
-			throw new RuntimeDataException(ExceptionMessage.MSG_RUNTIMEDATA_NOTFOUND, ExceptionErrorCode.RUNTIMEDATA_NOTFOUND, e);
+			RuntimeDataException rde = new RuntimeDataException(ExceptionMessage.MSG_RUNTIMEDATA_NOTFOUND, ExceptionErrorCode.RUNTIMEDATA_NOTFOUND, e);
+			rde.initAteProblemInstance(this).setFatalProblem(true);
+			throw rde;
 		}
 
 	}
