@@ -174,8 +174,9 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 			}
 			
 			retVal = new ChromeDriver(options);
+			setWebDriver(retVal);
 		}
-		setWebDriver(retVal);
+		
 		return retVal;
 	}
 
