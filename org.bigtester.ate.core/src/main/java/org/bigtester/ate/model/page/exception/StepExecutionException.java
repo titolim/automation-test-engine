@@ -28,7 +28,8 @@ import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.LogbackWriter;
-import org.bigtester.ate.systemlogger.problemhandler.IProblemLogPrinter;
+import org.bigtester.ate.systemlogger.LogMessage;
+import org.bigtester.ate.systemlogger.problemhandler.IProblemLogMessenger;
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
 import org.bigtester.ate.systemlogger.problems.IAteProblemImpl;
@@ -197,7 +198,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	 * @author Peidong Hu
 	 * 
 	 */
-	public class StepExecutionProblem extends GenericATEProblem implements IATECaseExecProblem, IAteProblemImpl, IProblemLogPrinter{
+	public class StepExecutionProblem extends GenericATEProblem implements IATECaseExecProblem, IAteProblemImpl, IProblemLogMessenger{
 		
 		
 		
@@ -307,13 +308,27 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 
 
 
+
+
 		/**
-		* {@inheritDoc}
-		*/
+		 * {@inheritDoc}
+		 */
 		@Override
-		public void logging(Level logLevel) {
-			LogbackWriter.writeAppError("test printer interface.");
+		public LogMessage getLogMessage() {
+			String errorMsg = "";
+			String warnMsg = "";
+			if (isFatalProblem()) {
+				errorMsg = "This throwable " + this.getClass().getCanonicalName() +"  is fatal for test case: " 
+						+ this.getCurrentTestCase().getTestCaseName() 
+						+ " in step: " + this.getCurrentTestStep().getStepName();
+				
+			} else {
+				warnMsg = "This step producing throwable  " + this.getClass().getCanonicalName() +"  is optional for test case: " 
+						+ this.getCurrentTestCase().getTestCaseName() 
+						+ " in step: " + this.getCurrentTestStep().getStepName();
+			}
 			
+			return new LogMessage(errorMsg, warnMsg);
 		}
 
 

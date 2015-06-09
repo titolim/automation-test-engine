@@ -21,7 +21,11 @@
 package org.bigtester.ate.systemlogger.problemhandler;
 
 import java.util.Properties;
+
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.IATEException;
+import org.bigtester.ate.systemlogger.LogbackWriter;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.bigtester.problomatic2.InitException;
 import org.bigtester.problomatic2.Problem;
 import org.bigtester.problomatic2.handlers.AbstractProblemHandler;
@@ -57,12 +61,18 @@ public class ProblemLogbackHandler extends AbstractProblemHandler implements
 		// bug)
 		
 
-		if (aProblem instanceof IProblemLogPrinter) {
+		if (aProblem instanceof IProblemLogMessenger) {
 			final Level warn2 = Level.WARN;
 			if (warn2 == null) {
 				GlobalUtils.createInternalError("jvm logback level enum.");
 			} else {
-				((IProblemLogPrinter) aProblem).logging(warn2);
+				Class<?> cls = aProblem.getSource().getClass();
+				if (cls == null) throw GlobalUtils.createInternalError("jvm");
+				IATEException ateE = ((IATEProblem)aProblem).getAteException();
+				if (null == ateE) 
+					LogbackWriter.writeLogbackAppLog(((IProblemLogMessenger) aProblem).getLogMessage(), cls);
+				else 
+					LogbackWriter.writeLogbackAppLog(((IProblemLogMessenger) aProblem).getLogMessage(), cls, (Throwable) ateE);
 			}
 		}
 		//non application level error is not logged in application.log

@@ -65,6 +65,8 @@ public class SaveAppliedJobReference extends AbstractBaseJavaCodedStep
 			if (lines.contains(jobApplyID)) {
 				
 				RuntimeDataException rde = new RuntimeDataException(ExceptionMessage.MSG_TESTDATA_DUPLICATED, ExceptionErrorCode.REPEATTESTDATA_DUPLICATED);
+				rde.setTestCaseName(this.getTestCase().getTestCaseName());
+				rde.setTestStepName(this.getTestCase().getCurrentTestStep().getStepName());
 				rde.initAteProblemInstance(this).setFatalProblem(false);
 				throw rde;
 			}
@@ -74,6 +76,8 @@ public class SaveAppliedJobReference extends AbstractBaseJavaCodedStep
 			}
 		} catch (IOException e) {
 			RuntimeDataException rde = new RuntimeDataException(ExceptionMessage.MSG_RUNTIMEDATA_NOTFOUND, ExceptionErrorCode.RUNTIMEDATA_NOTFOUND, e);
+			rde.setTestCaseName(this.getTestCase().getTestCaseName());
+			rde.setTestStepName(this.getTestCase().getCurrentTestStep().getStepName());
 			rde.initAteProblemInstance(this).setFatalProblem(true);
 			throw rde;
 		}

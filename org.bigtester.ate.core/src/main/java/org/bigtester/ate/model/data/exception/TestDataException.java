@@ -22,8 +22,9 @@ package org.bigtester.ate.model.data.exception;
 
 import org.bigtester.ate.model.AbstractATEException;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.LogMessage;
 import org.bigtester.ate.systemlogger.LogbackWriter;
-import org.bigtester.ate.systemlogger.problemhandler.IProblemLogPrinter;
+import org.bigtester.ate.systemlogger.problemhandler.IProblemLogMessenger;
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
@@ -74,14 +75,9 @@ public class TestDataException extends AbstractATEException implements IATEProbl
 	/**
 	 * @return the testStepName
 	 */
+	@Nullable
 	public String getTestStepName() {
-		final String retVal = testStepName;
-		if (null == retVal) {
-			throw new IllegalStateException("teststepName is not correctly populated");
-			
-		} else {
-			return retVal;
-		}
+		return testStepName;
 	}
 
 	/**
@@ -94,14 +90,9 @@ public class TestDataException extends AbstractATEException implements IATEProbl
 	/**
 	 * @return the testCaseName
 	 */
+	@Nullable
 	public String getTestCaseName() {
-		final String retVal = testCaseName;
-		if (null == retVal) {
-			throw new IllegalStateException("testcasename is not correctly populated");
-			
-		} else {
-			return retVal;
-		}
+		return  testCaseName;
 	}
 
 	/**
@@ -142,7 +133,7 @@ public class TestDataException extends AbstractATEException implements IATEProbl
 	 * @author Peidong Hu
 	 * 
 	 */
-	public class TestDataProblem extends GenericATEProblem implements IATEProblem, IProblemLogPrinter{
+	public class TestDataProblem extends GenericATEProblem implements IATEProblem, IProblemLogMessenger{
 
 		/** The test data exception. */
 		private final transient TestDataException testDataException;
@@ -170,12 +161,23 @@ public class TestDataException extends AbstractATEException implements IATEProbl
 		}
 
 		/**
-		* {@inheritDoc}
-		*/
+		 * {@inheritDoc}
+		 */
 		@Override
-		public void logging(Level logLevel) {
+		public LogMessage getLogMessage() {
+			String errorMsg = "";
+			String warnMsg = "";
+			if (isFatalProblem()) {
+				errorMsg = "This throwable " + this.getClass().getCanonicalName() +" is fatal for test case: " + this.testDataException.getTestCaseName()
+						+ " in step: " + this.testDataException.getTestStepName();
+				
+			} else {
+				warnMsg = "This step producing throwable " + this.getClass().getCanonicalName()  + " is optional for test case: " 
+						+ this.testDataException.getTestCaseName() 
+						+ " in step: " + this.testDataException.getTestStepName();
+			}
 			
-			LogbackWriter.writeAppError("test data test printer interface.");
+			return new LogMessage(errorMsg, warnMsg);
 		}
 
 	}

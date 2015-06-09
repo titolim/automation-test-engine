@@ -167,6 +167,9 @@ public final class TestProjectRunner {
 		
 	}
 
+	/**
+	 * Register problem handlers.
+	 */
 	public static void registerProblemHandlers() {
 		Reflections reflections = new Reflections("org.bigtester.ate");
 		Set<Class<? extends IATEProblemHandler>> handlers = reflections.getSubTypesOf(IATEProblemHandler.class);

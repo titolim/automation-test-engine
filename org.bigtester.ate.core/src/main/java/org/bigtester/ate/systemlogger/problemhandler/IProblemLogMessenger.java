@@ -20,7 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger.problemhandler;
 
-import ch.qos.logback.classic.Level;
+import org.bigtester.ate.systemlogger.LogMessage;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,6 +29,7 @@ import ch.qos.logback.classic.Level;
  * @author Peidong Hu
  *
  */
-public interface IProblemLogPrinter {
-	void logging(Level logLevel);
+public interface IProblemLogMessenger {
+	 LogMessage getLogMessage();
+	
 }

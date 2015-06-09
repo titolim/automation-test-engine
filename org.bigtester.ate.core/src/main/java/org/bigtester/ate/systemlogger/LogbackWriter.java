@@ -21,7 +21,6 @@
 package org.bigtester.ate.systemlogger;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bigtester.ate.GlobalUtils;
@@ -67,36 +66,42 @@ public final class LogbackWriter {
 		}
 	}
 	
-	/**
-	 * The Class LogbackLogMessenger.
-	 *
-	 * @author Peidong Hu
-	 */
-	public class LogbackLogMessenger {
-		
-		/** The messages. */
-		final private Map<Level, String> messages = new ConcurrentHashMap<Level, String>(); //NOPMD
-		public String getErrorMsg() {
-			String retVal = messages.get(Level.ERROR);
-			if (null == retVal) retVal = "";
-			return retVal;
+	
+	
+	public static void writeLogbackAppLog(LogMessage logMessenger, Class<?> classProducingError) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException("logback logger");
 		}
-		public String getErrorMsg() {
-			String retVal = messages.get(Level.ERROR);
-			if (null == retVal) retVal = "";
-			return retVal;
+		if (!logMessenger.getErrorMsg().equals(""))
+			logger.error(LogbackTag.TAG_APP_LOG
+					+ LogbackTag.TAG_TEST_ERROR +logMessenger.getErrorMsg());
+		if (!logMessenger.getWarningMsg().equals(""))
+			logger.warn(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg());
+		if (!logMessenger.getInfoMsg().equals(""))
+			logger.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg());
+		if (!logMessenger.getDebugMsg().equals(""))
+			logger.debug(logMessenger.getDebugMsg());
+		if (!logMessenger.getTraceMsg().equals(""))
+			logger.trace(logMessenger.getTraceMsg());
+	}
+	
+	public static void writeLogbackAppLog(LogMessage logMessenger, Class<?> classProducingError, Throwable error) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException("logback logger");
 		}
-		public String getErrorMsg() {
-			String retVal = messages.get(Level.ERROR);
-			if (null == retVal) retVal = "";
-			return retVal;
-		}
-		public String getErrorMsg() {
-			String retVal = messages.get(Level.ERROR);
-			if (null == retVal) retVal = "";
-			return retVal;
-		}
-		
+		if (!logMessenger.getErrorMsg().equals(""))
+			logger.error(LogbackTag.TAG_APP_LOG
+					+ LogbackTag.TAG_TEST_ERROR +logMessenger.getErrorMsg(), error);
+		if (!logMessenger.getWarningMsg().equals(""))
+			logger.warn(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg(), error);
+		if (!logMessenger.getInfoMsg().equals(""))
+			logger.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg(), error);
+		if (!logMessenger.getDebugMsg().equals(""))
+			logger.debug(logMessenger.getDebugMsg(), error);
+		if (!logMessenger.getTraceMsg().equals(""))
+			logger.trace(logMessenger.getTraceMsg(), error);
 	}
 	
 	/**
