@@ -185,11 +185,12 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 							StepExecutionException.CODE,
 					this.getMyWebDriver(),
 					getParentTestCase(), t);
-			IATEProblem caseProb = pve.initAteProblemInstance(this);
-			if (t instanceof IATEProblemCreator) {
+			if (t instanceof IATEProblemCreator) {//NOPMD
 				IATEProblem prob = ((IATEProblemCreator) t).getAteProblem();
-				if (null != prob)
-					caseProb.setFatalProblem(prob.isFatalProblem());
+				if (null == prob) {
+					prob = pve.initAteProblemInstance(this);
+				}
+				prob.setFatalProblem(prob.isFatalProblem());
 			}
 			throw pve;
 		}

@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
-import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.casestep.RepeatStepInOutEvent.RepeatStepInOut;
 import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.IRepeatIncrementalIndex;
@@ -274,7 +273,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 //					}
 				} catch (Throwable e) { // NOPMD
 					IATEProblem prob;
-					if (e instanceof IATEProblemCreator) {
+					if (e instanceof IATEProblemCreator) {//NOPMD
 						prob = ((IATEProblemCreator) e).getAteProblem();
 						if (prob == null) {
 							prob = ((IATEProblemCreator) e)

@@ -26,7 +26,6 @@ import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
@@ -310,10 +309,10 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 								.setValue(new RuntimeBeanReference(idstr));
 
 					} catch (ClassNotFoundException e) {
-						throw GlobalUtils
+						throw GlobalUtils // NOPMD
 								.createNotInitializedException(
 										"user java step class: "
-												+ userJavaClassName, e);// NOPMD
+												+ userJavaClassName, e);
 					}
 				}
 			}

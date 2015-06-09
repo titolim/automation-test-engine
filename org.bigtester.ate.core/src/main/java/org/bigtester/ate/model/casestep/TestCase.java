@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
-import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException2;
@@ -33,7 +32,6 @@ import org.bigtester.ate.model.project.TestProject;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
-import org.bigtester.ate.systemlogger.problems.IAteProblemImpl;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -226,7 +224,7 @@ public class TestCase {
 //				}
 			} catch (Throwable e) { // NOPMD
 				IATEProblem prob;
-				if (e instanceof IATEProblemCreator) {
+				if (e instanceof IATEProblemCreator) {//NOPMD
 					prob = ((IATEProblemCreator) e).getAteProblem();
 					if (prob == null) {
 						prob = ((IATEProblemCreator) e)
@@ -239,7 +237,7 @@ public class TestCase {
 								StepResultStatus.SKIP);
 						if (currentTestStepTmp
 								.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
-							i = currentTestStepTmp
+							i = currentTestStepTmp//NOPMD
 									.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
 
 						}

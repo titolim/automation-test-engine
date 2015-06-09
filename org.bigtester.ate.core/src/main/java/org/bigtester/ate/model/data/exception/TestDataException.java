@@ -21,18 +21,11 @@
 package org.bigtester.ate.model.data.exception;
 
 import org.bigtester.ate.model.AbstractATEException;
-import org.bigtester.ate.model.IATECaseExecException;
-import org.bigtester.ate.model.IATEException;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
-import org.bigtester.ate.model.page.exception.StepExecutionException.StepExecutionProblem;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.LogbackWriter;
 import org.bigtester.ate.systemlogger.problemhandler.IProblemLogPrinter;
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
-import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
-import org.bigtester.ate.systemlogger.problems.IAteProblemImpl;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.qos.logback.classic.Level;

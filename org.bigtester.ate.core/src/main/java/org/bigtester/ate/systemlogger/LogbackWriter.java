@@ -20,12 +20,18 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger;
 
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.constant.LogbackTag;
 import org.eclipse.jdt.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,7 +43,7 @@ public final class LogbackWriter {
 
 	/** The Constant MYLOGGER. */
 	@Nullable
-	private static final Logger MYLOGGER = LoggerFactory
+	private static Logger myLogger = LoggerFactory
 			.getLogger(LogbackWriter.class);
 
 	/**
@@ -46,7 +52,7 @@ public final class LogbackWriter {
 	 * @param thr the th
 	 */
 	public static void printStackTrace(Throwable thr) {
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER"); //NOPMD
 		} else {
@@ -60,6 +66,57 @@ public final class LogbackWriter {
 			
 		}
 	}
+	
+	/**
+	 * The Class LogbackLogMessenger.
+	 *
+	 * @author Peidong Hu
+	 */
+	public class LogbackLogMessenger {
+		
+		/** The messages. */
+		final private Map<Level, String> messages = new ConcurrentHashMap<Level, String>(); //NOPMD
+		public String getErrorMsg() {
+			String retVal = messages.get(Level.ERROR);
+			if (null == retVal) retVal = "";
+			return retVal;
+		}
+		public String getErrorMsg() {
+			String retVal = messages.get(Level.ERROR);
+			if (null == retVal) retVal = "";
+			return retVal;
+		}
+		public String getErrorMsg() {
+			String retVal = messages.get(Level.ERROR);
+			if (null == retVal) retVal = "";
+			return retVal;
+		}
+		public String getErrorMsg() {
+			String retVal = messages.get(Level.ERROR);
+			if (null == retVal) retVal = "";
+			return retVal;
+		}
+		
+	}
+	
+	/**
+	 * Write app error.
+	 *
+	 * @param msg the msg
+	 * @param classProducingError the class producing error
+	 */
+	public static void writeAppError(String msg, Class<?> classProducingError) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException("logback logger");
+		}
+		if (logger.isErrorEnabled()) {
+			logger.error(msg);
+		}
+	}
+	
+	
+	
 	/**
 	 * Write app error.
 	 *
@@ -68,7 +125,7 @@ public final class LogbackWriter {
 	 */
 	public static void writeAppError(String msg) {
 
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER"); //NOPMD
 		} else {
@@ -92,7 +149,7 @@ public final class LogbackWriter {
 	 *            the msg
 	 */
 	public static void writeSysError(String msg) {
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
@@ -114,7 +171,7 @@ public final class LogbackWriter {
 	 *            the msg
 	 */
 	public static void writeAppWarning(String msg) {
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
@@ -136,7 +193,7 @@ public final class LogbackWriter {
 	 *            the msg
 	 */
 	public static void writeAppInfo(String msg) {
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
@@ -157,7 +214,7 @@ public final class LogbackWriter {
 	 *            the msg
 	 */
 	public static void writeUnitTestInfo(String msg) {
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {

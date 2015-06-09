@@ -45,8 +45,10 @@ import ch.qos.logback.classic.Level;
  */
 public class StepExecutionException extends BaseATECaseExecE implements IATEProblemCreator{
 
+	/** The Constant MSG. */
 	public static final String MSG = "Step execution throwable";
 	
+	/** The Constant CODE. */
 	public static final String CODE = "6019919237360483689L";
 	
 	/** The Constant serialVersionUID. */
@@ -77,6 +79,16 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		setCurrentTestCase(currentTestCase);
 	}
 
+	/**
+	 * Instantiates a new step execution exception.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 * @param myWebElement the my web element
+	 * @param myWebDriver the my web driver
+	 * @param currentTestCase the current test case
+	 * @param cause the cause
+	 */
 	public StepExecutionException(String message, String errorCode,
 			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase, Throwable cause) {
 		super(message, errorCode, currentTestCase, myWebDriver, cause);
@@ -86,6 +98,14 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	}
 
 	
+	/**
+	 * Instantiates a new step execution exception.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 * @param myWebDriver the my web driver
+	 * @param currentTestCase the current test case
+	 */
 	public StepExecutionException(String message, String errorCode,
 			IMyWebDriver myWebDriver, TestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
@@ -93,9 +113,18 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		setCurrentTestCase(currentTestCase);
 	}
 	
+	/**
+	 * Instantiates a new step execution exception.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 * @param myWebDriver the my web driver
+	 * @param currentTestCase the current test case
+	 * @param cause the cause
+	 */
 	public StepExecutionException(String message, String errorCode,
 			IMyWebDriver myWebDriver, TestCase currentTestCase, Throwable cause) {
-		super(message, errorCode, currentTestCase, myWebDriver);
+		super(message, errorCode, currentTestCase, myWebDriver, cause);
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
 	}
@@ -118,6 +147,17 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		super.setStepIndexJumpTo(stepIndexJumpTo);
 	}
 	
+	/**
+	 * Instantiates a new step execution exception.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 * @param myWebElement the my web element
+	 * @param myWebDriver the my web driver
+	 * @param currentTestCase the current test case
+	 * @param stepIndexJumpTo the step index jump to
+	 * @param cause the cause
+	 */
 	public StepExecutionException(String message, String errorCode,
 			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo, Throwable cause) {
 		super(message, errorCode, currentTestCase, myWebDriver, cause);
