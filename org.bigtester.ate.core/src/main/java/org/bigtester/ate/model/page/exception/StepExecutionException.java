@@ -20,8 +20,10 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.exception;
 
+import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.IATECaseExecException;
+import org.bigtester.ate.model.IATEException;
 import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -204,8 +206,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		
 		/** The problem test case. */
 		private final TestCase problemTestCase;	
-		/** The step exec exception. */
-		private final StepExecutionException stepExecException;
+		
 		
 		/**
 		 * Instantiates a new page validation problem.
@@ -216,7 +217,6 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		 */
 		public StepExecutionProblem(Object source, StepExecutionException see) {
 			super(source, see);
-			stepExecException = see;
 			problemTestCase = see.getCurrentTestCase();
 		}
 		
@@ -227,8 +227,11 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		 *
 		 * @return the stepExecException
 		 */
-		public StepExecutionException getStepExecException() {
-			return stepExecException;
+		public IATECaseExecException getStepExecException() {
+			IATECaseExecException retVal;
+			retVal = (IATECaseExecException) getAteException(); 
+			if (null == retVal) throw GlobalUtils.createNotInitializedException("case exec exception");
+			return retVal;
 		}
 
 		/**
@@ -247,7 +250,10 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		 */
 		@Override
 		public TestCase getCurrentTestCase() {
-			return this.stepExecException.getCurrentTestCase();
+			IATECaseExecException retVal;
+			retVal = (IATECaseExecException) getAteException();
+			if (null == retVal) throw GlobalUtils.createNotInitializedException("case exec exception");
+			return ((IATECaseExecException) retVal).getCurrentTestCase();
 		}
 
 
@@ -287,7 +293,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		 */
 		@Override
 		public String getErrorCode() {
-			return this.getStepExecException().getErrorCode();
+			return CODE;
 		}
 
 

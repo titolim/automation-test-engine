@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
-import org.bigtester.ate.model.page.exception.StepExecutionException.StepExecutionProblem;
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 

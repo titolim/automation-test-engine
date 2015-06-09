@@ -80,10 +80,10 @@ public final class LogbackWriter {
 			logger.warn(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg());
 		if (!logMessenger.getInfoMsg().equals(""))
 			logger.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg());
-		if (!logMessenger.getDebugMsg().equals(""))
-			logger.debug(logMessenger.getDebugMsg());
-		if (!logMessenger.getTraceMsg().equals(""))
-			logger.trace(logMessenger.getTraceMsg());
+//		if (!logMessenger.getDebugMsg().equals(""))
+//			logger.debug(logMessenger.getDebugMsg());
+//		if (!logMessenger.getTraceMsg().equals(""))
+//			logger.trace(logMessenger.getTraceMsg());
 	}
 	
 	public static void writeLogbackAppLog(LogMessage logMessenger, Class<?> classProducingError, Throwable error) {
@@ -98,10 +98,10 @@ public final class LogbackWriter {
 			logger.warn(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg(), error);
 		if (!logMessenger.getInfoMsg().equals(""))
 			logger.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg(), error);
-		if (!logMessenger.getDebugMsg().equals(""))
-			logger.debug(logMessenger.getDebugMsg(), error);
-		if (!logMessenger.getTraceMsg().equals(""))
-			logger.trace(logMessenger.getTraceMsg(), error);
+//		if (!logMessenger.getDebugMsg().equals(""))
+//			logger.debug(logMessenger.getDebugMsg(), error);
+//		if (!logMessenger.getTraceMsg().equals(""))
+//			logger.trace(logMessenger.getTraceMsg(), error);
 	}
 	
 	/**
@@ -158,14 +158,13 @@ public final class LogbackWriter {
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
-			if (mylogger2.isErrorEnabled()) {
-				mylogger2.error(LogbackTag.TAG_SYS_LOG + LogbackTag.TAG_SYS_ERROR
-						+ msg);
-			} else {
-				throw new UnsupportedOperationException(
-						ExceptionMessage.MSG_UNSUPPORTED_LOGBACK_LEVEL
-								+ "MYLOGGER.isErrorEnabled()");
-			}
+			//if (mylogger2.isErrorEnabled()) {
+				mylogger2.error(msg);
+			//} else {
+			//	throw new UnsupportedOperationException(
+			//			ExceptionMessage.MSG_UNSUPPORTED_LOGBACK_LEVEL
+			//					+ "MYLOGGER.isErrorEnabled()");
+			//}
 		}
 	}
 

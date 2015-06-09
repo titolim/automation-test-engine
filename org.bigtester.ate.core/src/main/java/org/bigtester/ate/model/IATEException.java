@@ -20,8 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
-import org.bigtester.ate.model.casestep.TestCase;
-import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc

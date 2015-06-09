@@ -90,6 +90,7 @@ public class GenericATEProblem extends RawProblem implements IATEProblem{
 		} else {
 			this.loggingLevel = warn2;
 		}
+		if (exception instanceof IATEException) this.ateException = (IATEException) exception;
 		this.fatalProblem = true;
 		this.problemMessage = exception.getMessage();
 	}
@@ -123,6 +124,8 @@ public class GenericATEProblem extends RawProblem implements IATEProblem{
 			this.loggingLevel = warn2;
 		}
 		this.fatalProblem = false;
+		if (exception instanceof IATEException) this.ateException = (IATEException) exception;
+		this.problemMessage = exception.getMessage();
 	}
 
 	/**
