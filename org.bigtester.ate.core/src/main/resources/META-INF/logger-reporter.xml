@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
-	<bean id="systemlogger" class="org.bigtester.ate.systemlogger.GenericSystemLogger" />
-	<bean id="TestCaseLogger" class="org.bigtester.ate.systemlogger.GenericTestCaseLogger" />
+	<bean id="systemlogger" class="org.bigtester.ate.systemlogger.SystemLogger" />
+	<bean id="TestCaseLogger" class="org.bigtester.ate.systemlogger.ApplicationLogger" />
 	<bean id="TestStepResult" class="org.bigtester.ate.resultmaker.StepResultMaker" />
 
 

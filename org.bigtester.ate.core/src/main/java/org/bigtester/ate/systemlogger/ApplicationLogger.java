@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger;
 
-import java.util.List;
 import java.util.Set;
 
 import org.aspectj.lang.JoinPoint;
@@ -29,14 +28,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ExceptionMessage;
-import org.bigtester.ate.model.BaseATECaseExecE;
-import org.bigtester.ate.model.AbstractATEException;
 import org.bigtester.ate.systemlogger.problemhandler.ProblemHandlerRegistry;
-import org.bigtester.ate.systemlogger.problemhandler.ProblemLogbackHandler;
-import org.bigtester.ate.systemlogger.problems.ATEProblemFactory;
-import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
-import org.bigtester.ate.systemlogger.problems.IATEProblemFactory;
 import org.bigtester.problomatic2.Problem;
 import org.bigtester.problomatic2.ProblemHandler;
 import org.bigtester.problomatic2.Problomatic;
@@ -58,7 +51,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * 
  */
 @Aspect
-public class GenericTestCaseLogger implements ApplicationContextAware {
+public class ApplicationLogger implements ApplicationContextAware {
 //TODO change the name to AteApplicationLevelLogger
 	/** The app context. */
 	@Nullable
@@ -141,10 +134,15 @@ public class GenericTestCaseLogger implements ApplicationContextAware {
 			} else {
 				prb = (Problem) GlobalUtils.getTargetObject(iPrb);
 			}
-			Set<ProblemHandler> plbh = ProblemHandlerRegistry.getGenericProblemHandlers();
-			for (ProblemHandler hlr : plbh)
+			Set<ProblemHandler> genericBlbh = ProblemHandlerRegistry.getGenericProblemHandlers();
+			for (ProblemHandler hlr : genericBlbh)
 				Problomatic.addProblemHandlerForProblem(prb, hlr);
 			
+			Set<ProblemHandler> problemSpecificBlbh = ProblemHandlerRegistry.getProblemAttachedProblemHandlers(prb);
+			for (ProblemHandler hlr : problemSpecificBlbh)
+				Problomatic.addProblemHandlerForProblem(prb, hlr);
+			//Application logger doesn't handle the throwableAttachedProblemHandlers, 
+			//since only IATEProblemCreator is considered as application level throwable 
 			Problomatic.handleProblem(prb);
 		}
 

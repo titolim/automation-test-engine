@@ -22,8 +22,6 @@ package org.bigtester.ate.systemlogger.problemhandler;
 
 import java.util.Properties;
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.problomatic2.InitException;
 import org.bigtester.problomatic2.Problem;
 import org.bigtester.problomatic2.handlers.AbstractProblemHandler;
@@ -57,8 +55,7 @@ public class ProblemLogbackHandler extends AbstractProblemHandler implements
 		// 3) page validation error : test error; (failed test)
 		// 4) page validation exception: test pass with bug; (passed test with
 		// bug)
-		TestCase pTC;
-		ITestStep pTS;
+		
 
 		if (aProblem instanceof IProblemLogPrinter) {
 			final Level warn2 = Level.WARN;
