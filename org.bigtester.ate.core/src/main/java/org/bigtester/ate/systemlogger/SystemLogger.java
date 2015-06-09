@@ -39,7 +39,7 @@ import org.testng.internal.Utils;
  * 
  */
 @Aspect
-public class GenericSystemLogger {
+public class SystemLogger {
 	
 	
 	@Pointcut("within(org.bigtester.ate..*)")

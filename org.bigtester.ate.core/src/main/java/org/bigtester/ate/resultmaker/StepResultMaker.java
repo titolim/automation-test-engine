@@ -142,7 +142,7 @@ public class StepResultMaker {
 
 	@SuppressWarnings("unchecked")
 	@After("@annotation(org.bigtester.ate.annotation.StepLoggable)")
-	public void log(final JoinPoint joinPoint_p) {
+	public void reportStepResult(final JoinPoint joinPoint_p) {
 
 		// Cloner cloner=new Cloner();
 		//

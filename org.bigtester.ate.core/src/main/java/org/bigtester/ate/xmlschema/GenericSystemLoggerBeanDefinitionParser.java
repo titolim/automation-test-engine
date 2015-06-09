@@ -22,7 +22,7 @@ package org.bigtester.ate.xmlschema;
 
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.systemlogger.GenericSystemLogger;
+import org.bigtester.ate.systemlogger.SystemLogger;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
@@ -42,8 +42,8 @@ public class GenericSystemLoggerBeanDefinitionParser extends
 	/**
 	 * {@inheritDoc}
 	 */
-	protected Class<GenericSystemLogger> getBeanClass(@Nullable Element element) {
-	        return GenericSystemLogger.class; 
+	protected Class<SystemLogger> getBeanClass(@Nullable Element element) {
+	        return SystemLogger.class; 
     }
 
 	/**
