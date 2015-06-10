@@ -31,10 +31,11 @@ import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 
@@ -68,7 +69,7 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 	@StepLoggable(level = ATELogLevel.INFO)
 	@Override
 	public void doStep() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
+			PageValidationException, RuntimeDataException {
 		try {
 			getMyWebElement().doAction();
 			super.parseDataHolder();
@@ -108,11 +109,13 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 			listAsserters.add(asserterList.get(i));
 		}
 		if (flagThrowE && isTargetStep()) {
-			PageValidationException2 pve = new PageValidationException2(
+			PageValidationException pve = new PageValidationException(
 					ExceptionMessage.MSG_PAGE_VALIDATION_ERROR_HIGH,
 					ExceptionErrorCode.PAGEVALIDATION_HIGH, listAsserters,
 					asserterList.get(0).getResultPage().getMyWd(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()));
+			IATEProblem prob = pve.initAteProblemInstance(this);
+			prob.setFatalProblem(true);
 			throw pve;
 		}
 

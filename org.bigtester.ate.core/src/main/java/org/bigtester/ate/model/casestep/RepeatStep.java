@@ -35,7 +35,7 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.model.utils.ThinkTime;
@@ -197,7 +197,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
 	public void doStep() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
+			PageValidationException, RuntimeDataException {
 
 		repeatSteps();
 
@@ -211,7 +211,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 * @throws PageValidationException
 	 */
 	private void repeatSteps() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
+			PageValidationException, RuntimeDataException {
 		buildRepeatStepContext();
 		getApplicationContext().publishEvent(
 				new RepeatStepInOutEvent(this, RepeatStepInOut.IN));

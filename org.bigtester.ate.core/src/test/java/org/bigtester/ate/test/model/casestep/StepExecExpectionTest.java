@@ -24,7 +24,7 @@ package org.bigtester.ate.test.model.casestep;
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -43,13 +43,13 @@ public class StepExecExpectionTest extends BigtesterProjectTest {
 	 * Ead test.
 	 * 
 	 * @throws RuntimeDataException
-	 * @throws PageValidationException2
+	 * @throws PageValidationException
 	 * @throws StepExecutionException 
 	 * @throws InterruptedException 
 	 * @throws BrowserUnexpectedException 
 	 */
 	@Test(priority = 1)
-	public void assignValueEADTest() throws PageValidationException2,
+	public void assignValueEADTest() throws PageValidationException,
 			RuntimeDataException, StepExecutionException, InterruptedException, BrowserUnexpectedException {
 //here, we need portable file path handling for different system
 		//getTestPage("file:///c:/index.html");

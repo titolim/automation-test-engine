@@ -32,7 +32,7 @@ import org.bigtester.ate.model.data.IDataParser;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.IPageObject; 
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
@@ -145,7 +145,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 */
 	@Override
 	public void doStep() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
+			PageValidationException, RuntimeDataException {
 		String testCaseFileName = getTestCaseFileName();
 		WebDriver mainDriver;
 		ApplicationContext context;

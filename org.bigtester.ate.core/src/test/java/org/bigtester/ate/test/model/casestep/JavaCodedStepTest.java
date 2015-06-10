@@ -23,7 +23,7 @@ package org.bigtester.ate.test.model.casestep;
 import org.bigtester.ate.model.casestep.IJavaCodedStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.openqa.selenium.By;
@@ -43,13 +43,13 @@ public class JavaCodedStepTest extends BigtesterProjectTest {
 	 * Ead test.
 	 * 
 	 * @throws RuntimeDataException
-	 * @throws PageValidationException2
+	 * @throws PageValidationException
 	 * @throws StepExecutionException
 	 * @throws InterruptedException
 	 * @throws BrowserUnexpectedException 
 	 */
 	@Test(priority = 1)
-	public void javaCodedStepTest() throws PageValidationException2,
+	public void javaCodedStepTest() throws PageValidationException,
 			RuntimeDataException, StepExecutionException, InterruptedException, BrowserUnexpectedException {
 		getTestPage("bigtesterTestNG/aut/textarea.html");
 

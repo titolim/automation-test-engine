@@ -31,8 +31,9 @@ import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.page.IHomepage;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -90,7 +91,7 @@ public class HomeStep extends BaseTestStep implements ITestStep {
 	 */
 	@StepLoggable(level = ATELogLevel.INFO)
 	@Override
-	public void doStep() throws PageValidationException2, RuntimeDataException {
+	public void doStep() throws PageValidationException, RuntimeDataException {
 		homePage.startHomepage();
 		super.parseDataHolder();
 		List<IExpectedResultAsserter> asserters = getExpectedResultAsserter();
@@ -106,11 +107,13 @@ public class HomeStep extends BaseTestStep implements ITestStep {
 
 		}
 		if (flagThrowE && isTargetStep()) {
-			PageValidationException2 pve = new PageValidationException2(
+			PageValidationException pve = new PageValidationException(
 					ExceptionMessage.MSG_PAGE_VALIDATION_ERROR_HIGH,
 					ExceptionErrorCode.PAGEVALIDATION_HIGH, listAsserters,
 					asserters.get(0).getResultPage().getMyWd(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()));
+			IATEProblem prob = pve.initAteProblemInstance(this);
+			prob.setFatalProblem(true);
 			throw pve;
 		}
 

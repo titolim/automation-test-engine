@@ -27,7 +27,7 @@ import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
@@ -190,7 +190,7 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
 	public void doStep() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
+			PageValidationException, RuntimeDataException {
 		IMyWebDriver myWebDriver2 = myWebDriver;
 		if (myWebDriver2 == null)
 			throw GlobalUtils.createNotInitializedException("my web driver");
@@ -255,7 +255,7 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 	 */
 	@Override
 	public void doStep(IMyWebDriver myWebDriver) throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
+			PageValidationException, RuntimeDataException {
 		getUserJavaStep().doStep();
 		getUserJavaStep().doStep(myWebDriver);
 	}

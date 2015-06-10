@@ -27,7 +27,7 @@ import org.bigtester.ate.annotation.StepLoggable;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.eclipse.jdt.annotation.Nullable;
@@ -50,7 +50,7 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
 	public void doStep() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
+			PageValidationException, RuntimeDataException {
 
 		runSteps();
 
@@ -64,7 +64,7 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 	 * @throws PageValidationException
 	 */
 	private void runSteps() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
+			PageValidationException, RuntimeDataException {
 		
 		for (int i = 0; i < getStepSet().size(); i++) {
 

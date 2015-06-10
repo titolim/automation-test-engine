@@ -26,7 +26,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.project.TestProject;
 import org.bigtester.ate.model.utils.ThinkTime;
@@ -177,7 +177,7 @@ public class TestCase {
 	 * @throws PageValidationException
 	 */
 	public void goSteps() throws StepExecutionException,
-			PageValidationException2, IllegalStateException,
+			PageValidationException, IllegalStateException,
 			RuntimeDataException {
 
 		for (int i = 0; i < getTestStepList().size(); i++) {

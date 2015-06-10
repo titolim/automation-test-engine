@@ -25,7 +25,7 @@ import org.bigtester.ate.model.page.atewebdriver.WindowFrame;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class PageValidationException defines ....
+ * This class PageFrameRefreshException defines ....
  * 
  * @author Peidong Hu
  *

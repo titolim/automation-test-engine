@@ -26,7 +26,7 @@ import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
@@ -48,13 +48,13 @@ public class AssignValueActionTest extends BigtesterProjectTest {
 	 * Ead test.
 	 * 
 	 * @throws RuntimeDataException
-	 * @throws PageValidationException2
+	 * @throws PageValidationException
 	 * @throws StepExecutionException 
 	 * @throws InterruptedException 
 	 * @throws BrowserUnexpectedException 
 	 */
 	@Test(priority = 1)
-	public void assignValueEADTest() throws PageValidationException2,
+	public void assignValueEADTest() throws PageValidationException,
 			RuntimeDataException, StepExecutionException, InterruptedException, BrowserUnexpectedException {
 		getTestPage("bigtesterTestNG/aut/textarea.html");
 

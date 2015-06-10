@@ -27,7 +27,7 @@ import org.bigtester.ate.model.casestep.ElementTestStep;
 import org.bigtester.ate.model.casestep.LastStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
@@ -54,13 +54,13 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 	 * Ead test.
 	 * 
 	 * @throws RuntimeDataException
-	 * @throws PageValidationException2
+	 * @throws PageValidationException
 	 * @throws StepExecutionException 
 	 * @throws BrowserUnexpectedException 
 	 * @throws NoSuchElementException 
 	 */
 	@Test(priority = 1)
-	public void eadHandleUnexpectedAlertTest() throws PageValidationException2,
+	public void eadHandleUnexpectedAlertTest() throws PageValidationException,
 			RuntimeDataException, StepExecutionException, NoSuchElementException, BrowserUnexpectedException {
 
 		getMyDriver().getWebDriverInstance();

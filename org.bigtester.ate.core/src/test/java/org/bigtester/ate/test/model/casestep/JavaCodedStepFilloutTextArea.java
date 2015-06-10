@@ -23,7 +23,7 @@ package org.bigtester.ate.test.model.casestep;
 import org.bigtester.ate.model.casestep.AbstractBaseJavaCodedStep;
 import org.bigtester.ate.model.casestep.IJavaCodedStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -45,7 +45,7 @@ public class JavaCodedStepFilloutTextArea extends AbstractBaseJavaCodedStep impl
 	 */
 	@Override
 	public void doStep() throws StepExecutionException,
-			PageValidationException2, RuntimeDataException {
+			PageValidationException, RuntimeDataException {
 		
 		WebElement webE = getMyWebDriver().getWebDriverInstance().findElement(By.tagName("textarea"));
 		webE.clear();
