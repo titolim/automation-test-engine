@@ -30,7 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peidong Hu
  *
  */
-public interface IATECaseExecException {
+public interface IATECaseExecException extends IATEException{
 	
 	/**
 	 * Gets the current test case.
@@ -46,10 +46,5 @@ public interface IATECaseExecException {
 	 */
 	IMyWebDriver getMyWebDriver();
 	
-	/**
-	 * Gets the message.
-	 *
-	 * @return the message
-	 */
-	@Nullable String getMessage();
+	
 }

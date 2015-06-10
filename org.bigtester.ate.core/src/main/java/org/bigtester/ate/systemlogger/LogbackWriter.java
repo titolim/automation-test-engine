@@ -93,15 +93,25 @@ public final class LogbackWriter {
 		}
 		if (!logMessenger.getErrorMsg().equals(""))
 			logger.error(LogbackTag.TAG_APP_LOG
-					+ LogbackTag.TAG_TEST_ERROR +logMessenger.getErrorMsg(), error);
+					+ LogbackTag.TAG_TEST_ERROR + error.hashCode() + logMessenger.getErrorMsg() + getCauseChainMessages(error));
 		if (!logMessenger.getWarningMsg().equals(""))
-			logger.warn(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg(), error);
+			logger.warn(LogbackTag.TAG_APP_LOG + error.hashCode() + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg()+ getCauseChainMessages(error));
 		if (!logMessenger.getInfoMsg().equals(""))
-			logger.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg(), error);
+			logger.info(LogbackTag.TAG_APP_LOG + error.hashCode() + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg() + getCauseChainMessages(error));
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg(), error);
 //		if (!logMessenger.getTraceMsg().equals(""))
 //			logger.trace(logMessenger.getTraceMsg(), error);
+	}
+	
+	private static String getCauseChainMessages(Throwable error) {
+		String retVal="";
+		Throwable errorPointer = error;
+		while (errorPointer.getCause() != null) {
+			retVal = retVal + "->caused by->" + errorPointer.getCause().getMessage();
+			errorPointer = errorPointer.getCause();
+		}
+		return retVal;
 	}
 	
 	/**
@@ -166,6 +176,14 @@ public final class LogbackWriter {
 			//					+ "MYLOGGER.isErrorEnabled()");
 			//}
 		}
+	}
+	
+	public static void writeSysError(Class<?> classProducingError, Throwable error) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException("logback logger");
+		}
+		logger.error(Integer.toString(error.hashCode()), error);
 	}
 
 	/**

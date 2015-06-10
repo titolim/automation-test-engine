@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
+import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -37,4 +39,12 @@ public interface IATEException {
 	 * @return the message
 	 */
 	@Nullable String getMessage();
+	
+	
+	/**
+	 * Gets the ate problem.
+	 *
+	 * @return the ate problem
+	 */
+	@Nullable IATEProblem getAteProblem();
 }

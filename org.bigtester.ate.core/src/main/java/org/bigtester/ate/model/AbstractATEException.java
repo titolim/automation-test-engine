@@ -21,6 +21,7 @@
 package org.bigtester.ate.model;
 
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -30,7 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peidong Hu
  * 
  */
-public abstract class AbstractATEException extends Exception {
+public abstract class AbstractATEException extends Exception implements IATEException{
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -5513011387447019438L;
@@ -70,6 +71,21 @@ public abstract class AbstractATEException extends Exception {
 	public AbstractATEException(final String message, final String errorCode, Throwable thr) {
 		super(message, thr);
 		this.errorCode = errorCode;
+	}
+
+	/**
+	 * @return the ateProblem
+	 */
+	@Nullable
+	public IATEProblem getAteProblem() {
+		return ateProblem;
+	}
+
+	/**
+	 * @param ateProblem the ateProblem to set
+	 */
+	public void setAteProblem(GenericATEProblem ateProblem) {
+		this.ateProblem = ateProblem;
 	}
 	
 }

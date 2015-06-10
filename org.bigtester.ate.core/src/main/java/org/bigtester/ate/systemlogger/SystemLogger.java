@@ -24,6 +24,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.data.exception.TestDataException;
 import org.testng.ITestResult;
@@ -80,9 +81,11 @@ public class SystemLogger {
 			ITestResult itr = Reporter.getCurrentTestResult();
 			itr.setThrowable(error);
 		}
-		String[] fullST = Utils.stackTrace(error, false);
-		LogbackWriter.writeSysError(joinPoint.getTarget().toString() + fullST[1] );
-
+//		String[] fullST = Utils.stackTrace(error, false);
+//		LogbackWriter.writeSysError(joinPoint.getTarget().toString()+ error.hashCode()  + fullST[1] );
+		Class<?> cls = joinPoint.getTarget().getClass();
+		if (null == cls) throw GlobalUtils.createInternalError("jvm");
+		LogbackWriter.writeSysError(cls,  error);
 		
 	}
 
