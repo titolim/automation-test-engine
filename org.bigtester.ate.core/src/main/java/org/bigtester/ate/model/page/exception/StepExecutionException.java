@@ -34,7 +34,6 @@ import org.bigtester.ate.systemlogger.LogMessage;
 import org.bigtester.ate.systemlogger.problemhandler.IProblemLogMessenger;
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
-import org.bigtester.ate.systemlogger.problems.IAteProblemImpl;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.qos.logback.classic.Level;
@@ -200,7 +199,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	 * @author Peidong Hu
 	 * 
 	 */
-	public class StepExecutionProblem extends GenericATEProblem implements IATECaseExecProblem, IAteProblemImpl, IProblemLogMessenger{
+	public class StepExecutionProblem extends GenericATEProblem implements IATECaseExecProblem,  IProblemLogMessenger{
 		
 		
 		
@@ -295,24 +294,6 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		public String getErrorCode() {
 			return CODE;
 		}
-
-
-
-		/**
-		* {@inheritDoc}
-		*/
-		@Override
-		@Nullable
-		public <T> T getCapability(Class<T> type) {
-			if (this instanceof IATECaseExecProblem) {
-				return (T) this; // NOPMD
-			} else {
-				return null;
-			}
-
-		}
-
-
 
 
 
