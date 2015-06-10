@@ -22,6 +22,8 @@ package org.bigtester.ate.model.page.elementfind;
 
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.TestObjectFinderLoggable;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.openqa.selenium.By;
@@ -40,6 +42,7 @@ public class ElementFindById extends AbstractElementFind implements
 	/**
 	 * @param findByValue
 	 */
+	
 	public ElementFindById(String findByValue) {
 		super(findByValue);
 		// TODO Auto-generated constructor stub

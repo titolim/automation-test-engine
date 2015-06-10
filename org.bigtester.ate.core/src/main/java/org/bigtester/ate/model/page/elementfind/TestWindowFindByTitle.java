@@ -69,5 +69,11 @@ public class TestWindowFindByTitle extends BaseTestWindowFinderImpl implements I
 			}
 		}
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public String getFindingParametersLoggingValue() {
+		return "title=" + title;
+	}
 }

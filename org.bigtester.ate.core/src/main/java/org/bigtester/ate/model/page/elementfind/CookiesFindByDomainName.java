@@ -65,5 +65,11 @@ public class CookiesFindByDomainName extends BaseCookieFinderImpl implements ICo
 		
 		}
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public String getFindingParametersLoggingValue() {
+		return "CookiesFindByDomainName with domainName = " + this.getDomain();
+	}
 }

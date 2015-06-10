@@ -41,7 +41,7 @@ import ch.qos.logback.classic.Level;
 {
     ElementType.METHOD, ElementType.TYPE
 })
-public @interface StepLoggable {
+public @interface TestObjectFinderLoggable {
 	
 	ATELogLevel level();
 }

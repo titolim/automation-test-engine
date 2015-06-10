@@ -22,7 +22,6 @@
 package org.bigtester.ate.model.casestep;
 
 import org.bigtester.ate.annotation.StepLoggable;
-import org.bigtester.ate.annotation.StepLoggable.ATELogLevel;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.ILastpage;
 
@@ -75,7 +74,7 @@ public class LastStep extends BaseTestStep implements ITestStep {
 	/**
 	 * {@inheritDoc}
 	 */
-	@StepLoggable(level = ATELogLevel.INFO)
+	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
 	public void doStep() {
 		lastPage.closeLastpage();

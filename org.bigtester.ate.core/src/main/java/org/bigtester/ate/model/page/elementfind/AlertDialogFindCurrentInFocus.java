@@ -43,5 +43,11 @@ public class AlertDialogFindCurrentInFocus extends BaseAlertDialogFinderImpl imp
 		}  
 		return retVal;
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public String getFindingParametersLoggingValue() {
+		return "AlertDialogFindCurrentInFocus with no parameter";
+	}
 }

@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.StepLoggable;
-import org.bigtester.ate.annotation.StepLoggable.ATELogLevel;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.casestep.RepeatStepInOutEvent.RepeatStepInOut;
 import org.bigtester.ate.model.data.IOnTheFlyData;
@@ -195,7 +194,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	/**
 	 * {@inheritDoc}
 	 */
-	@StepLoggable(level = ATELogLevel.INFO)
+	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
 	public void doStep() throws StepExecutionException,
 			PageValidationException2, RuntimeDataException {

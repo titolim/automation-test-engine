@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.annotation.StepLoggable;
-import org.bigtester.ate.annotation.StepLoggable.ATELogLevel;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -48,7 +47,7 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 	/**
 	 * {@inheritDoc}
 	 */
-	@StepLoggable(level = ATELogLevel.INFO)
+	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
 	public void doStep() throws StepExecutionException,
 			PageValidationException2, RuntimeDataException {

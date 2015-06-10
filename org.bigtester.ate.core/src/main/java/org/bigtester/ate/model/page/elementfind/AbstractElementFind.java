@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.TestObjectFinderLoggable;
 import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.page.atewebdriver.BrowserWindow;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -60,6 +62,12 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 	@Nullable
 	transient protected Wait<WebDriver> wait;
 
+	
+
+	public String getFindingParametersLoggingValue() {
+		return "findByValue = " + findByValue;
+	}
+	
 	/**
 	 * @return the wait
 	 */
@@ -164,6 +172,7 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 	 *             the no such element exception
 	 * @throws BrowserUnexpectedException 
 	 */
+	@TestObjectFinderLoggable (level=ATELogLevel.INFO)
 	public WebElement doFind(IMyWebDriver myWebDriver)
 			throws NoSuchElementException, BrowserUnexpectedException {
 

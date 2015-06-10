@@ -23,7 +23,7 @@ package org.bigtester.ate.systemlogger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.bigtester.ate.annotation.StepLoggable.ATELogLevel;
+import org.bigtester.ate.annotation.ATELogLevel;
 
 import ch.qos.logback.classic.Level;
 

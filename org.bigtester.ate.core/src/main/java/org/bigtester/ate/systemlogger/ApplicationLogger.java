@@ -22,6 +22,7 @@ package org.bigtester.ate.systemlogger;
 
 import java.util.Set;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -31,8 +32,10 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.StepLoggable;
+import org.bigtester.ate.annotation.TestObjectFinderLoggable;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.casestep.ITestStep;
+import org.bigtester.ate.model.page.elementfind.ITestObjectFinder;
 import org.bigtester.ate.systemlogger.problemhandler.ProblemHandlerRegistry;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.bigtester.problomatic2.Problem;
@@ -160,6 +163,44 @@ public class ApplicationLogger implements ApplicationContextAware {
 		if (null != cls && obj instanceof ITestStep) {
 			ITestStep step = (ITestStep) obj;
 			LogMessage lmsg = new LogMessage(LogbackWriter.APPLOG_INFOHEADER + step.getStepName() + " execution starts.", loggable.level());
+			LogbackWriter.writeLogbackAppLog(lmsg, cls);
+		} else if (null != cls){
+			LogMessage lmsg = new LogMessage("", LogbackWriter.APPLOG_WARNHEADER + "incorrect object type for test step logging: " + cls.getCanonicalName());
+			LogbackWriter.writeLogbackAppLog(lmsg, cls);
+		} else {
+			LogMessage lmsg = new LogMessage("", LogbackWriter.APPLOG_WARNHEADER + "incorrect system aop pointcut for test step logging: class is null.");
+			LogbackWriter.writeLogbackAppLog(lmsg);
+		}
+		
+		
+	}
+	
+	@Before(value = "@annotation(finderloggable)", argNames="joinPoint_p, finderloggable")
+	public void logBeforeFinder(final JoinPoint joinPoint_p, TestObjectFinderLoggable finderloggable) {
+		Object obj = joinPoint_p.getTarget();
+		Class<?> cls = obj.getClass();
+		if (null != cls && obj instanceof ITestObjectFinder<?>) {
+			ITestObjectFinder<?> finder = (ITestObjectFinder<?>) obj;
+			LogMessage lmsg = new LogMessage(LogbackWriter.APPLOG_INFOHEADER + finder.getClass().getName() + " : \"" + finder.getFindingParametersLoggingValue()+ "\" searching test object starts.", finderloggable.level());
+			LogbackWriter.writeLogbackAppLog(lmsg, cls);
+		} else if (null != cls){
+			LogMessage lmsg = new LogMessage("", LogbackWriter.APPLOG_WARNHEADER + "incorrect object type for test step logging: " + cls.getCanonicalName());
+			LogbackWriter.writeLogbackAppLog(lmsg, cls);
+		} else {
+			LogMessage lmsg = new LogMessage("", LogbackWriter.APPLOG_WARNHEADER + "incorrect system aop pointcut for test step logging: class is null.");
+			LogbackWriter.writeLogbackAppLog(lmsg);
+		}
+		
+		
+	}
+	
+	@AfterReturning(value = "@annotation(finderloggable)", returning="retVal", argNames="joinPoint_p, finderloggable, retVal")
+	public void logAfterFinder(final JoinPoint joinPoint_p, TestObjectFinderLoggable finderloggable, Object retVal) {
+		Object obj = joinPoint_p.getTarget();
+		Class<?> cls = obj.getClass();
+		if (null != cls && obj instanceof ITestObjectFinder<?>) {
+			ITestObjectFinder<?> finder = (ITestObjectFinder<?>) obj;
+			LogMessage lmsg = new LogMessage(LogbackWriter.APPLOG_INFOHEADER + finder.getClass().getName() + " : \"" + finder.getFindingParametersLoggingValue()+ "\" has been found. searching test object ends.", finderloggable.level());
 			LogbackWriter.writeLogbackAppLog(lmsg, cls);
 		} else if (null != cls){
 			LogMessage lmsg = new LogMessage("", LogbackWriter.APPLOG_WARNHEADER + "incorrect object type for test step logging: " + cls.getCanonicalName());

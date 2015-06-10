@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.StepLoggable;
-import org.bigtester.ate.annotation.StepLoggable.ATELogLevel;
+import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;

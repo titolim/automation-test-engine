@@ -25,20 +25,20 @@
 
 		</rollingPolicy>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-			<level>ERROR</level>
+			<level>INFO</level>
 		</filter>
-		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+<!-- 		<filter class="ch.qos.logback.core.filter.EvaluatorFilter"> -->
 
-			<evaluator name="app.error">
+<!-- 			<evaluator name="app.error"> -->
 
-				<expression>message.contains("APP_LOG: ")</expression>
+<!-- 				<expression>message.contains("APP_LOG: ")</expression> -->
 
-			</evaluator>
+<!-- 			</evaluator> -->
 
-			<OnMatch>DENY</OnMatch>
+<!-- 			<OnMatch>DENY</OnMatch> -->
 
-			<OnMismatch>ACCEPT</OnMismatch>
-		</filter>
+<!-- 			<OnMismatch>ACCEPT</OnMismatch> -->
+<!-- 		</filter> -->
 		
 	</appender>
 	<appender name="ApplicationLog"

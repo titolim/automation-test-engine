@@ -52,5 +52,11 @@ public class CookiesFindAll extends BaseCookieFinderImpl implements
 		return new CookiesManager(myWebDriver, coos);
 
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public String getFindingParametersLoggingValue() {
+		return "CookiesFindAll with no parameter";
+	}
 }
