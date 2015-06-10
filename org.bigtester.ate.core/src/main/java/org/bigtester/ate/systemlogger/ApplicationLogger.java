@@ -23,11 +23,16 @@ package org.bigtester.ate.systemlogger;
 import java.util.Set;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.StepLoggable;
 import org.bigtester.ate.constant.ExceptionMessage;
+import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.systemlogger.problemhandler.ProblemHandlerRegistry;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.bigtester.problomatic2.Problem;
@@ -148,6 +153,44 @@ public class ApplicationLogger implements ApplicationContextAware {
 
 	}
 
+	@Before(value = "@annotation(loggable)", argNames="joinPoint_p, loggable")
+	public void logBeforeTestStep(final JoinPoint joinPoint_p, StepLoggable loggable) {
+		Object obj = joinPoint_p.getTarget();
+		Class<?> cls = obj.getClass();
+		if (null != cls && obj instanceof ITestStep) {
+			ITestStep step = (ITestStep) obj;
+			LogMessage lmsg = new LogMessage(LogbackWriter.APPLOG_INFOHEADER + step.getStepName() + " execution starts.", loggable.level());
+			LogbackWriter.writeLogbackAppLog(lmsg, cls);
+		} else if (null != cls){
+			LogMessage lmsg = new LogMessage("", LogbackWriter.APPLOG_WARNHEADER + "incorrect object type for test step logging: " + cls.getCanonicalName());
+			LogbackWriter.writeLogbackAppLog(lmsg, cls);
+		} else {
+			LogMessage lmsg = new LogMessage("", LogbackWriter.APPLOG_WARNHEADER + "incorrect system aop pointcut for test step logging: class is null.");
+			LogbackWriter.writeLogbackAppLog(lmsg);
+		}
+		
+		
+	}
+	
+	@AfterReturning(value = "@annotation(loggable)", argNames="joinPoint, loggable")
+	public void logAfterTestStep(final JoinPoint joinPoint, StepLoggable loggable) {
+		Object obj = joinPoint.getTarget();
+		Class<?> cls = obj.getClass();
+		if (null != cls && obj instanceof ITestStep) {
+			ITestStep step = (ITestStep) obj;
+			LogMessage lmsg = new LogMessage(LogbackWriter.APPLOG_INFOHEADER + step.getStepName() + " execution ends.", loggable.level());
+			LogbackWriter.writeLogbackAppLog(lmsg, cls);
+		} else if (null != cls){
+			LogMessage lmsg = new LogMessage("", LogbackWriter.APPLOG_WARNHEADER + "incorrect object type for test step logging: " + cls.getCanonicalName());
+			LogbackWriter.writeLogbackAppLog(lmsg, cls);
+		} else {
+			LogMessage lmsg = new LogMessage("", LogbackWriter.APPLOG_WARNHEADER + "incorrect system aop pointcut for test step logging: class is null.");
+			LogbackWriter.writeLogbackAppLog(lmsg);
+		}
+		
+		
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

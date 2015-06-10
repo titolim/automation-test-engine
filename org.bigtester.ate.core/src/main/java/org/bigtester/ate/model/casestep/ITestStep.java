@@ -21,7 +21,6 @@
 package org.bigtester.ate.model.casestep; //NOPMD
 
 import java.util.List;
-
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.IDataParser;
@@ -153,7 +152,6 @@ public interface ITestStep {
 	 * @throws StepExecutionException the step execution exception
 	 * @throws PageValidationException 
 	 */
-
 	void doStep () throws StepExecutionException, PageValidationException2, RuntimeDataException;
 	
 	/**

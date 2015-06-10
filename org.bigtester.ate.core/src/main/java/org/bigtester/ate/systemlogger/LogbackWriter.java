@@ -66,7 +66,26 @@ public final class LogbackWriter {
 		}
 	}
 	
+	public static String APPLOG_INFOHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO;
+	public static String APPLOG_WARNHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING;
 	
+	public static void writeLogbackAppLog(LogMessage logMessenger) {
+		final Logger logger = LoggerFactory.getLogger(LogbackWriter.class);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException("logback logger");
+		}
+		if (!logMessenger.getErrorMsg().equals(""))
+			logger.error(LogbackTag.TAG_APP_LOG
+					+ LogbackTag.TAG_TEST_ERROR +logMessenger.getErrorMsg());
+		if (!logMessenger.getWarningMsg().equals(""))
+			logger.warn(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg());
+		if (!logMessenger.getInfoMsg().equals(""))
+			logger.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg());
+//		if (!logMessenger.getDebugMsg().equals(""))
+//			logger.debug(logMessenger.getDebugMsg());
+//		if (!logMessenger.getTraceMsg().equals(""))
+//			logger.trace(logMessenger.getTraceMsg());
+	}
 	
 	public static void writeLogbackAppLog(LogMessage logMessenger, Class<?> classProducingError) {
 		final Logger logger = LoggerFactory.getLogger(classProducingError);

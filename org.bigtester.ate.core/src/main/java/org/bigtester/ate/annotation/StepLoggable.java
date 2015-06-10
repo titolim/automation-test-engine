@@ -20,10 +20,14 @@
  *******************************************************************************/
 package org.bigtester.ate.annotation;
 
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.ElementType;
+
+import ch.qos.logback.classic.Level;
+
 
 
 /**
@@ -32,10 +36,14 @@ import java.lang.annotation.ElementType;
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
+@Inherited
 @Target(
 {
     ElementType.METHOD, ElementType.TYPE
 })
 public @interface StepLoggable {
-
+	public enum ATELogLevel {
+		INFO, DEBUG, TRACE
+	}
+	ATELogLevel level();
 }

@@ -21,6 +21,8 @@
 package org.bigtester.ate.model.casestep;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.StepLoggable;
+import org.bigtester.ate.annotation.StepLoggable.ATELogLevel;
 import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.constant.XsdElementConstants;
@@ -186,6 +188,7 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 	/**
 	 * {@inheritDoc}
 	 */
+	@StepLoggable(level = ATELogLevel.INFO)
 	@Override
 	public void doStep() throws StepExecutionException,
 			PageValidationException2, RuntimeDataException {

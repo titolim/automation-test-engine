@@ -23,6 +23,8 @@ package org.bigtester.ate.systemlogger;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bigtester.ate.annotation.StepLoggable.ATELogLevel;
+
 import ch.qos.logback.classic.Level;
 
 /**
@@ -31,61 +33,86 @@ import ch.qos.logback.classic.Level;
  * @author Peidong Hu
  */
 public class LogMessage {
-	
+
 	/** The messages. */
-	final private Map<Level, String> messages = new ConcurrentHashMap<Level, String>(); //NOPMD
+	final private Map<Level, String> messages = new ConcurrentHashMap<Level, String>(); // NOPMD
+
 	public String getErrorMsg() {
 		String retVal = messages.get(Level.ERROR);
-		if (null == retVal) retVal = "";
+		if (null == retVal)
+			retVal = "";
 		return retVal;
 	}
+
 	public String getWarningMsg() {
 		String retVal = messages.get(Level.WARN);
-		if (null == retVal) retVal = "";
+		if (null == retVal)
+			retVal = "";
 		return retVal;
 	}
+
 	public String getInfoMsg() {
 		String retVal = messages.get(Level.INFO);
-		if (null == retVal) retVal = "";
+		if (null == retVal)
+			retVal = "";
 		return retVal;
 	}
+
 	public String getDebugMsg() {
 		String retVal = messages.get(Level.DEBUG);
-		if (null == retVal) retVal = "";
+		if (null == retVal)
+			retVal = "";
 		return retVal;
 	}
-	
+
 	public String getTraceMsg() {
 		String retVal = messages.get(Level.TRACE);
-		if (null == retVal) retVal = "";
+		if (null == retVal)
+			retVal = "";
 		return retVal;
 	}
+
 	public LogMessage(String errorMsg) {
 		messages.put(Level.ERROR, errorMsg);
-		
+
 	}
+
 	public LogMessage(String errorMsg, String warnMsg) {
 		messages.put(Level.ERROR, errorMsg);
 		messages.put(Level.WARN, warnMsg);
-		
+
 	}
+
 	public LogMessage(String errorMsg, String warnMsg, String infoMsg) {
 		messages.put(Level.ERROR, errorMsg);
 		messages.put(Level.WARN, warnMsg);
 		messages.put(Level.INFO, infoMsg);
-		
+
 	}
-	public LogMessage(String errorMsg, String warnMsg, String infoMsg, String debugMsg) {
+
+	public LogMessage(String errorMsg, String warnMsg, String infoMsg,
+			String debugMsg) {
 		messages.put(Level.ERROR, errorMsg);
 		messages.put(Level.WARN, warnMsg);
 		messages.put(Level.INFO, infoMsg);
 		messages.put(Level.DEBUG, debugMsg);
 	}
-	public LogMessage(String errorMsg, String warnMsg, String infoMsg, String debugMsg, String traceMsg) {
+
+	public LogMessage(String errorMsg, String warnMsg, String infoMsg,
+			String debugMsg, String traceMsg) {
 		messages.put(Level.ERROR, errorMsg);
 		messages.put(Level.WARN, warnMsg);
 		messages.put(Level.INFO, infoMsg);
 		messages.put(Level.DEBUG, debugMsg);
 		messages.put(Level.TRACE, traceMsg);
+	}
+
+	public LogMessage(String msg, ATELogLevel level) {
+		if (level == ATELogLevel.INFO)
+			messages.put(Level.INFO, msg);
+		if (level == ATELogLevel.DEBUG)
+			messages.put(Level.DEBUG, msg);
+		if (level == ATELogLevel.TRACE)
+			messages.put(Level.TRACE, msg);
 	}
 }
