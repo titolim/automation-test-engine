@@ -39,6 +39,18 @@ public class TestSuite {
 	/** The suite name. */
 	private String suiteName;
 
+	@Override
+	public String toString() {
+		String retVal =  "Suite: " + suiteName + " with following test cases, ";
+		final List<XmlTestCase> testCaseList2 = testCaseList;
+		if (testCaseList2 != null) {
+			for (XmlTestCase testCase: testCaseList2) {
+				retVal = retVal + "\r\n" + testCase.getTestCaseFilePathName() ;
+			}
+		} 
+		
+		return retVal;
+	}
 	/**
 	 * Instantiates a new test suite.
 	 *

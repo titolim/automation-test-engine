@@ -246,6 +246,16 @@ public class TestProject {
 	public TestNG getTestng() {
 		return testng;
 	}
-
+	@Override
+	public String toString() {
+		String retVal = "Test Project with following suites,";
+		final List<TestSuite> suiteList2 = this.suiteList;
+		if (suiteList2 != null) {
+			for (TestSuite suite: suiteList2) {
+				retVal =retVal + "\r\n" +  suite.toString() ;
+			}
+		} 
+		return retVal;
+	}
 
 }
