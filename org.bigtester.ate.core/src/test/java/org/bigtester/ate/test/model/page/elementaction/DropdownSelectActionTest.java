@@ -40,7 +40,7 @@ import org.testng.annotations.Test;
  * @author Peidong Hu
  *
  */
-@ContextConfiguration(locations = { "classpath:bigtesterTestNG/pageObjects/dropdownListHomePage.xml" })
+@ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/dropDownList.xml" })
 public class DropdownSelectActionTest extends BigtesterProjectTest {
 
 	/**

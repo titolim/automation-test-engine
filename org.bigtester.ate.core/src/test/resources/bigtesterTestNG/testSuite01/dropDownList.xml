@@ -13,10 +13,9 @@
 	<!-- this registers beans annotated with @Aspect -->
 	<aop:aspectj-autoproxy />
 
-	<import resource="classpath:META-INF/logger-reporter.xml" />
 	<import resource="classpath:META-INF/page_base_bean.xml" />
 	<import resource="classpath:META-INF/case_base_bean.xml" />
-	<import resource="../pageObjects/assignValueHomePage.xml" />
+	<import resource="../pageObjects/dropdownListHomePage.xml" />
 	<import resource="../pageObjects/lastPage.xml" />
 	
 	<!-- 
@@ -31,7 +30,7 @@
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="assignValue">
-		<ate:elementStep id="testStepException" stepName="testStepException" targetStep="false" elementActionDef="eadAssignValue"></ate:elementStep>
+	 	
 		<ate:lastStep id="stepLastStep" stepName="stepLastStep"
 			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
 		</ate:lastStep>

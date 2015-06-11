@@ -23,6 +23,7 @@ package org.bigtester.ate.test.model.casestep;
 
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.casestep.ITestStep;
+import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
@@ -49,17 +50,17 @@ public class StepExecExpectionTest extends BigtesterProjectTest {
 	 * @throws BrowserUnexpectedException 
 	 */
 	@Test(priority = 1)
-	public void assignValueEADTest() throws PageValidationException,
+	public void stepException() throws PageValidationException,
 			RuntimeDataException, StepExecutionException, InterruptedException, BrowserUnexpectedException {
 //here, we need portable file path handling for different system
 		//getTestPage("file:///c:/index.html");
 		getTestPage("bigtesterTestNG/aut/textarea_stepExecution.html");
 
 		
-		ITestStep assignStep = (ITestStep) getApplicationContext()
-				.getBean("testStepException");
+		TestCase exception = (TestCase) getApplicationContext()
+				.getBean("testcase");
 		
-		assignStep.doStep();
+		exception.goSteps();
 		//TODO Use  stub to evaluate if the logging function has been invoked.
 	}
 
