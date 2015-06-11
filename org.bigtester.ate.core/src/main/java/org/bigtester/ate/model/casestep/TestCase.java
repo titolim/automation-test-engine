@@ -225,7 +225,7 @@ public class TestCase {
 //					}
 //					throw baee;
 //				}
-			} catch (Throwable e) { // NOPMD
+			} catch (Exception e) { // NOPMD
 				IATEProblem prob;
 				if (e instanceof IATEProblemCreator) {//NOPMD
 					prob = ((IATEProblemCreator) e).getAteProblem();

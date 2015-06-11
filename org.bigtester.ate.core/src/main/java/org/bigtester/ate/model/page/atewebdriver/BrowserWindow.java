@@ -92,9 +92,9 @@ public class BrowserWindow {
 	 */
 	public void switchToDefaultContent() throws BrowserUnexpectedException {
 		try {
-		myWd.getWebDriverInstance().switchTo().defaultContent();
+			myWd.getWebDriverInstance().switchTo().defaultContent();
 		}
-		catch (Throwable thr) {//NOPMD
+		catch (Exception thr) {//NOPMD
 			
 			String msg = thr.getMessage();
 			if (null == msg) msg = "Can't switch to DefaultContent";

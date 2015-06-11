@@ -83,7 +83,7 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 			IATECaseExecProblem prb =pve.initAteProblemInstance(this);
 			prb.setFatalProblem(false);
 			throw pve;
-		} catch (Throwable otherE) {//NOPMD
+		} catch (Exception otherE) {//NOPMD
 			getApplicationContext().publishEvent(
 					new StepUnexpectedAlertEvent(this, otherE));
 			StepExecutionException pve = new StepExecutionException(

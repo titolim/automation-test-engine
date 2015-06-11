@@ -74,6 +74,12 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 	@Nullable
 	transient private BeanDefinitionRegistry bdReg;
 
+	/** The xsd element javacodedstep. */
+	final public static String XSD_ELEMENT_JAVACODEDSTEP = "javaCodedStep";
+
+	/** The name space parser. */
+	@Nullable
+	private static JavaCodedStepNameSpaceParser nameSpaceParser;
 	/**
 	 * Gets the user java step.
 	 *
@@ -98,12 +104,6 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 		this.userJavaStep = userJavaStep;
 	}
 
-	/** The xsd element javacodedstep. */
-	final public static String XSD_ELEMENT_JAVACODEDSTEP = "javaCodedStep";
-
-	/** The name space parser. */
-	@Nullable
-	private static JavaCodedStepNameSpaceParser nameSpaceParser;
 
 	/**
 	 * The Class JavaCodedStepNameSpaceParser.
@@ -208,7 +208,7 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 			prob.setFatalProblem(false);
 			throw pve;
 		
-		} catch (Throwable otherE) {// NOPMD
+		} catch (Exception otherE) {// NOPMD
 			if (otherE instanceof IATEProblemCreator) {//NOPMD
 				throw otherE;
 			}

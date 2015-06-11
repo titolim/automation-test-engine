@@ -175,7 +175,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 				}
 			}
 
-		} catch (Throwable t) { // NOPMD
+		} catch (Exception t) { // NOPMD
 			//CaseTypeservice is considered as atomic step. We don't do step jump inside of the casetypeservice
 			//if error appears, directly, we exit the service and throw error.
 			mainDriver.quit();
@@ -326,7 +326,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	*/
 	@Override
 	public void setCorrectedOnTheFly(boolean correctedOnTheFly) {
-		
+		//for future.
 		
 	}
 

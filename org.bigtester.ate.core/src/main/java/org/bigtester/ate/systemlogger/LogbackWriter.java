@@ -112,7 +112,7 @@ public final class LogbackWriter {
 		if (!logMessenger.getWarningMsg().equals("") && logger.isWarnEnabled())
 			logger.warn(APPLOG_WARNHEADER +logMessenger.getWarningMsg());
 		if (!logMessenger.getInfoMsg().equals("") && logger.isInfoEnabled())
-			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());
+			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());//NOPMD
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg());
 //		if (!logMessenger.getTraceMsg().equals(""))
@@ -136,7 +136,7 @@ public final class LogbackWriter {
 		if (!logMessenger.getWarningMsg().equals("") && logger.isWarnEnabled())
 			logger.warn(APPLOG_WARNHEADER +logMessenger.getWarningMsg()+ getCauseChainMessages(error));
 		if (!logMessenger.getInfoMsg().equals("") && logger.isInfoEnabled())
-			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg() + getCauseChainMessages(error));
+			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg() + getCauseChainMessages(error));//NOPMD
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg(), error);
 //		if (!logMessenger.getTraceMsg().equals(""))

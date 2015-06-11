@@ -111,7 +111,7 @@ public class WindowFrame {
 			} else {
 				throw GlobalUtils.createInternalError("obtainFrameFocus", thr);
 			}
-		} catch (Throwable thr2) {//NOPMD
+		} catch (Exception thr2) {//NOPMD
 			throw GlobalUtils.createInternalError("obtainFrameFocus", thr2);
 		}
 
