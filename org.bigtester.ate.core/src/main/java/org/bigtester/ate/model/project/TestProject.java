@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.TestProjectLoggable;
 import org.bigtester.ate.model.caserunner.CaseRunnerGenerator;
 import org.bigtester.ate.reporter.ATEXMLReporter;
 import org.bigtester.ate.systemlogger.LogbackWriter;
@@ -117,6 +119,7 @@ public class TestProject {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
+	@TestProjectLoggable (level=ATELogLevel.INFO)
 	public void runSuites() throws ClassNotFoundException, ParseException,
 			IOException {
 
@@ -150,12 +153,6 @@ public class TestProject {
 		XmlTest test = new XmlTest(xmlProject);
 		test.setPackages(packages);
 		xmlSuites.add(xmlProject);
-		String appLogInfo = xmlProject.toXml();
-		if (appLogInfo == null) {
-			LogbackWriter.writeSysError("internal error: xmlsuite error.");
-		} else {
-			LogbackWriter.writeAppInfo(appLogInfo);
-		}
 		if (xmlSuites.isEmpty()) {
 			throw new IllegalStateException("xmlsuites are not populated.");
 		} else {

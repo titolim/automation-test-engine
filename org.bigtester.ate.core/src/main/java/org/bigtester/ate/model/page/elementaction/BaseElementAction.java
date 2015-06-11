@@ -49,7 +49,17 @@ public class BaseElementAction extends PageModelBase{
 		super(myWd);
 		// TODO Auto-generated constructor stub
 	}
-
+	public String getActionParametersLoggingValue() {
+		String retVal;
+		
+		final IStepInputData dataValue2 = dataValue;
+		if (dataValue2 == null) {
+			retVal = "action with no parameter";
+		} else {
+			retVal = "dataValue = " + dataValue2.getStrDataValue();
+		}
+		return retVal;
+	}
 	
 	/**
 	 * Gets the data value.

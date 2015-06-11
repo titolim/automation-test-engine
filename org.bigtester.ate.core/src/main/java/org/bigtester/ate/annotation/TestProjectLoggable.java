@@ -1,7 +1,7 @@
 /*******************************************************************************
  * ATE, Automation Test Engine
  *
- * Copyright 2015, Montreal PROT, or individual contributors as
+ * Copyright 2014, Montreal PROT, or individual contributors as
  * indicated by the @author tags or express copyright attribution
  * statements applied by the authors.  All third-party contributions are
  * distributed under license by Montreal PROT.
@@ -18,24 +18,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.page.elementaction;
+package org.bigtester.ate.annotation;
 
-import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.ElementType;
+
+import ch.qos.logback.classic.Level;
+
+
 
 /**
- * This class ITestObjectFinder defines ....
+ * This class StepLoggable defines ....
  * @author Peidong Hu
  *
  */
-public interface ITestObjectAction<T> {
-	/**
-	 * Do find of the element.
-	 * 
-	 * @param findByValue
-	 *            the find by value
-	 * @return the web element
-	 * @throws BrowserUnexpectedException 
-	 */
-	void doAction(T testObject) throws BrowserUnexpectedException;
-	String getActionParametersLoggingValue();
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Target(
+{
+    ElementType.METHOD, ElementType.TYPE
+})
+public @interface TestProjectLoggable {
+	
+	ATELogLevel level();
 }

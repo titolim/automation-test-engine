@@ -21,6 +21,8 @@
 package org.bigtester.ate.model.page.elementaction;
 
 
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.systemlogger.LogbackWriter;
 import org.openqa.selenium.WebElement;
@@ -47,8 +49,8 @@ public class SendReturnAction extends BaseElementAction implements IElementActio
 	 * {@inheritDoc}
 	 */
 	@Override
+	@ActionLoggable (level=ATELogLevel.INFO)
     public void doAction(final WebElement webElm) {
         webElm.sendKeys(String.valueOf(KeyEvent.VK_ENTER));
-        LogbackWriter.writeAppInfo("action tracing: send return to browser.");
     }
 }

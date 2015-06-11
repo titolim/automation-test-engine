@@ -66,6 +66,7 @@ public final class LogbackWriter {
 		}
 	}
 	
+	public static String APPLOG_ERRORHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_ERROR;
 	public static String APPLOG_INFOHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO;
 	public static String APPLOG_WARNHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING;
 	
@@ -75,12 +76,11 @@ public final class LogbackWriter {
 			throw GlobalUtils.createNotInitializedException("logback logger");
 		}
 		if (!logMessenger.getErrorMsg().equals(""))
-			logger.error(LogbackTag.TAG_APP_LOG
-					+ LogbackTag.TAG_TEST_ERROR +logMessenger.getErrorMsg());
+			logger.error(APPLOG_ERRORHEADER + logMessenger.getErrorMsg());
 		if (!logMessenger.getWarningMsg().equals(""))
-			logger.warn(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg());
+			logger.warn(APPLOG_WARNHEADER + logMessenger.getWarningMsg());
 		if (!logMessenger.getInfoMsg().equals(""))
-			logger.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg());
+			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg());
 //		if (!logMessenger.getTraceMsg().equals(""))
@@ -93,12 +93,11 @@ public final class LogbackWriter {
 			throw GlobalUtils.createNotInitializedException("logback logger");
 		}
 		if (!logMessenger.getErrorMsg().equals(""))
-			logger.error(LogbackTag.TAG_APP_LOG
-					+ LogbackTag.TAG_TEST_ERROR +logMessenger.getErrorMsg());
+			logger.error(APPLOG_ERRORHEADER + logMessenger.getErrorMsg());
 		if (!logMessenger.getWarningMsg().equals(""))
-			logger.warn(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg());
+			logger.warn(APPLOG_WARNHEADER +logMessenger.getWarningMsg());
 		if (!logMessenger.getInfoMsg().equals(""))
-			logger.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg());
+			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg());
 //		if (!logMessenger.getTraceMsg().equals(""))
@@ -111,12 +110,11 @@ public final class LogbackWriter {
 			throw GlobalUtils.createNotInitializedException("logback logger");
 		}
 		if (!logMessenger.getErrorMsg().equals(""))
-			logger.error(LogbackTag.TAG_APP_LOG
-					+ LogbackTag.TAG_TEST_ERROR + error.hashCode() + logMessenger.getErrorMsg() + getCauseChainMessages(error));
+			logger.error(APPLOG_ERRORHEADER + "Error Code: " + error.hashCode() + " " + logMessenger.getErrorMsg() + getCauseChainMessages(error));
 		if (!logMessenger.getWarningMsg().equals(""))
-			logger.warn(LogbackTag.TAG_APP_LOG + error.hashCode() + LogbackTag.TAG_TEST_WARNING + logMessenger.getWarningMsg()+ getCauseChainMessages(error));
+			logger.warn(APPLOG_WARNHEADER +logMessenger.getWarningMsg()+ getCauseChainMessages(error));
 		if (!logMessenger.getInfoMsg().equals(""))
-			logger.info(LogbackTag.TAG_APP_LOG + error.hashCode() + LogbackTag.TAG_TEST_INFO +logMessenger.getInfoMsg() + getCauseChainMessages(error));
+			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg() + getCauseChainMessages(error));
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg(), error);
 //		if (!logMessenger.getTraceMsg().equals(""))

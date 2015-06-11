@@ -21,6 +21,8 @@
 package org.bigtester.ate.model.page.elementaction;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.AbstractAlertDialog;
 import org.bigtester.ate.model.page.atewebdriver.AlertDialogAcceptedEvent;
@@ -60,11 +62,14 @@ public class AlertDialogAcceptLikeAction extends PageModelBase implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	@ActionLoggable (level=ATELogLevel.INFO)
 	public void doAction(AbstractAlertDialog alertD) {
 		alertD.accept();
 		GlobalUtils.getApx().publishEvent(
 				new AlertDialogAcceptedEvent(alertD));
 		
 	}
-
+	public String getActionParametersLoggingValue() {
+		return "accept alert dialog with no action parameter";
+	}
 }

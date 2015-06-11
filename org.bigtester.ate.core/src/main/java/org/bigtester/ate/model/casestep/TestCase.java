@@ -23,6 +23,9 @@ package org.bigtester.ate.model.casestep;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.ActionLoggable;
+import org.bigtester.ate.annotation.TestCaseLoggable;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -176,6 +179,7 @@ public class TestCase {
 	 * @throws StepExecutionException
 	 * @throws PageValidationException
 	 */
+	@TestCaseLoggable (level=ATELogLevel.INFO)
 	public void goSteps() throws StepExecutionException,
 			PageValidationException, IllegalStateException,
 			RuntimeDataException {

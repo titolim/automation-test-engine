@@ -50,7 +50,7 @@
 
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 
-			<Pattern>%-40(%d{ISO8601} [%thread]) %-5level [M: %marker] %-47.47logger{45} :%X{host}%X{message}: %msg%n           </Pattern>
+			<Pattern>%-25(%d{ISO8601}) %-5level :%X{host}%X{message}: %msg%n           </Pattern>
 
 		</encoder>
 
