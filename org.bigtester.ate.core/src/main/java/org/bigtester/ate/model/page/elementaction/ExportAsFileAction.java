@@ -99,6 +99,10 @@ public class ExportAsFileAction extends PageModelBase implements
 		fileOpr.saveToSingleFile();
 		
 	}
+	
+	/**
+	* {@inheritDoc}
+	*/
 	public String getActionParametersLoggingValue() {
 		return "fileNameWithAbsolutePath = " + fileNameWithAbsolutePath;
 	}

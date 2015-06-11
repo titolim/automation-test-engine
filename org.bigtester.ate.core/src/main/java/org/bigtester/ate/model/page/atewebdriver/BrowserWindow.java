@@ -94,7 +94,7 @@ public class BrowserWindow {
 		try {
 		myWd.getWebDriverInstance().switchTo().defaultContent();
 		}
-		catch (Throwable thr) {
+		catch (Throwable thr) {//NOPMD
 			
 			String msg = thr.getMessage();
 			if (null == msg) msg = "Can't switch to DefaultContent";

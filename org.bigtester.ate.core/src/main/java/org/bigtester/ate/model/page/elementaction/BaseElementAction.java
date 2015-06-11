@@ -43,12 +43,20 @@ public class BaseElementAction extends PageModelBase{
 	
 	
 	/**
-	 * @param myWd
+	 * Instantiates a new base element action.
+	 *
+	 * @param myWd the my wd
 	 */
 	public BaseElementAction(IMyWebDriver myWd) {
 		super(myWd);
 		// TODO Auto-generated constructor stub
 	}
+	
+	/**
+	 * Gets the action parameters logging value.
+	 *
+	 * @return the action parameters logging value
+	 */
 	public String getActionParametersLoggingValue() {
 		String retVal;
 		

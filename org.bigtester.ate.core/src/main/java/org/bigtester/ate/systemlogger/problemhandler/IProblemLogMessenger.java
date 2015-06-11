@@ -30,6 +30,12 @@ import org.bigtester.ate.systemlogger.LogMessage;
  *
  */
 public interface IProblemLogMessenger {
-	 LogMessage getLogMessage();
+	 
+ 	/**
+ 	 * Gets the log message.
+ 	 *
+ 	 * @return the log message
+ 	 */
+ 	LogMessage getLogMessage();
 	
 }

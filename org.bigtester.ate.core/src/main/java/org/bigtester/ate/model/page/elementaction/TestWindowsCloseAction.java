@@ -73,6 +73,10 @@ public class TestWindowsCloseAction extends PageModelBase implements
 		}
 		
 	}
+	
+	/**
+	* {@inheritDoc}
+	*/
 	public String getActionParametersLoggingValue() {
 		return "window close action with no parameter";
 	}

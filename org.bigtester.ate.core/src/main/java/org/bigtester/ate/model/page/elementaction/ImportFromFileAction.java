@@ -108,6 +108,10 @@ public class ImportFromFileAction extends PageModelBase implements
 		
 		
 	}
+	
+	/**
+	* {@inheritDoc}
+	*/
 	public String getActionParametersLoggingValue() {
 		return "fileNameWithAbsolutePath = " + fileNameWithAbsolutePath;
 	}

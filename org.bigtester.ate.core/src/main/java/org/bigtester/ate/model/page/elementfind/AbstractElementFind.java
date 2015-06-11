@@ -64,6 +64,11 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 
 	
 
+	/**
+	 * Gets the finding parameters logging value.
+	 *
+	 * @return the finding parameters logging value
+	 */
 	public String getFindingParametersLoggingValue() {
 		return "findByValue = " + findByValue;
 	}

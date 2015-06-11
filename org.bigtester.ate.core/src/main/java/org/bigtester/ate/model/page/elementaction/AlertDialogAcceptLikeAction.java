@@ -69,6 +69,10 @@ public class AlertDialogAcceptLikeAction extends PageModelBase implements
 				new AlertDialogAcceptedEvent(alertD));
 		
 	}
+	
+	/**
+	* {@inheritDoc}
+	*/
 	public String getActionParametersLoggingValue() {
 		return "accept alert dialog with no action parameter";
 	}

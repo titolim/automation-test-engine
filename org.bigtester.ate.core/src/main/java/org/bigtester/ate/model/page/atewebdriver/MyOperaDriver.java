@@ -110,7 +110,7 @@ public class MyOperaDriver extends AbstractWebDriverBase implements IMyWebDriver
 			EPlatform platform = osinfo.getOSname();
 			String driverPath = GlobalUtils.getDriverPath(); //NOPMD
 			
-			ChromeOptions options = new ChromeOptions();
+			ChromeOptions options = new ChromeOptions();//NOPMD
                         
 			switch (platform) {
 			case Windows_32:

@@ -20,8 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ExceptionMessage;
@@ -29,8 +27,6 @@ import org.bigtester.ate.constant.LogbackTag;
 import org.eclipse.jdt.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -42,9 +38,20 @@ public final class LogbackWriter {
 
 	/** The Constant MYLOGGER. */
 	@Nullable
-	private static Logger myLogger = LoggerFactory
+	private static Logger myLogger = LoggerFactory//NOPMD
 			.getLogger(LogbackWriter.class);
+	
+	/** The applog errorheader. */
+	final public static String APPLOG_ERRORHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_ERROR;
+	
+	/** The applog infoheader. */
+	final public static String APPLOG_INFOHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO;
+	
+	/** The applog warnheader. */
+	final public static String APPLOG_WARNHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING;
 
+	/** The Constant LOGBACKLOGGERNOTINIT. */
+	final private static String LOGBACKLOGGERNOTINIT = "Logback Logger";
 	/**
 	 * Prints the stack trace.
 	 *
@@ -66,20 +73,22 @@ public final class LogbackWriter {
 		}
 	}
 	
-	public static String APPLOG_ERRORHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_ERROR;
-	public static String APPLOG_INFOHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO;
-	public static String APPLOG_WARNHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING;
 	
+	/**
+	 * Write logback app log.
+	 *
+	 * @param logMessenger the log messenger
+	 */
 	public static void writeLogbackAppLog(LogMessage logMessenger) {
 		final Logger logger = LoggerFactory.getLogger(LogbackWriter.class);
 		if (null == logger) {
-			throw GlobalUtils.createNotInitializedException("logback logger");
+			throw GlobalUtils.createNotInitializedException(LOGBACKLOGGERNOTINIT);
 		}
-		if (!logMessenger.getErrorMsg().equals(""))
+		if (!logMessenger.getErrorMsg().equals("") && logger.isErrorEnabled())
 			logger.error(APPLOG_ERRORHEADER + logMessenger.getErrorMsg());
-		if (!logMessenger.getWarningMsg().equals(""))
+		if (!logMessenger.getWarningMsg().equals("") && logger.isWarnEnabled())
 			logger.warn(APPLOG_WARNHEADER + logMessenger.getWarningMsg());
-		if (!logMessenger.getInfoMsg().equals(""))
+		if (!logMessenger.getInfoMsg().equals("") && logger.isInfoEnabled())
 			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg());
@@ -87,16 +96,22 @@ public final class LogbackWriter {
 //			logger.trace(logMessenger.getTraceMsg());
 	}
 	
+	/**
+	 * Write logback app log.
+	 *
+	 * @param logMessenger the log messenger
+	 * @param classProducingError the class producing error
+	 */
 	public static void writeLogbackAppLog(LogMessage logMessenger, Class<?> classProducingError) {
 		final Logger logger = LoggerFactory.getLogger(classProducingError);
 		if (null == logger) {
-			throw GlobalUtils.createNotInitializedException("logback logger");
+			throw GlobalUtils.createNotInitializedException(LOGBACKLOGGERNOTINIT);
 		}
-		if (!logMessenger.getErrorMsg().equals(""))
+		if (!logMessenger.getErrorMsg().equals("") && logger.isErrorEnabled())
 			logger.error(APPLOG_ERRORHEADER + logMessenger.getErrorMsg());
-		if (!logMessenger.getWarningMsg().equals(""))
+		if (!logMessenger.getWarningMsg().equals("") && logger.isWarnEnabled())
 			logger.warn(APPLOG_WARNHEADER +logMessenger.getWarningMsg());
-		if (!logMessenger.getInfoMsg().equals(""))
+		if (!logMessenger.getInfoMsg().equals("") && logger.isInfoEnabled())
 			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg());
@@ -104,16 +119,23 @@ public final class LogbackWriter {
 //			logger.trace(logMessenger.getTraceMsg());
 	}
 	
+	/**
+	 * Write logback app log.
+	 *
+	 * @param logMessenger the log messenger
+	 * @param classProducingError the class producing error
+	 * @param error the error
+	 */
 	public static void writeLogbackAppLog(LogMessage logMessenger, Class<?> classProducingError, Throwable error) {
 		final Logger logger = LoggerFactory.getLogger(classProducingError);
 		if (null == logger) {
-			throw GlobalUtils.createNotInitializedException("logback logger");
+			throw GlobalUtils.createNotInitializedException(LOGBACKLOGGERNOTINIT);
 		}
-		if (!logMessenger.getErrorMsg().equals(""))
+		if (!logMessenger.getErrorMsg().equals("") && logger.isErrorEnabled())
 			logger.error(APPLOG_ERRORHEADER + "Error Code: " + error.hashCode() + " " + logMessenger.getErrorMsg() + getCauseChainMessages(error));
-		if (!logMessenger.getWarningMsg().equals(""))
+		if (!logMessenger.getWarningMsg().equals("") && logger.isWarnEnabled())
 			logger.warn(APPLOG_WARNHEADER +logMessenger.getWarningMsg()+ getCauseChainMessages(error));
-		if (!logMessenger.getInfoMsg().equals(""))
+		if (!logMessenger.getInfoMsg().equals("") && logger.isInfoEnabled())
 			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg() + getCauseChainMessages(error));
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg(), error);
@@ -121,11 +143,17 @@ public final class LogbackWriter {
 //			logger.trace(logMessenger.getTraceMsg(), error);
 	}
 	
+	/**
+	 * Gets the cause chain messages.
+	 *
+	 * @param error the error
+	 * @return the cause chain messages
+	 */
 	private static String getCauseChainMessages(Throwable error) {
-		String retVal="";
+		String retVal="";//NOPMD
 		Throwable errorPointer = error;
 		while (errorPointer.getCause() != null) {
-			retVal = retVal + "->caused by->" + errorPointer.getCause().getMessage();
+			retVal = retVal + "->caused by->" + errorPointer.getCause().getMessage();//NOPMD
 			errorPointer = errorPointer.getCause();
 		}
 		return retVal;
@@ -195,6 +223,12 @@ public final class LogbackWriter {
 		}
 	}
 	
+	/**
+	 * Write sys error.
+	 *
+	 * @param classProducingError the class producing error
+	 * @param error the error
+	 */
 	public static void writeSysError(Class<?> classProducingError, Throwable error) {
 		final Logger logger = LoggerFactory.getLogger(classProducingError);
 		if (null == logger) {

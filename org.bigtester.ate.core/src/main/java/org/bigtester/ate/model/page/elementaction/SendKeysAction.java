@@ -24,7 +24,6 @@ import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.systemlogger.LogbackWriter;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 

@@ -37,5 +37,11 @@ public interface ITestObjectAction<T> {
 	 * @throws BrowserUnexpectedException 
 	 */
 	void doAction(T testObject) throws BrowserUnexpectedException;
+	
+	/**
+	 * Gets the action parameters logging value.
+	 *
+	 * @return the action parameters logging value
+	 */
 	String getActionParametersLoggingValue();
 }

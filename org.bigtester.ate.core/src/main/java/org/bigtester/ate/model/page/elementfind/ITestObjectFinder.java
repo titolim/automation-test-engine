@@ -40,6 +40,11 @@ public interface ITestObjectFinder<T> {
 	 */
 	T doFind(IMyWebDriver myWebDriver) throws NoSuchElementException, BrowserUnexpectedException;
 	
+	/**
+	 * Gets the finding parameters logging value.
+	 *
+	 * @return the finding parameters logging value
+	 */
 	String getFindingParametersLoggingValue();
 	
 }

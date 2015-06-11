@@ -30,6 +30,12 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  */
 public interface IATEProblemHandler extends ProblemHandler {
+	
+	/**
+	 * Gets the attached class.
+	 *
+	 * @return the attached class
+	 */
 	@Nullable
 	Class<?> getAttachedClass();
 }

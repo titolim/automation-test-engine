@@ -23,7 +23,6 @@ package org.bigtester.ate.model.page.elementaction;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.annotation.ActionLoggable;
-import org.bigtester.ate.annotation.TestObjectFinderLoggable;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.openqa.selenium.WebElement;
 

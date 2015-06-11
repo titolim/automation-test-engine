@@ -24,7 +24,6 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.ATELogLevel;
-import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.annotation.TestCaseLoggable;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;

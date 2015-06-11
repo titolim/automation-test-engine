@@ -29,7 +29,6 @@ import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.elementfind.IElementFind;
-import org.bigtester.ate.model.page.exception.StepExecutionException.StepExecutionProblem;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.LogMessage;
 import org.bigtester.ate.systemlogger.problemhandler.IProblemLogMessenger;
@@ -63,6 +62,8 @@ public class PageValidationException extends BaseATECaseExecE implements IATEPro
 
 		
 	/**
+	 * Gets the list asserters.
+	 *
 	 * @return the listAsserters
 	 */
 	@Nullable
@@ -71,8 +72,9 @@ public class PageValidationException extends BaseATECaseExecE implements IATEPro
 	}
 
 	/**
-	 * @param listAsserters
-	 *            the listAsserters to set
+	 * Sets the list asserters.
+	 *
+	 * @param listAsserters            the listAsserters to set
 	 */
 	public void setListAsserters(List<IExpectedResultAsserter> listAsserters) {
 		this.listAsserters = listAsserters;
@@ -156,6 +158,11 @@ public class PageValidationException extends BaseATECaseExecE implements IATEPro
 
 	
 
+	/**
+	 * The Class PageValidationProblem.
+	 *
+	 * @author Peidong Hu
+	 */
 	public class PageValidationProblem extends GenericATEProblem implements IATECaseExecProblem, IProblemLogMessenger {
 
 		/** The test data exception. */
@@ -163,11 +170,9 @@ public class PageValidationException extends BaseATECaseExecE implements IATEPro
 
 		/**
 		 * Instantiates a new page validation problem.
-		 * 
-		 * @param source
-		 *            the source
-		 * @param tde
-		 *            the see
+		 *
+		 * @param source            the source
+		 * @param pageValException the page val exception
 		 */
 		public PageValidationProblem(Object source, PageValidationException pageValException) {
 			super(source, pageValException);
@@ -230,8 +235,8 @@ public class PageValidationException extends BaseATECaseExecE implements IATEPro
 		*/
 		@Override
 		public LogMessage getLogMessage() {
-			String errorMsg = "";
-			String warnMsg = "";
+			String errorMsg = "";//NOPMD
+			String warnMsg = "";//NOPMD
 			if (isFatalProblem()) {
 				errorMsg = "This throwable " + this.getClass().getCanonicalName() +"  is fatal for test case: " 
 						+ this.getCurrentTestCase().getTestCaseName() 

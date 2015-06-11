@@ -28,8 +28,6 @@ import java.util.Set;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
-import org.bigtester.ate.model.page.exception.StepExecutionException;
-import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -54,6 +52,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  */
 public class MultiWindowsHandler implements IMultiWindowsHandler,
 		WebDriverEventListener, ApplicationListener<AlertDialogAcceptedEvent> {
+	
+	/** The test case. */
 	@Nullable
 	@Autowired
 	private TestCase testCase;
@@ -80,8 +80,8 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	private void resetWindows() {
 		windows.clear();
 		alerts.clear();
-		this.mainWindowHandler = null;
-		this.mainWindowTitle = null;
+		this.mainWindowHandler = null;//NOPMD
+		this.mainWindowTitle = null;//NOPMD
 	}
 	/**
 	 * @return the mainWindowTitle

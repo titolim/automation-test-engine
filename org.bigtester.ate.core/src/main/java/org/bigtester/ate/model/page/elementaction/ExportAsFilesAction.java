@@ -69,6 +69,9 @@ public class ExportAsFilesAction extends PageModelBase implements
 		
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
 	public String getActionParametersLoggingValue() {
 		return "this action is not implemented yet.";
 	}

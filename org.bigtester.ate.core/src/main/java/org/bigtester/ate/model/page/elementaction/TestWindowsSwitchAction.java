@@ -72,6 +72,9 @@ public class TestWindowsSwitchAction extends PageModelBase implements
 		
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
 	public String getActionParametersLoggingValue() {
 		return "window switch action with no parameter";
 	}

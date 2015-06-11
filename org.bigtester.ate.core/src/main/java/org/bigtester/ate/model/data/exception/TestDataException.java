@@ -23,15 +23,10 @@ package org.bigtester.ate.model.data.exception;
 import org.bigtester.ate.model.AbstractATEException;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.LogMessage;
-import org.bigtester.ate.systemlogger.LogbackWriter;
 import org.bigtester.ate.systemlogger.problemhandler.IProblemLogMessenger;
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.qos.logback.classic.Level;
-
-// TODO: Auto-generated Javadoc
 /**
  * This class StepExecutionException defines ....
  * 
@@ -165,8 +160,8 @@ public class TestDataException extends AbstractATEException implements IATEProbl
 		 */
 		@Override
 		public LogMessage getLogMessage() {
-			String errorMsg = "";
-			String warnMsg = "";
+			String errorMsg = "";//NOPMD
+			String warnMsg = "";//NOPMD
 			if (isFatalProblem()) {
 				errorMsg = "This throwable " + this.getClass().getCanonicalName() +" is fatal for test case: " + this.testDataException.getTestCaseName()
 						+ " in step: " + this.testDataException.getTestStepName();

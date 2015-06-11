@@ -39,13 +39,16 @@ public class TestSuite {
 	/** The suite name. */
 	private String suiteName;
 
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public String toString() {
-		String retVal =  "Suite: " + suiteName + " with following test cases, ";
+		String retVal =  "Suite: " + suiteName + " with following test cases, ";//NOPMD
 		final List<XmlTestCase> testCaseList2 = testCaseList;
 		if (testCaseList2 != null) {
 			for (XmlTestCase testCase: testCaseList2) {
-				retVal = retVal + "\r\n" + testCase.getTestCaseFilePathName() ;
+				retVal = retVal + "\r\n" + testCase.getTestCaseFilePathName() ;//NOPMD
 			}
 		} 
 		

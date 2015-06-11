@@ -29,7 +29,6 @@ import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.annotation.TestProjectLoggable;
 import org.bigtester.ate.model.caserunner.CaseRunnerGenerator;
 import org.bigtester.ate.reporter.ATEXMLReporter;
-import org.bigtester.ate.systemlogger.LogbackWriter;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
@@ -246,13 +245,17 @@ public class TestProject {
 	public TestNG getTestng() {
 		return testng;
 	}
+	
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public String toString() {
-		String retVal = "Test Project with following suites,";
+		String retVal = "Test Project with following suites,";//NOPMD
 		final List<TestSuite> suiteList2 = this.suiteList;
 		if (suiteList2 != null) {
 			for (TestSuite suite: suiteList2) {
-				retVal =retVal + "\r\n" +  suite.toString() ;
+				retVal = retVal + "\r\n" +  suite.toString() ;//NOPMD
 			}
 		} 
 		return retVal;

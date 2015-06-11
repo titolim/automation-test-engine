@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
-import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 

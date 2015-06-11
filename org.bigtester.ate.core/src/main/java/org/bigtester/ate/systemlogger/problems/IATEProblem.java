@@ -41,17 +41,60 @@ public interface IATEProblem {
 	@Nullable
 	String getProblemMessage();
 	
+	/**
+	 * Checks if is fatal problem.
+	 *
+	 * @return true, if is fatal problem
+	 */
 	boolean isFatalProblem();
 	
+	/**
+	 * Gets the logging level.
+	 *
+	 * @return the logging level
+	 */
 	Level getLoggingLevel();
 	
+	/**
+	 * Sets the logging level.
+	 *
+	 * @param loggingLevel the new logging level
+	 */
 	void setLoggingLevel(Level loggingLevel);
 	
+	/**
+	 * Sets the fatal problem.
+	 *
+	 * @param fatal the new fatal problem
+	 */
 	void setFatalProblem(boolean fatal);
+	
+	/**
+	 * Gets the ate exception.
+	 *
+	 * @return the ate exception
+	 */
 	@Nullable
 	IATEException getAteException();
 	
+	/**
+	 * Sets the ate exception.
+	 *
+	 * @param ateE the new ate exception
+	 */
 	void setAteException(IATEException ateE);
+	
+	/**
+	 * Gets the step index jump to.
+	 *
+	 * @return the step index jump to
+	 */
 	int getStepIndexJumpTo();
+	
+	/**
+	 * Sets the step index jump to.
+	 *
+	 * @param stepIndex the new step index jump to
+	 */
 	void setStepIndexJumpTo(int stepIndex);
 }

@@ -78,7 +78,7 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
 							+ ExceptionMessage.MSG_SEPERATOR + e.getMessage(),
 					ExceptionErrorCode.WEBELEMENT_NOTFOUND,
-					this.getMyWebElement(), this.getMyWebDriver(),
+					this.getMyWebDriver(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()), e);
 			IATECaseExecProblem prb =pve.initAteProblemInstance(this);
 			prb.setFatalProblem(false);
@@ -90,7 +90,7 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 					StepExecutionException.MSG
 							+ ExceptionMessage.MSG_SEPERATOR + otherE.getMessage(),
 							StepExecutionException.CODE,
-					this.getMyWebElement(), this.getMyWebDriver(),
+					this.getMyWebDriver(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()), otherE);
 			IATECaseExecProblem prb = pve.initAteProblemInstance(this);
 			prb.setFatalProblem(true);

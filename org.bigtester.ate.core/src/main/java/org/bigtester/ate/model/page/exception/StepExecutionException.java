@@ -23,20 +23,16 @@ package org.bigtester.ate.model.page.exception;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.IATECaseExecException;
-import org.bigtester.ate.model.IATEException;
 import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
-import org.bigtester.ate.systemlogger.LogbackWriter;
 import org.bigtester.ate.systemlogger.LogMessage;
 import org.bigtester.ate.systemlogger.problemhandler.IProblemLogMessenger;
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
 import org.eclipse.jdt.annotation.Nullable;
 
-import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -56,48 +52,11 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 6019919237360483689L;
 
-	/** The my web element. */
-	@Nullable
-	private MyWebElement<?> myWebElement;
 	
 	
 
 
 	
-	/**
-	 * Instantiates a new step execution exception2.
-	 *
-	 * @param message the message
-	 * @param errorCode the error code
-	 * @param myWebElement the my web element
-	 * @param myWebDriver the my web driver
-	 * @param currentTestCase the current test case
-	 */
-	public StepExecutionException(String message, String errorCode,
-			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase) {
-		super(message, errorCode, currentTestCase, myWebDriver);
-		this.myWebElement = myWebElement;
-		setMyWebDriver(myWebDriver);
-		setCurrentTestCase(currentTestCase);
-	}
-
-	/**
-	 * Instantiates a new step execution exception.
-	 *
-	 * @param message the message
-	 * @param errorCode the error code
-	 * @param myWebElement the my web element
-	 * @param myWebDriver the my web driver
-	 * @param currentTestCase the current test case
-	 * @param cause the cause
-	 */
-	public StepExecutionException(String message, String errorCode,
-			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase, Throwable cause) {
-		super(message, errorCode, currentTestCase, myWebDriver, cause);
-		this.myWebElement = myWebElement;
-		setMyWebDriver(myWebDriver);
-		setCurrentTestCase(currentTestCase);
-	}
 
 	
 	/**
@@ -141,9 +100,8 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	 * @param currentTestCase the current test case
 	 */
 	public StepExecutionException(String message, String errorCode,
-			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo) {
+			IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo) {
 		super(message, errorCode, currentTestCase, myWebDriver);
-		this.myWebElement = myWebElement;
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
 		super.setStepIndexJumpTo(stepIndexJumpTo);
@@ -161,9 +119,8 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	 * @param cause the cause
 	 */
 	public StepExecutionException(String message, String errorCode,
-			MyWebElement<?> myWebElement, IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo, Throwable cause) {
+			IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo, Throwable cause) {
 		super(message, errorCode, currentTestCase, myWebDriver, cause);
-		this.myWebElement = myWebElement;
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
 		super.setStepIndexJumpTo(stepIndexJumpTo);
@@ -302,8 +259,8 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		 */
 		@Override
 		public LogMessage getLogMessage() {
-			String errorMsg = "";
-			String warnMsg = "";
+			String errorMsg = "";//NOPMD
+			String warnMsg = "";//NOPMD
 			if (isFatalProblem()) {
 				errorMsg = "This throwable " + this.getClass().getCanonicalName() +"  is fatal for test case: " 
 						+ this.getCurrentTestCase().getTestCaseName() 

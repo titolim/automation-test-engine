@@ -48,10 +48,14 @@ public class GenericATEProblem extends RawProblem implements IATEProblem{
 	/** The fatal problem. */
 	private boolean fatalProblem;
 	
+	/** The step index jump to. */
 	private int stepIndexJumpTo = -1;
 	
+	/** The ate exception. */
 	@Nullable
 	private IATEException ateException;
+	
+	/** The problem message. */
 	@Nullable
 	private String problemMessage; 
 	
