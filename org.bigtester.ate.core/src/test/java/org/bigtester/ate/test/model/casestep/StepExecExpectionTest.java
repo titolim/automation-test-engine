@@ -43,14 +43,14 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/stepExecutionException.xml" })
 public class StepExecExpectionTest extends BigtesterProjectTest {
 
-//	/**
-//	 * Setup.
-//	 */
-//	@BeforeClass
-//	public void setup() {
-//		when(getMyMockedDriver().getWebDriverInstance()).thenReturn(getMockedDriver());
-//		when(getMockedDriver().manage()).thenReturn(getOptions());
-//	}
+	/**
+	 * Setup.
+	 */
+	@BeforeClass
+	public void setup() {
+		when(getMyMockedDriver().getWebDriverInstance()).thenReturn(getMockedDriver());
+		when(getMockedDriver().manage()).thenReturn(getOptions());
+	}
 	/**
 	 * Ead test.
 	 * 
@@ -68,10 +68,10 @@ public class StepExecExpectionTest extends BigtesterProjectTest {
 		getTestPage("bigtesterTestNG/aut/textarea_stepExecution.html");
 
 		
-		TestCase exception = (TestCase) getApplicationContext()
+		TestCase testCase = (TestCase) getApplicationContext()
 				.getBean("testcase");
 		try {
-			exception.goSteps();
+			testCase.goSteps();
 		} catch (StepExecutionException e) {
 			//TODO add assert to validate the application log printed
 			Assert.assertTrue(true);

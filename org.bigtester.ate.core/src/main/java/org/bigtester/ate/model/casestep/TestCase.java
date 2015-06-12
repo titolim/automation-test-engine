@@ -58,6 +58,7 @@ public class TestCase {
 	/** The current test step. */
 	@Nullable
 	private ITestStep currentTestStep;
+	
 
 	/** The test step list. */
 	@Nullable

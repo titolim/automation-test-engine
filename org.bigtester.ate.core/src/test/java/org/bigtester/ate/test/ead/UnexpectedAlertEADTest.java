@@ -59,7 +59,7 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 	 * @throws BrowserUnexpectedException 
 	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 1)
+	//@Test(priority = 1)
 	public void eadHandleUnexpectedAlertTest() throws PageValidationException,
 			RuntimeDataException, StepExecutionException, NoSuchElementException, BrowserUnexpectedException {
 

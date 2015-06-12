@@ -26,6 +26,7 @@ import java.util.List;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.StepLoggable;
 import org.bigtester.ate.constant.StepResultStatus;
+import org.bigtester.ate.model.AbstractATEException;
 import org.bigtester.ate.model.casestep.RepeatStepInOutEvent.RepeatStepInOut;
 import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.IRepeatIncrementalIndex;
@@ -285,31 +286,6 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 					currentTestStepTmp.doStep();// NOPMD
 					currentTestStepTmp.setStepResultStatus(
 							StepResultStatus.PASS);
-					// } catch (BaseATECaseExecE baee) {
-					//
-					// if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1)
-					// { //NOPMD
-					// i = ((BaseATECaseExecE) baee).getStepIndexJumpTo();
-					// //NOPMD
-					// } else if
-					// (getTestCase().getCurrentTestStep().isOptionalStep()) {
-					// getTestCase().getCurrentTestStep().setStepResultStatus(
-					// StepResultStatus.SKIP);
-					// if
-					// (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex()
-					// > getStepIndexes().get(i)) {
-					// i =
-					// getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());//
-					// NOPMD
-					// if (-1 == i) {
-					// baee.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
-					// thr = baee;//NOPMD
-					// }
-					// }
-					// } else {
-					// if (!this.continueOnFailure)
-					// thr = baee;//NOPMD
-					// }
 				} catch (Exception e) { // NOPMD
 					IATEProblem prob;
 					if (e instanceof IATEProblemCreator) {// NOPMD
@@ -318,43 +294,30 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 							prob = ((IATEProblemCreator) e)
 									.initAteProblemInstance(currentTestStepTmp);
 						}
-						// if (prob.getStepIndexJumpTo() > -1) { // NOPMD
-						// i = prob.getStepIndexJumpTo(); // NOPMD
-						// } else if (getCurrentTestStep().isOptionalStep()) {
-						// getCurrentTestStep().setStepResultStatus(
-						// StepResultStatus.SKIP);
-						// if (currentTestStepTmp
-						// .getCorrelatedOptionalStepsUtilInclusiveIndex() > i)
-						// {
-						// i = currentTestStepTmp
-						// .getCorrelatedOptionalStepsUtilInclusiveIndex();//
-						// NOPMD
-						//
-						// }
-						// } else {
-						// prob.setFatality(false);
-						// throw e;
-						// }
+						ITestStep exceptionRaisingStep = ((AbstractATEException) e).getOriginalStepRaisingException();
+						boolean optionalStepRaisingException = false;//NOPMD
+						if (exceptionRaisingStep != null)
+							optionalStepRaisingException = exceptionRaisingStep.isOptionalStep(); //NOPMD
 						if (!prob.isFatalProblem()
 								&& prob.getStepIndexSkipTo() > -1) { // NOPMD
-							i = prob.getStepIndexSkipTo(); // NOPMD
-							if (i >= repeatingStepIndexesInTestCase.size())
+							i = repeatingStepIndexesInTestCase
+									.indexOf(prob.getStepIndexSkipTo()); // NOPMD
+							if (-1 == i)
 								thr = e;
 						} else if (!prob.isFatalProblem()
-								&& currentTestStepTmp //this variable should be replaced by new variable throwingExceptionStep
-										.isOptionalStep()) {
+								&& optionalStepRaisingException) {
+							int correlatedOptionalStepsUtilInclusiveIndex = -1;//NOPMD
+							if (exceptionRaisingStep != null)
+								correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex(); //NOPMD
 							currentTestStepTmp
 									.setStepResultStatus(StepResultStatus.SKIP);
-							if (currentTestStepTmp
-									.getCorrelatedOptionalStepsUtilInclusiveIndex() > repeatingStepIndexesInTestCase
+							if (correlatedOptionalStepsUtilInclusiveIndex > repeatingStepIndexesInTestCase
 									.get(i)) {
 								i = repeatingStepIndexesInTestCase
 										.indexOf(
-												currentTestStepTmp
-														.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+												correlatedOptionalStepsUtilInclusiveIndex);// NOPMD
 								if (-1 == i) {
-									prob.setStepIndexSkipTo(currentTestStepTmp
-											.getCorrelatedOptionalStepsUtilInclusiveIndex());
+									prob.setStepIndexSkipTo(correlatedOptionalStepsUtilInclusiveIndex);
 									thr = e;// NOPMD
 								}
 							}
@@ -363,50 +326,10 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 								thr = e;// NOPMD
 						}
 					} else {
-						// if
-						// (getTestCase().getCurrentTestStep().isOptionalStep())
-						// {
-						// getTestCase().getCurrentTestStep().setStepResultStatus(
-						// StepResultStatus.SKIP);
-						// if
-						// (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex()
-						// > getStepIndexes().get(i)) {
-						// i =
-						// getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());//
-						// NOPMD
-						// }
-						// } else if
-						// (getTestCase().getCurrentTestStep().isCorrectedOnTheFly())
-						// {
-						// getTestCase().getCurrentTestStep().setStepResultStatus(
-						// StepResultStatus.PASS);
-						// } else {
 						thr = e;// If exception was not handled, we don't know
 								// what the exception/throwable could cause in
 								// the ate, so we just stop the testcase.
-						// }
 					}
-
-					// ///
-					// if (getTestCase().getCurrentTestStep().isOptionalStep())
-					// {
-					// getTestCase().getCurrentTestStep().setStepResultStatus(
-					// StepResultStatus.SKIP);
-					// if
-					// (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex()
-					// > getStepIndexes().get(i)) {
-					// i =
-					// getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());//
-					// NOPMD
-					// }
-					// } else if
-					// (getTestCase().getCurrentTestStep().isCorrectedOnTheFly())
-					// {
-					// getTestCase().getCurrentTestStep().setStepResultStatus(
-					// StepResultStatus.PASS);
-					// } else {
-					// thr = e;
-					// }
 
 				}
 
