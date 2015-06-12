@@ -196,8 +196,9 @@ public class TestCase {
 			}
 
 			try {
-				getCurrentTestStep().doStep();// NOPMD
-				getCurrentTestStep().setStepResultStatus(StepResultStatus.PASS);
+				currentTestStepTmp.doStep();// NOPMD
+				currentTestStepTmp.setStepResultStatus(StepResultStatus.PASS);
+				setCurrentTestStep(currentTestStepTmp);
 				// if (i == correlatedOptionlStepsEndIndex)
 				// correlatedOptionlStepsEndIndex = -1;//NOPMD
 //			} catch (BaseATECaseExecE baee) {
@@ -226,17 +227,18 @@ public class TestCase {
 //					throw baee;
 //				}
 			} catch (Exception e) { // NOPMD
+				setCurrentTestStep(currentTestStepTmp);
 				IATEProblem prob;
 				if (e instanceof IATEProblemCreator) {//NOPMD
 					prob = ((IATEProblemCreator) e).getAteProblem();
 					if (prob == null) {
 						prob = ((IATEProblemCreator) e)
-								.initAteProblemInstance(getCurrentTestStep());
+								.initAteProblemInstance(currentTestStepTmp);
 					}
-					if (!prob.isFatalProblem() && prob.getStepIndexJumpTo() > -1) { // NOPMD
-						i = prob.getStepIndexJumpTo(); // NOPMD
-					} else if (!prob.isFatalProblem() && getCurrentTestStep().isOptionalStep()) {
-						getCurrentTestStep().setStepResultStatus(
+					if (!prob.isFatalProblem() && prob.getStepIndexSkipTo() > -1) { // NOPMD
+						i = prob.getStepIndexSkipTo(); // NOPMD
+					} else if (!prob.isFatalProblem() && currentTestStepTmp.isOptionalStep()) {
+						currentTestStepTmp.setStepResultStatus(
 								StepResultStatus.SKIP);
 						if (currentTestStepTmp
 								.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {

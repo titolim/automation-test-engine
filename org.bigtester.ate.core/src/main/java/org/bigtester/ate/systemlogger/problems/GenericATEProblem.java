@@ -49,7 +49,7 @@ public class GenericATEProblem extends RawProblem implements IATEProblem{
 	private boolean fatalProblem;
 	
 	/** The step index jump to. */
-	private int stepIndexJumpTo = -1;
+	private int stepIndexSkipTo = -1;
 	
 	/** The ate exception. */
 	@Nullable
@@ -168,15 +168,15 @@ public class GenericATEProblem extends RawProblem implements IATEProblem{
 	/**
 	 * @return the stepIndexJumpTo
 	 */
-	public int getStepIndexJumpTo() {
-		return stepIndexJumpTo;
+	public int getStepIndexSkipTo() {
+		return stepIndexSkipTo;
 	}
 
 	/**
 	 * @param stepIndexJumpTo the stepIndexJumpTo to set
 	 */
-	public void setStepIndexJumpTo(int stepIndexJumpTo) {
-		this.stepIndexJumpTo = stepIndexJumpTo;
+	public void setStepIndexSkipTo(int stepIndexJumpTo) {
+		this.stepIndexSkipTo = stepIndexJumpTo;
 	}
 	
 	/**
