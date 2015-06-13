@@ -72,8 +72,8 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 				getStepSet().get(i).doStep();// NOPMD
 				getStepSet().get(i).setStepResultStatus(StepResultStatus.PASS);
 			} catch (Exception e) { //NOPMD
-				//StepTypeService is considered as atomic step. We don't do step jump inside of the steptypeservice
-				//if error appears, directly, we exit the service and throw error.
+				//StepTypeService is considered as atomic step. We don't do step jump to step out of the steptypeservice
+				//jump only happens in side the steps of stepTypeService
 				if (!getStepSet().get(i).isCorrectedOnTheFly()) 
 					getStepSet().get(i).setStepResultStatus(StepResultStatus.FAIL);
 				throw e;
