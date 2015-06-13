@@ -72,41 +72,6 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	/** The step i ds. */
 	final private List<Integer> repeatingStepIndexesInTestCase = new ArrayList<Integer>();
 
-	/**
-	 * @return the repeatingStepIndexesInTestCase
-	 */
-	public final List<Integer> getRepeatingStepIndexesInTestCase() {
-		return repeatingStepIndexesInTestCase;
-	}
-
-	/**
-	 * @return the repeatingSteps
-	 */
-	public final List<ITestStep> getRepeatingSteps() {
-		return repeatingSteps;
-	}
-
-	/**
-	 * @return the dataValuesNeedRefresh
-	 */
-	public final List<IStepInputData> getDataValuesNeedRefresh() {
-		return dataValuesNeedRefresh;
-	}
-
-	/**
-	 * @return the erValuesNeedRefresh
-	 */
-	public final List<IStepERValue> getErValuesNeedRefresh() {
-		return erValuesNeedRefresh;
-	}
-
-	/**
-	 * @return the repeatIndexValuesNeedRefresh
-	 */
-	public final List<IRepeatIncrementalIndex> getRepeatIndexValuesNeedRefresh() {
-		return repeatIndexValuesNeedRefresh;
-	}
-
 	/** The repeating steps. */
 	final private List<ITestStep> repeatingSteps = new ArrayList<ITestStep>();
 
@@ -263,7 +228,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 			LogbackWriter.writeDebugInfo("finish first data refressh in step iteration:" + this.getStepName() + ":" + iteration, this.getClass());
 			
 			for (int i = 0; i < repeatingStepIndexesInTestCase.size(); i++) {
-				LogbackWriter.writeDebugInfo("run step (index:" + i + "), in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
+				LogbackWriter.writeDebugInfo("run step (index:" + i + "), in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());//NOPMD
 				ITestStep currentTestStepTmp = getTestCase().getTestStepList()
 						.get(repeatingStepIndexesInTestCase.get(i));
 				if (null == currentTestStepTmp) {
@@ -301,11 +266,16 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 					IATEProblem prob;
 					if (e instanceof IATEProblemCreator) {// NOPMD
 						prob = ((IATEProblemCreator) e).getAteProblem();
-						if (prob == null) {
-							prob = ((IATEProblemCreator) e)
-									.initAteProblemInstance(currentTestStepTmp);
-						}
 						ITestStep exceptionRaisingStep = ((AbstractATEException) e).getOriginalStepRaisingException();
+						if (prob == null) {
+							if (null == exceptionRaisingStep)
+								prob = ((IATEProblemCreator) e)
+									.initAteProblemInstance(currentTestStepTmp);
+							else
+								prob = ((IATEProblemCreator) e)
+								.initAteProblemInstance(exceptionRaisingStep);
+						} 
+						
 						boolean optionalStepRaisingException = false;//NOPMD
 						if (exceptionRaisingStep != null)
 							optionalStepRaisingException = exceptionRaisingStep.isOptionalStep(); //NOPMD
@@ -524,4 +494,40 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 		this.currentRepeatNodeOfThisStep = currentRepeatNodeOfThisStep;
 	}
 
+
+	/**
+	 * @return the repeatingStepIndexesInTestCase
+	 */
+	public final List<Integer> getRepeatingStepIndexesInTestCase() {
+		return repeatingStepIndexesInTestCase;
+	}
+
+	/**
+	 * @return the repeatingSteps
+	 */
+	public final List<ITestStep> getRepeatingSteps() {
+		return repeatingSteps;
+	}
+
+	/**
+	 * @return the dataValuesNeedRefresh
+	 */
+	public final List<IStepInputData> getDataValuesNeedRefresh() {
+		return dataValuesNeedRefresh;
+	}
+
+	/**
+	 * @return the erValuesNeedRefresh
+	 */
+	public final List<IStepERValue> getErValuesNeedRefresh() {
+		return erValuesNeedRefresh;
+	}
+
+	/**
+	 * @return the repeatIndexValuesNeedRefresh
+	 */
+	public final List<IRepeatIncrementalIndex> getRepeatIndexValuesNeedRefresh() {
+		return repeatIndexValuesNeedRefresh;
+	}
+	
 }
