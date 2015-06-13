@@ -200,33 +200,6 @@ public class TestCase {
 				currentTestStepTmp.doStep();// NOPMD
 				currentTestStepTmp.setStepResultStatus(StepResultStatus.PASS);
 				setCurrentTestStep(currentTestStepTmp);
-				// if (i == correlatedOptionlStepsEndIndex)
-				// correlatedOptionlStepsEndIndex = -1;//NOPMD
-//			} catch (BaseATECaseExecE baee) {
-//
-//				if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1) { // NOPMD
-//					i = ((BaseATECaseExecE) baee).getStepIndexJumpTo(); // NOPMD
-//				} else if (getCurrentTestStep().isOptionalStep()) {
-//					getCurrentTestStep().setStepResultStatus(
-//							StepResultStatus.SKIP);
-//					if (currentTestStepTmp
-//							.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
-//						i = currentTestStepTmp
-//								.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
-//
-//					}
-//				} else {
-//					if (baee instanceof IATEProblemCreator) {
-//						IATEProblem prob = ((IATEProblemCreator) baee)
-//								.getAteProblem();
-//						if (prob == null)
-//							throw GlobalUtils
-//									.createNotInitializedException("exception problem.");
-//						prob.setFatality(false);
-//
-//					}
-//					throw baee;
-//				}
 			} catch (Exception e) { // NOPMD
 				setCurrentTestStep(currentTestStepTmp);
 				IATEProblem prob;
@@ -238,6 +211,9 @@ public class TestCase {
 					}
 					if (!prob.isFatalProblem() && prob.getStepIndexSkipTo() > -1) { // NOPMD
 						i = prob.getStepIndexSkipTo(); // NOPMD
+						currentTestStepTmp.setStepResultStatus(
+								StepResultStatus.SKIP);
+
 					} else if (!prob.isFatalProblem() && currentTestStepTmp.isOptionalStep()) {
 						currentTestStepTmp.setStepResultStatus(
 								StepResultStatus.SKIP);
@@ -251,20 +227,7 @@ public class TestCase {
 						throw e;
 					}
 				} else {
-//					if (getCurrentTestStep().isOptionalStep()) {
-//						getCurrentTestStep().setStepResultStatus(
-//								StepResultStatus.SKIP);
-//						if (currentTestStepTmp
-//								.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
-//							i = currentTestStepTmp
-//									.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
-//						}
-//					} else if (getCurrentTestStep().isCorrectedOnTheFly()) {
-//						getCurrentTestStep().setStepResultStatus(
-//								StepResultStatus.PASS);
-//					} else {
 						throw e;
-//					}
 				}
 			}
 

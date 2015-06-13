@@ -35,8 +35,6 @@ import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.IPageObject; 
-import org.bigtester.ate.systemlogger.IATEProblemCreator;
-import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.springframework.context.ApplicationContext;
@@ -185,13 +183,15 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 							StepExecutionException.CODE,
 					this.getMyWebDriver(),
 					getParentTestCase(), t);
-			if (t instanceof IATEProblemCreator) {//NOPMD
-				IATEProblem prob = ((IATEProblemCreator) t).getAteProblem();
-				if (null == prob) {
-					prob = pve.initAteProblemInstance(this);
-				}
-				prob.setFatalProblem(prob.isFatalProblem());
-			}
+//			if (t instanceof IATEProblemCreator) {//NOPMD
+//				IATEProblem prob = ((IATEProblemCreator) t).getAteProblem();
+//				if (null == prob) {
+//					prob = pve.initAteProblemInstance(this);
+//				}
+//				prob.setFatalProblem(prob.isFatalProblem());
+//			}
+			pve.initAteProblemInstance(this).setFatalProblem(true);//Any exception thrown out of testcase is fatal for this step.
+			
 			throw pve;
 		}
 

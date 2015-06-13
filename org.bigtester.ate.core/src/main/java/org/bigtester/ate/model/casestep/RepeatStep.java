@@ -285,13 +285,17 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 									.indexOf(prob.getStepIndexSkipTo()); // NOPMD
 							if (-1 == i)
 								thr = e;
+							else if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
+								currentTestStepTmp
+								.setStepResultStatus(StepResultStatus.NEUTURE);
+							else 
+								currentTestStepTmp
+								.setStepResultStatus(StepResultStatus.SKIP);
 						} else if (!prob.isFatalProblem()
 								&& optionalStepRaisingException) {
 							int correlatedOptionalStepsUtilInclusiveIndex = -1;//NOPMD
 							if (exceptionRaisingStep != null)
 								correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex(); //NOPMD
-							currentTestStepTmp
-									.setStepResultStatus(StepResultStatus.SKIP);
 							if (correlatedOptionalStepsUtilInclusiveIndex > repeatingStepIndexesInTestCase
 									.get(i)) {
 								i = repeatingStepIndexesInTestCase
@@ -300,7 +304,12 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 								if (-1 == i) {
 									prob.setStepIndexSkipTo(correlatedOptionalStepsUtilInclusiveIndex);
 									thr = e;// NOPMD
-								}
+								}else if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
+										currentTestStepTmp
+										.setStepResultStatus(StepResultStatus.NEUTURE);
+								else
+									currentTestStepTmp
+									.setStepResultStatus(StepResultStatus.SKIP);
 							}
 						} else {
 							if (!this.continueOnFailure)
