@@ -26,6 +26,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.annotation.TestCaseLoggable;
 import org.bigtester.ate.constant.StepResultStatus;
+import org.bigtester.ate.model.AbstractATEException;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException;
@@ -137,42 +138,6 @@ public class TestCase {
 	}
 
 	/**
-	 * Optional step population. return the endindex;
-	 */
-	// private int optionalStepPopulation(@Nullable ITestStep currentStep) {
-	// if (null == currentStep)
-	// throw GlobalUtils.createNotInitializedException("currentStep");
-	// int retVal = -1;//NOPMD
-	// if
-	// (!StringUtils.isEmpty(currentStep.getCorrelatedOptionalStepsUtilInclusiveName()))
-	// {
-	// currentStep.setOptionalStep(true);
-	// int startIndex = -1;//NOPMD
-	// int endIndex = -1;//NOPMD
-	// for (int index = 0; index < getTestStepList().size(); index++) {
-	// if (getTestStepList().get(index).getStepName() == currentStep
-	// .getStepName()) {
-	// startIndex = index;//NOPMD
-	// }
-	// if (getTestStepList().get(index).getStepName() == currentStep
-	// .getCorrelatedOptionalStepsUtilInclusiveName()) {
-	// endIndex = index;
-	// break;
-	// }
-	// }
-	// if (startIndex == -1 || endIndex == -1 || endIndex < startIndex)
-	// throw GlobalUtils
-	// .createInternalError("Optional Step util inclusive");
-	// for (int index2 = startIndex; index2 <= endIndex; index2++) {
-	// getTestStepList().get(index2).setOptionalStep(true);
-	// }
-	// retVal = endIndex;
-	// }
-	// return retVal;
-	//
-	// }
-
-	/**
 	 * run steps.
 	 * 
 	 * @throws RuntimeDataException
@@ -205,22 +170,28 @@ public class TestCase {
 				IATEProblem prob;
 				if (e instanceof IATEProblemCreator) {//NOPMD
 					prob = ((IATEProblemCreator) e).getAteProblem();
+					ITestStep exceptionRaisingStep = ((AbstractATEException) e).getOriginalStepRaisingException();
 					if (prob == null) {
-						prob = ((IATEProblemCreator) e)
+						if (null == exceptionRaisingStep)
+							prob = ((IATEProblemCreator) e)
 								.initAteProblemInstance(currentTestStepTmp);
-					}
+						else
+							prob = ((IATEProblemCreator) e)
+							.initAteProblemInstance(exceptionRaisingStep);
+					} 
+					boolean optionalStepRaisingException = false;//NOPMD
+					if (exceptionRaisingStep != null)
+						optionalStepRaisingException = exceptionRaisingStep.isOptionalStep(); //NOPMD
 					if (!prob.isFatalProblem() && prob.getStepIndexSkipTo() > -1) { // NOPMD
 						i = prob.getStepIndexSkipTo(); // NOPMD
+					} else if (!prob.isFatalProblem() && optionalStepRaisingException) {
+						int correlatedOptionalStepsUtilInclusiveIndex = -1;//NOPMD
+						if (exceptionRaisingStep != null)
+							correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex(); //NOPMD
 						currentTestStepTmp.setStepResultStatus(
 								StepResultStatus.SKIP);
-
-					} else if (!prob.isFatalProblem() && currentTestStepTmp.isOptionalStep()) {
-						currentTestStepTmp.setStepResultStatus(
-								StepResultStatus.SKIP);
-						if (currentTestStepTmp
-								.getCorrelatedOptionalStepsUtilInclusiveIndex() > i) {
-							i = currentTestStepTmp//NOPMD
-									.getCorrelatedOptionalStepsUtilInclusiveIndex();// NOPMD
+						if (correlatedOptionalStepsUtilInclusiveIndex > i) {
+							i = correlatedOptionalStepsUtilInclusiveIndex;// NOPMD
 
 						}
 					} else {
