@@ -54,7 +54,7 @@ public class BaseATECaseExecE extends AbstractATEException implements IATECaseEx
 		super(message, errorCode);
 		this.currentTestCase = currentTestCase;
 		this.myWebDriver = myWebDriver;
-		// TODO Auto-generated constructor stub
+		this.setOriginalStepRaisingException(currentTestCase.getCurrentTestStep());
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public class BaseATECaseExecE extends AbstractATEException implements IATECaseEx
 		super(message, errorCode, cause);
 		this.currentTestCase = currentTestCase;
 		this.myWebDriver = myWebDriver;
-		// TODO Auto-generated constructor stub
+		this.setOriginalStepRaisingException(currentTestCase.getCurrentTestStep());
 	}
 	/**
 	 * Gets the current test case.
@@ -115,7 +115,4 @@ public class BaseATECaseExecE extends AbstractATEException implements IATECaseEx
 	public void setStepIndexJumpTo(int stepIndexJumpTo) {
 		this.stepIndexJumpTo = stepIndexJumpTo;
 	}
-	
-	
-
 }

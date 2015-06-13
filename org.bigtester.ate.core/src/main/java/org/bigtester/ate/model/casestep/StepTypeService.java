@@ -69,7 +69,6 @@ public class StepTypeService extends BaseTestStep implements ITestStep {
 		for (int i = 0; i < getStepSet().size(); i++) {
 
 			try {
-				
 				getStepSet().get(i).doStep();// NOPMD
 				getStepSet().get(i).setStepResultStatus(StepResultStatus.PASS);
 			} catch (Exception e) { //NOPMD

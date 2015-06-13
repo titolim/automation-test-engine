@@ -111,7 +111,7 @@ public class StepInputDataValue extends BaseInputDataValue implements IStepInput
 	
 		if (arg0 == null)
 			return;//NOPMD
-		if (!((RepeatStep) arg0.getSource()).getRefreshDataValues().contains(this)) return;
+		if (!((RepeatStep) arg0.getSource()).getDataValuesNeedRefresh().contains(this)) return;
 		
 		String valueTmp = this.getStrDataValue();
 		if (arg0.getIteration() == 0) {

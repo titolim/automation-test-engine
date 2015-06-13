@@ -26,6 +26,7 @@ import java.util.List;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.StepLoggable;
 import org.bigtester.ate.constant.StepResultStatus;
+import org.bigtester.ate.model.AbstractATEException;
 import org.bigtester.ate.model.casestep.RepeatStepInOutEvent.RepeatStepInOut;
 import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.IRepeatIncrementalIndex;
@@ -69,19 +70,54 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	private int numberOfIterations;
 
 	/** The step i ds. */
-	final private List<Integer> stepIndexes = new ArrayList<Integer>();
+	final private List<Integer> repeatingStepIndexesInTestCase = new ArrayList<Integer>();
+
+	/**
+	 * @return the repeatingStepIndexesInTestCase
+	 */
+	public final List<Integer> getRepeatingStepIndexesInTestCase() {
+		return repeatingStepIndexesInTestCase;
+	}
+
+	/**
+	 * @return the repeatingSteps
+	 */
+	public final List<ITestStep> getRepeatingSteps() {
+		return repeatingSteps;
+	}
+
+	/**
+	 * @return the dataValuesNeedRefresh
+	 */
+	public final List<IStepInputData> getDataValuesNeedRefresh() {
+		return dataValuesNeedRefresh;
+	}
+
+	/**
+	 * @return the erValuesNeedRefresh
+	 */
+	public final List<IStepERValue> getErValuesNeedRefresh() {
+		return erValuesNeedRefresh;
+	}
+
+	/**
+	 * @return the repeatIndexValuesNeedRefresh
+	 */
+	public final List<IRepeatIncrementalIndex> getRepeatIndexValuesNeedRefresh() {
+		return repeatIndexValuesNeedRefresh;
+	}
 
 	/** The repeating steps. */
 	final private List<ITestStep> repeatingSteps = new ArrayList<ITestStep>();
 
 	/** The refresh data values. */
-	final private List<IStepInputData> refreshDataValues = new ArrayList<IStepInputData>();
+	final private List<IStepInputData> dataValuesNeedRefresh = new ArrayList<IStepInputData>();
 
 	/** The refresh er values. */
-	final private List<IStepERValue> refreshERValues = new ArrayList<IStepERValue>();
+	final private List<IStepERValue> erValuesNeedRefresh = new ArrayList<IStepERValue>();
 
 	/** The refresh on the fly values. */
-	final private List<IRepeatIncrementalIndex> refreshIndexValues = new ArrayList<IRepeatIncrementalIndex>();
+	final private List<IRepeatIncrementalIndex> repeatIndexValuesNeedRefresh = new ArrayList<IRepeatIncrementalIndex>();
 
 	/** The external repeat node of this step. */
 	private transient @Nullable RepeatStepExecutionLoggerNode externalRepeatNodeOfThisStep;
@@ -119,10 +155,10 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	}
 
 	private void buildRepeatStepContext() {
-		stepIndexes.clear();
+		repeatingStepIndexesInTestCase.clear();
 		repeatingSteps.clear();
-		refreshERValues.clear();
-		refreshDataValues.clear();
+		erValuesNeedRefresh.clear();
+		dataValuesNeedRefresh.clear();
 
 		int startIndex = -1; // NOPMD
 		int endIndex = -1; // NOPMD
@@ -142,12 +178,12 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 					.createNotInitializedException("startStepName or endStepName");
 		for (int i = 0; i < getTestCase().getTestStepList().size(); i++) {
 			if (i >= startIndex && i <= endIndex) {
-				stepIndexes.add(i);
+				repeatingStepIndexesInTestCase.add(i);
 				ITestStep thisStep = getTestCase().getTestStepList().get(i);
 				repeatingSteps.add(thisStep);
 				for (int asserterIndex = 0; asserterIndex < thisStep
 						.getExpectedResultAsserter().size(); asserterIndex++) {
-					refreshERValues.add((IStepERValue) GlobalUtils
+					erValuesNeedRefresh.add((IStepERValue) GlobalUtils
 							.getTargetObject(thisStep
 									.getExpectedResultAsserter()
 									.get(asserterIndex).getStepERValue()));
@@ -160,7 +196,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 						ITestObjectAction<?> iTOA = webE.getTestObjectAction();
 						if (null != iTOA
 								&& ((IElementAction) iTOA).getDataValue() != null) {
-							refreshDataValues.add((IStepInputData) GlobalUtils
+							dataValuesNeedRefresh.add((IStepInputData) GlobalUtils
 									.getTargetObject(((IElementAction) iTOA)
 											.getDataValue()));
 						}
@@ -173,7 +209,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	}
 
 	private void buildRepeatIndexes() {
-		refreshIndexValues.clear();
+		repeatIndexValuesNeedRefresh.clear();
 		StepDataLogger sdl = GlobalUtils
 				.findStepDataLoggerBean(getApplicationContext());
 		if (null != sdl.getRepeatStepOnTheFlies().get(
@@ -183,7 +219,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 			for (IOnTheFlyData<?> data : sdl.getRepeatStepOnTheFlies().get(
 					GlobalUtils.getTargetObject(this))) {
 				if (data instanceof IRepeatIncrementalIndex) {
-					refreshIndexValues.add((IRepeatIncrementalIndex) data);
+					repeatIndexValuesNeedRefresh.add((IRepeatIncrementalIndex) data);
 				}
 			}
 		}
@@ -226,10 +262,10 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 							.getCurrentRepeatStepPathNodes(), iteration));
 			LogbackWriter.writeDebugInfo("finish first data refressh in step iteration:" + this.getStepName() + ":" + iteration, this.getClass());
 			
-			for (int i = 0; i < getStepIndexes().size(); i++) {
+			for (int i = 0; i < repeatingStepIndexesInTestCase.size(); i++) {
 				LogbackWriter.writeDebugInfo("run step (index:" + i + "), in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 				ITestStep currentTestStepTmp = getTestCase().getTestStepList()
-						.get(getStepIndexes().get(i));
+						.get(repeatingStepIndexesInTestCase.get(i));
 				if (null == currentTestStepTmp) {
 					throw new IllegalStateException(
 							"Test Step List was not successfully initialized by ApplicationContext at list index"
@@ -239,12 +275,10 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 				}
 
 				if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class) {
-					((RepeatStep) GlobalUtils.getTargetObject(getTestCase()
-							.getCurrentTestStep()))
+					((RepeatStep) GlobalUtils.getTargetObject(currentTestStepTmp))
 							.setAsserterValuesRemainSame(this
 									.isAsserterValuesRemainSame());
-					((RepeatStep) GlobalUtils.getTargetObject(getTestCase()
-							.getCurrentTestStep()))
+					((RepeatStep) GlobalUtils.getTargetObject(currentTestStepTmp))
 							.setContinueOnFailure(this.continueOnFailure);
 					LogbackWriter.writeDebugInfo("before entering repeat step, current test step in testcase is:" + getTestCase()
 							.getCurrentTestStep().getStepName() + ";" +" current test step optional value is:" + getTestCase()
@@ -258,85 +292,43 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 				}
 				String tmpStepDesc = currentTestStepTmp.getStepDescription();// NOPMD
 				try {
-					
-					getTestCase().getCurrentTestStep().doStep();// NOPMD
-					getTestCase().getCurrentTestStep().setStepResultStatus( //might be buggy the nested repeat step might change the current test step in test case object
+					currentTestStepTmp.doStep();// NOPMD
+					currentTestStepTmp.setStepResultStatus(
 							StepResultStatus.PASS);
 					LogbackWriter.writeDebugInfo("current test step in testcase is:" + getTestCase()
 							.getCurrentTestStep().getStepName() + ", in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
-					// } catch (BaseATECaseExecE baee) {
-					//
-					// if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1)
-					// { //NOPMD
-					// i = ((BaseATECaseExecE) baee).getStepIndexJumpTo();
-					// //NOPMD
-					// } else if
-					// (getTestCase().getCurrentTestStep().isOptionalStep()) {
-					// getTestCase().getCurrentTestStep().setStepResultStatus(
-					// StepResultStatus.SKIP);
-					// if
-					// (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex()
-					// > getStepIndexes().get(i)) {
-					// i =
-					// getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());//
-					// NOPMD
-					// if (-1 == i) {
-					// baee.setStepIndexJumpTo(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());
-					// thr = baee;//NOPMD
-					// }
-					// }
-					// } else {
-					// if (!this.continueOnFailure)
-					// thr = baee;//NOPMD
-					// }
 				} catch (Exception e) { // NOPMD
-//					LogbackWriter.writeDebugInfo("in step exception senario, current test step in testcase is:" + getTestCase()
-//							.getCurrentTestStep().getStepName() + ", in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 					IATEProblem prob;
 					if (e instanceof IATEProblemCreator) {// NOPMD
 						prob = ((IATEProblemCreator) e).getAteProblem();
 						if (prob == null) {
 							prob = ((IATEProblemCreator) e)
-									.initAteProblemInstance(getTestCase()
-											.getCurrentTestStep());
+									.initAteProblemInstance(currentTestStepTmp);
 						}
-						// if (prob.getStepIndexJumpTo() > -1) { // NOPMD
-						// i = prob.getStepIndexJumpTo(); // NOPMD
-						// } else if (getCurrentTestStep().isOptionalStep()) {
-						// getCurrentTestStep().setStepResultStatus(
-						// StepResultStatus.SKIP);
-						// if (currentTestStepTmp
-						// .getCorrelatedOptionalStepsUtilInclusiveIndex() > i)
-						// {
-						// i = currentTestStepTmp
-						// .getCorrelatedOptionalStepsUtilInclusiveIndex();//
-						// NOPMD
-						//
-						// }
-						// } else {
-						// prob.setFatality(false);
-						// throw e;
-						// }
+						ITestStep exceptionRaisingStep = ((AbstractATEException) e).getOriginalStepRaisingException();
+						boolean optionalStepRaisingException = false;//NOPMD
+						if (exceptionRaisingStep != null)
+							optionalStepRaisingException = exceptionRaisingStep.isOptionalStep(); //NOPMD
 						if (!prob.isFatalProblem()
-								&& prob.getStepIndexJumpTo() > -1) { // NOPMD
-							//i = prob.getStepIndexJumpTo(); // NOPMD
-							i = getStepIndexes().indexOf(prob.getStepIndexJumpTo());
-							if (i == -1) thr = e;
+								&& prob.getStepIndexSkipTo() > -1) { // NOPMD
+							i = repeatingStepIndexesInTestCase
+									.indexOf(prob.getStepIndexSkipTo()); // NOPMD
+							if (-1 == i)
+								thr = e;
 						} else if (!prob.isFatalProblem()
-								&& getTestCase().getCurrentTestStep()
-										.isOptionalStep()) {
-							getTestCase().getCurrentTestStep()
+								&& optionalStepRaisingException) {
+							int correlatedOptionalStepsUtilInclusiveIndex = -1;//NOPMD
+							if (exceptionRaisingStep != null)
+								correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex(); //NOPMD
+							currentTestStepTmp
 									.setStepResultStatus(StepResultStatus.SKIP);
-							if (currentTestStepTmp
-									.getCorrelatedOptionalStepsUtilInclusiveIndex() > getStepIndexes()
+							if (correlatedOptionalStepsUtilInclusiveIndex > repeatingStepIndexesInTestCase
 									.get(i)) {
-								i = getStepIndexes()
+								i = repeatingStepIndexesInTestCase
 										.indexOf(
-												currentTestStepTmp
-														.getCorrelatedOptionalStepsUtilInclusiveIndex());// NOPMD
+												correlatedOptionalStepsUtilInclusiveIndex);// NOPMD
 								if (-1 == i) {
-									prob.setStepIndexJumpTo(currentTestStepTmp
-											.getCorrelatedOptionalStepsUtilInclusiveIndex());
+									prob.setStepIndexSkipTo(correlatedOptionalStepsUtilInclusiveIndex);
 									thr = e;// NOPMD
 								}
 							}
@@ -345,50 +337,10 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 								thr = e;// NOPMD
 						}
 					} else {
-						// if
-						// (getTestCase().getCurrentTestStep().isOptionalStep())
-						// {
-						// getTestCase().getCurrentTestStep().setStepResultStatus(
-						// StepResultStatus.SKIP);
-						// if
-						// (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex()
-						// > getStepIndexes().get(i)) {
-						// i =
-						// getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());//
-						// NOPMD
-						// }
-						// } else if
-						// (getTestCase().getCurrentTestStep().isCorrectedOnTheFly())
-						// {
-						// getTestCase().getCurrentTestStep().setStepResultStatus(
-						// StepResultStatus.PASS);
-						// } else {
 						thr = e;// If exception was not handled, we don't know
 								// what the exception/throwable could cause in
 								// the ate, so we just stop the testcase.
-						// }
 					}
-
-					// ///
-					// if (getTestCase().getCurrentTestStep().isOptionalStep())
-					// {
-					// getTestCase().getCurrentTestStep().setStepResultStatus(
-					// StepResultStatus.SKIP);
-					// if
-					// (currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex()
-					// > getStepIndexes().get(i)) {
-					// i =
-					// getStepIndexes().indexOf(currentTestStepTmp.getCorrelatedOptionalStepsUtilInclusiveIndex());//
-					// NOPMD
-					// }
-					// } else if
-					// (getTestCase().getCurrentTestStep().isCorrectedOnTheFly())
-					// {
-					// getTestCase().getCurrentTestStep().setStepResultStatus(
-					// StepResultStatus.PASS);
-					// } else {
-					// thr = e;
-					// }
 
 				}
 
@@ -403,6 +355,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 							.getCurrentTestStep().getStepName() + ";" +" current test step optional value is:" + getTestCase()
 							.getCurrentTestStep().isOptionalStep() + " , in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 				}
+				getTestCase().setCurrentTestStep(currentTestStepTmp);
 				if (null == tmpStepDesc)
 					tmpStepDesc = ""; // NOPMD
 				else
@@ -418,7 +371,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 					break;
 				}
 				LogbackWriter.writeDebugInfo("finish repeatingsteps iteration normally, step (index:" + i + " stepname: " + getTestCase().getTestStepList().get(i).getStepName() + "), in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
-				LogbackWriter.writeDebugInfo("total repeating steps number is:" + getStepIndexes().size() + " and last repeating step is: " + getTestCase().getTestStepList().get(getStepIndexes().get(getStepIndexes().size()-1)).getStepName() + ", in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
+				LogbackWriter.writeDebugInfo("total repeating steps number is:" + repeatingStepIndexesInTestCase.size() + " and last repeating step is: " + getTestCase().getTestStepList().get(repeatingStepIndexesInTestCase.get(repeatingStepIndexesInTestCase.size()-1)).getStepName() + ", in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 			}
 			if (null != thr) {
 				LogbackWriter.writeDebugInfo("exit repeat iteration due to exception, in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
@@ -500,12 +453,6 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 		this.numberOfIterations = numberOfIterations;
 	}
 
-	/**
-	 * @return the stepIndexes
-	 */
-	public List<Integer> getStepIndexes() {
-		return stepIndexes;
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -528,20 +475,6 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	}
 
 	/**
-	 * @return the refreshDataValues
-	 */
-	public List<IStepInputData> getRefreshDataValues() {
-		return refreshDataValues;
-	}
-
-	/**
-	 * @return the refreshERValues
-	 */
-	public List<IStepERValue> getRefreshERValues() {
-		return refreshERValues;
-	}
-
-	/**
 	 * @return the asserterValueRemainSame
 	 */
 	public boolean isAsserterValuesRemainSame() {
@@ -554,20 +487,6 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 */
 	public void setAsserterValuesRemainSame(boolean asserterValueRemainSame) {
 		this.asserterValuesRemainSame = asserterValueRemainSame;
-	}
-
-	/**
-	 * @return the refreshOnTheFlyValues
-	 */
-	public List<IRepeatIncrementalIndex> getRefreshIndexValues() {
-		return refreshIndexValues;
-	}
-
-	/**
-	 * @return the repeatingSteps
-	 */
-	public List<ITestStep> getRepeatingSteps() {
-		return repeatingSteps;
 	}
 
 	/**

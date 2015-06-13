@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
+import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
@@ -38,6 +39,11 @@ public abstract class AbstractATEException extends Exception implements IATEExce
 	/** The error code. */
 	private final String errorCode;
 
+	/** The failed step causing step jump. */
+	@Nullable
+	private ITestStep originalStepRaisingException;
+
+	
 	/** The ate problem. */
 	@Nullable
 	protected GenericATEProblem ateProblem; 
@@ -86,6 +92,22 @@ public abstract class AbstractATEException extends Exception implements IATEExce
 	 */
 	public void setAteProblem(GenericATEProblem ateProblem) {
 		this.ateProblem = ateProblem;
+	}
+
+	/**
+	 * @return the originalStepRaisingException
+	 */
+	@Nullable
+	public ITestStep getOriginalStepRaisingException() {
+		return originalStepRaisingException;
+	}
+
+	/**
+	 * @param originalStepRaisingException the originalStepRaisingException to set
+	 */
+	public void setOriginalStepRaisingException(
+			ITestStep originalStepRaisingException) {
+		this.originalStepRaisingException = originalStepRaisingException;
 	}
 	
 }

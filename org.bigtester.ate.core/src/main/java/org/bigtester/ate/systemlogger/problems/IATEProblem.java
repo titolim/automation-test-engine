@@ -89,12 +89,12 @@ public interface IATEProblem {
 	 *
 	 * @return the step index jump to
 	 */
-	int getStepIndexJumpTo();
+	int getStepIndexSkipTo();
 	
 	/**
 	 * Sets the step index jump to.
 	 *
 	 * @param stepIndex the new step index jump to
 	 */
-	void setStepIndexJumpTo(int stepIndex);
+	void setStepIndexSkipTo(int stepIndex);
 }

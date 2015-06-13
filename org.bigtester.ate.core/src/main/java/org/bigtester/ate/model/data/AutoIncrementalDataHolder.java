@@ -91,7 +91,7 @@ public class AutoIncrementalDataHolder extends
 		if (arg0 == null)
 			return;// NOPMD
 		RepeatStep currentRepeatStep = ((RepeatStep) arg0.getSource());
-		if (!(currentRepeatStep).getRefreshIndexValues().contains(this))
+		if (!(currentRepeatStep).getRepeatIndexValuesNeedRefresh().contains(this))
 			return;
 
 		Integer tmp = Integer

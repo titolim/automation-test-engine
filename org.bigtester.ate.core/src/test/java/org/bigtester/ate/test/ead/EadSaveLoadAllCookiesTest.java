@@ -68,7 +68,7 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	 * @throws BrowserUnexpectedException 
 	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 1)
+	//@Test(priority = 1)
 	public void eadSaveCookiesTest() throws PageValidationException,
 			RuntimeDataException, NoSuchElementException, BrowserUnexpectedException {
 
@@ -105,7 +105,7 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	 * @throws BrowserUnexpectedException 
 	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 2)
+	//@Test(priority = 2)
 	public void eadLoadCookiesTest() throws PageValidationException,
 			RuntimeDataException, StepExecutionException, NoSuchElementException, BrowserUnexpectedException {
 
@@ -132,7 +132,7 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	 * @throws BrowserUnexpectedException 
 	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 3)
+	//@Test(priority = 3)
 	public void eadLoadCookiesFileNotExistErrorRaisedTest() throws PageValidationException,
 			RuntimeDataException, StepExecutionException, NoSuchElementException, BrowserUnexpectedException {
 
@@ -160,7 +160,7 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	 * @throws BrowserUnexpectedException 
 	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 4)
+	//@Test(priority = 4)
 	public void eadLoadCookiesFileNotExistNoErrorRaiseTest() throws PageValidationException,
 			RuntimeDataException, StepExecutionException, NoSuchElementException, BrowserUnexpectedException {
 

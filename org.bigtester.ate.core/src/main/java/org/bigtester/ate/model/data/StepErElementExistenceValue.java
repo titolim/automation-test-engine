@@ -109,7 +109,7 @@ public class StepErElementExistenceValue extends BaseERValue implements
 		
 		if (arg0 == null)
 			return;//NOPMD
-		if (!((RepeatStep) arg0.getSource()).getRefreshERValues().contains(this)) return;
+		if (!((RepeatStep) arg0.getSource()).getErValuesNeedRefresh().contains(this)) return;
 		
 		List<StepErElementExistence> valueTmp = this.value;// NOPMD;
 		if (arg0.getIteration() == 0 || ((RepeatStep) arg0.getSource()).isAsserterValuesRemainSame()) {

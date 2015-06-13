@@ -21,14 +21,17 @@
 package org.bigtester.ate.test.model.casestep;
 
 
+import static org.mockito.Mockito.when;
+
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
-import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.casestep.TestCase;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.test.BigtesterProjectTest;
+import org.junit.Assert;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
@@ -40,6 +43,14 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/stepExecutionException.xml" })
 public class StepExecExpectionTest extends BigtesterProjectTest {
 
+	/**
+	 * Setup.
+	 */
+	@BeforeClass
+	public void setup() {
+		when(getMyMockedDriver().getWebDriverInstance()).thenReturn(getMockedDriver());
+		when(getMockedDriver().manage()).thenReturn(getOptions());
+	}
 	/**
 	 * Ead test.
 	 * 
@@ -57,11 +68,14 @@ public class StepExecExpectionTest extends BigtesterProjectTest {
 		getTestPage("bigtesterTestNG/aut/textarea_stepExecution.html");
 
 		
-		TestCase exception = (TestCase) getApplicationContext()
+		TestCase testCase = (TestCase) getApplicationContext()
 				.getBean("testcase");
-		
-		exception.goSteps();
-		//TODO Use  stub to evaluate if the logging function has been invoked.
+		try {
+			testCase.goSteps();
+		} catch (StepExecutionException e) {
+			//TODO add assert to validate the application log printed
+			Assert.assertTrue(true);
+		}
 	}
 
 }
