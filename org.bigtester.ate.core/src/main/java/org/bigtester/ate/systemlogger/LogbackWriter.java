@@ -49,6 +49,9 @@ public final class LogbackWriter {
 	
 	/** The applog warnheader. */
 	final public static String APPLOG_WARNHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING;
+	
+	/** The Constant APPLOG_DEBUGHEADER. */
+	final public static String APPLOG_DEBUGHEADER = LogbackTag.TAG_SYS_LOG + LogbackTag.TAG_TEST_DEBUG;
 
 	/** The Constant LOGBACKLOGGERNOTINIT. */
 	final private static String LOGBACKLOGGERNOTINIT = "Logback Logger";
@@ -286,19 +289,13 @@ public final class LogbackWriter {
 	 * @param msg
 	 *            the msg
 	 */
-	public static void writeUnitTestInfo(String msg) {
-		final Logger mylogger2 = myLogger;
-		if (mylogger2 == null) {
-			throw GlobalUtils.createNotInitializedException("MYLOGGER");
-		} else {
-			
-			if (mylogger2.isInfoEnabled()) {
-				mylogger2.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_UNITTEST_INFO + msg); // NOPMD
-			} else {
-				throw new UnsupportedOperationException(
-						ExceptionMessage.MSG_UNSUPPORTED_LOGBACK_LEVEL
-								+ "MYLOGGER.isInfoEnabled()");
-			}
+	public static void writeDebugInfo(String msg, @Nullable Class<?> classProducingError) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException(LOGBACKLOGGERNOTINIT);
+		}
+		if (logger.isDebugEnabled()) {
+			logger.error(APPLOG_DEBUGHEADER + msg);//NOPMD
 		}
 	}
 

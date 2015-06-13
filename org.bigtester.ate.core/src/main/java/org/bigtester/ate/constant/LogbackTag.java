@@ -41,6 +41,9 @@ public final class LogbackTag {
 	/** The Constant MSG_WEBELEMENT_NOTFOUND. */
 	public static final String TAG_TEST_ERROR = "Test-Error: ";
 	
+	/** The Constant TAG_TEST_DEBUG. */
+	public static final String TAG_TEST_DEBUG = "Test-DEBUG: ";
+	
 	/** The Constant TAG_TEST_WARNING. */
 	public static final String TAG_TEST_WARNING= "Test-Warning: ";
 	

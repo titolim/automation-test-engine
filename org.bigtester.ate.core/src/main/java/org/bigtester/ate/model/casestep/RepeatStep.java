@@ -40,6 +40,7 @@ import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.LogbackWriter;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.aop.support.AopUtils;
@@ -209,19 +210,24 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 */
 	private void repeatSteps() throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
+		LogbackWriter.writeDebugInfo("entering repeatSteps:" + this.getStepName(), this.getClass());
 		buildRepeatStepContext();
+		
 		getApplicationContext().publishEvent(
 				new RepeatStepInOutEvent(this, RepeatStepInOut.IN));
 		buildRepeatIndexes();
 		Exception thr = null;// NOPMD
 		for (int iteration = 1; iteration <= getNumberOfIterations(); iteration++) {
-
+			LogbackWriter.writeDebugInfo("entering step iteration:" + this.getStepName() + ":" + iteration, this.getClass());
 			setCurrentIteration(iteration);
+			
 			getApplicationContext().publishEvent(
 					new RepeatDataRefreshEvent(this, getRepeatStepLogger()
 							.getCurrentRepeatStepPathNodes(), iteration));
-
+			LogbackWriter.writeDebugInfo("finish first data refressh in step iteration:" + this.getStepName() + ":" + iteration, this.getClass());
+			
 			for (int i = 0; i < getStepIndexes().size(); i++) {
+				LogbackWriter.writeDebugInfo("run step (index:" + i + "), in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 				ITestStep currentTestStepTmp = getTestCase().getTestStepList()
 						.get(getStepIndexes().get(i));
 				if (null == currentTestStepTmp) {
@@ -240,6 +246,9 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 					((RepeatStep) GlobalUtils.getTargetObject(getTestCase()
 							.getCurrentTestStep()))
 							.setContinueOnFailure(this.continueOnFailure);
+					LogbackWriter.writeDebugInfo("before entering repeat step, current test step in testcase is:" + getTestCase()
+							.getCurrentTestStep().getStepName() + ";" +" current test step optional value is:" + getTestCase()
+							.getCurrentTestStep().isOptionalStep() + " , in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 				} else {
 					currentTestStepTmp.setStepDescription(currentTestStepTmp
 							.getStepDescription()
@@ -249,9 +258,12 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 				}
 				String tmpStepDesc = currentTestStepTmp.getStepDescription();// NOPMD
 				try {
+					
 					getTestCase().getCurrentTestStep().doStep();// NOPMD
-					getTestCase().getCurrentTestStep().setStepResultStatus(
+					getTestCase().getCurrentTestStep().setStepResultStatus( //might be buggy the nested repeat step might change the current test step in test case object
 							StepResultStatus.PASS);
+					LogbackWriter.writeDebugInfo("current test step in testcase is:" + getTestCase()
+							.getCurrentTestStep().getStepName() + ", in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 					// } catch (BaseATECaseExecE baee) {
 					//
 					// if (((BaseATECaseExecE) baee).getStepIndexJumpTo() > -1)
@@ -278,6 +290,8 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 					// thr = baee;//NOPMD
 					// }
 				} catch (Exception e) { // NOPMD
+//					LogbackWriter.writeDebugInfo("in step exception senario, current test step in testcase is:" + getTestCase()
+//							.getCurrentTestStep().getStepName() + ", in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 					IATEProblem prob;
 					if (e instanceof IATEProblemCreator) {// NOPMD
 						prob = ((IATEProblemCreator) e).getAteProblem();
@@ -305,7 +319,9 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 						// }
 						if (!prob.isFatalProblem()
 								&& prob.getStepIndexJumpTo() > -1) { // NOPMD
-							i = prob.getStepIndexJumpTo(); // NOPMD
+							//i = prob.getStepIndexJumpTo(); // NOPMD
+							i = getStepIndexes().indexOf(prob.getStepIndexJumpTo());
+							if (i == -1) thr = e;
 						} else if (!prob.isFatalProblem()
 								&& getTestCase().getCurrentTestStep()
 										.isOptionalStep()) {
@@ -382,7 +398,10 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 									getRepeatStepLogger()
 											.getCurrentRepeatStepPathNodes(),
 									iteration));
-
+					LogbackWriter.writeDebugInfo("finish 2nd data refressh in step iteration:" + this.getStepName() + ":" + iteration + ", triggered by:"+ currentTestStepTmp.getStepName(), this.getClass());
+					LogbackWriter.writeDebugInfo("before entering repeat step, current test step in testcase is:" + getTestCase()
+							.getCurrentTestStep().getStepName() + ";" +" current test step optional value is:" + getTestCase()
+							.getCurrentTestStep().isOptionalStep() + " , in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 				}
 				if (null == tmpStepDesc)
 					tmpStepDesc = ""; // NOPMD
@@ -395,12 +414,17 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 					thinkTimer.setTimer();
 				}
 				if (null != thr) {
+					LogbackWriter.writeDebugInfo("exit repeat steps due to exception, step (index:" + i + "), in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 					break;
 				}
+				LogbackWriter.writeDebugInfo("finish repeatingsteps iteration normally, step (index:" + i + " stepname: " + getTestCase().getTestStepList().get(i).getStepName() + "), in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
+				LogbackWriter.writeDebugInfo("total repeating steps number is:" + getStepIndexes().size() + " and last repeating step is: " + getTestCase().getTestStepList().get(getStepIndexes().get(getStepIndexes().size()-1)).getStepName() + ", in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 			}
 			if (null != thr) {
+				LogbackWriter.writeDebugInfo("exit repeat iteration due to exception, in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 				break;
 			}
+			LogbackWriter.writeDebugInfo("exit repeat iteration normally, in iteration:" + iteration +" of step:" + this.getStepName(), this.getClass());
 		}
 		getApplicationContext().publishEvent(
 				new RepeatStepInOutEvent(this, RepeatStepInOut.OUT));
