@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.systemlogger;
+package org.bigtester.ate.systemlogger;//NOPMD
 
 
 import org.bigtester.ate.GlobalUtils;
@@ -92,7 +92,7 @@ public final class LogbackWriter {
 		if (!logMessenger.getWarningMsg().equals("") && logger.isWarnEnabled())
 			logger.warn(APPLOG_WARNHEADER + logMessenger.getWarningMsg());
 		if (!logMessenger.getInfoMsg().equals("") && logger.isInfoEnabled())
-			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());
+			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());//NOPMD
 //		if (!logMessenger.getDebugMsg().equals(""))
 //			logger.debug(logMessenger.getDebugMsg());
 //		if (!logMessenger.getTraceMsg().equals(""))
@@ -295,7 +295,7 @@ public final class LogbackWriter {
 			throw GlobalUtils.createNotInitializedException(LOGBACKLOGGERNOTINIT);
 		}
 		if (logger.isDebugEnabled()) {
-			logger.error(APPLOG_DEBUGHEADER + msg);//NOPMD
+			logger.debug(APPLOG_DEBUGHEADER + msg);
 		}
 	}
 
