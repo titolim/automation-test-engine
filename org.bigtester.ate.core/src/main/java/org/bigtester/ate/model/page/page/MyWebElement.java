@@ -32,6 +32,7 @@ import org.bigtester.ate.model.page.elementfind.ITestObjectFinderImpl;
 import org.bigtester.ate.model.page.elementfind.TestObjectFinder;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -98,7 +99,11 @@ public class MyWebElement<T> extends PageModelBase {
 		if (testObjectAction2 == null) {
 			throw GlobalUtils.createNotInitializedException("test object action.");
 		} else {
-			testObjectAction2.doAction(testObjectFinder.doFind(getMyWd()));
+			try {
+				testObjectAction2.doAction(testObjectFinder.doFind(getMyWd()));
+			} catch (UnexpectedTagNameException ute) {
+				throw new NoSuchElementException("Html element found by ate has different tag name.", ute);
+			}
 		}
 
 	}

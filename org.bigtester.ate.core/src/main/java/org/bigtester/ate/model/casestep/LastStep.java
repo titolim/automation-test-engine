@@ -76,7 +76,7 @@ public class LastStep extends BaseTestStep implements ITestStep {
 	 */
 	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
-	public void doStep() {
+	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) {
 		lastPage.closeLastpage();
 	}
 

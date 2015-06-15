@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.LogbackTag;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase; 
 import org.bigtester.ate.model.data.TestParameters;
 import org.bigtester.ate.model.data.exception.TestDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -80,7 +80,7 @@ public class CaseRunner implements IRunTestCase {
 
 	/** The my tc. */
 	@Nullable
-	private TestCase myTestCase;
+	private ITestCase myTestCase;
 
 	/** The current executing tc name. */
 	@Nullable
@@ -128,8 +128,8 @@ public class CaseRunner implements IRunTestCase {
 	/**
 	 * @return the myTestCase
 	 */
-	public TestCase getMyTestCase() {
-		final TestCase retVal = myTestCase;
+	public ITestCase getMyTestCase() {
+		final ITestCase retVal = myTestCase;
 		if (null == retVal) {
 			throw new IllegalStateException(
 					"myTestCase is not correctly populated");
@@ -143,7 +143,7 @@ public class CaseRunner implements IRunTestCase {
 	 * @param myTestCase
 	 *            the myTestCase to set
 	 */
-	public void setMyTestCase(final TestCase myTestCase) {
+	public void setMyTestCase(final ITestCase myTestCase) {
 		this.myTestCase = myTestCase;
 	}
 

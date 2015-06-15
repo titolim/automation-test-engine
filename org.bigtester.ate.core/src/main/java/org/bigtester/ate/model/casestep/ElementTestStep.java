@@ -68,7 +68,7 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 	 */
 	@StepLoggable(level = ATELogLevel.INFO)
 	@Override
-	public void doStep() throws StepExecutionException,
+	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
 		try {
 			getMyWebElement().doAction();
@@ -148,4 +148,6 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 	public void setMyWebElement(final MyWebElement<?> myWebElement) {
 		this.myWebElement = myWebElement;
 	}
+
+	
 }

@@ -58,7 +58,7 @@ public interface ITestStep {
 	 *
 	 * @return the correlated optional steps util inclusive index
 	 */
-	int getCorrelatedOptionalStepsUtilInclusiveIndex();
+	int getCorrelatedOptionalStepsUtilInclusiveIndex(IStepJumpingEnclosedContainer jumpingContainer);
 	/**
 	 * Checks if is optional step.
 	 *
@@ -152,7 +152,7 @@ public interface ITestStep {
 	 * @throws StepExecutionException the step execution exception
 	 * @throws PageValidationException 
 	 */
-	void doStep () throws StepExecutionException, PageValidationException, RuntimeDataException;
+	void doStep (IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException, PageValidationException, RuntimeDataException;
 	
 	/**
 	 * Sets the step result status.
@@ -164,7 +164,7 @@ public interface ITestStep {
 	/**
 	 * Gets the step result status.
 	 *
-	 * @return the step result status
+	 * @return the step result status, default is FAIL
 	 */
 	StepResultStatus getStepResultStatus();
 	

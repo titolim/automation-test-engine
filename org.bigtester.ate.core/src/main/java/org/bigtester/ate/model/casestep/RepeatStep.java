@@ -195,7 +195,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 */
 	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
-	public void doStep() throws StepExecutionException,
+	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
 
 		repeatSteps();
@@ -257,7 +257,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 				}
 				String tmpStepDesc = currentTestStepTmp.getStepDescription();// NOPMD
 				try {
-					currentTestStepTmp.doStep();// NOPMD
+					currentTestStepTmp.doStep((IStepJumpingEnclosedContainer) GlobalUtils.getTargetObject(getTestCase()));// NOPMD
 					currentTestStepTmp.setStepResultStatus(
 							StepResultStatus.PASS);
 					LogbackWriter.writeDebugInfo("current test step in testcase is:" + getTestCase()
@@ -285,9 +285,9 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 									.indexOf(prob.getStepIndexSkipTo()); // NOPMD
 							if (-1 == i)
 								thr = e;
-							else if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
+							if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
 								currentTestStepTmp
-								.setStepResultStatus(StepResultStatus.NEUTURE);
+								.setStepResultStatus(StepResultStatus.NEUTRAL);
 							else 
 								currentTestStepTmp
 								.setStepResultStatus(StepResultStatus.SKIP);
@@ -295,7 +295,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 								&& optionalStepRaisingException) {
 							int correlatedOptionalStepsUtilInclusiveIndex = -1;//NOPMD
 							if (exceptionRaisingStep != null)
-								correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex(); //NOPMD
+								correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex((IStepJumpingEnclosedContainer) GlobalUtils.getTargetObject(getTestCase())); //NOPMD
 							if (correlatedOptionalStepsUtilInclusiveIndex > repeatingStepIndexesInTestCase
 									.get(i)) {
 								i = repeatingStepIndexesInTestCase
@@ -304,13 +304,14 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 								if (-1 == i) {
 									prob.setStepIndexSkipTo(correlatedOptionalStepsUtilInclusiveIndex);
 									thr = e;// NOPMD
-								}else if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
-										currentTestStepTmp
-										.setStepResultStatus(StepResultStatus.NEUTURE);
-								else
-									currentTestStepTmp
-									.setStepResultStatus(StepResultStatus.SKIP);
+								}
 							}
+							if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
+								currentTestStepTmp
+										.setStepResultStatus(StepResultStatus.NEUTRAL);
+							else
+								currentTestStepTmp
+										.setStepResultStatus(StepResultStatus.SKIP);
 						} else {
 							if (!this.continueOnFailure)
 								thr = e;// NOPMD

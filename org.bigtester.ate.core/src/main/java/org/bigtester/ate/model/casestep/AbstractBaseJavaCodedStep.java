@@ -72,7 +72,7 @@ abstract public class AbstractBaseJavaCodedStep extends BaseTestStep{
 	 * {@inheritDoc}
 	 * if user wants to use different webdriver than the default system one, please override this method.
 	 */
-	public void doStep(IMyWebDriver myWebDriver)
+	public void doStep(IMyWebDriver myWebDriver, IStepJumpingEnclosedContainer jumpingContainer)
 			throws StepExecutionException, PageValidationException,
 			RuntimeDataException {
 		

@@ -22,7 +22,7 @@ package org.bigtester.ate.model.data;
 
 import java.util.List;
 
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase; 
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -48,7 +48,7 @@ public class CaseConfigData {
 	
 	/** The config test cases. */
 	@Nullable
-	private List<TestCase> configTestCases;
+	private List<ITestCase> configTestCases;
 	
 	/**
 	 * Gets the config test cases.
@@ -56,7 +56,7 @@ public class CaseConfigData {
 	 * @return the configTestCases
 	 */
 	@Nullable
-	public List<TestCase> getConfigTestCases() {
+	public List<ITestCase> getConfigTestCases() {
 		return configTestCases;
 	}
 	
@@ -65,7 +65,7 @@ public class CaseConfigData {
 	 *
 	 * @param configTestCases the configTestCases to set
 	 */
-	public void setConfigTestCases(List<TestCase> configTestCases) {
+	public void setConfigTestCases(List<ITestCase> configTestCases) {
 		this.configTestCases = configTestCases;
 	}
 

@@ -91,7 +91,7 @@ public class HomeStep extends BaseTestStep implements ITestStep {
 	 */
 	@StepLoggable(level = ATELogLevel.INFO)
 	@Override
-	public void doStep() throws PageValidationException, RuntimeDataException {
+	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws PageValidationException, RuntimeDataException {
 		homePage.startHomepage();
 		super.parseDataHolder();
 		List<IExpectedResultAsserter> asserters = getExpectedResultAsserter();

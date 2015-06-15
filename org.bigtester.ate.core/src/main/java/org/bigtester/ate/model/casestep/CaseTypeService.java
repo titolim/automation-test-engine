@@ -60,7 +60,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	/** The parent test case. */
 	// TODO current version needs user to manually set the parentTestCase in xml
 	// file
-	final private TestCase parentTestCase;
+	final private ITestCase parentTestCase;
 
 	/** The data holders. */
 	@XStreamOmitField
@@ -73,7 +73,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 * @param testCaseName
 	 */
 	public CaseTypeService(String testCaseName, String testCaseFileName,
-			TestCase parentTestCase) {
+			ITestCase parentTestCase) {
 		super(testCaseName);
 		this.testCaseFileName = testCaseFileName;
 		this.parentTestCase = parentTestCase;
@@ -142,7 +142,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void doStep() throws StepExecutionException,
+	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
 		String testCaseFileName = getTestCaseFileName();
 		WebDriver mainDriver;
@@ -183,13 +183,6 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 							StepExecutionException.CODE,
 					this.getMyWebDriver(),
 					getParentTestCase(), t);
-//			if (t instanceof IATEProblemCreator) {//NOPMD
-//				IATEProblem prob = ((IATEProblemCreator) t).getAteProblem();
-//				if (null == prob) {
-//					prob = pve.initAteProblemInstance(this);
-//				}
-//				prob.setFatalProblem(prob.isFatalProblem());
-//			}
 			pve.initAteProblemInstance(this).setFatalProblem(true);//Any exception thrown out of testcase is fatal for this step.
 			
 			throw pve;
@@ -207,7 +200,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	/**
 	 * @return the parentTestCase
 	 */
-	public TestCase getParentTestCase() {
+	public ITestCase getParentTestCase() {
 		return parentTestCase;
 	}
 
@@ -307,8 +300,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getCorrelatedOptionalStepsUtilInclusiveIndex() {
-		// TODO Auto-generated method stub
+	public int getCorrelatedOptionalStepsUtilInclusiveIndex(IStepJumpingEnclosedContainer jumpingContainer) {
 		return -1;
 	}
 

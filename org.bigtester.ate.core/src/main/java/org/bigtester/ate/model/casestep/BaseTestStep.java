@@ -49,8 +49,11 @@ abstract public class BaseTestStep implements ApplicationContextAware {// NOPMD
 
 	/** The test case. */
 	@Nullable
-	private TestCase testCase;
+	private ITestCase testCase;
 
+//	@Nullable
+//	private IStepJumpingEnclosedContainer stepJumpingEnclosedContainer;
+	
 	/** The current iteration. */
 	private int currentIteration;
 
@@ -116,16 +119,17 @@ abstract public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	/** The corrected on the fly. */
 	private boolean correctedOnTheFly;
 	
+	
 	/**
 	 * Gets the test case.
 	 *
 	 * @return the testCase
 	 */
-	public TestCase getTestCase() {
+	public ITestCase getTestCase() {
 		
 		if (null == testCase) 
 			testCase = GlobalUtils.findTestCaseBean();
-		final TestCase testCase2 = testCase;
+		final ITestCase testCase2 = testCase;
 		if (testCase2 == null) {
 			throw GlobalUtils.createInternalError("test case bean couldn't be found");
 			
@@ -161,7 +165,7 @@ abstract public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	 * @return the correlatedOptionalStepsUtilInclusiveIndex
 	 */
 
-	public int getCorrelatedOptionalStepsUtilInclusiveIndex() {
+	public int getCorrelatedOptionalStepsUtilInclusiveIndex(IStepJumpingEnclosedContainer stepJumpingEnclosedContainer) {
 		if (-1 == correlatedOptionalStepsUtilInclusiveIndex
 				&& !StringUtils
 						.isEmpty(getCorrelatedOptionalStepsUtilInclusiveName())) {
@@ -169,22 +173,22 @@ abstract public class BaseTestStep implements ApplicationContextAware {// NOPMD
 			setOptionalStep(true);
 			int startIndex = -1;// NOPMD
 			int endIndex = -1;// NOPMD
-			for (int index = 0; index < getTestCase().getTestStepList().size(); index++) {
+			for (int index = 0; index < stepJumpingEnclosedContainer.getContainerStepList().size(); index++) {
 				if (startIndex == -1
-						&& getTestCase().getTestStepList().get(index)
+						&& stepJumpingEnclosedContainer.getContainerStepList().get(index)
 								.getStepName() == getStepName()) {
 					startIndex = index;// NOPMD
 				}
-				if (getTestCase().getTestStepList().get(index).getStepName() == getCorrelatedOptionalStepsUtilInclusiveName()) {
+				if (stepJumpingEnclosedContainer.getContainerStepList().get(index).getStepName() == getCorrelatedOptionalStepsUtilInclusiveName()) {
 					endIndex = index;
 					break;
 				}
 			}
 			if (startIndex == -1 || endIndex == -1 || endIndex < startIndex)
 				throw GlobalUtils
-						.createInternalError("Optional Step util inclusive");
+						.createInternalError("parameter optional Step util inclusive not correctly populated");
 			for (int index2 = startIndex; index2 <= endIndex; index2++) {
-				getTestCase().getTestStepList().get(index2)
+				stepJumpingEnclosedContainer.getContainerStepList().get(index2)
 						.setOptionalStep(true);
 			}
 			correlatedOptionalStepsUtilInclusiveIndex = endIndex;
@@ -526,7 +530,7 @@ abstract public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	/**
 	 * @param testCase the testCase to set
 	 */
-	public void setTestCase(TestCase testCase) {
+	public void setTestCase(ITestCase testCase) {
 		this.testCase = testCase;
 	}
 
@@ -554,6 +558,22 @@ abstract public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	public void setCorrectedOnTheFly(boolean correctedOnTheFly) {
 		this.correctedOnTheFly = correctedOnTheFly;
 	}
+
+//	/**
+//	 * @return the stepJumpingEnclosedContainer
+//	 */
+//	@Nullable
+//	public IStepJumpingEnclosedContainer getStepJumpingEnclosedContainer() {
+//		return stepJumpingEnclosedContainer;
+//	}
+//
+//	/**
+//	 * @param stepJumpingEnclosedContainer the stepJumpingEnclosedContainer to set
+//	 */
+//	public void setStepJumpingEnclosedContainer(
+//			IStepJumpingEnclosedContainer stepJumpingEnclosedContainer) {
+//		this.stepJumpingEnclosedContainer = stepJumpingEnclosedContainer;
+//	}
 
 	
 }

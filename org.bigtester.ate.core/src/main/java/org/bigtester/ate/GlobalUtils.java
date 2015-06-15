@@ -31,8 +31,8 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.aop.framework.Advised;
-import org.bigtester.ate.model.casestep.StepDataLogger;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase;
+import org.bigtester.ate.model.casestep.StepDataLogger; 
 import org.bigtester.ate.model.data.AbstractRunTimeDataHolder;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -125,16 +125,16 @@ public class GlobalUtils implements ApplicationContextAware {
 	 * @throws NoSuchBeanDefinitionException
 	 *             the no such bean definition exception
 	 */
-	public static TestCase findTestCaseBean(ApplicationContext appCtx)
+	public static ITestCase findTestCaseBean(ApplicationContext appCtx)
 			throws NoSuchBeanDefinitionException {
-		Map<String, TestCase> testcases = appCtx.getBeansOfType(TestCase.class);
+		Map<String, ITestCase> testcases = appCtx.getBeansOfType(ITestCase.class);
 
 		if (testcases.isEmpty()) {
-			throw new NoSuchBeanDefinitionException(TestCase.class);
+			throw new NoSuchBeanDefinitionException(ITestCase.class);
 		} else {
-			TestCase retVal = testcases.values().iterator().next();
+			ITestCase retVal = testcases.values().iterator().next();
 			if (null == retVal) {
-				throw new NoSuchBeanDefinitionException(TestCase.class);
+				throw new NoSuchBeanDefinitionException(ITestCase.class);
 			} else {
 				return retVal;
 			}
@@ -168,17 +168,17 @@ public class GlobalUtils implements ApplicationContextAware {
 	 * @throws NoSuchBeanDefinitionException
 	 *             the no such bean definition exception
 	 */
-	public static TestCase findTestCaseBean()
+	public static ITestCase findTestCaseBean()
 			throws NoSuchBeanDefinitionException {
 		ApplicationContext appCtx = getApx();
-		Map<String, TestCase> testcases = appCtx.getBeansOfType(TestCase.class);
+		Map<String, ITestCase> testcases = appCtx.getBeansOfType(ITestCase.class);
 
 		if (testcases.isEmpty()) {
-			throw new NoSuchBeanDefinitionException(TestCase.class);
+			throw new NoSuchBeanDefinitionException(ITestCase.class);
 		} else {
-			TestCase retVal = testcases.values().iterator().next();
+			ITestCase retVal = testcases.values().iterator().next();
 			if (null == retVal) {
-				throw new NoSuchBeanDefinitionException(TestCase.class);
+				throw new NoSuchBeanDefinitionException(ITestCase.class);
 			} else {
 				return retVal;
 			}
@@ -197,11 +197,11 @@ public class GlobalUtils implements ApplicationContextAware {
 		Map<String, StepDataLogger> loggers = appCtx.getBeansOfType(StepDataLogger.class);
 
 		if (loggers.isEmpty()) {
-			throw new NoSuchBeanDefinitionException(TestCase.class);
+			throw new NoSuchBeanDefinitionException(StepDataLogger.class);
 		} else {
 			StepDataLogger retVal = loggers.values().iterator().next();
 			if (null == retVal) {
-				throw new NoSuchBeanDefinitionException(TestCase.class);
+				throw new NoSuchBeanDefinitionException(StepDataLogger.class);
 			} else {
 				return retVal;
 			}

@@ -18,24 +18,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.casestep;
+package org.bigtester.ate.model.casestep;//NOPMD
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.StepLoggable;
 import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.constant.XsdElementConstants;
+import org.bigtester.ate.model.AbstractATEException;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.LogbackWriter;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.bigtester.ate.xmlschema.BaseTestStepBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.IXsdBeanDefinitionParser;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,8 +159,87 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 	public JavaCodedStep(IJavaCodedStep userJavaStep) {
 		super();
 		this.userJavaStep = userJavaStep;
+		//replaceUserJavaStepFieldValues(userJavaStep);
 	}
 
+//	public void replaceUserJavaStepFieldValues(Object userJavaStep) {
+//		try {
+//			Map<String, FieldValuePair> thisObjectFieldNameValues = getFieldNamesAndValues(this);
+//			Map<String, FieldValuePair> userClassObjectFieldNameValues = getFieldNamesAndValues(userJavaStep);
+//			for (Map.Entry<String, FieldValuePair> thisField : thisObjectFieldNameValues.entrySet() ) {
+//				if (userClassObjectFieldNameValues.containsKey(thisField.getKey())) {
+//					userClassObjectFieldNameValues.get(thisField.getKey()).getField().set(userJavaStep, thisField.getValue().getValue());
+//				}
+//			}
+//		} catch (IllegalArgumentException | IllegalAccessException e) {
+//		
+//			e.printStackTrace();
+//		}
+//		
+//	}
+	
+//	public void replaceUserJavaStepFieldsValue(Object userJavaStep) {
+//		ReflectionUtils.doWithFields(AbstractBaseJavaCodedStep.class,
+//			    new FieldCallback(){
+//
+//			        @Override
+//			        public void doWith(final @Nullable Field field) throws IllegalArgumentException,
+//			            IllegalAccessException{
+//
+//			            System.out.println("Found field " + field + " in type "
+//			                + field.getDeclaringClass());
+//
+//			        }
+//			    });
+//	}
+//	private class FieldValuePair {
+//		final private Field field;
+//		@Nullable
+//		final private Object value;
+//		
+//		public FieldValuePair(Field field, @Nullable Object value) {
+//			this.field = field;
+//			this.value = value;
+//		}
+//
+//		/**
+//		 * @return the field
+//		 */
+//		public Field getField() {
+//			return field;
+//		}
+//
+//		 
+//
+//		/**
+//		 * @return the value
+//		 */
+//		@Nullable
+//		public Object getValue() {
+//			return value;
+//		}
+//
+//		 
+//	}
+//	
+//	private Map<String, FieldValuePair> getFieldNamesAndValues(final Object obj)
+//		    throws IllegalArgumentException,IllegalAccessException
+//		  {
+//		    Class<? extends Object> c1 = obj.getClass();
+//		    Map<String, FieldValuePair> map = new HashMap<String, FieldValuePair>();
+//		    Field[] fields = c1.getDeclaredFields();
+//		    for (int i = 0; i < fields.length; i++) {
+//		    	Field fld = fields[i];
+//		    	String name = fld.getName();
+//		      
+//		        fields[i].setAccessible(true);
+//		        Object value = fld.get(obj);
+//		        FieldValuePair fv = new FieldValuePair(fld, value);
+//		        map.put(name, fv);
+//		     }
+//		    return map;
+//		  }
+//	
 	/**
 	 * Instantiates a new java coded step.
 	 */
@@ -189,14 +271,19 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 	 */
 	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
-	public void doStep() throws StepExecutionException,
+	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
+		
 		IMyWebDriver myWebDriver2 = myWebDriver;
 		if (myWebDriver2 == null)
 			throw GlobalUtils.createNotInitializedException("my web driver");
 		try {
-			getUserJavaStep().doStep();
-			getUserJavaStep().doStep(myWebDriver2);
+			
+			BeanUtils.copyProperties(this, this.userJavaStep);
+			LogbackWriter.writeDebugInfo("correlatedOptionalStepsUtilInclusiveIndex is copied with value:" + this.getUserJavaStep().getCorrelatedOptionalStepsUtilInclusiveIndex(jumpingContainer), JavaCodedStep.class);
+
+			getUserJavaStep().doStep(jumpingContainer);
+			getUserJavaStep().doStep(myWebDriver2, jumpingContainer);
 		} catch (NoSuchElementException | TimeoutException e) {
 			StepExecutionException pve = new StepExecutionException(
 					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
@@ -209,6 +296,11 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 			throw pve;
 		
 		} catch (Exception otherE) {// NOPMD
+			if (otherE instanceof AbstractATEException) {//NOPMD
+				if (null == ((AbstractATEException) otherE).getOriginalStepRaisingException()) {
+					((AbstractATEException) otherE).setOriginalStepRaisingException(this);
+				}
+			}
 			if (otherE instanceof IATEProblemCreator) {//NOPMD
 				throw otherE;
 			}
@@ -254,10 +346,10 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void doStep(IMyWebDriver myWebDriver) throws StepExecutionException,
+	public void doStep(IMyWebDriver myWebDriver, IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
-		getUserJavaStep().doStep();
-		getUserJavaStep().doStep(myWebDriver);
+		getUserJavaStep().doStep(jumpingContainer);
+		getUserJavaStep().doStep(myWebDriver, jumpingContainer);
 	}
 
 	/**

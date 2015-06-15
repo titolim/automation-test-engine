@@ -20,7 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase; 
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 
 // TODO: Auto-generated Javadoc
@@ -36,7 +36,7 @@ public interface IATECaseExecException extends IATEException{
 	 *
 	 * @return the current test case
 	 */
-	TestCase getCurrentTestCase();
+	ITestCase getCurrentTestCase();
 	
 	/**
 	 * Gets the my web driver.

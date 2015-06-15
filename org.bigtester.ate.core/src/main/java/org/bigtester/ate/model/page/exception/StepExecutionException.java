@@ -23,8 +23,8 @@ package org.bigtester.ate.model.page.exception;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.IATECaseExecException;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase;
+import org.bigtester.ate.model.casestep.ITestStep; 
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.LogMessage;
@@ -68,7 +68,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	 * @param currentTestCase the current test case
 	 */
 	public StepExecutionException(String message, String errorCode,
-			IMyWebDriver myWebDriver, TestCase currentTestCase) {
+			IMyWebDriver myWebDriver, ITestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
@@ -84,7 +84,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	 * @param cause the cause
 	 */
 	public StepExecutionException(String message, String errorCode,
-			IMyWebDriver myWebDriver, TestCase currentTestCase, Throwable cause) {
+			IMyWebDriver myWebDriver, ITestCase currentTestCase, Throwable cause) {
 		super(message, errorCode, currentTestCase, myWebDriver, cause);
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
@@ -100,7 +100,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	 * @param currentTestCase the current test case
 	 */
 	public StepExecutionException(String message, String errorCode,
-			IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo) {
+			IMyWebDriver myWebDriver, ITestCase currentTestCase, int stepIndexJumpTo) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
@@ -119,7 +119,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 	 * @param cause the cause
 	 */
 	public StepExecutionException(String message, String errorCode,
-			IMyWebDriver myWebDriver, TestCase currentTestCase, int stepIndexJumpTo, Throwable cause) {
+			IMyWebDriver myWebDriver, ITestCase currentTestCase, int stepIndexJumpTo, Throwable cause) {
 		super(message, errorCode, currentTestCase, myWebDriver, cause);
 		setMyWebDriver(myWebDriver);
 		setCurrentTestCase(currentTestCase);
@@ -161,7 +161,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		
 		
 		/** The problem test case. */
-		private final TestCase problemTestCase;	
+		private final ITestCase problemTestCase;	
 		
 		
 		/**
@@ -195,7 +195,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		 *
 		 * @return the problemTestCase
 		 */
-		public TestCase getProblemTestCase() {
+		public ITestCase getProblemTestCase() {
 			return problemTestCase;
 		}
 
@@ -205,7 +205,7 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 		 * {@inheritDoc}
 		 */
 		@Override
-		public TestCase getCurrentTestCase() {
+		public ITestCase getCurrentTestCase() {
 			IATECaseExecException retVal;
 			retVal = (IATECaseExecException) getAteException();
 			if (null == retVal) throw GlobalUtils.createNotInitializedException("case exec exception");

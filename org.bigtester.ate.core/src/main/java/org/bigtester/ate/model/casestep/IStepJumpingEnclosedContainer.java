@@ -20,28 +20,20 @@
  *******************************************************************************/
 package org.bigtester.ate.model.casestep;
 
-import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException;
-import org.bigtester.ate.model.page.exception.StepExecutionException;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class IElementStep defines ....
+ * This class IStepJumpingEnclosedContainer defines ....
  * @author Peidong Hu
  *
  */
-public interface IJavaCodedStep extends ITestStep {
+public interface IStepJumpingEnclosedContainer {
 	
 	/**
-	 * Do step.
+	 * Gets the container step list.
 	 *
-	 * @param myWebDriver the my web driver
-	 * @throws StepExecutionException the step execution exception2
-	 * @throws PageValidationException the page validation exception2
-	 * @throws RuntimeDataException the runtime data exception
+	 * @return the container step list
 	 */
-	void doStep(IMyWebDriver myWebDriver, IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
-	PageValidationException, RuntimeDataException;
-
+	List<ITestStep> getContainerStepList();
 }

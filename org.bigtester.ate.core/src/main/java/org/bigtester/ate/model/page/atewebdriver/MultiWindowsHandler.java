@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase; 
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Alert;
@@ -56,7 +56,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	/** The test case. */
 	@Nullable
 	@Autowired
-	private TestCase testCase;
+	private ITestCase testCase;
 	/** The my wd. */
 	@XStreamOmitField
 	@Nullable
@@ -787,8 +787,8 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	/**
 	 * @return the testCase
 	 */
-	public TestCase getTestCase() {
-		final TestCase testCase2 = testCase;
+	public ITestCase getTestCase() {
+		final ITestCase testCase2 = testCase;
 		if (testCase2 == null) {
 			throw GlobalUtils.createNotInitializedException("test case");
 		} else {
@@ -799,7 +799,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	/**
 	 * @param testCase the testCase to set
 	 */
-	public void setTestCase(TestCase testCase) {
+	public void setTestCase(ITestCase testCase) {
 		this.testCase = testCase;
 	}
 

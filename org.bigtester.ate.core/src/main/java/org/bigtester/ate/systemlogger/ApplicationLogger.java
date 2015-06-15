@@ -35,8 +35,8 @@ import org.bigtester.ate.annotation.TestCaseLoggable;
 import org.bigtester.ate.annotation.TestObjectFinderLoggable;
 import org.bigtester.ate.annotation.TestProjectLoggable;
 import org.bigtester.ate.constant.ExceptionMessage;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase;
+import org.bigtester.ate.model.casestep.ITestStep; 
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.page.elementfind.ITestObjectFinder;
 import org.bigtester.ate.model.project.TestProject;
@@ -247,8 +247,8 @@ public class ApplicationLogger implements ApplicationContextAware {
 			LogMessage lmsg = new LogMessage("",
 					nullAOPPointCutClass );
 			LogbackWriter.writeLogbackAppLog(lmsg);
-		} else if (obj instanceof TestCase) {
-			TestCase testCase = (TestCase) obj;
+		} else if (obj instanceof ITestCase) {
+			ITestCase testCase = (ITestCase) obj;
 			LogMessage lmsg = new LogMessage("\r\n *****TestCase: "
 					+ testCase.getTestCaseName() + " execution starts.*****",
 					loggable.level());
@@ -458,8 +458,8 @@ public class ApplicationLogger implements ApplicationContextAware {
 			LogMessage lmsg = new LogMessage("",
 					nullAOPPointCutClass );
 			LogbackWriter.writeLogbackAppLog(lmsg);
-		} else if (obj instanceof TestCase) {
-			TestCase testCase = (TestCase) obj;
+		} else if (obj instanceof ITestCase) {
+			ITestCase testCase = (ITestCase) obj;
 			LogMessage lmsg = new LogMessage(" TestCase: "
 					+ testCase.getTestCaseName() + " execution ends.",
 					loggable.level());

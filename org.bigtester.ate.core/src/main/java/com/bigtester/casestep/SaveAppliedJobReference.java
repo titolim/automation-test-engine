@@ -30,6 +30,7 @@ import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.casestep.AbstractBaseJavaCodedStep;
 import org.bigtester.ate.model.casestep.IJavaCodedStep;
+import org.bigtester.ate.model.casestep.IStepJumpingEnclosedContainer;
 import org.bigtester.ate.model.data.exception.RuntimeDataException; 
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException; 
@@ -51,7 +52,7 @@ public class SaveAppliedJobReference extends AbstractBaseJavaCodedStep
 	/**
 	 * {@inheritDoc}
 	 */
-	public void doStep() throws StepExecutionException,
+	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
 		WebElement applyButtonLink = getMyWebDriver().getWebDriverInstance().findElement(By.xpath("(//span[@class='indeed-apply-widget indeed-apply-button-container indeed-apply-status-not-applied'])[1]"));
 		String jobApplyID = applyButtonLink.getAttribute("data-indeed-apply-jobid");

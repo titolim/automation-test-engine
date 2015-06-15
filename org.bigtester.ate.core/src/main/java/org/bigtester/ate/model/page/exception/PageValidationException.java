@@ -25,8 +25,8 @@ import java.util.List;
 import org.bigtester.ate.model.BaseATECaseExecE;
 import org.bigtester.ate.model.IATECaseExecException;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase;
+import org.bigtester.ate.model.casestep.ITestStep; 
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.elementfind.IElementFind;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
@@ -106,7 +106,7 @@ public class PageValidationException extends BaseATECaseExecE implements IATEPro
 	 */
 	public PageValidationException(String message, String errorCode,
 			String pageProperty, IMyWebDriver myWebDriver,
-			TestCase currentTestCase) {
+			ITestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		this.pageProperty = pageProperty;
 
@@ -128,7 +128,7 @@ public class PageValidationException extends BaseATECaseExecE implements IATEPro
 	 */
 	public PageValidationException(String message, String errorCode,
 			IElementFind eFind, IMyWebDriver myWebDriver,
-			TestCase currentTestCase) {
+			ITestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		elementFind = eFind;
 
@@ -150,7 +150,7 @@ public class PageValidationException extends BaseATECaseExecE implements IATEPro
 	 */
 	public PageValidationException(String message, String errorCode,
 			List<IExpectedResultAsserter> listAsserters,
-			IMyWebDriver myWebDriver, TestCase currentTestCase) {
+			IMyWebDriver myWebDriver, ITestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		this.listAsserters = listAsserters;
 
@@ -192,7 +192,7 @@ public class PageValidationException extends BaseATECaseExecE implements IATEPro
 		 * {@inheritDoc}
 		 */
 		@Override
-		public TestCase getCurrentTestCase() {
+		public ITestCase getCurrentTestCase() {
 			return this.pageValException.getCurrentTestCase();
 		}
 

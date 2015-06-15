@@ -21,8 +21,8 @@
 package org.bigtester.ate.systemlogger.problems;
 
 import org.bigtester.ate.model.IATECaseExecException;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase;
+import org.bigtester.ate.model.casestep.ITestStep; 
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,7 +37,7 @@ public interface IATECaseExecProblem extends IATEProblem{
 	 *
 	 * @return the current test case
 	 */
-	TestCase getCurrentTestCase();
+	ITestCase getCurrentTestCase();
 	
 	/**
 	 * Gets the current test step.

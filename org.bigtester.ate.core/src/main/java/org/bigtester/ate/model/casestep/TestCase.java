@@ -36,6 +36,7 @@ import org.bigtester.ate.model.utils.ThinkTime;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
+import org.springframework.aop.support.AopUtils;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -45,7 +46,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * 
  * @author Peidong Hu
  */
-public class TestCase {
+public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 
 	/** The current web driver. */
 	@Nullable
@@ -162,7 +163,7 @@ public class TestCase {
 			}
 
 			try {
-				currentTestStepTmp.doStep();// NOPMD
+				currentTestStepTmp.doStep(this);// NOPMD
 				currentTestStepTmp.setStepResultStatus(StepResultStatus.PASS);
 				setCurrentTestStep(currentTestStepTmp);
 			} catch (Exception e) { // NOPMD
@@ -184,12 +185,22 @@ public class TestCase {
 						optionalStepRaisingException = exceptionRaisingStep.isOptionalStep(); //NOPMD
 					if (!prob.isFatalProblem() && prob.getStepIndexSkipTo() > -1) { // NOPMD
 						i = prob.getStepIndexSkipTo(); // NOPMD
+						if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
+							currentTestStepTmp
+									.setStepResultStatus(StepResultStatus.NEUTRAL);
+						else
+							currentTestStepTmp
+									.setStepResultStatus(StepResultStatus.SKIP);
 					} else if (!prob.isFatalProblem() && optionalStepRaisingException) {
 						int correlatedOptionalStepsUtilInclusiveIndex = -1;//NOPMD
 						if (exceptionRaisingStep != null)
-							correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex(); //NOPMD
-						currentTestStepTmp.setStepResultStatus(
-								StepResultStatus.SKIP);
+							correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex(this); //NOPMD
+						if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
+							currentTestStepTmp
+									.setStepResultStatus(StepResultStatus.NEUTRAL);
+						else
+							currentTestStepTmp
+									.setStepResultStatus(StepResultStatus.SKIP);
 						if (correlatedOptionalStepsUtilInclusiveIndex > i) {
 							i = correlatedOptionalStepsUtilInclusiveIndex;// NOPMD
 
@@ -298,6 +309,15 @@ public class TestCase {
 	 */
 	public void setParentTestProject(TestProject parentTestProject) {
 		this.parentTestProject = parentTestProject;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ITestStep> getContainerStepList() {
+		
+		return getTestStepList();
 	}
 
 }
