@@ -23,7 +23,6 @@ package org.bigtester.ate.xmlschema;
 
 import java.util.Map;
 
-import org.bigtester.ate.constant.XsdElementConstants;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 

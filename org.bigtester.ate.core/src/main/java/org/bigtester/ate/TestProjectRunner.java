@@ -19,7 +19,7 @@
  * limitations under the License.
  *******************************************************************************/
 
-package org.bigtester.ate;
+package org.bigtester.ate;//NOPMD
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -87,6 +87,7 @@ import org.bigtester.ate.xmlschema.SafariDriverBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.SendKeysActionBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.StepERValueBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.StepInputDataValueBeanDefinitionParser;
+import org.bigtester.ate.xmlschema.StepTypeReferenceBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.StepTypeServiceBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.TestCaseBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.TestDatabaseInitializerBeanDefinitionParser;
@@ -218,6 +219,8 @@ public final class TestProjectRunner {
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_LASTSTEP, new LastStepBeanDefinitionParser());
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_BASEERVALUE, new BaseERValueBeanDefinitionParser());
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_STEPEXPECTEDRESULTVALUE, new StepERValueBeanDefinitionParser());
+		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_STEPTYPESERVICEREFERENCE, new StepTypeReferenceBeanDefinitionParser());
+		
 		
 		/******************************* following for Test Page ******************************/
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_BASEPAGEOBJECT, new BasePageObjectBeanDefinitionParser());
