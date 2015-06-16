@@ -21,6 +21,7 @@
 package org.bigtester.ate.test.ead;
 
 import java.io.File;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,7 +39,6 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
 
 
 /**
@@ -81,7 +81,7 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 		HomeStep homeStep = (HomeStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
 						"stepOpenBigtesterHomePage"));
-		homeStep.doStep();
+		homeStep.doStep(null);
 
 		Set<Cookie> homepageCookies = webDriver.manage().getCookies();
 		Assert.assertTrue(!homepageCookies.isEmpty());

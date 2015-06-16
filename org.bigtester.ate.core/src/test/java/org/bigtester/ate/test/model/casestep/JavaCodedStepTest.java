@@ -55,7 +55,7 @@ public class JavaCodedStepTest extends BigtesterProjectTest {
 
 		IJavaCodedStep assignV = (IJavaCodedStep) getApplicationContext()
 				.getBean("javaStep1");
-		assignV.doStep();
+		assignV.doStep(null);
 
 		String actualVal = getMyDriver().getWebDriverInstance()
 				.findElements(By.tagName("textarea")).get(0)

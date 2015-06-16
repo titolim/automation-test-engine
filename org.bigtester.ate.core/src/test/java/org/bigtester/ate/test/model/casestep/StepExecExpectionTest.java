@@ -24,7 +24,7 @@ package org.bigtester.ate.test.model.casestep;
 import static org.mockito.Mockito.when;
 
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
@@ -68,7 +68,7 @@ public class StepExecExpectionTest extends BigtesterProjectTest {
 		getTestPage("bigtesterTestNG/aut/textarea_stepExecution.html");
 
 		
-		TestCase testCase = (TestCase) getApplicationContext()
+		ITestCase testCase = (ITestCase) getApplicationContext()
 				.getBean("testcase");
 		try {
 			testCase.goSteps();

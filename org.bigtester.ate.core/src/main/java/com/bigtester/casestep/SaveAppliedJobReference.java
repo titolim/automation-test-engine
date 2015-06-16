@@ -34,6 +34,7 @@ import org.bigtester.ate.model.casestep.IStepJumpingEnclosedContainer;
 import org.bigtester.ate.model.data.exception.RuntimeDataException; 
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException; 
+import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -52,7 +53,7 @@ public class SaveAppliedJobReference extends AbstractBaseJavaCodedStep
 	/**
 	 * {@inheritDoc}
 	 */
-	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
 		WebElement applyButtonLink = getMyWebDriver().getWebDriverInstance().findElement(By.xpath("(//span[@class='indeed-apply-widget indeed-apply-button-container indeed-apply-status-not-applied'])[1]"));
 		String jobApplyID = applyButtonLink.getAttribute("data-indeed-apply-jobid");
@@ -67,7 +68,7 @@ public class SaveAppliedJobReference extends AbstractBaseJavaCodedStep
 				
 				RuntimeDataException rde = new RuntimeDataException(ExceptionMessage.MSG_TESTDATA_DUPLICATED, ExceptionErrorCode.REPEATTESTDATA_DUPLICATED);
 				rde.setTestCaseName(this.getTestCase().getTestCaseName());
-				rde.setTestStepName(this.getTestCase().getCurrentTestStep().getStepName());
+				rde.setTestStepName(this.getStepName());
 				rde.initAteProblemInstance(this).setFatalProblem(false);
 				throw rde;
 			}

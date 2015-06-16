@@ -152,7 +152,7 @@ public interface ITestStep {
 	 * @throws StepExecutionException the step execution exception
 	 * @throws PageValidationException 
 	 */
-	void doStep (IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException, PageValidationException, RuntimeDataException;
+	void doStep (@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException, PageValidationException, RuntimeDataException;
 	
 	/**
 	 * Sets the step result status.

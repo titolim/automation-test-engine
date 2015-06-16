@@ -271,9 +271,9 @@ public class JavaCodedStep extends BaseTestStep implements IJavaCodedStep,
 	 */
 	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
-	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
-		
+		if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) GlobalUtils.getTargetObject(getTestCase());
 		IMyWebDriver myWebDriver2 = myWebDriver;
 		if (myWebDriver2 == null)
 			throw GlobalUtils.createNotInitializedException("my web driver");

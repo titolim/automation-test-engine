@@ -37,6 +37,7 @@ import org.bigtester.ate.systemlogger.problemhandler.ProblemHandlerRegistry;
 import org.bigtester.ate.xmlschema.AlertDialogAcceptActionBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.AlertDialogFindInFocusBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.AssignValueActionBeanDefinitionParser;
+import org.bigtester.ate.xmlschema.AteReferenceBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.AutoIncrementalDataHolderBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.BaseERValueBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.BaseElementActionBeanDefinitionParser;
@@ -233,6 +234,8 @@ public final class TestProjectRunner {
 						
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_PAGEELEMENTEXISTENCE, new PageElementExistBeanDefinitionParser());
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_PAGEPROPERTYCORRECTNESS, new PagePropertyCorrectBeanDefinitionParser());
+		
+		XsdNameSpaceParserRegistry.registerNameSpaceHandler("ateXmlElementReference", new AteReferenceBeanDefinitionParser());
 		
 		/******************************* following for Test Data ******************************/
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_BASEINPUTDATAVALUE, new BaseInputDataValueBeanDefinitionParser());

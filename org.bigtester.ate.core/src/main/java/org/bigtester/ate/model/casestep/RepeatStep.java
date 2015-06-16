@@ -195,10 +195,11 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 */
 	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
-	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
+		if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) GlobalUtils.getTargetObject(getTestCase());
 
-		repeatSteps();
+		repeatSteps(jumpingContainer);
 
 	}
 
@@ -209,7 +210,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 * @throws StepExecutionException
 	 * @throws PageValidationException
 	 */
-	private void repeatSteps() throws StepExecutionException,
+	private void repeatSteps(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
 		LogbackWriter.writeDebugInfo("entering repeatSteps:" + this.getStepName(), this.getClass());
 		buildRepeatStepContext();
@@ -257,7 +258,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 				}
 				String tmpStepDesc = currentTestStepTmp.getStepDescription();// NOPMD
 				try {
-					currentTestStepTmp.doStep((IStepJumpingEnclosedContainer) GlobalUtils.getTargetObject(getTestCase()));// NOPMD
+					currentTestStepTmp.doStep(jumpingContainer);// NOPMD
 					currentTestStepTmp.setStepResultStatus(
 							StepResultStatus.PASS);
 					LogbackWriter.writeDebugInfo("current test step in testcase is:" + getTestCase()

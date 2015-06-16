@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.xmlschema;
 
+import java.util.List;
+
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.constant.XsdElementConstants;
@@ -29,9 +31,12 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
+import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.StringUtils;
+import org.springframework.util.xml.DomUtils;
 import org.w3c.dom.Element;
 
 
@@ -103,10 +108,33 @@ public class BaseTestStepBeanDefinitionParser extends
 			bDef.getPropertyValues().addPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE,
 					new RuntimeBeanReference(testcaseParentName));
 		}
-//        String text = element.getAttribute("text");
-//        bd.getPropertyValues().addPropertyValue("text", text);
+		
+        List<Element> asserterReferences = (List<Element>) DomUtils.getChildElementsByTagName(element, "asserterReferences");
+        if (null != asserterReferences && asserterReferences.size() == 1) {
+	        List<Element> allReferences = (List<Element>) DomUtils.getChildElementsByTagName(asserterReferences.get(0), "ateXmlElementReference");
+	        
+	        if (allReferences != null && !allReferences.isEmpty()) {
+	        	parseAsserterComponents(allReferences , bDef, parserContext);
+	        }
+		}
+        
         parserContext.getRegistry().registerBeanDefinition(element.getAttribute("id"), bDef);
         return (AbstractBeanDefinition) bDef;
       
 	}
+	private static void parseAsserterComponents(List<Element> childElements,
+			BeanDefinition beanDef, ParserContext parserContext) {
+		ManagedList<BeanDefinition> children = new ManagedList<BeanDefinition>(//NOPMD
+				childElements.size());
+		for (Element element : childElements) {
+			BeanDefinitionParser bep = XsdNameSpaceParserRegistry.getNameSpaceHandlerRegistry().get(element.getLocalName());
+			if (null == bep) throw GlobalUtils.createNotInitializedException("Name space handler not registered for this element: " + element.getTagName());
+			BeanDefinition tmpBDef = bep.parse(element, parserContext);
+			children.add(tmpBDef);
+			
+		}
+		beanDef.getPropertyValues().addPropertyValue(
+				"expectedResultAsserter", children);
+	}
+	
 }
