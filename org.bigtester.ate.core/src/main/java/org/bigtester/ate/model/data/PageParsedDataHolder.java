@@ -30,7 +30,7 @@ import org.bigtester.ate.model.page.page.IPageObject;
  * @author Peidong Hu
  *
  */
-public class PageParsedDataHolder extends AbstractRunTimeDataHolder implements IStepInputData, IDataParser{
+public class PageParsedDataHolder extends AbstractRunTimeInputDataHolder implements IStepInputData, IDataParser{
 	
 	/** The index of same type of data on page. */
 	final private int indexOfSameTypeOfDataOnPage;

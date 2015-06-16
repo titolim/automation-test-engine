@@ -29,14 +29,14 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.page.IPageObject;
 import org.eclipse.jdt.annotation.Nullable;
 
-// TODO: Auto-generated Javadoc
 /**
- * This class RunTimeDataHolder defines ....
+ * This class is the abstract class of any input data created in script (Non
+ * File db generated input data).
  * 
  * @author Peidong Hu
  *
  */
-public abstract class AbstractRunTimeDataHolder extends BaseInputDataValue{
+public abstract class AbstractRunTimeInputDataHolder extends BaseInputDataValue{
 
 	/** The page that has been used to parse the data. */
 	final private String springBeanID;
@@ -72,7 +72,7 @@ public abstract class AbstractRunTimeDataHolder extends BaseInputDataValue{
 	 *            the data type
 	 * @param pageHtmlRightBoundry
 	 */
-	public AbstractRunTimeDataHolder(EnumRunTimeDataType dataType,
+	public AbstractRunTimeInputDataHolder(EnumRunTimeDataType dataType,
 			String pageHtmlLeftBoundry, String pageHtmlRightBoundry,
 			IPageObject page, String springBeanID) {
 		super("");
@@ -92,7 +92,7 @@ public abstract class AbstractRunTimeDataHolder extends BaseInputDataValue{
 	 *            the str data value
 	 * @param springBeanID 
 	 */
-	public AbstractRunTimeDataHolder(EnumRunTimeDataType dataType, String strDataValue, String springBeanID) {
+	public AbstractRunTimeInputDataHolder(EnumRunTimeDataType dataType, String strDataValue, String springBeanID) {
 		super(strDataValue);
 		this.dataType = dataType;
 		this.springBeanID = springBeanID;
@@ -107,7 +107,7 @@ public abstract class AbstractRunTimeDataHolder extends BaseInputDataValue{
 	 *            the str data value
 	 * @param springBeanID 
 	 */
-	public AbstractRunTimeDataHolder(EnumRunTimeDataType dataType, String springBeanID) {
+	public AbstractRunTimeInputDataHolder(EnumRunTimeDataType dataType, String springBeanID) {
 		super("");
 		this.dataType = dataType;
 		this.springBeanID = springBeanID;

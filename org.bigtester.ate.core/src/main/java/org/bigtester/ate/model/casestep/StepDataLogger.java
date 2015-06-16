@@ -36,6 +36,7 @@ import org.bigtester.ate.annotation.RepeatStepRefreshable;
 import org.bigtester.ate.annotation.RepeatStepRefreshable.RefreshDataType;
 import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.IRepeatIncrementalIndex;
+import org.bigtester.ate.model.data.IStepInputData;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -53,7 +54,10 @@ public class StepDataLogger implements
 
 	/** The on the flies. */
 	final private Map<ITestStep, List<IOnTheFlyData<?>>> onTheFlies = new ConcurrentHashMap<ITestStep, List<IOnTheFlyData<?>>>(); // NOPMD
-
+	
+	/** The on the flies. */
+	final private Map<ITestStep, List<IStepInputData>> stepInputDatas = new ConcurrentHashMap<ITestStep, List<IStepInputData>>(); // NOPMD
+	
 	/** The repeat step on the flies. */
 	final private Map<RepeatStep, List<IOnTheFlyData<?>>> repeatStepOnTheFlies = new ConcurrentHashMap<RepeatStep, List<IOnTheFlyData<?>>>(); // NOPMD
 
@@ -79,6 +83,22 @@ public class StepDataLogger implements
 			onTheFlies.get(currentExecutionStep).add(data);
 		} else if (!onTheFlies.get(currentExecutionStep).contains(data)) {
 			onTheFlies.get(currentExecutionStep).add(data);
+		}
+
+	}
+
+	/**
+	 * Log data.
+	 *
+	 * @param data the data
+	 */
+	public void logData(IStepInputData data) {
+		if (null == stepInputDatas.get(currentExecutionStep)) {
+			stepInputDatas.put(currentExecutionStep,
+					new ArrayList<IStepInputData>());
+			stepInputDatas.get(currentExecutionStep).add(data);
+		} else if (!stepInputDatas.get(currentExecutionStep).contains(data)) {
+			stepInputDatas.get(currentExecutionStep).add(data);
 		}
 
 	}
@@ -174,6 +194,15 @@ public class StepDataLogger implements
 						.createInternalError("RepeatStepRefreshable pointcut error");
 			if (targ instanceof IOnTheFlyData<?>) {
 				logData((IOnTheFlyData<?>) targ);
+			}
+		}
+		if (getDataType(jPoint) == RefreshDataType.PAGEINPUTDATA) {
+			Object targ = jPoint.getTarget();
+			if (null == targ)
+				throw GlobalUtils
+						.createInternalError("RepeatStepRefreshable pointcut error");
+			if (targ instanceof IStepInputData) {
+				logData((IStepInputData) targ);
 			}
 		}
 		return true;

@@ -33,7 +33,7 @@ import javax.sql.DataSource;
 import org.springframework.aop.framework.Advised;
 import org.bigtester.ate.model.casestep.ITestCase;
 import org.bigtester.ate.model.casestep.StepDataLogger; 
-import org.bigtester.ate.model.data.AbstractRunTimeDataHolder;
+import org.bigtester.ate.model.data.AbstractRunTimeInputDataHolder;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.Homepage;
@@ -217,9 +217,9 @@ public class GlobalUtils implements ApplicationContextAware {
 	 * @throws NoSuchBeanDefinitionException
 	 *             the no such bean definition exception
 	 */
-	public static @Nullable Map<String, AbstractRunTimeDataHolder> findRunTimeDataHolderBeans(
+	public static @Nullable Map<String, AbstractRunTimeInputDataHolder> findRunTimeDataHolderBeans(
 			ApplicationContext appCtx) throws NoSuchBeanDefinitionException {
-		return appCtx.getBeansOfType(AbstractRunTimeDataHolder.class);
+		return appCtx.getBeansOfType(AbstractRunTimeInputDataHolder.class);
 
 	}
 
