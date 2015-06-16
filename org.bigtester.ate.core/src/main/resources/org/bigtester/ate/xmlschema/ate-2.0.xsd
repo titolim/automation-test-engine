@@ -846,9 +846,6 @@
 	</xsd:complexType>
 
 
-
-
-
 	<xsd:complexType name="ElementFindByTagNameType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -1068,7 +1065,7 @@
 	<xsd:element name="stepTypeServiceReference" type="StepTypeServiceRefType" />
 
 	<xsd:element name="baseERValue" type="BaseERValueType" />
-	<xsd:element name="stepExpectedResultValue" type="StepExpectedResultValueType" />
+<!-- 	<xsd:element name="stepExpectedResultValue" type="StepExpectedResultValueType" /> -->
 
 	<xsd:element name="basePageModel" type="PageModelBaseType" />
 	<xsd:element name="basePageObject" type="BasePageObjectType" />

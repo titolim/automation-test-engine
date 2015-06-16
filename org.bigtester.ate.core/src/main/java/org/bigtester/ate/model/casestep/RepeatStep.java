@@ -153,7 +153,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 									.getExpectedResultAsserter()
 									.get(asserterIndex).getStepERValue()));
 				}
-
+				//TODO in future version, We need to use the pubishevent to build these dataValuesNeedRefresh list. 
 				if (thisStep instanceof IElementStep) {
 					MyWebElement<?> webE = ((IElementStep) thisStep)
 							.getMyWebElement();
@@ -164,6 +164,24 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 							dataValuesNeedRefresh.add((IStepInputData) GlobalUtils
 									.getTargetObject(((IElementAction) iTOA)
 											.getDataValue()));
+						}
+					}
+					//TODO implement recursive IStepJumpingEnclosedContainer which handle recursive steptypeservice
+				} else if (thisStep instanceof IStepJumpingEnclosedContainer) {
+					for (int j=0; j<((IStepJumpingEnclosedContainer)thisStep).getContainerStepList().size(); j++) {
+						ITestStep tmpStep = ((IStepJumpingEnclosedContainer)thisStep).getContainerStepList().get(j);
+						if (tmpStep instanceof IElementStep) {
+							MyWebElement<?> webE = ((IElementStep) tmpStep)
+									.getMyWebElement();
+							if (webE.getTestObjectAction() instanceof IElementAction) {
+								ITestObjectAction<?> iTOA = webE.getTestObjectAction();
+								if (null != iTOA
+										&& ((IElementAction) iTOA).getDataValue() != null) {
+									dataValuesNeedRefresh.add((IStepInputData) GlobalUtils
+											.getTargetObject(((IElementAction) iTOA)
+													.getDataValue()));
+								}
+							}
 						}
 					}
 				}

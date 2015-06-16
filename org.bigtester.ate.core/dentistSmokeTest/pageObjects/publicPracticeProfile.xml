@@ -40,7 +40,5 @@
 		id="publicPracticeProfileClinicCElementExistenceAsserter" resultPage="publicPracticeProfileClinicC"
 		stepERValue="publicPracticeProfileClinicCVID" />
 
-<!-- 	<ate:stepExpectedResultValue -->
-<!-- 		id="publicPracticeProfileClinicCValidationValue" dataValueID="publicPracticeProfileClinicCVID" /> -->
 
 </beans>
