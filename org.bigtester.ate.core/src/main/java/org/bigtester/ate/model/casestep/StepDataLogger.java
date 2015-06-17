@@ -53,13 +53,17 @@ public class StepDataLogger implements
 		ApplicationListener<RepeatStepInOutEvent> {
 
 	/** The on the flies. */
-	final private Map<ITestStep, List<IOnTheFlyData<?>>> onTheFlies = new ConcurrentHashMap<ITestStep, List<IOnTheFlyData<?>>>(); // NOPMD
+	//final private Map<ITestStep, List<IOnTheFlyData<?>>> onTheFlies = new ConcurrentHashMap<ITestStep, List<IOnTheFlyData<?>>>(); // NOPMD
 	
 	/** The on the flies. */
-	final private Map<ITestStep, List<IStepInputData>> stepInputDatas = new ConcurrentHashMap<ITestStep, List<IStepInputData>>(); // NOPMD
+	final private Map<ITestStep, List<Object>> stepDataRegistry = new ConcurrentHashMap<ITestStep, List<Object>>(); // NOPMD
 	
 	/** The repeat step on the flies. */
-	final private Map<RepeatStep, List<IOnTheFlyData<?>>> repeatStepOnTheFlies = new ConcurrentHashMap<RepeatStep, List<IOnTheFlyData<?>>>(); // NOPMD
+	final private Map<RepeatStep, List<Object>> repeatStepDataRegistry = new ConcurrentHashMap<RepeatStep, List<Object>>(); // NOPMD
+
+	
+//	/** The repeat step on the flies. */
+//	final private Map<RepeatStep, List<IOnTheFlyData<?>>> repeatStepOnTheFlies = new ConcurrentHashMap<RepeatStep, List<IOnTheFlyData<?>>>(); // NOPMD
 
 	/** The repeat step logger. */
 	@Nullable
@@ -76,13 +80,13 @@ public class StepDataLogger implements
 	 * @param data
 	 *            the data
 	 */
-	public void logData(IOnTheFlyData<?> data) {
-		if (null == onTheFlies.get(currentExecutionStep)) {
-			onTheFlies.put(currentExecutionStep,
-					new ArrayList<IOnTheFlyData<?>>());
-			onTheFlies.get(currentExecutionStep).add(data);
-		} else if (!onTheFlies.get(currentExecutionStep).contains(data)) {
-			onTheFlies.get(currentExecutionStep).add(data);
+	public void logData(Object data) {
+		if (null == stepDataRegistry.get(currentExecutionStep)) {
+			stepDataRegistry.put(currentExecutionStep,
+					new ArrayList<Object>());
+			stepDataRegistry.get(currentExecutionStep).add(data);
+		} else if (!stepDataRegistry.get(currentExecutionStep).contains(data)) {
+			stepDataRegistry.get(currentExecutionStep).add(data);
 		}
 
 	}
@@ -92,21 +96,21 @@ public class StepDataLogger implements
 	 *
 	 * @param data the data
 	 */
-	public void logData(IStepInputData data) {
-		if (null == stepInputDatas.get(currentExecutionStep)) {
-			stepInputDatas.put(currentExecutionStep,
-					new ArrayList<IStepInputData>());
-			stepInputDatas.get(currentExecutionStep).add(data);
-		} else if (!stepInputDatas.get(currentExecutionStep).contains(data)) {
-			stepInputDatas.get(currentExecutionStep).add(data);
-		}
+//	public void logData(IStepInputData data) {
+//		if (null == stepInputDatas.get(currentExecutionStep)) {
+//			stepInputDatas.put(currentExecutionStep,
+//					new ArrayList<IStepInputData>());
+//			stepInputDatas.get(currentExecutionStep).add(data);
+//		} else if (!stepInputDatas.get(currentExecutionStep).contains(data)) {
+//			stepInputDatas.get(currentExecutionStep).add(data);
+//		}
+//
+//	}
 
-	}
-
-	private boolean isAlreadyLoggedInRepeatStep(IOnTheFlyData<?> data) {
+	private boolean isAlreadyLoggedInRepeatStep(Object data) {
 		boolean alreadyLoggedInRepeatStep = false; //NOPMD
 
-		for (Map.Entry<RepeatStep, List<IOnTheFlyData<?>>> entry : repeatStepOnTheFlies
+		for (Map.Entry<RepeatStep, List<Object>> entry : repeatStepDataRegistry
 				.entrySet()) {
 			if (entry.getValue().contains(data)) {
 				alreadyLoggedInRepeatStep = true;
@@ -117,26 +121,46 @@ public class StepDataLogger implements
 		return alreadyLoggedInRepeatStep;
 	}
 
-	private void logRepeatStepData(IOnTheFlyData<?> data, RepeatStep liveRepeat) {
+	private void logRepeatStepData(Object data, RepeatStep liveRepeat) {
 
 		if (!isAlreadyLoggedInRepeatStep(data)) {
-			if (repeatStepOnTheFlies.containsKey(liveRepeat)) {
-				if (!repeatStepOnTheFlies.get(liveRepeat).contains(data))
-					repeatStepOnTheFlies.get(liveRepeat).add(data);
+			if (repeatStepDataRegistry.containsKey(liveRepeat)) {
+				if (!repeatStepDataRegistry.get(liveRepeat).contains(data))
+					repeatStepDataRegistry.get(liveRepeat).add(data);
 			} else {
-				repeatStepOnTheFlies.put(liveRepeat,
-						new ArrayList<IOnTheFlyData<?>>());
-				repeatStepOnTheFlies.get(liveRepeat).add(data);
+				repeatStepDataRegistry.put(liveRepeat,
+						new ArrayList<Object>());
+				repeatStepDataRegistry.get(liveRepeat).add(data);
 			}
 
 		}
 	}
+	
+//	private void logRepeatStepData(IStepInputData data, RepeatStep liveRepeat) {
+//
+//		if (!isAlreadyLoggedInRepeatStep(data)) {
+//			if (repeatStepOnTheFlies.containsKey(liveRepeat)) {
+//				if (!repeatStepOnTheFlies.get(liveRepeat).contains(data))
+//					repeatStepOnTheFlies.get(liveRepeat).add(data);
+//			} else {
+//				repeatStepOnTheFlies.put(liveRepeat,
+//						new ArrayList<IOnTheFlyData<?>>());
+//				repeatStepOnTheFlies.get(liveRepeat).add(data);
+//			}
+//
+//		}
+//	}
 
-	/**
-	 * @return the onTheFlies
-	 */
-	public Map<ITestStep, List<IOnTheFlyData<?>>> getOnTheFlies() {
-		return onTheFlies;
+
+//	/**
+//	 * @return the onTheFlies
+//	 */
+//	public Map<ITestStep, List<IOnTheFlyData<?>>> getOnTheFlies() {
+//		return onTheFlies;
+//	}
+	
+	public Map<ITestStep, List<Object>> getStepDataRegistry() {
+		return stepDataRegistry;
 	}
 
 	/**
@@ -177,6 +201,36 @@ public class StepDataLogger implements
 		currentExecutionStep = bts;
 	}
 
+//	/**
+//	 * Process data log.
+//	 *
+//	 * @param jPoint
+//	 *            the j point
+//	 * @return true, if successful
+//	 */
+//	@After("@annotation(org.bigtester.ate.annotation.RepeatStepRefreshable)")
+//	public boolean processDataLog(JoinPoint jPoint) {
+//		if (getDataType(jPoint) == RefreshDataType.ONTHEFLY) {
+//			Object targ = jPoint.getTarget();
+//			if (null == targ)
+//				throw GlobalUtils
+//						.createInternalError("RepeatStepRefreshable pointcut error");
+//			if (targ instanceof IOnTheFlyData<?>) {
+//				logData((IOnTheFlyData<?>) targ);
+//			}
+//		}
+//		if (getDataType(jPoint) == RefreshDataType.PAGEINPUTDATA) {
+//			Object targ = jPoint.getTarget();
+//			if (null == targ)
+//				throw GlobalUtils
+//						.createInternalError("RepeatStepRefreshable pointcut error");
+//			if (targ instanceof IStepInputData) {
+//				logData((IStepInputData) targ);
+//			}
+//		}
+//		return true;
+//	}
+
 	/**
 	 * Process data log.
 	 *
@@ -185,48 +239,34 @@ public class StepDataLogger implements
 	 * @return true, if successful
 	 */
 	@After("@annotation(org.bigtester.ate.annotation.RepeatStepRefreshable)")
-	// @Around("execution(public * org.bigtester.ate.annotation.RepeatStepRefreshable+.*(..))")
 	public boolean processDataLog(JoinPoint jPoint) {
-		if (getDataType(jPoint) == RefreshDataType.ONTHEFLY) {
-			Object targ = jPoint.getTarget();
-			if (null == targ)
-				throw GlobalUtils
-						.createInternalError("RepeatStepRefreshable pointcut error");
-			if (targ instanceof IOnTheFlyData<?>) {
-				logData((IOnTheFlyData<?>) targ);
-			}
-		}
-		if (getDataType(jPoint) == RefreshDataType.PAGEINPUTDATA) {
-			Object targ = jPoint.getTarget();
-			if (null == targ)
-				throw GlobalUtils
-						.createInternalError("RepeatStepRefreshable pointcut error");
-			if (targ instanceof IStepInputData) {
-				logData((IStepInputData) targ);
-			}
-		}
+		Object targ = jPoint.getTarget();
+		if (null == targ)
+			throw GlobalUtils
+					.createInternalError("RepeatStepRefreshable pointcut error");
+		logData(targ);
 		return true;
 	}
 
-	private RefreshDataType getDataType(JoinPoint thisJoinPoint) {
-
-		MethodSignature methodSignature = (MethodSignature) thisJoinPoint
-				.getSignature();
-		String methodName = methodSignature.getMethod().getName();
-		Class<?>[] parameterTypes = methodSignature.getMethod()
-				.getParameterTypes();
-		Method targetMethod;
-		try {
-			targetMethod = thisJoinPoint.getTarget().getClass()
-					.getMethod(methodName, parameterTypes);
-			return ((RepeatStepRefreshable) targetMethod
-					.getAnnotation(RepeatStepRefreshable.class)).dataType();
-		} catch (NoSuchMethodException | SecurityException e) {
-			throw GlobalUtils.createInternalError("jvm class method error", e);
-		}
-		// targetMethod = methodSignature.getMethod();
-
-	}
+//	private RefreshDataType getDataType(JoinPoint thisJoinPoint) {
+//
+//		MethodSignature methodSignature = (MethodSignature) thisJoinPoint
+//				.getSignature();
+//		String methodName = methodSignature.getMethod().getName();
+//		Class<?>[] parameterTypes = methodSignature.getMethod()
+//				.getParameterTypes();
+//		Method targetMethod;
+//		try {
+//			targetMethod = thisJoinPoint.getTarget().getClass()
+//					.getMethod(methodName, parameterTypes);
+//			return ((RepeatStepRefreshable) targetMethod
+//					.getAnnotation(RepeatStepRefreshable.class)).dataType();
+//		} catch (NoSuchMethodException | SecurityException e) {
+//			throw GlobalUtils.createInternalError("jvm class method error", e);
+//		}
+//		// targetMethod = methodSignature.getMethod();
+//
+//	}
 
 	/**
 	 * @return the repeatStepLogger
@@ -249,20 +289,27 @@ public class StepDataLogger implements
 		this.repeatStepLogger = repeatStepLogger;
 	}
 
+//	/**
+//	 * @return the repeatStepOnTheFlies
+//	 */
+//	public Map<RepeatStep, List<IOnTheFlyData<?>>> getRepeatStepOnTheFlies() {
+//		return repeatStepOnTheFlies;
+//	}
+	
 	/**
 	 * @return the repeatStepOnTheFlies
 	 */
-	public Map<RepeatStep, List<IOnTheFlyData<?>>> getRepeatStepOnTheFlies() {
-		return repeatStepOnTheFlies;
+	public Map<RepeatStep, List<Object>> getRepeatStepDataRegistry() {
+		return repeatStepDataRegistry;
 	}
 
 	private void resetRepeatIncrementalIndex(RepeatStep rStep) {
-		List<IOnTheFlyData<?>> onTheFlies = getRepeatStepOnTheFlies()
+		List<Object> onTheFlies = getRepeatStepDataRegistry()
 				.get(rStep);
 		if (null == onTheFlies)
 			return;
-		for (IOnTheFlyData<?> data : onTheFlies) {
-			if (data instanceof IRepeatIncrementalIndex) {
+		for (Object data : onTheFlies) {
+			if (data instanceof IOnTheFlyData<?> && data instanceof IRepeatIncrementalIndex) {
 				((IRepeatIncrementalIndex) data).resetIndex();
 			}
 		}
@@ -279,10 +326,10 @@ public class StepDataLogger implements
 			RepeatStep liveRepeatStep = GlobalUtils.getTargetObject(event
 					.getSource());
 			for (ITestStep step : liveRepeatStep.getRepeatingSteps()) {
-				List<IOnTheFlyData<?>> dataList = onTheFlies.get(GlobalUtils
+				List<Object> dataList = stepDataRegistry.get(GlobalUtils
 						.getTargetObject(step));
 				if (null != dataList) {
-					for (IOnTheFlyData<?> data : dataList)
+					for (Object data : dataList)
 						if (data != null)
 							logRepeatStepData(data, liveRepeatStep);
 				}

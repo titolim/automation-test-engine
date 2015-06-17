@@ -146,6 +146,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 				repeatingStepIndexesInTestCase.add(i);
 				ITestStep thisStep = getTestCase().getTestStepList().get(i);
 				repeatingSteps.add(thisStep);
+				//TODO in future version, We need to use the pubishevent to build these erValuesNeedRefresh list.
 				for (int asserterIndex = 0; asserterIndex < thisStep
 						.getExpectedResultAsserter().size(); asserterIndex++) {
 					erValuesNeedRefresh.add((IStepERValue) GlobalUtils
@@ -153,55 +154,75 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 									.getExpectedResultAsserter()
 									.get(asserterIndex).getStepERValue()));
 				}
-				//TODO in future version, We need to use the pubishevent to build these dataValuesNeedRefresh list. 
-				if (thisStep instanceof IElementStep) {
-					MyWebElement<?> webE = ((IElementStep) thisStep)
-							.getMyWebElement();
-					if (webE.getTestObjectAction() instanceof IElementAction) {
-						ITestObjectAction<?> iTOA = webE.getTestObjectAction();
-						if (null != iTOA
-								&& ((IElementAction) iTOA).getDataValue() != null) {
-							dataValuesNeedRefresh.add((IStepInputData) GlobalUtils
-									.getTargetObject(((IElementAction) iTOA)
-											.getDataValue()));
-						}
-					}
-					//TODO implement recursive IStepJumpingEnclosedContainer which handle recursive steptypeservice
-				} else if (thisStep instanceof IStepJumpingEnclosedContainer) {
-					for (int j=0; j<((IStepJumpingEnclosedContainer)thisStep).getContainerStepList().size(); j++) {
-						ITestStep tmpStep = ((IStepJumpingEnclosedContainer)thisStep).getContainerStepList().get(j);
-						if (tmpStep instanceof IElementStep) {
-							MyWebElement<?> webE = ((IElementStep) tmpStep)
-									.getMyWebElement();
-							if (webE.getTestObjectAction() instanceof IElementAction) {
-								ITestObjectAction<?> iTOA = webE.getTestObjectAction();
-								if (null != iTOA
-										&& ((IElementAction) iTOA).getDataValue() != null) {
-									dataValuesNeedRefresh.add((IStepInputData) GlobalUtils
-											.getTargetObject(((IElementAction) iTOA)
-													.getDataValue()));
-								}
-							}
-						}
-					}
-				}
+				
+				
+//				//TODO in future version, We need to use the pubishevent to build these dataValuesNeedRefresh list. 
+//				if (thisStep instanceof IElementStep) {
+//					MyWebElement<?> webE = ((IElementStep) thisStep)
+//							.getMyWebElement();
+//					if (webE.getTestObjectAction() instanceof IElementAction) {
+//						ITestObjectAction<?> iTOA = webE.getTestObjectAction();
+//						if (null != iTOA
+//								&& ((IElementAction) iTOA).getDataValue() != null) {
+//							dataValuesNeedRefresh.add((IStepInputData) GlobalUtils
+//									.getTargetObject(((IElementAction) iTOA)
+//											.getDataValue()));
+//						}
+//					}
+//					//TODO implement recursive IStepJumpingEnclosedContainer which handle recursive steptypeservice
+//				} else if (thisStep instanceof IStepJumpingEnclosedContainer) {
+//					for (int j=0; j<((IStepJumpingEnclosedContainer)thisStep).getContainerStepList().size(); j++) {
+//						ITestStep tmpStep = ((IStepJumpingEnclosedContainer)thisStep).getContainerStepList().get(j);
+//						if (tmpStep instanceof IElementStep) {
+//							MyWebElement<?> webE = ((IElementStep) tmpStep)
+//									.getMyWebElement();
+//							if (webE.getTestObjectAction() instanceof IElementAction) {
+//								ITestObjectAction<?> iTOA = webE.getTestObjectAction();
+//								if (null != iTOA
+//										&& ((IElementAction) iTOA).getDataValue() != null) {
+//									dataValuesNeedRefresh.add((IStepInputData) GlobalUtils
+//											.getTargetObject(((IElementAction) iTOA)
+//													.getDataValue()));
+//								}
+//							}
+//						}
+//					}
+//				}
 
 			}
 		}
 
 	}
 
+	private void buildStepInputDatasNeedRefresh() {
+		dataValuesNeedRefresh.clear();
+		StepDataLogger sdl = GlobalUtils
+				.findStepDataLoggerBean(getApplicationContext());
+		if (null != sdl.getRepeatStepDataRegistry().get(
+				GlobalUtils.getTargetObject(this))
+				&& !sdl.getRepeatStepDataRegistry()
+						.get(GlobalUtils.getTargetObject(this)).isEmpty()) {
+			for (Object data : sdl.getRepeatStepDataRegistry().get(
+					GlobalUtils.getTargetObject(this))) {
+				if (data instanceof IStepInputData) {
+					dataValuesNeedRefresh.add((IStepInputData) data);
+				}
+			}
+		}
+	}
+
+	
 	private void buildRepeatIndexes() {
 		repeatIndexValuesNeedRefresh.clear();
 		StepDataLogger sdl = GlobalUtils
 				.findStepDataLoggerBean(getApplicationContext());
-		if (null != sdl.getRepeatStepOnTheFlies().get(
+		if (null != sdl.getRepeatStepDataRegistry().get(
 				GlobalUtils.getTargetObject(this))
-				&& !sdl.getRepeatStepOnTheFlies()
+				&& !sdl.getRepeatStepDataRegistry()
 						.get(GlobalUtils.getTargetObject(this)).isEmpty()) {
-			for (IOnTheFlyData<?> data : sdl.getRepeatStepOnTheFlies().get(
+			for (Object data : sdl.getRepeatStepDataRegistry().get(
 					GlobalUtils.getTargetObject(this))) {
-				if (data instanceof IRepeatIncrementalIndex) {
+				if (data instanceof IOnTheFlyData<?> && data instanceof IRepeatIncrementalIndex) {
 					repeatIndexValuesNeedRefresh.add((IRepeatIncrementalIndex) data);
 				}
 			}
@@ -235,6 +256,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 		
 		getApplicationContext().publishEvent(
 				new RepeatStepInOutEvent(this, RepeatStepInOut.IN));
+		buildStepInputDatasNeedRefresh();
 		buildRepeatIndexes();
 		Exception thr = null;// NOPMD
 		for (int iteration = 1; iteration <= getNumberOfIterations(); iteration++) {
