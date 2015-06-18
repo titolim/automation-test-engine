@@ -24,6 +24,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 // TODO: Auto-generated Javadoc
@@ -52,7 +53,7 @@ public class ClearTextAction extends BaseElementAction implements
 		if (webElm.isDisplayed()) {
 			webElm.clear();
 		} else {
-			throw GlobalUtils.createNotInitializedException("web element display status wrong");
+			throw new NoSuchElementException("Element invisible");
 		}
 	}
 

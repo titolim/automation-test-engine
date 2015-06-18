@@ -177,6 +177,7 @@ public class StepResultMaker {
 
 		stepResultList.add(tsr);
 		testResult.setAttribute(TestStepResult.STEPRESULTLIST, stepResultList);
+		
 	}
 
 }

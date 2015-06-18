@@ -55,7 +55,7 @@
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 
-			<FileNamePattern>logs/ApplicationLog.log.%d{yyyy-MM-dd-HH}
+			<FileNamePattern>logs/ApplicationLog.log.%d{yyyy-MM-dd}
 
 			</FileNamePattern>
 

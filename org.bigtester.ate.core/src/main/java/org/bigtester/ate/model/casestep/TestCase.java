@@ -37,6 +37,7 @@ import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.aop.support.AopUtils;
+import org.testng.Reporter;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -206,11 +207,15 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 
 						}
 					} else {
+						Reporter.getCurrentTestResult().setThrowable(e);
 						throw e;
+						
 					}
 				} else {
+						Reporter.getCurrentTestResult().setThrowable(e);
 						throw e;
 				}
+				
 			}
 
 			if (stepThinkTime > 0) {
@@ -219,6 +224,7 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 			}
 
 		}
+		Reporter.getCurrentTestResult().setThrowable(null);
 	}
 
 	/**
