@@ -23,7 +23,6 @@ package org.bigtester.ate.xmlschema;
 
 import java.util.Map;
 
-import org.bigtester.ate.constant.XsdElementConstants;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
@@ -41,97 +40,6 @@ public class AteNamespaceHandler extends NamespaceHandlerSupport {
 	 */
 	@Override
 	public void init() {
-		
-		
-		/******************************* following for Test Project ******************************/
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_TESTPROJECT, new TestProjectBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_TESTSUITE, new TestSuiteBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_XMLTESTCASE, new XmlTestCaseBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CASEDEPENDENCY, new CaseDependencyBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_GENERICSYSTEMLOGGER, new GenericSystemLoggerBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_TESTDATABASEINITIALIZER, new TestDatabaseInitializerBeanDefinitionParser());
-		
-		/******************************* following for Test Case ******************************/
-        registerBeanDefinitionParser(XsdElementConstants.ELEMENT_TESTCASE, new TestCaseBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CASETYPESERVICE, new CaseTypeServiceBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_STEPTYPESERVICEDEFINITION, new StepTypeServiceBeanDefinitionParser());
-		
-		/******************************* following for Test Step ******************************/
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTSTEP, new ElementStepBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_HOMESTEP, new HomeStepBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_REPEATSTEP, new RepeatStepBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_LASTSTEP, new LastStepBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BASEERVALUE, new BaseERValueBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_STEPEXPECTEDRESULTVALUE, new StepERValueBeanDefinitionParser());
-		
-		/******************************* following for Test Page ******************************/
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BASEPAGEOBJECT, new BasePageObjectBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BASEPAGEMODEL, new BasePageModelBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_MYWEBELEMENT, new MyWebElementBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_HOMEPAGE, new HomepageBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_LASTPAGE, new LastPageBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_REGULARPAGE, new RegularPageBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BASEELEMENTACTION, new BaseElementActionBeanDefinitionParser());
-						
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_PAGEELEMENTEXISTENCE, new PageElementExistBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_PAGEPROPERTYCORRECTNESS, new PagePropertyCorrectBeanDefinitionParser());
-		
-		/******************************* following for Test Data ******************************/
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BASEINPUTDATAVALUE, new BaseInputDataValueBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_STEPINPUTDATAVALUE, new StepInputDataValueBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_INPUTDATAVALUEPARENT, new InputDataValueParentBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_RUNTIMEDATAHOLDER, new RunTimeDataHolderBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_AUTOINCREMENTALDATAHOLDSER, new AutoIncrementalDataHolderBeanDefinitionParser());
-		
-		/******************************* following for Element Find ******************************/
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYXPATH, new FindByXpathBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYID, new FindByIdBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYTITLE, new WindowFindByTitleBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWFINDBYOPENSEQUENCE, new WindowFindByOpenSequenceBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYNAME, new FindByNameBeanDefinitionParser());	
-
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYCLASSNAME, new FindByClassBeanDefinitionParser());
-	
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYCSS, new FindByCssBeanDefinitionParser());
-	
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYLINKTEXT, new FindByLinkTextBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ALERTDIALOGFINDINCURRENTFOCUS, new AlertDialogFindInFocusBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_COOKIESFINDALL, new CookiesFindAllBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_COOKIESFINDBYDOMAINNAME, new CookiesFindByDomainNameBeanDefinitionParser());
-		
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYPLINKTEXT, new FindByPartialLinkTextBeanDefinitionParser());
-
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTFINDBYTAGNAME, new FindByTagNameBeanDefinitionParser());		
-		/******************************* following for Element Action ******************************/
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ELEMENTACTIONDEF, new ElementActionDefBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CLICKACTION, new ClickActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CLEARTEXTACTION, new ClearTextActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_MOUSEMOVETOACTION, new CursorMoveActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_SENDKEYSACTION, new SendKeysActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_DROPDOWNLISTSELECTACTION, new DropdownListSelectActionBeanDefinitionParser());
-		
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ASSIGNVALUEACTION, new AssignValueActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_UPLOADFILEACTION, new UploadFileActionBeanDefinitionParser());
-				
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWSWITCH, new WindowSwitchActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_BROWSERWINDOWCLOSE, new WindowCloseActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_ALERTDIALOGACCEPT, new AlertDialogAcceptActionBeanDefinitionParser());
-		
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILEIMPORTACTION, new FileImportActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILESIMPORTACTION, new FilesImportActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILEEXPORTACTION, new FileExportActionBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FILESEXPORTACTION, new FilesExportActionBeanDefinitionParser());
-		
-		
-		
-		/******************************* following for Webdriver ******************************/
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_FIREFOXDRIVER, new FirefoxDriverBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_CHROMEDRIVER, new ChromeDriverBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_IEDRIVER, new IEDriverBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_SAFARIDRIVER, new SafariDriverBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_OPERADRIVER, new OperaDriverBeanDefinitionParser());
-		registerBeanDefinitionParser(XsdElementConstants.ELEMENT_HTMLUNITDRIVER, new HtmlUnitDriverBeanDefinitionParser());
-		
 		Map<String, BeanDefinitionParser> userParsers = XsdNameSpaceParserRegistry.getNameSpaceHandlerRegistry();
 		for (Map.Entry<String, BeanDefinitionParser> parser : userParsers.entrySet()) {
 			registerBeanDefinitionParser(parser.getKey(), parser.getValue());

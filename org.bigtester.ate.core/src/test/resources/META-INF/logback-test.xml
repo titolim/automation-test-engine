@@ -6,9 +6,9 @@
 				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n -%throwable{full}
 			</Pattern>
 		</encoder>
-		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-			<level>ERROR</level>
-		</filter>
+<!-- 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter"> -->
+<!-- 			<level>ERROR</level> -->
+<!-- 		</filter> -->
 	</appender>
 	<appender name="SystemLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">

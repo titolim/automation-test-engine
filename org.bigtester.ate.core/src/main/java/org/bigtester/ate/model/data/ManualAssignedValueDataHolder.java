@@ -28,7 +28,7 @@ import org.bigtester.ate.constant.EnumRunTimeDataType;
  * @author Peidong Hu
  *
  */
-public class ManualAssignedValueDataHolder extends AbstractRunTimeDataHolder  implements IStepInputData{
+public class ManualAssignedValueDataHolder extends AbstractRunTimeInputDataHolder  implements IStepInputData{
 
 	/**
 	 * @param dataType

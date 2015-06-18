@@ -34,7 +34,6 @@ import org.bigtester.ate.test.BigtesterProjectTest;
 import org.openqa.selenium.NoSuchElementException;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
 
 
 /**
@@ -68,7 +67,7 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 		HomeStep homeStep = (HomeStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
 						"stepOpenAlertHomePage"));
-		homeStep.doStep();
+		homeStep.doStep(null);
 
 
 		MyWebElement<?> clickAlertWinLink = (MyWebElement<?>) getApplicationContext()
@@ -79,11 +78,11 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 				.getTargetObject(getApplicationContext().getBean(
 						"stepCloseAlertWindow"));
 		
-		closeStep.doStep();
+		closeStep.doStep(null);
 		ElementTestStep stepAccepAlert = (ElementTestStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
 						"stepAccepAlert"));
-		stepAccepAlert.doStep();
+		stepAccepAlert.doStep(null);
 		
 		
 //		MyWebElement<?> eadSwitchToMainWindow = (MyWebElement<?>) getApplicationContext()
@@ -94,7 +93,7 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 		LastStep stepLastStep = (LastStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
 						"stepLastStep"));
-		stepLastStep.doStep();
+		stepLastStep.doStep(null);
 		
 
 	}

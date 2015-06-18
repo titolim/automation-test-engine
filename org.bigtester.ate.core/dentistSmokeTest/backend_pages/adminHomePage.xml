@@ -134,8 +134,6 @@
 <ate:pageElementExistenceAsserter
 		id="adminRegisterSuccessAsserter" resultPage="adminHomePage" stepERValue="adminRegisterSuccessVID" />
 		
-<!-- <ate:stepExpectedResultValue id="adminRegisterSuccessERValue" -->
-<!-- 		dataValueID="adminRegisterSuccessVID"   /> -->
 
 
 </beans>

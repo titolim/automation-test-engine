@@ -36,6 +36,7 @@ import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 
@@ -68,8 +69,10 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 	 */
 	@StepLoggable(level = ATELogLevel.INFO)
 	@Override
-	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
+		//if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) getTestCase();
+
 		try {
 			getMyWebElement().doAction();
 			super.parseDataHolder();

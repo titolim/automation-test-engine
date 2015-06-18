@@ -31,7 +31,7 @@ import org.springframework.context.ApplicationListener;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class StepInputDataValue retrieve inputdata from db.
+ * This class StepInputDataValue retrieve inputdata from db file.
  * 
  * @author Peidong Hu
  *

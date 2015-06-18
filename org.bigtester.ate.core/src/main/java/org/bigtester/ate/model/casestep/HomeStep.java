@@ -34,6 +34,7 @@ import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.page.IHomepage;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
+import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -91,7 +92,8 @@ public class HomeStep extends BaseTestStep implements ITestStep {
 	 */
 	@StepLoggable(level = ATELogLevel.INFO)
 	@Override
-	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws PageValidationException, RuntimeDataException {
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws PageValidationException, RuntimeDataException {
+		//if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) getTestCase();
 		homePage.startHomepage();
 		super.parseDataHolder();
 		List<IExpectedResultAsserter> asserters = getExpectedResultAsserter();

@@ -31,7 +31,7 @@ import org.bigtester.ate.constant.EnumRunTimeDataType;
  *
  */
 abstract public class AbstractRandomValueDataHolder extends
-		AbstractRunTimeDataHolder {
+		AbstractRunTimeInputDataHolder {
 
 	/**
 	 * The Enum Mode.

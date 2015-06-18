@@ -45,6 +45,5 @@
 	<ate:pageElementExistenceAsserter 
 	 id="homeElementExistenceAsserter" resultPage="poHomePage" stepERValue="homePageVID"/>
 	
-<!-- 	<ate:stepExpectedResultValue id="homePageValidationValue" dataValueID="homePageVID" /> -->
 			
 </beans>

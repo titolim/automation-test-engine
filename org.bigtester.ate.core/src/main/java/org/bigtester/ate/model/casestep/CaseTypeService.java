@@ -142,8 +142,10 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
+		//if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) this.getParentTestCase();
+
 		String testCaseFileName = getTestCaseFileName();
 		WebDriver mainDriver;
 		ApplicationContext context;

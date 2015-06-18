@@ -29,7 +29,7 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
  * @author Peidong Hu
  *
  */
-public class CaseServiceParsedDataHolder extends AbstractRunTimeDataHolder  implements IStepInputData, ICaseServiceParsedDataParser{
+public class CaseServiceParsedDataHolder extends AbstractRunTimeInputDataHolder  implements IStepInputData, ICaseServiceParsedDataParser{
 	
 	/** The sub case mapped data holder id. */
 	final private String subCaseMappedDataHolderID;

@@ -153,7 +153,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 									.getExpectedResultAsserter()
 									.get(asserterIndex).getStepERValue()));
 				}
-
+				//TODO in future version, We need to use the pubishevent to build these dataValuesNeedRefresh list. 
 				if (thisStep instanceof IElementStep) {
 					MyWebElement<?> webE = ((IElementStep) thisStep)
 							.getMyWebElement();
@@ -164,6 +164,24 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 							dataValuesNeedRefresh.add((IStepInputData) GlobalUtils
 									.getTargetObject(((IElementAction) iTOA)
 											.getDataValue()));
+						}
+					}
+					//TODO implement recursive IStepJumpingEnclosedContainer which handle recursive steptypeservice
+				} else if (thisStep instanceof IStepJumpingEnclosedContainer) {
+					for (int j=0; j<((IStepJumpingEnclosedContainer)thisStep).getContainerStepList().size(); j++) {
+						ITestStep tmpStep = ((IStepJumpingEnclosedContainer)thisStep).getContainerStepList().get(j);
+						if (tmpStep instanceof IElementStep) {
+							MyWebElement<?> webE = ((IElementStep) tmpStep)
+									.getMyWebElement();
+							if (webE.getTestObjectAction() instanceof IElementAction) {
+								ITestObjectAction<?> iTOA = webE.getTestObjectAction();
+								if (null != iTOA
+										&& ((IElementAction) iTOA).getDataValue() != null) {
+									dataValuesNeedRefresh.add((IStepInputData) GlobalUtils
+											.getTargetObject(((IElementAction) iTOA)
+													.getDataValue()));
+								}
+							}
 						}
 					}
 				}
@@ -195,10 +213,11 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 */
 	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
 	@Override
-	public void doStep(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
+		if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) GlobalUtils.getTargetObject(getTestCase());
 
-		repeatSteps();
+		repeatSteps(jumpingContainer);
 
 	}
 
@@ -209,7 +228,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 	 * @throws StepExecutionException
 	 * @throws PageValidationException
 	 */
-	private void repeatSteps() throws StepExecutionException,
+	private void repeatSteps(IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
 			PageValidationException, RuntimeDataException {
 		LogbackWriter.writeDebugInfo("entering repeatSteps:" + this.getStepName(), this.getClass());
 		buildRepeatStepContext();
@@ -257,7 +276,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 				}
 				String tmpStepDesc = currentTestStepTmp.getStepDescription();// NOPMD
 				try {
-					currentTestStepTmp.doStep((IStepJumpingEnclosedContainer) GlobalUtils.getTargetObject(getTestCase()));// NOPMD
+					currentTestStepTmp.doStep(jumpingContainer);// NOPMD
 					currentTestStepTmp.setStepResultStatus(
 							StepResultStatus.PASS);
 					LogbackWriter.writeDebugInfo("current test step in testcase is:" + getTestCase()
