@@ -21,6 +21,7 @@
 package org.bigtester.ate.model.asserter;
 
 
+import org.bigtester.ate.annotation.RepeatStepRefreshable;
 import org.bigtester.ate.model.data.IStepERValue;
 import org.bigtester.ate.model.page.page.IPageObject;
 
@@ -49,6 +50,7 @@ public interface IExpectedResultAsserter {
 	 *
 	 * @return the step er value
 	 */
+	@RepeatStepRefreshable
 	IStepERValue getStepERValue();
 	
 	/**

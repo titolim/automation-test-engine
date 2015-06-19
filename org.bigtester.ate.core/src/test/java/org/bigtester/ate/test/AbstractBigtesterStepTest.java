@@ -24,7 +24,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.casestep.ElementTestStep;
 import org.bigtester.ate.model.casestep.IStepJumpingEnclosedContainer;
 import org.bigtester.ate.model.casestep.ITestCase;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.StepDataLogger;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
@@ -38,7 +38,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
  * @author Peidong Hu
  *
  */
-abstract public class BaseBigtesterStepTest extends BigtesterProjectTest {
+abstract public class AbstractBigtesterStepTest extends BigtesterProjectTest {
 	
 	/**
 	 * Run element test step.
@@ -68,6 +68,8 @@ abstract public class BaseBigtesterStepTest extends BigtesterProjectTest {
 		ElementTestStep ets = new ElementTestStep(myWebE);
 		ets.setApplicationContext(getApplicationContext());
 		((ITestCase)GlobalUtils.findTestCaseBean(getApplicationContext())).setCurrentTestStep(ets);
+		StepDataLogger sdl = (StepDataLogger)getApplicationContext().getBean("StepDataLogger");
+		sdl.setCurrentExecutionStep(ets);
 		ets.doStep((IStepJumpingEnclosedContainer)GlobalUtils.findTestCaseBean(getApplicationContext()));
 	}
 	

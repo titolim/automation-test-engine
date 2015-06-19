@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.asserter;
 
+import org.bigtester.ate.annotation.RepeatStepRefreshable;
 import org.bigtester.ate.constant.EnumAssertPriority;
 import org.bigtester.ate.constant.EnumAssertResult;
 import org.bigtester.ate.model.data.IStepERValue;
@@ -69,7 +70,7 @@ public class PageElementExistenceAsserter extends
 		for (int index = 0; index < stepERValue.getValue().size(); index++) {
 			IATEPageFactory ipf = ATEPageFactory.getInstance();
 			StepErElementExistence sErEE = stepERValue.getValue().get(index);
-			MyWebElement webelement = ipf.getMyWebElement(
+			MyWebElement<?> webelement = ipf.getMyWebElement(
 					sErEE.getElementFindBy(), sErEE.getElementFindByValue(),
 					getResultPage().getMyWd());
 			try {
@@ -111,6 +112,7 @@ public class PageElementExistenceAsserter extends
 	/**
 	 * @return the stepERValue
 	 */
+
 	public StepErElementExistenceValue getStepERValue() {
 		return stepERValue;
 	}

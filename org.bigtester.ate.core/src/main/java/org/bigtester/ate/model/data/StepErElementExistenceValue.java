@@ -23,6 +23,7 @@ package org.bigtester.ate.model.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bigtester.ate.annotation.RepeatStepRefreshable;
 import org.bigtester.ate.model.casestep.RepeatDataRefreshEvent;
 import org.bigtester.ate.model.casestep.RepeatStep;
 import org.bigtester.ate.model.data.dao.StepExpectedResultDaoImpl;
@@ -141,6 +142,7 @@ public class StepErElementExistenceValue extends BaseERValue implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	@RepeatStepRefreshable
 	public BaseERValue getERValue() {
 		return this;
 	}

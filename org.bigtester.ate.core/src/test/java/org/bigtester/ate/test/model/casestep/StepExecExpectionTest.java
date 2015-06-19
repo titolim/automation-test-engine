@@ -22,7 +22,6 @@ package org.bigtester.ate.test.model.casestep;
 
 
 import static org.mockito.Mockito.when;
-
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.casestep.ITestCase;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
@@ -75,6 +74,7 @@ public class StepExecExpectionTest extends BigtesterProjectTest {
 		} catch (StepExecutionException e) {
 			//TODO add assert to validate the application log printed
 			Assert.assertTrue(true);
+			//Reporter.getCurrentTestResult().setThrowable(null);
 		}
 	}
 

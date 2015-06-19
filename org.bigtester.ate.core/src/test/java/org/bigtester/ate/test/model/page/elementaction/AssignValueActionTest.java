@@ -22,6 +22,7 @@ package org.bigtester.ate.test.model.page.elementaction;
 
 
 import org.bigtester.ate.GlobalUtils;
+
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
@@ -30,8 +31,7 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
-import org.bigtester.ate.test.BaseBigtesterStepTest;
-import org.bigtester.ate.test.BigtesterProjectTest;
+import org.bigtester.ate.test.AbstractBigtesterStepTest;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,10 +45,11 @@ import org.testng.annotations.Test;
  *
  */
 @ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/assignValueAction.xml" })
-public class AssignValueActionTest extends BaseBigtesterStepTest {
+public class AssignValueActionTest extends AbstractBigtesterStepTest {
 
+	/** The my web e. */
 	@Nullable
-	MyWebElement<?> myWebE;
+	private transient MyWebElement<?> myWebE;
 	/**
 	 * Ead test.
 	 * 
@@ -72,12 +73,12 @@ public class AssignValueActionTest extends BaseBigtesterStepTest {
 		MyWebElement<?> prependAssignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValuePrepend");
 		//prependAssignV.doAction();
-		this.runElementTestStep(assignV);
+		this.runElementTestStep(prependAssignV);
 		
 		MyWebElement<?> appendAssignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValueAppend");
 		//appendAssignV.doAction();
-		this.runElementTestStep(assignV);
+		this.runElementTestStep(appendAssignV);
 		
 		
 		ITestObjectAction<?> prependActObj = (ITestObjectAction<?>) prependAssignV.getTestObjectAction();
