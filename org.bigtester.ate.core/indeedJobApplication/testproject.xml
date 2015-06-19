@@ -20,10 +20,10 @@
 		globalInitXmlFile="indeedJobApplication/data.xml">
 		
 		<ate:TestSuite id="easyApply" suiteName="easyApply">
-<!-- 		<ate:XmlTestCase -->
-<!-- 				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJobDemoService.xml" /> -->
-			<ate:XmlTestCase
-				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJob.xml" />
+		<ate:XmlTestCase
+				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJobDemoService.xml" />
+<!-- 			<ate:XmlTestCase -->
+<!-- 				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJob.xml" /> -->
  		</ate:TestSuite>
 	</ate:TestProject>
 </beans>
