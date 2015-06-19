@@ -83,7 +83,7 @@ abstract public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	private transient boolean elementStepFlag;
 
 	/** The i expected result asserter. */
-	@XStreamOmitField
+	//@XStreamOmitField
 	private List<IExpectedResultAsserter> expectedResultAsserter = new ArrayList<IExpectedResultAsserter>();
 
 	/** The forced page validation. */

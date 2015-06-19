@@ -267,9 +267,9 @@ public class StepExecutionException extends BaseATECaseExecE implements IATEProb
 						+ " in step: " + this.getCurrentTestStep().getStepName();
 				
 			} else {
-				warnMsg = "This step producing throwable  " + this.getClass().getCanonicalName() +"  is optional for test case: " 
+				warnMsg = "This throwable  " + this.getClass().getCanonicalName() +"  is non fatal for test case: " 
 						+ this.getCurrentTestCase().getTestCaseName() 
-						+ " in step: " + this.getCurrentTestStep().getStepName();
+						+ " in step: " + this.getCurrentTestStep().getStepName() + ". Step optional parameter will decide the final status of test step.";
 			}
 			
 			return new LogMessage(errorMsg, warnMsg);

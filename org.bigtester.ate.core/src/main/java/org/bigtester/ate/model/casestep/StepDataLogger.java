@@ -352,7 +352,7 @@ public class StepDataLogger implements
 	@Override
 	public void onApplicationEvent(@Nullable RepeatStepInOutEvent event) {
 		if (null == event)
-			throw GlobalUtils.createInternalError("spring event");
+			throw GlobalUtils.createInternalError("spring  event");
 		if (event.getInOutFlag() == RepeatStepInOutEvent.RepeatStepInOut.IN) {
 			RepeatStep liveRepeatStep = GlobalUtils.getTargetObject(event
 					.getSource());

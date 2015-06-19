@@ -22,7 +22,7 @@
 			<FileNamePattern>logs/SystemLog.log.%d{yyyy-MM-dd-HH}
 
 			</FileNamePattern>
-
+			<maxHistory>3</maxHistory>
 		</rollingPolicy>
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>DEBUG</level>
