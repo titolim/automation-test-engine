@@ -21,6 +21,7 @@
 package org.bigtester.ate.model.casestep;//NOPMD
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
@@ -34,11 +35,8 @@ import org.bigtester.ate.model.data.IStepERValue;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.elementaction.IElementAction;
-import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
-import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.LogbackWriter;

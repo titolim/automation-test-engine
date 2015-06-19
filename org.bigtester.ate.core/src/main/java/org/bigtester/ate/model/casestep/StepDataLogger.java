@@ -20,7 +20,6 @@
  *******************************************************************************/
 package org.bigtester.ate.model.casestep;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,13 +29,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.annotation.RepeatStepRefreshable;
-import org.bigtester.ate.annotation.RepeatStepRefreshable.RefreshDataType;
 import org.bigtester.ate.model.data.IOnTheFlyData;
 import org.bigtester.ate.model.data.IRepeatIncrementalIndex;
-import org.bigtester.ate.model.data.IStepInputData;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -159,7 +154,12 @@ public class StepDataLogger implements
 //		return onTheFlies;
 //	}
 	
-	public Map<ITestStep, List<Object>> getStepDataRegistry() {
+	/**
+ * Gets the step data registry.
+ *
+ * @return the step data registry
+ */
+public Map<ITestStep, List<Object>> getStepDataRegistry() {
 		return stepDataRegistry;
 	}
 
@@ -315,6 +315,25 @@ public class StepDataLogger implements
 		}
 	}
 
+	private void logRepeatStepDataRecursivelyInStepJumpingEnclosedContainer(Map<ITestStep, List<Object>> stepDataRegistry, ITestStep step, RepeatStep liveRepeatStep) {
+		if (step instanceof IStepJumpingEnclosedContainer) {
+			for (int j=0; j<((IStepJumpingEnclosedContainer)step).getContainerStepList().size(); j++) {
+				ITestStep tmpStep = ((IStepJumpingEnclosedContainer)step).getContainerStepList().get(j);
+				if (tmpStep instanceof IStepJumpingEnclosedContainer) {
+					logRepeatStepDataRecursivelyInStepJumpingEnclosedContainer(stepDataRegistry, tmpStep, liveRepeatStep);
+				} else {
+					List<Object> dataList = stepDataRegistry.get(GlobalUtils
+							.getTargetObject(tmpStep));
+					if (null != dataList) {
+						for (Object data : dataList)
+							if (data != null)
+								logRepeatStepData(data, liveRepeatStep);
+					}
+				}
+			}
+		}
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -326,12 +345,16 @@ public class StepDataLogger implements
 			RepeatStep liveRepeatStep = GlobalUtils.getTargetObject(event
 					.getSource());
 			for (ITestStep step : liveRepeatStep.getRepeatingSteps()) {
-				List<Object> dataList = stepDataRegistry.get(GlobalUtils
-						.getTargetObject(step));
-				if (null != dataList) {
-					for (Object data : dataList)
-						if (data != null)
-							logRepeatStepData(data, liveRepeatStep);
+				if (step instanceof IStepJumpingEnclosedContainer) {
+					logRepeatStepDataRecursivelyInStepJumpingEnclosedContainer(stepDataRegistry, step, liveRepeatStep);
+				} else {
+					List<Object> dataList = stepDataRegistry.get(GlobalUtils
+							.getTargetObject(step));
+					if (null != dataList) {
+						for (Object data : dataList)
+							if (data != null)
+								logRepeatStepData(data, liveRepeatStep);
+					}
 				}
 			}
 
