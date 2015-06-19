@@ -27,8 +27,8 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ReportMessage;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.casestep.IElementStep;
-import org.bigtester.ate.model.data.IStepInputData;
-import org.bigtester.ate.model.page.elementaction.IElementAction;
+import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
+import org.bigtester.ate.model.page.elementfind.ITestObjectFinder;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.model.testresult.TestStepResult;
 import org.openqa.selenium.WebElement;
@@ -63,9 +63,7 @@ public final class TestStepsXMLReporterUtils {
 			@SuppressWarnings("unchecked")
 			List<TestStepResult> stepResults = (List<TestStepResult>) testResult
 					.getAttribute(TestStepResult.STEPRESULTLIST);
-			if (stepResults == null) {
-
-			} else if (!stepResults.isEmpty()) {
+			if (!stepResults.isEmpty()) {
 				xmlBuffer.push(ATEXMLReporterConfig.TAG_STEPS);
 				for (int i = 0; i < stepResults.size(); i++) {
 					addStep(xmlBuffer, stepResults.get(i), i);
@@ -93,28 +91,28 @@ public final class TestStepsXMLReporterUtils {
 		attrs.setProperty(ATEXMLReporterConfig.ATTR_NAME, tsr.getStepName());
 		xmlBuffer.push(ATEXMLReporterConfig.TAG_STEP, attrs);
 		xmlBuffer.push(ATEXMLReporterConfig.TAG_STEP_DESC);
-		String testData;
+		
 		String stepReportMSG;
-		if (tsr.getThisStep().isElementStepFlag()) {
+		if (tsr.getThisStep() instanceof IElementStep) {
 			
 			@SuppressWarnings("unchecked")
 			MyWebElement<WebElement> mwe = (MyWebElement<WebElement>) ((IElementStep) tsr.getThisStep()).getMyWebElement();
-			IElementAction myEA = (IElementAction) mwe.getTestObjectAction();
+			ITestObjectAction<?> myEA = (ITestObjectAction<?>) mwe.getTestObjectAction();
 			if (null == myEA) {
-				throw GlobalUtils.createNotInitializedException("element action in element step.");
+				throw GlobalUtils
+						.createNotInitializedException("test object action in test step.");
 			} else {
-				if (myEA.isDataValuedActionFlag()) {
-					IStepInputData dataV = myEA.getDataValue(); 
-					if (null == dataV) throw GlobalUtils.createNotInitializedException("dataValue in my element action");
-					else {
-						testData = dataV.getStrDataValue();
-						stepReportMSG = tsr.getThisStep().getStepDescription()
-							+ ReportMessage.MSG_SEPERATOR + testData;
-					}
-				} else {
-					stepReportMSG = tsr.getThisStep().getStepDescription();
-				}
+				ITestObjectFinder<?> myEF = (ITestObjectFinder<?>) mwe.getTestObjectFinder();
+				
+				stepReportMSG = tsr.getThisStep().getStepDescription()
+						+ ReportMessage.MSG_SEPERATOR
+						+ myEA.getClass().getName() + " : \""
+						+ myEA.getActionParametersLoggingValue()
+						+ "\" action on test object:"
+						+ myEF.getClass().getName() + ": \""
+						+ myEF.getFindingParametersLoggingValue() + "\"";
 			}
+
 		} else {
 			stepReportMSG = tsr.getThisStep().getStepDescription();
 		}
@@ -122,7 +120,7 @@ public final class TestStepsXMLReporterUtils {
 		xmlBuffer.pop();
 		xmlBuffer.push(ATEXMLReporterConfig.TAG_STEP_RESULT);
 		List<IExpectedResultAsserter> asserters = tsr.getThisStep().getExpectedResultAsserter();
-		if (asserters != null) {
+		if (!asserters.isEmpty()) {
 			StringBuffer stepResultMSG = new StringBuffer("");
 			for (int i = 0; i < asserters
 					.size(); i++) {

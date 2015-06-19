@@ -22,8 +22,9 @@ package org.bigtester.ate.model.testresult;
 
 import java.util.Date;
 
+
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.casestep.BaseTestStep;
+import org.bigtester.ate.model.casestep.ITestStep;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.jamonapi.Monitor;
@@ -54,7 +55,7 @@ public class TestStepResult {
 	private String stepName;
 
 	/** The this step. */
-	private BaseTestStep thisStep;
+	private ITestStep thisStep;
 
 	/**
 	 * Instantiates a new test step result.
@@ -62,7 +63,7 @@ public class TestStepResult {
 	 * @param stepName the step name
 	 * @param thisStep the this step
 	 */
-	public TestStepResult(String stepName, BaseTestStep thisStep) {
+	public TestStepResult(String stepName, ITestStep thisStep) {
 		this.stepName = stepName;
 		this.thisStep = thisStep;
 	}
@@ -216,7 +217,7 @@ public class TestStepResult {
 	 * 
 	 * @return the thisStep
 	 */
-	public BaseTestStep getThisStep() {
+	public ITestStep getThisStep() {
 		return thisStep;
 	}
 
@@ -226,7 +227,7 @@ public class TestStepResult {
 	 * @param thisStep
 	 *            the thisStep to set
 	 */
-	public void setThisStep(BaseTestStep thisStep) {
+	public void setThisStep(ITestStep thisStep) {
 		this.thisStep = thisStep;
 	}
 
