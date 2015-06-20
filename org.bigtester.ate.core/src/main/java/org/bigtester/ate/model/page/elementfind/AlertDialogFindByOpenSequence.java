@@ -61,5 +61,12 @@ public class AlertDialogFindByOpenSequence extends BaseAlertDialogFinderImpl imp
 		}  
 		return retVal;
 	}
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public String getFindingParametersLoggingValue() {
+		return "openSequence=" + openSequence;
+	}
 
 }

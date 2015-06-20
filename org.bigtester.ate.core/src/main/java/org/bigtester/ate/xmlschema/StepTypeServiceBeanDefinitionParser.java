@@ -29,6 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.ManagedList;
+import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.util.xml.DomUtils;
 import org.w3c.dom.Element;
@@ -76,40 +77,37 @@ BaseTestStepBeanDefinitionParser {
 
 	private static void parseTestStepComponents(List<Element> childElements,
 			BeanDefinition beanDef, ParserContext parserContext) {
-		ManagedList<BeanDefinition> children = new ManagedList<BeanDefinition>(
+		ManagedList<BeanDefinition> children = new ManagedList<BeanDefinition>(//NOPMD
 				childElements.size());
 		for (Element element : childElements) {
-			if (element.getTagName() == "ate:" //NOPMD
-					+ XsdElementConstants.ELEMENT_HOMESTEP) {
-				HomeStepBeanDefinitionParser homeStep = new HomeStepBeanDefinitionParser();
-				BeanDefinition tmpBDef = homeStep.parse(element, parserContext);
-				tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
-				
-				children.add(tmpBDef);
-			} else if (element.getTagName() == "ate:"
-					+ XsdElementConstants.ELEMENT_ELEMENTSTEP) {
-				ElementStepBeanDefinitionParser elementStep = new ElementStepBeanDefinitionParser();
-				BeanDefinition tmpBDef = elementStep.parse(element, parserContext);
-				tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
-				
-				children.add(tmpBDef);
+			BeanDefinitionParser bep = XsdNameSpaceParserRegistry.getNameSpaceHandlerRegistry().get(element.getLocalName());
+			if (null == bep) throw GlobalUtils.createNotInitializedException("Name space handler not registered for this element: " + element.getTagName());
+			BeanDefinition tmpBDef = bep.parse(element, parserContext);
+			tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
+			children.add(tmpBDef);
+			
+//			if (element.getTagName() == "ate:" //NOPMD
+//					+ XsdElementConstants.ELEMENT_HOMESTEP) {
+//				HomeStepBeanDefinitionParser homeStep = new HomeStepBeanDefinitionParser();
+//				BeanDefinition tmpBDef = homeStep.parse(element, parserContext);
+//				tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
+//				
+//				children.add(tmpBDef);
 //			} else if (element.getTagName() == "ate:"
-//					+ XsdElementConstants.ELEMENT_REPEATSTEP) {
-//				RepeatStepBeanDefinitionParser repeatStep = new RepeatStepBeanDefinitionParser();
-//				children.add(repeatStep.parse(element, parserContext));
-			} else if (element.getTagName() == "ate:"
-					+ XsdElementConstants.ELEMENT_LASTSTEP) {
-				LastStepBeanDefinitionParser lastStep = new LastStepBeanDefinitionParser();
-				BeanDefinition tmpBDef = lastStep.parse(element, parserContext);
-				tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
-				
-				children.add(tmpBDef);
-		
-			}
+//					+ XsdElementConstants.ELEMENT_ELEMENTSTEP) {
+//				ElementStepBeanDefinitionParser elementStep = new ElementStepBeanDefinitionParser();
+//				BeanDefinition tmpBDef = elementStep.parse(element, parserContext);
+//				tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
+//				
+//				children.add(tmpBDef);
 //			} else if (element.getTagName() == "ate:"
-//					+ XsdElementConstants.ELEMENT_CASETYPESERVICE) {
-//				CaseTypeServiceBeanDefinitionParser caseService = new CaseTypeServiceBeanDefinitionParser();
-//				children.add(caseService.parse(element, parserContext));
+//					+ XsdElementConstants.ELEMENT_LASTSTEP) {
+//				LastStepBeanDefinitionParser lastStep = new LastStepBeanDefinitionParser();
+//				BeanDefinition tmpBDef = lastStep.parse(element, parserContext);
+//				tmpBDef.getPropertyValues().removePropertyValue(tmpBDef.getPropertyValues().getPropertyValue(XsdElementConstants.MEMBER_BASETESTSTEP_TESTCASE));
+//				
+//				children.add(tmpBDef);
+//		
 //			}
 		}
 		beanDef.getPropertyValues().addPropertyValue(

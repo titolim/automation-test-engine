@@ -26,13 +26,14 @@ import org.bigtester.ate.model.casestep.HomeStep;
 import org.bigtester.ate.model.casestep.ElementTestStep;
 import org.bigtester.ate.model.casestep.LastStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
+import org.bigtester.ate.model.page.exception.PageValidationException;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
+import org.openqa.selenium.NoSuchElementException;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
 
 
 /**
@@ -52,19 +53,21 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 	 * Ead test.
 	 * 
 	 * @throws RuntimeDataException
-	 * @throws PageValidationException2
-	 * @throws StepExecutionException2 
+	 * @throws PageValidationException
+	 * @throws StepExecutionException 
+	 * @throws BrowserUnexpectedException 
+	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 1)
-	public void eadHandleUnexpectedAlertTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2 {
+	//@Test(priority = 1)
+	public void eadHandleUnexpectedAlertTest() throws PageValidationException,
+			RuntimeDataException, StepExecutionException, NoSuchElementException, BrowserUnexpectedException {
 
 		getMyDriver().getWebDriverInstance();
 
 		HomeStep homeStep = (HomeStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
 						"stepOpenAlertHomePage"));
-		homeStep.doStep();
+		homeStep.doStep(null);
 
 
 		MyWebElement<?> clickAlertWinLink = (MyWebElement<?>) getApplicationContext()
@@ -75,11 +78,11 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 				.getTargetObject(getApplicationContext().getBean(
 						"stepCloseAlertWindow"));
 		
-		closeStep.doStep();
+		closeStep.doStep(null);
 		ElementTestStep stepAccepAlert = (ElementTestStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
 						"stepAccepAlert"));
-		stepAccepAlert.doStep();
+		stepAccepAlert.doStep(null);
 		
 		
 //		MyWebElement<?> eadSwitchToMainWindow = (MyWebElement<?>) getApplicationContext()
@@ -90,7 +93,7 @@ public class UnexpectedAlertEADTest extends BigtesterProjectTest {
 		LastStep stepLastStep = (LastStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
 						"stepLastStep"));
-		stepLastStep.doStep();
+		stepLastStep.doStep(null);
 		
 
 	}

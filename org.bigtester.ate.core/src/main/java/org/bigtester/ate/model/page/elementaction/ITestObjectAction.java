@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementaction;
 
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
+
 /**
  * This class ITestObjectFinder defines ....
  * @author Peidong Hu
@@ -32,7 +34,14 @@ public interface ITestObjectAction<T> {
 	 * @param findByValue
 	 *            the find by value
 	 * @return the web element
+	 * @throws BrowserUnexpectedException 
 	 */
-	void doAction(T testObject);
+	void doAction(T testObject) throws BrowserUnexpectedException;
 	
+	/**
+	 * Gets the action parameters logging value.
+	 *
+	 * @return the action parameters logging value
+	 */
+	String getActionParametersLoggingValue();
 }

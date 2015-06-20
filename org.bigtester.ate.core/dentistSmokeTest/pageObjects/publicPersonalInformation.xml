@@ -43,5 +43,4 @@
 	<ate:clickAction id="savePersonalInfoButtonClickEA"  />
 	
 	<ate:pageElementExistenceAsserter id="savePersonalInfoElementExistenceAsserter" resultPage="personalInformationPage" stepERValue="savePersonalInfoElementExistenceAsserterVID" />
-<!-- 	<ate:stepExpectedResultValue id="savePersonalInfoElementExistenceAsserterData" dataValueID="savePersonalInfoElementExistenceAsserterVID"   /> -->
 </beans>

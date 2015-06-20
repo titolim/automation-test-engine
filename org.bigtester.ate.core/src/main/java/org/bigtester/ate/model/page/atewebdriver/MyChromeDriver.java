@@ -192,8 +192,8 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 			} else {
 				retVal = new ChromeDriver();
 			}
+			setWebDriver(retVal);
 		}
-		setWebDriver(retVal);
 		return retVal;
 
 	}

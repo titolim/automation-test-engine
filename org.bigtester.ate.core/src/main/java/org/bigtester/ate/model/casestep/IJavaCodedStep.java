@@ -22,8 +22,8 @@ package org.bigtester.ate.model.casestep;
 
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,11 +37,11 @@ public interface IJavaCodedStep extends ITestStep {
 	 * Do step.
 	 *
 	 * @param myWebDriver the my web driver
-	 * @throws StepExecutionException2 the step execution exception2
-	 * @throws PageValidationException2 the page validation exception2
+	 * @throws StepExecutionException the step execution exception2
+	 * @throws PageValidationException the page validation exception2
 	 * @throws RuntimeDataException the runtime data exception
 	 */
-	void doStep(IMyWebDriver myWebDriver) throws StepExecutionException2,
-	PageValidationException2, RuntimeDataException;
+	void doStep(IMyWebDriver myWebDriver, IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
+	PageValidationException, RuntimeDataException;
 
 }

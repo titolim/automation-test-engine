@@ -20,6 +20,11 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
+import org.bigtester.ate.model.casestep.ITestStep;
+import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
+import org.eclipse.jdt.annotation.Nullable;
+
 // TODO: Auto-generated Javadoc
 /**
  * This class Abstract defines ....
@@ -27,13 +32,21 @@ package org.bigtester.ate.model;
  * @author Peidong Hu
  * 
  */
-public abstract class AbstractATEException extends Exception {
+public abstract class AbstractATEException extends Exception implements IATEException{
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -5513011387447019438L;
 	/** The error code. */
 	private final String errorCode;
 
+	/** The failed step causing step jump. */
+	@Nullable
+	private ITestStep originalStepRaisingException;
+
+	
+	/** The ate problem. */
+	@Nullable
+	protected GenericATEProblem ateProblem; 
 		
 	/**
 	 * Gets the error code.
@@ -64,6 +77,37 @@ public abstract class AbstractATEException extends Exception {
 	public AbstractATEException(final String message, final String errorCode, Throwable thr) {
 		super(message, thr);
 		this.errorCode = errorCode;
+	}
+
+	/**
+	 * @return the ateProblem
+	 */
+	@Nullable
+	public IATEProblem getAteProblem() {
+		return ateProblem;
+	}
+
+	/**
+	 * @param ateProblem the ateProblem to set
+	 */
+	public void setAteProblem(GenericATEProblem ateProblem) {
+		this.ateProblem = ateProblem;
+	}
+
+	/**
+	 * @return the originalStepRaisingException
+	 */
+	@Nullable
+	public ITestStep getOriginalStepRaisingException() {
+		return originalStepRaisingException;
+	}
+
+	/**
+	 * @param originalStepRaisingException the originalStepRaisingException to set
+	 */
+	public void setOriginalStepRaisingException(
+			ITestStep originalStepRaisingException) {
+		this.originalStepRaisingException = originalStepRaisingException;
 	}
 	
 }

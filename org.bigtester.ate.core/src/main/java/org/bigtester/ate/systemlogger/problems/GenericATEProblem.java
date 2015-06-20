@@ -20,8 +20,13 @@
  *******************************************************************************/
 package org.bigtester.ate.systemlogger.problems;
 
+import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.IATEException;
 import org.bigtester.problomatic2.problems.RawProblem;
+import org.eclipse.jdt.annotation.Nullable;
 import org.testng.internal.Utils;
+
+import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,12 +35,36 @@ import org.testng.internal.Utils;
  * @author Peidong Hu
  *
  */
-public class GenericATEProblem extends RawProblem {
+public class GenericATEProblem extends RawProblem implements IATEProblem{
 	/** The full stack trace. */
 	private final String fullStackTrace;
 
 	/** The short stack trace. */
 	private final String shortStackTrace;
+
+	/** The log level. */
+	private Level loggingLevel;
+	
+	/** The fatal problem. */
+	private boolean fatalProblem;
+	
+	/** The step index jump to. */
+	private int stepIndexSkipTo = -1;
+	
+	/** The ate exception. */
+	@Nullable
+	private IATEException ateException;
+	
+	/** The problem message. */
+	@Nullable
+	private String problemMessage; 
+	
+	/**
+	 * @param problemMessage the problemMessage to set
+	 */
+	public final void setProblemMessage(String problemMessage) {
+		this.problemMessage = problemMessage;
+	}
 
 	/**
 	 * Instantiates a new generic ate problem.
@@ -59,6 +88,15 @@ public class GenericATEProblem extends RawProblem {
 			shortStackTrace = "shortstacktrace Internal error.";
 		else
 			shortStackTrace = tmp0;
+		final Level warn2 = Level.WARN;
+		if (warn2 == null) {
+			throw GlobalUtils.createInternalError("jvm");
+		} else {
+			this.loggingLevel = warn2;
+		}
+		if (exception instanceof IATEException) this.ateException = (IATEException) exception;
+		this.fatalProblem = true;
+		this.problemMessage = exception.getMessage();
 	}
 
 	/**
@@ -83,6 +121,15 @@ public class GenericATEProblem extends RawProblem {
 			shortStackTrace = "shortstacktrace Internal error.";
 		else
 			shortStackTrace = tmp0;
+		final Level warn2 = Level.WARN;
+		if (warn2 == null) {
+			throw GlobalUtils.createInternalError("jvm");
+		} else {
+			this.loggingLevel = warn2;
+		}
+		this.fatalProblem = false;
+		if (exception instanceof IATEException) this.ateException = (IATEException) exception;
+		this.problemMessage = exception.getMessage();
 	}
 
 	/**
@@ -102,4 +149,80 @@ public class GenericATEProblem extends RawProblem {
 	public String getFullStackTrace() {
 		return fullStackTrace;
 	}
+
+
+	/**
+	 * @return the fatalProblem
+	 */
+	public boolean isFatalProblem() {
+		return fatalProblem;
+	}
+
+	/**
+	 * @param fatalProblem the fatalProblem to set
+	 */
+	public void setFatalProblem(boolean fatalProblem) {
+		this.fatalProblem = fatalProblem;
+	}
+
+	/**
+	 * @return the stepIndexJumpTo
+	 */
+	public int getStepIndexSkipTo() {
+		return stepIndexSkipTo;
+	}
+
+	/**
+	 * @param stepIndexJumpTo the stepIndexJumpTo to set
+	 */
+	public void setStepIndexSkipTo(int stepIndexJumpTo) {
+		this.stepIndexSkipTo = stepIndexJumpTo;
+	}
+	
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public Level getLoggingLevel() {
+		// TODO Auto-generated method stub
+		return loggingLevel;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public void setLoggingLevel(Level loggingLevel) {
+		this.loggingLevel = loggingLevel;
+	}
+
+	
+	/**
+	* {@inheritDoc}
+	*/
+	@Nullable
+	public IATEException getAteException() {
+		return ateException;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	
+	public void setAteException(IATEException ateE) {
+		this.ateException = ateE;
+		
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	@Nullable
+	public String getProblemMessage() {
+		// TODO Auto-generated method stub
+		return problemMessage;
+	}
+
+
 }

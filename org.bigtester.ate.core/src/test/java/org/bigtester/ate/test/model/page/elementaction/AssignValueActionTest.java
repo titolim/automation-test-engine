@@ -21,14 +21,18 @@
 package org.bigtester.ate.test.model.page.elementaction;
 
 
+import org.bigtester.ate.GlobalUtils;
+
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.elementaction.IElementAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
-import org.bigtester.ate.test.BigtesterProjectTest;
+import org.bigtester.ate.test.AbstractBigtesterStepTest;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
@@ -41,34 +45,41 @@ import org.testng.annotations.Test;
  *
  */
 @ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/assignValueAction.xml" })
-public class AssignValueActionTest extends BigtesterProjectTest {
+public class AssignValueActionTest extends AbstractBigtesterStepTest {
 
+	/** The my web e. */
+	@Nullable
+	private transient MyWebElement<?> myWebE;
 	/**
 	 * Ead test.
 	 * 
 	 * @throws RuntimeDataException
-	 * @throws PageValidationException2
-	 * @throws StepExecutionException2 
+	 * @throws PageValidationException
+	 * @throws StepExecutionException 
 	 * @throws InterruptedException 
+	 * @throws BrowserUnexpectedException 
 	 */
 	@Test(priority = 1)
-	public void assignValueEADTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2, InterruptedException {
-//here, we need portable file path handling for different system
-		//getTestPage("file:///c:/index.html");
+	public void assignValueEADTest() throws PageValidationException,
+			RuntimeDataException, StepExecutionException, InterruptedException, BrowserUnexpectedException {
 		getTestPage("bigtesterTestNG/aut/textarea.html");
 
 		MyWebElement<?> assignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValue");
-		assignV.doAction();
+		//assignV.doAction();
+		this.runElementTestStep(assignV);
+		
 		
 		MyWebElement<?> prependAssignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValuePrepend");
-		prependAssignV.doAction();
+		//prependAssignV.doAction();
+		this.runElementTestStep(prependAssignV);
 		
 		MyWebElement<?> appendAssignV = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadAssignValueAppend");
-		appendAssignV.doAction();
+		//appendAssignV.doAction();
+		this.runElementTestStep(appendAssignV);
+		
 		
 		ITestObjectAction<?> prependActObj = (ITestObjectAction<?>) prependAssignV.getTestObjectAction();
 		
@@ -95,4 +106,16 @@ public class AssignValueActionTest extends BigtesterProjectTest {
 		
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public MyWebElement<?> getMyWebElement() {
+			final MyWebElement<?> myWebE2 = myWebE;
+			if (myWebE2 == null) {
+				throw GlobalUtils.createNotInitializedException("myWebe");
+			} else {
+				return myWebE2;
+			}
+		}
 }

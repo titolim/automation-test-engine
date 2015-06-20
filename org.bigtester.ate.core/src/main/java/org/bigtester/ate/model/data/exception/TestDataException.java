@@ -21,16 +21,19 @@
 package org.bigtester.ate.model.data.exception;
 
 import org.bigtester.ate.model.AbstractATEException;
+import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.LogMessage;
+import org.bigtester.ate.systemlogger.problemhandler.IProblemLogMessenger;
+import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
-
-// TODO: Auto-generated Javadoc
 /**
  * This class StepExecutionException defines ....
  * 
  * @author Peidong Hu
  * 
  */
-public class TestDataException extends AbstractATEException {
+public class TestDataException extends AbstractATEException implements IATEProblemCreator{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -2675548817712757408L;
@@ -67,14 +70,9 @@ public class TestDataException extends AbstractATEException {
 	/**
 	 * @return the testStepName
 	 */
+	@Nullable
 	public String getTestStepName() {
-		final String retVal = testStepName;
-		if (null == retVal) {
-			throw new IllegalStateException("teststepName is not correctly populated");
-			
-		} else {
-			return retVal;
-		}
+		return testStepName;
 	}
 
 	/**
@@ -87,14 +85,9 @@ public class TestDataException extends AbstractATEException {
 	/**
 	 * @return the testCaseName
 	 */
+	@Nullable
 	public String getTestCaseName() {
-		final String retVal = testCaseName;
-		if (null == retVal) {
-			throw new IllegalStateException("testcasename is not correctly populated");
-			
-		} else {
-			return retVal;
-		}
+		return  testCaseName;
 	}
 
 	/**
@@ -128,5 +121,84 @@ public class TestDataException extends AbstractATEException {
 		this.message = message;
 		
 	}
+	
+	/**
+	 * This class StepExecutionProblem defines ....
+	 * 
+	 * @author Peidong Hu
+	 * 
+	 */
+	public class TestDataProblem extends GenericATEProblem implements IATEProblem, IProblemLogMessenger{
+
+		/** The test data exception. */
+		private final transient TestDataException testDataException;
+
+		/**
+		 * Instantiates a new page validation problem.
+		 * 
+		 * @param source
+		 *            the source
+		 * @param tde
+		 *            the see
+		 */
+		public TestDataProblem(Object source, TestDataException tde) {
+			super(source, tde);
+			testDataException = tde;
+		}
+
+		/**
+		 * Gets the step exec exception.
+		 * 
+		 * @return the step exec exception
+		 */
+		public TestDataException getStepExecException() {
+			return testDataException;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public LogMessage getLogMessage() {
+			String errorMsg = "";//NOPMD
+			String warnMsg = "";//NOPMD
+			if (isFatalProblem()) {
+				errorMsg = "This throwable " + this.getClass().getCanonicalName() +" is fatal for test case: " + this.testDataException.getTestCaseName()
+						+ " in step: " + this.testDataException.getTestStepName();
+				
+			} else {
+				warnMsg = "This step producing throwable " + this.getClass().getCanonicalName()  + " is optional for test case: " 
+						+ this.testDataException.getTestCaseName() 
+						+ " in step: " + this.testDataException.getTestStepName();
+			}
+			
+			return new LogMessage(errorMsg, warnMsg);
+		}
+
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public IATEProblem initAteProblemInstance(Object ateProblemLocatin) {
+		TestDataProblem retVal = (TestDataProblem) ateProblem;
+		if (null == retVal) {
+			retVal = new TestDataProblem(ateProblemLocatin, this);
+			ateProblem = retVal;
+		}
+		return retVal;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	@Nullable
+	public IATEProblem getAteProblem() {
+		return (TestDataProblem) ateProblem;
+	}
+
+
 	
 }

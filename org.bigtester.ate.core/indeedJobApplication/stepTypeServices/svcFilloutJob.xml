@@ -17,11 +17,27 @@
 	
 	<ate:stepTypeServiceDefinition id="svcFilloutJob" stepName="svcFilloutJob" targetStep="false">
 
-		<ate:elementStep id="stepFilloutApplicantName"
+				<ate:elementStep id="stepFilloutApplicantName"
 			stepDescription="stepFilloutApplicantName" stepName="stepFilloutApplicantName"
+			optionalStep="true"
 			targetStep="false" elementActionDef="eadFilloutApplicantName"
 			>
 		</ate:elementStep>
+
+		<ate:elementStep id="stepFilloutApplicantFirstName"
+			stepDescription="stepFilloutApplicantFirstName" stepName="stepFilloutApplicantFirstName"
+			targetStep="false" elementActionDef="eadFilloutApplicantFirstName"
+			optionalStep="true"
+			correlatedOptionalStepsUtilInclusive="stepFilloutApplicantLastName"
+			>
+		</ate:elementStep>
+		
+		<ate:elementStep id="stepFilloutApplicantLastName"
+			stepDescription="stepFilloutApplicantLastName" stepName="stepFilloutApplicantLastName"
+			targetStep="false" elementActionDef="eadFilloutApplicantLastName"
+			>
+		</ate:elementStep>
+		
 
 		<ate:elementStep id="stepFilloutApplicantEmail"
 			stepDescription="stepFilloutApplicantEmail" stepName="stepFilloutApplicantEmail"
@@ -40,15 +56,39 @@
 			targetStep="false" elementActionDef="eadApplyChooseFile"
 			>
 		</ate:elementStep>
-
-		<ate:elementStep id="stepSubmitResume"
-			stepDescription="stepSubmitResume" stepName="stepSubmitResume"
-			targetStep="false" elementActionDef="eadSubmitResume"
+		<ate:elementStep id="stepFilloutMessage"
+			stepDescription="stepFilloutMessage" stepName="stepFilloutMessage"
+			targetStep="false" elementActionDef="eadFilloutMessage"
 			>
 		</ate:elementStep>
-			
-		
-		
+
+		<ate:elementStep id="stepContinueQuestions"
+			stepDescription="stepContinueQuestions" stepName="stepContinueQuestions"
+			targetStep="false" elementActionDef="eadContinueApplication" optionalStep="true"
+			correlatedOptionalStepsUtilInclusive="stepAnswerYesQ2"
+			>
+		</ate:elementStep>
+
+		<ate:elementStep id="stepAnswerYesQ0"
+			stepDescription="stepAnswerYesQ0" stepName="stepAnswerYesQ0"
+			targetStep="false" elementActionDef="eadAnswerYesForQ0" optionalStep="true"
+			>
+		</ate:elementStep>
+
+		<ate:elementStep id="stepAnswerYesQ1"
+			stepDescription="stepAnswerYesQ1" stepName="stepAnswerYesQ1"
+			targetStep="false" elementActionDef="eadAnswerYesForQ1" optionalStep="true"
+			correlatedOptionalStepsUtilInclusive="stepAnswerYesQ2"
+			>
+		</ate:elementStep>
+
+		<ate:elementStep id="stepAnswerYesQ2"
+			stepDescription="stepAnswerYesQ2" stepName="stepAnswerYesQ2"
+			targetStep="false" elementActionDef="eadAnswerYesForQ2" optionalStep="true"
+			>
+		</ate:elementStep>
+
+
 		
 	</ate:stepTypeServiceDefinition>
 

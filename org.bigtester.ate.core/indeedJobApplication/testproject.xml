@@ -20,39 +20,10 @@
 		globalInitXmlFile="indeedJobApplication/data.xml">
 		
 		<ate:TestSuite id="easyApply" suiteName="easyApply">
-<!-- 		<ate:XmlTestCase -->
-<!-- 				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJobServiceDemo.xml" /> -->
-			<ate:XmlTestCase
-				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJob.xml" />
+		<ate:XmlTestCase
+				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJobDemoService.xml" />
 <!-- 			<ate:XmlTestCase -->
-<!-- 				testCaseFilePathName="dentistSmokeTest/backend_login/adminRegistration.xml" /> -->
-		</ate:TestSuite>
-<!-- 		<ate:TestSuite id="frontend_login_suite" suiteName="frontend_login_suite"> -->
-<!-- 			<ate:XmlTestCase -->
-<!-- 				testCaseFilePathName="dentistSmokeTest/frontend_login_suite/publicHomePageValidation.xml" /> -->
-<!-- 			<ate:XmlTestCase -->
-<!-- 				testCaseFilePathName="dentistSmokeTest/frontend_login_suite/publicRegistration.xml" /> -->
-<!-- 			<ate:XmlTestCase id="publicLoginSuccess" -->
-<!-- 				testCaseFilePathName="dentistSmokeTest/frontend_login_suite/publicLoginSuccess.xml" /> -->
-<!-- 			<ate:XmlTestCase id="publicLoginWrongPassword" -->
-<!-- 				testCaseFilePathName="dentistSmokeTest/frontend_login_suite/publicWrongPasswordLogin.xml" /> -->
-
-<!-- 		</ate:TestSuite> -->
-<!-- 		<ate:TestSuite id="booking_suite" suiteName="booking_suite"> -->
-<!-- 			<ate:XmlTestCase id="bookingClinicC" -->
-<!-- 				testCaseFilePathName="dentistSmokeTest/booking_suite/publicClinicCBooking.xml" /> -->
-
-<!-- 			<ate:XmlTestCase id="reviewBooking" -->
-<!-- 				testCaseFilePathName="dentistSmokeTest/booking_suite/reviewBooking.xml" /> -->
-
-<!-- 			<ate:XmlTestCase -->
-<!-- 				testCaseFilePathName="dentistSmokeTest/booking_suite/updatePersonalInformation.xml"> -->
-<!-- 				<ate:CaseDependencies> -->
-<!-- 					<ate:CaseDependency -->
-<!-- 						dependOnTestCaseID="dentistSmokeTest/frontend_login_suite/publicHomePageValidation.xml" -->
-<!-- 						dependencyType="TestCaseDataDependency" /> -->
-<!-- 				</ate:CaseDependencies> -->
-<!-- 			</ate:XmlTestCase> -->
-<!-- 		</ate:TestSuite> -->
+<!-- 				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJob.xml" /> -->
+ 		</ate:TestSuite>
 	</ate:TestProject>
 </beans>

@@ -24,6 +24,7 @@ package org.bigtester.ate.model.casestep;
 import org.bigtester.ate.annotation.StepLoggable;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.page.ILastpage;
+import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -74,8 +75,11 @@ public class LastStep extends BaseTestStep implements ITestStep {
 	/**
 	 * {@inheritDoc}
 	 */
-	@StepLoggable
-	public void doStep() {
+	@StepLoggable(level = org.bigtester.ate.annotation.ATELogLevel.INFO)
+	@Override
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) {
+		//if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) getTestCase();
+
 		lastPage.closeLastpage();
 	}
 

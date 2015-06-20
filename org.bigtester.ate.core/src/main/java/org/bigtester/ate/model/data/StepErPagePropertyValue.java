@@ -23,6 +23,7 @@ package org.bigtester.ate.model.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bigtester.ate.annotation.RepeatStepRefreshable;
 import org.bigtester.ate.model.data.dao.StepExpectedResultDaoImpl;
 import org.bigtester.ate.model.data.dbtable.StepErPageProperty;
 import org.bigtester.ate.model.data.exception.TestDataException;
@@ -91,6 +92,7 @@ public class StepErPagePropertyValue extends BaseERValue implements IStepERValue
 	 * {@inheritDoc}
 	 */
 	@Override
+	@RepeatStepRefreshable
 	public BaseERValue getERValue() {
 		return this;
 	}

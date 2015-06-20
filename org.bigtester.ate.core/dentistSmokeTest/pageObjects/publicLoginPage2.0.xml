@@ -27,17 +27,9 @@
 	<ate:pageElementExistenceAsserter
 		id="publicRegisterSuccessAsserter" resultPage="publicLoginPage" stepERValue="publicRegisterSuccessVID" />
 		
-<!-- <ate:stepExpectedResultValue id="publicRegisterSuccessERValue" -->
-<!-- 		dataValueID="publicRegisterSuccessVID"   /> -->
-		
-<!-- 	<ate:stepExpectedResultValue id="publicLoginPageValidationValue" -->
-<!-- 		dataValueID="publicLoginPageVID"   /> -->
 
 	<ate:pageElementExistenceAsserter
 		id="publicLoginWrongPasswdElementExistenceAsserter" resultPage="publicLoginPage" stepERValue="publicLoginWrongPasswdVID" />
-
-<!-- 	<ate:stepExpectedResultValue id="publicLoginWrongPasswdValidationValue" -->
-<!-- 		dataValueID="publicLoginWrongPasswdVID"   /> -->
 
 
 	<!-- myWebElement definition -->

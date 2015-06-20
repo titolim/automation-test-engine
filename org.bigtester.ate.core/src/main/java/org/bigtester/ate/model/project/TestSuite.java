@@ -40,6 +40,21 @@ public class TestSuite {
 	private String suiteName;
 
 	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public String toString() {
+		String retVal =  "Suite: " + suiteName + " with following test cases, ";//NOPMD
+		final List<XmlTestCase> testCaseList2 = testCaseList;
+		if (testCaseList2 != null) {
+			for (XmlTestCase testCase: testCaseList2) {
+				retVal = retVal + "\r\n" + testCase.getTestCaseFilePathName() ;//NOPMD
+			}
+		} 
+		
+		return retVal;
+	}
+	/**
 	 * Instantiates a new test suite.
 	 *
 	 * @param suiteName the suite name

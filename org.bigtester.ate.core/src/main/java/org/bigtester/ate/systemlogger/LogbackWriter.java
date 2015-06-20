@@ -18,7 +18,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.systemlogger;
+package org.bigtester.ate.systemlogger;//NOPMD
+
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ExceptionMessage;
@@ -37,16 +38,30 @@ public final class LogbackWriter {
 
 	/** The Constant MYLOGGER. */
 	@Nullable
-	private static final Logger MYLOGGER = LoggerFactory
+	private static Logger myLogger = LoggerFactory//NOPMD
 			.getLogger(LogbackWriter.class);
+	
+	/** The applog errorheader. */
+	final public static String APPLOG_ERRORHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_ERROR;
+	
+	/** The applog infoheader. */
+	final public static String APPLOG_INFOHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_INFO;
+	
+	/** The applog warnheader. */
+	final public static String APPLOG_WARNHEADER = LogbackTag.TAG_APP_LOG + LogbackTag.TAG_TEST_WARNING;
+	
+	/** The Constant APPLOG_DEBUGHEADER. */
+	final public static String APPLOG_DEBUGHEADER = LogbackTag.TAG_SYS_LOG + LogbackTag.TAG_TEST_DEBUG;
 
+	/** The Constant LOGBACKLOGGERNOTINIT. */
+	final private static String LOGBACKLOGGERNOTINIT = "Logback Logger";
 	/**
 	 * Prints the stack trace.
 	 *
 	 * @param thr the th
 	 */
 	public static void printStackTrace(Throwable thr) {
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER"); //NOPMD
 		} else {
@@ -60,6 +75,111 @@ public final class LogbackWriter {
 			
 		}
 	}
+	
+	
+	/**
+	 * Write logback app log.
+	 *
+	 * @param logMessenger the log messenger
+	 */
+	public static void writeLogbackAppLog(LogMessage logMessenger) {
+		final Logger logger = LoggerFactory.getLogger(LogbackWriter.class);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException(LOGBACKLOGGERNOTINIT);
+		}
+		if (!logMessenger.getErrorMsg().equals("") && logger.isErrorEnabled())
+			logger.error(APPLOG_ERRORHEADER + logMessenger.getErrorMsg());
+		if (!logMessenger.getWarningMsg().equals("") && logger.isWarnEnabled())
+			logger.warn(APPLOG_WARNHEADER + logMessenger.getWarningMsg());
+		if (!logMessenger.getInfoMsg().equals("") && logger.isInfoEnabled())
+			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());//NOPMD
+//		if (!logMessenger.getDebugMsg().equals(""))
+//			logger.debug(logMessenger.getDebugMsg());
+//		if (!logMessenger.getTraceMsg().equals(""))
+//			logger.trace(logMessenger.getTraceMsg());
+	}
+	
+	/**
+	 * Write logback app log.
+	 *
+	 * @param logMessenger the log messenger
+	 * @param classProducingError the class producing error
+	 */
+	public static void writeLogbackAppLog(LogMessage logMessenger, Class<?> classProducingError) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException(LOGBACKLOGGERNOTINIT);
+		}
+		if (!logMessenger.getErrorMsg().equals("") && logger.isErrorEnabled())
+			logger.error(APPLOG_ERRORHEADER + logMessenger.getErrorMsg());
+		if (!logMessenger.getWarningMsg().equals("") && logger.isWarnEnabled())
+			logger.warn(APPLOG_WARNHEADER +logMessenger.getWarningMsg());
+		if (!logMessenger.getInfoMsg().equals("") && logger.isInfoEnabled())
+			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg());//NOPMD
+//		if (!logMessenger.getDebugMsg().equals(""))
+//			logger.debug(logMessenger.getDebugMsg());
+//		if (!logMessenger.getTraceMsg().equals(""))
+//			logger.trace(logMessenger.getTraceMsg());
+	}
+	
+	/**
+	 * Write logback app log.
+	 *
+	 * @param logMessenger the log messenger
+	 * @param classProducingError the class producing error
+	 * @param error the error
+	 */
+	public static void writeLogbackAppLog(LogMessage logMessenger, Class<?> classProducingError, Throwable error) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException(LOGBACKLOGGERNOTINIT);
+		}
+		if (!logMessenger.getErrorMsg().equals("") && logger.isErrorEnabled())
+			logger.error(APPLOG_ERRORHEADER + "Error Code: " + error.hashCode() + " " + logMessenger.getErrorMsg() + getCauseChainMessages(error));
+		if (!logMessenger.getWarningMsg().equals("") && logger.isWarnEnabled())
+			logger.warn(APPLOG_WARNHEADER +logMessenger.getWarningMsg()+ getCauseChainMessages(error));
+		if (!logMessenger.getInfoMsg().equals("") && logger.isInfoEnabled())
+			logger.info(APPLOG_INFOHEADER + logMessenger.getInfoMsg() + getCauseChainMessages(error));//NOPMD
+//		if (!logMessenger.getDebugMsg().equals(""))
+//			logger.debug(logMessenger.getDebugMsg(), error);
+//		if (!logMessenger.getTraceMsg().equals(""))
+//			logger.trace(logMessenger.getTraceMsg(), error);
+	}
+	
+	/**
+	 * Gets the cause chain messages.
+	 *
+	 * @param error the error
+	 * @return the cause chain messages
+	 */
+	private static String getCauseChainMessages(Throwable error) {
+		String retVal="";//NOPMD
+		Throwable errorPointer = error;
+		while (errorPointer.getCause() != null) {
+			retVal = retVal + "->caused by->" + errorPointer.getCause().getMessage();//NOPMD
+			errorPointer = errorPointer.getCause();
+		}
+		return retVal;
+	}
+	
+	/**
+	 * Write app error.
+	 *
+	 * @param msg the msg
+	 * @param classProducingError the class producing error
+	 */
+	public static void writeAppError(String msg, Class<?> classProducingError) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException("logback logger");
+		}
+		if (logger.isErrorEnabled()) {
+			logger.error(msg);
+		}
+	}
+	
+	
+	
 	/**
 	 * Write app error.
 	 *
@@ -68,7 +188,7 @@ public final class LogbackWriter {
 	 */
 	public static void writeAppError(String msg) {
 
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER"); //NOPMD
 		} else {
@@ -92,19 +212,32 @@ public final class LogbackWriter {
 	 *            the msg
 	 */
 	public static void writeSysError(String msg) {
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
-			if (mylogger2.isErrorEnabled()) {
-				mylogger2.error(LogbackTag.TAG_SYS_LOG + LogbackTag.TAG_SYS_ERROR
-						+ msg);
-			} else {
-				throw new UnsupportedOperationException(
-						ExceptionMessage.MSG_UNSUPPORTED_LOGBACK_LEVEL
-								+ "MYLOGGER.isErrorEnabled()");
-			}
+			//if (mylogger2.isErrorEnabled()) {
+				mylogger2.error(msg);
+			//} else {
+			//	throw new UnsupportedOperationException(
+			//			ExceptionMessage.MSG_UNSUPPORTED_LOGBACK_LEVEL
+			//					+ "MYLOGGER.isErrorEnabled()");
+			//}
 		}
+	}
+	
+	/**
+	 * Write sys error.
+	 *
+	 * @param classProducingError the class producing error
+	 * @param error the error
+	 */
+	public static void writeSysError(Class<?> classProducingError, Throwable error) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException("logback logger");
+		}
+		logger.error(Integer.toString(error.hashCode()), error);
 	}
 
 	/**
@@ -114,7 +247,7 @@ public final class LogbackWriter {
 	 *            the msg
 	 */
 	public static void writeAppWarning(String msg) {
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
@@ -136,7 +269,7 @@ public final class LogbackWriter {
 	 *            the msg
 	 */
 	public static void writeAppInfo(String msg) {
-		final Logger mylogger2 = MYLOGGER;
+		final Logger mylogger2 = myLogger;
 		if (mylogger2 == null) {
 			throw GlobalUtils.createNotInitializedException("MYLOGGER");
 		} else {
@@ -156,19 +289,13 @@ public final class LogbackWriter {
 	 * @param msg
 	 *            the msg
 	 */
-	public static void writeUnitTestInfo(String msg) {
-		final Logger mylogger2 = MYLOGGER;
-		if (mylogger2 == null) {
-			throw GlobalUtils.createNotInitializedException("MYLOGGER");
-		} else {
-			
-			if (mylogger2.isInfoEnabled()) {
-				mylogger2.info(LogbackTag.TAG_APP_LOG + LogbackTag.TAG_UNITTEST_INFO + msg); // NOPMD
-			} else {
-				throw new UnsupportedOperationException(
-						ExceptionMessage.MSG_UNSUPPORTED_LOGBACK_LEVEL
-								+ "MYLOGGER.isInfoEnabled()");
-			}
+	public static void writeDebugInfo(String msg, @Nullable Class<?> classProducingError) {
+		final Logger logger = LoggerFactory.getLogger(classProducingError);
+		if (null == logger) {
+			throw GlobalUtils.createNotInitializedException(LOGBACKLOGGERNOTINIT);
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug(APPLOG_DEBUGHEADER + msg);
 		}
 	}
 

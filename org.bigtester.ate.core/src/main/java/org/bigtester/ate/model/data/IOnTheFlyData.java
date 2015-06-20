@@ -21,9 +21,10 @@
 package org.bigtester.ate.model.data;
 
 
-// TODO: Auto-generated Javadoc
 /**
- * This class IOnTheFlyData defines ....
+ * class implements IOnTheFlyData will be handled by the StepDataLogger 
+ * onTheFlyData will dynamically change value during the execution, for example in repeatSteps.
+ * Index of repeatStep and index of same elements on pages are this type of data.
  * @author Peidong Hu
  *
  */

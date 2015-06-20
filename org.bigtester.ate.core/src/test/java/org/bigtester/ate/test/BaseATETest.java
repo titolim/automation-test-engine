@@ -122,6 +122,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 		myMockedDriver = ateMock(IMyWebDriver.class);
 		options = ateMock(Options.class);
 		TestProjectRunner.registerXsdNameSpaceParsers();
+		TestProjectRunner.registerProblemHandlers();
 	}
 	
 	/**
@@ -202,7 +203,7 @@ public class BaseATETest extends AbstractTestNGSpringContextTests implements
 	public BeanDefinitionRegistry getBdReg() {
 		final BeanDefinitionRegistry bdReg2 = bdReg;
 		if (bdReg2 == null) {
-			throw GlobalUtils.createNotInitializedException("beaddefregistry");
+			throw GlobalUtils.createNotInitializedException("beandefregistry");
 		} else {
 			return bdReg2;
 		}

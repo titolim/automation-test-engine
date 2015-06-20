@@ -22,18 +22,16 @@ package org.bigtester.ate.systemlogger.problemhandler;
 
 import java.util.Properties;
 
- 
- 
-import org.bigtester.ate.constant.LogbackTag;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.IATEException;
 import org.bigtester.ate.systemlogger.LogbackWriter;
-import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.bigtester.problomatic2.InitException;
 import org.bigtester.problomatic2.Problem;
-import org.bigtester.problomatic2.ProblemHandler;
 import org.bigtester.problomatic2.handlers.AbstractProblemHandler;
 import org.eclipse.jdt.annotation.Nullable;
+
+import ch.qos.logback.classic.Level;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -43,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  */
 public class ProblemLogbackHandler extends AbstractProblemHandler implements
-		ProblemHandler {
+		IATEProblemHandler {
 
 	/** The Constant slf4jLogger. */
 
@@ -61,21 +59,20 @@ public class ProblemLogbackHandler extends AbstractProblemHandler implements
 		// 3) page validation error : test error; (failed test)
 		// 4) page validation exception: test pass with bug; (passed test with
 		// bug)
-		TestCase pTC;
-		ITestStep pTS;
+		
 
-		if (aProblem instanceof IATECaseExecProblem) {
-			IATECaseExecProblem caseExecProblem = (IATECaseExecProblem) aProblem;
-			pTC = caseExecProblem.getCurrentTestCase();
-			pTS = caseExecProblem.getCurrentTestStep();
-			String logMsg = pTC.getTestCaseName() + LogbackTag.TAG_SEPERATOR
-					+ pTS.getStepName() + LogbackTag.TAG_SEPERATOR
-					+ pTS.getStepDescription() + LogbackTag.TAG_SEPERATOR
-					+ caseExecProblem.getProblemMessage();
-			if (pTS.isTargetStep() & !pTS.isOptionalStep()) {
-				LogbackWriter.writeAppError(logMsg);
+		if (aProblem instanceof IProblemLogMessenger) {
+			final Level warn2 = Level.WARN;
+			if (warn2 == null) {
+				GlobalUtils.createInternalError("jvm logback level enum.");
 			} else {
-				LogbackWriter.writeAppWarning(logMsg);
+				Class<?> cls = aProblem.getSource().getClass();
+				if (cls == null) throw GlobalUtils.createInternalError("jvm");
+				IATEException ateE = ((IATEProblem)aProblem).getAteException();
+				if (null == ateE) 
+					LogbackWriter.writeLogbackAppLog(((IProblemLogMessenger) aProblem).getLogMessage(), cls);
+				else 
+					LogbackWriter.writeLogbackAppLog(((IProblemLogMessenger) aProblem).getLogMessage(), cls, (Throwable) ateE);
 			}
 		}
 		//non application level error is not logged in application.log
@@ -102,6 +99,15 @@ public class ProblemLogbackHandler extends AbstractProblemHandler implements
 	public void init(@Nullable Properties properties) throws InitException {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	@Nullable
+	public Class<?> getAttachedClass() {
+		return null;
 	}
 
 }

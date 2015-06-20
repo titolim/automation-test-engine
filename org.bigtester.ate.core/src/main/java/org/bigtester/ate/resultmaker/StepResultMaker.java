@@ -29,8 +29,8 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.casestep.BaseTestStep;
+import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.testresult.TestStepResult;
-
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
@@ -52,86 +52,6 @@ public class StepResultMaker {
 
 	/** The Step result list constant. */
 	public static final String STEPRESULTLIST = "StepResultList";
-//
-//	private class SuperclassExclusionStrategy implements ExclusionStrategy {
-//		public boolean shouldSkipClass(@Nullable Class<?> arg0) {
-//			return false;
-//		}
-//
-//		/**
-//		 * {@inheritDoc}
-//		 */
-//		@Override
-//		public boolean shouldSkipField(@Nullable FieldAttributes fieldAttributes) {
-//			if (null == fieldAttributes) {
-//				throw GlobalUtils.createNotInitializedException("fieldAttri");
-//				
-//			} else {
-//				String fieldName = fieldAttributes.getName();
-//				Class<?> theClass = fieldAttributes.getDeclaringClass();
-//
-//				return isFieldInSuperclass(theClass, fieldName);
-//			}
-//
-//		}
-//
-//		private boolean isFieldInSuperclass(@Nullable Class<?> subclass,
-//				@Nullable String fieldName) {
-//			if (null == subclass) {
-//				throw GlobalUtils.createNotInitializedException("subclass");
-//				
-//			} 
-//			Class<?> superclass = subclass.getSuperclass();
-//			Field field;
-//
-//			while (superclass != null) {
-//				field = getField(superclass, fieldName);
-//
-//				if (field != null)
-//					return true;
-//
-//				superclass = superclass.getSuperclass();
-//			}
-//
-//			return false;
-//		}
-//
-//		private @Nullable Field getField(@Nullable Class<?> theClass,
-//				@Nullable String fieldName) {
-//			if (null == theClass) {
-//				throw GlobalUtils.createNotInitializedException("theClass");
-//				
-//			} 
-//			try {
-//				Field retVal = theClass.getDeclaredField(fieldName);
-//				if (retVal == null) throw GlobalUtils.createInternalError("getDeclaredField");
-//				return retVal;
-//			} catch (Exception e) {
-//				return null;
-//			}
-//		}
-//
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	private BaseTestStep cloneThroughJson(@Nullable BaseTestStep t) {
-//		if (null == t)
-//			throw GlobalUtils
-//					.createInternalError("Gson conversion input parameter error");
-//		//Gson gson = new Gson();
-//		GsonBuilder gBuilder = new GsonBuilder();
-//		 
-//		 gBuilder.addDeserializationExclusionStrategy(new SuperclassExclusionStrategy());
-//		 gBuilder.addSerializationExclusionStrategy(new SuperclassExclusionStrategy());
-//		 Gson gson = gBuilder
-//			        .serializeNulls()
-//			        .create();
-//		String json = gson.toJson(t);
-//		BaseTestStep retval = (BaseTestStep) gson.fromJson(json, t.getClass());
-//		if (null == retval)
-//			throw GlobalUtils.createInternalError("Gson conversion error");
-//		return retval;
-//	}
 
 	/**
 	 * Log.
@@ -142,24 +62,17 @@ public class StepResultMaker {
 
 	@SuppressWarnings("unchecked")
 	@After("@annotation(org.bigtester.ate.annotation.StepLoggable)")
-	public void log(final JoinPoint joinPoint_p) {
-
-		// Cloner cloner=new Cloner();
-		//
-		// BaseTestStep bts =cloner.deepClone((BaseTestStep)
-		// joinPoint_p.getTarget());
-//		BaseTestStep bts = cloneThroughJson((BaseTestStep) joinPoint_p
-//				.getTarget());
+	public void reportStepResult(final JoinPoint joinPoint_p) {
 		
 		XStream xstream = new XStream();
 		xstream.autodetectAnnotations(true);
 		String xml = xstream.toXML((BaseTestStep) joinPoint_p
 				.getTarget());
-		BaseTestStep bts = (BaseTestStep)xstream.fromXML(xml);
+		Object bts = xstream.fromXML(xml);
 		 if (bts == null) throw
 				 GlobalUtils.createInternalError("stepresultmaker log function.");
 		TestStepResult tsr = new TestStepResult(
-				((BaseTestStep) joinPoint_p.getTarget()).getStepName(), bts);
+				((BaseTestStep) joinPoint_p.getTarget()).getStepName(), (ITestStep) bts);
 
 		ITestResult testResult = Reporter.getCurrentTestResult();
 		List<TestStepResult> stepResultList;
@@ -177,6 +90,7 @@ public class StepResultMaker {
 
 		stepResultList.add(tsr);
 		testResult.setAttribute(TestStepResult.STEPRESULTLIST, stepResultList);
+		
 	}
 
 }

@@ -21,6 +21,8 @@
 package org.bigtester.ate.model.page.elementaction;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.model.io.IDiskFileOperation;
 import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -91,12 +93,19 @@ public class ExportAsFileAction extends PageModelBase implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	@ActionLoggable (level=ATELogLevel.INFO)
 	public void doAction(IDiskFileOperation fileOpr) {
 		fileOpr.setExportFileNameWithAbsolutePath(getFileNameWithAbsolutePath());
 		fileOpr.saveToSingleFile();
 		
 	}
-
+	
+	/**
+	* {@inheritDoc}
+	*/
+	public String getActionParametersLoggingValue() {
+		return "fileNameWithAbsolutePath = " + fileNameWithAbsolutePath;
+	}
 	
 
 }

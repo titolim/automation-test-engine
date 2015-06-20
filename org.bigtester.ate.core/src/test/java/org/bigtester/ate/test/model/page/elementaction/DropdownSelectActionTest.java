@@ -21,11 +21,12 @@
 package org.bigtester.ate.test.model.page.elementaction;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.bigtester.ate.model.page.elementaction.DropdownListSelectAction;
 import org.bigtester.ate.model.page.elementaction.ITestObjectAction;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.openqa.selenium.By;
@@ -39,20 +40,21 @@ import org.testng.annotations.Test;
  * @author Peidong Hu
  *
  */
-@ContextConfiguration(locations = { "classpath:bigtesterTestNG/pageObjects/dropdownListHomePage.xml" })
+@ContextConfiguration(locations = { "classpath:bigtesterTestNG/testSuite01/dropDownList.xml" })
 public class DropdownSelectActionTest extends BigtesterProjectTest {
 
 	/**
 	 * Ead test.
 	 * 
 	 * @throws RuntimeDataException
-	 * @throws PageValidationException2
-	 * @throws StepExecutionException2
+	 * @throws PageValidationException
+	 * @throws StepExecutionException
 	 * @throws InterruptedException
+	 * @throws BrowserUnexpectedException 
 	 */
 	@Test(priority = 1)
-	public void mainTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2, InterruptedException {
+	public void mainTest() throws PageValidationException,
+			RuntimeDataException, StepExecutionException, InterruptedException, BrowserUnexpectedException {
 		getTestPage("bigtesterTestNG/aut/dropdownList.html");
 
 		MyWebElement<?> ead = (MyWebElement<?>) getApplicationContext()

@@ -20,9 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase; 
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,14 +29,14 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peidong Hu
  *
  */
-public interface IATECaseExecException {
+public interface IATECaseExecException extends IATEException{
 	
 	/**
 	 * Gets the current test case.
 	 *
 	 * @return the current test case
 	 */
-	TestCase getCurrentTestCase();
+	ITestCase getCurrentTestCase();
 	
 	/**
 	 * Gets the my web driver.
@@ -46,10 +45,5 @@ public interface IATECaseExecException {
 	 */
 	IMyWebDriver getMyWebDriver();
 	
-	/**
-	 * Gets the message.
-	 *
-	 * @return the message
-	 */
-	@Nullable String getMessage();
+	
 }

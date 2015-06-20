@@ -11,8 +11,8 @@
 		                   http://www.bigtester.org/schema/ate/ate-2.0.xsd">
 	
 	<import resource="classpath:META-INF/db-services.xml" />
-	
-	<ate:GenericSystemLogger id="systemlogger" />
+	<import resource="classpath:META-INF/logger-reporter.xml" />
+<!-- 	<ate:GenericSystemLogger id="systemlogger" /> -->
 	<ate:TestDatabaseInitializer id="dbInitializer" />
 	<bean id="globalUtilsForTestProject" class="org.bigtester.ate.GlobalUtils" />
 	

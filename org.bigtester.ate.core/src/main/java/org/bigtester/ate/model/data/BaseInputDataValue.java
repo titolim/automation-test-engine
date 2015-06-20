@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.data;
 
+import org.bigtester.ate.annotation.RepeatStepRefreshable;
+import org.bigtester.ate.annotation.RepeatStepRefreshable.RefreshDataType;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -50,6 +52,7 @@ public class BaseInputDataValue {//NOPMD
 	/**
 	 * @return the value
 	 */
+	@RepeatStepRefreshable (dataType=RefreshDataType.PAGEINPUTDATA)
 	public String getStrDataValue() {
 		final String value2 = strDataValue;
 		if (null == value2) {

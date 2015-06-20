@@ -305,9 +305,9 @@ public class CookiesManager extends PageModelBase implements IDiskFileOperation 
 				getMyWd().getWebDriverInstance().manage().deleteAllCookies();
 				for (Map.Entry<String, Cookie> entry : cookies.entrySet()) {
 					
-					//getMyWd().getWebDriverInstance().manage()
-						//	.addCookie(entry.getValue());
-					entry.getValue();
+					getMyWd().getWebDriverInstance().manage()
+							.addCookie(entry.getValue());
+					//entry.getValue();
 				}
 			} catch (IOException | ClassNotFoundException e) {
 				throw GlobalUtils.createInternalError("File loading operation", e);

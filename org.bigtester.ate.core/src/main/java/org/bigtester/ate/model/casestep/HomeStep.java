@@ -25,13 +25,16 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.StepLoggable;
+import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.page.IHomepage;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
+import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -87,8 +90,10 @@ public class HomeStep extends BaseTestStep implements ITestStep {
 	 * @throws RuntimeDataException
 	 * @throws PageValidationException
 	 */
-	@StepLoggable
-	public void doStep() throws PageValidationException2, RuntimeDataException {
+	@StepLoggable(level = ATELogLevel.INFO)
+	@Override
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws PageValidationException, RuntimeDataException {
+		//if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) getTestCase();
 		homePage.startHomepage();
 		super.parseDataHolder();
 		List<IExpectedResultAsserter> asserters = getExpectedResultAsserter();
@@ -104,11 +109,13 @@ public class HomeStep extends BaseTestStep implements ITestStep {
 
 		}
 		if (flagThrowE && isTargetStep()) {
-			PageValidationException2 pve = new PageValidationException2(
+			PageValidationException pve = new PageValidationException(
 					ExceptionMessage.MSG_PAGE_VALIDATION_ERROR_HIGH,
 					ExceptionErrorCode.PAGEVALIDATION_HIGH, listAsserters,
 					asserters.get(0).getResultPage().getMyWd(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()));
+			IATEProblem prob = pve.initAteProblemInstance(this);
+			prob.setFatalProblem(true);
 			throw pve;
 		}
 

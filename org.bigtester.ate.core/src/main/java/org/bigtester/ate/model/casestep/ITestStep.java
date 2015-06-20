@@ -21,14 +21,13 @@
 package org.bigtester.ate.model.casestep; //NOPMD
 
 import java.util.List;
-
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.IDataParser;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.IPageObject; 
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -59,7 +58,7 @@ public interface ITestStep {
 	 *
 	 * @return the correlated optional steps util inclusive index
 	 */
-	int getCorrelatedOptionalStepsUtilInclusiveIndex();
+	int getCorrelatedOptionalStepsUtilInclusiveIndex(IStepJumpingEnclosedContainer jumpingContainer);
 	/**
 	 * Checks if is optional step.
 	 *
@@ -153,8 +152,7 @@ public interface ITestStep {
 	 * @throws StepExecutionException the step execution exception
 	 * @throws PageValidationException 
 	 */
-
-	void doStep () throws StepExecutionException2, PageValidationException2, RuntimeDataException;
+	void doStep (@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException, PageValidationException, RuntimeDataException;
 	
 	/**
 	 * Sets the step result status.
@@ -166,7 +164,7 @@ public interface ITestStep {
 	/**
 	 * Gets the step result status.
 	 *
-	 * @return the step result status
+	 * @return the step result status, default is FAIL
 	 */
 	StepResultStatus getStepResultStatus();
 	

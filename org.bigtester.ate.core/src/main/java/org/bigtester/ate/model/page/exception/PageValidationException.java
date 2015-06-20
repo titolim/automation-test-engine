@@ -23,10 +23,18 @@ package org.bigtester.ate.model.page.exception;
 import java.util.List;
 
 import org.bigtester.ate.model.BaseATECaseExecE;
+import org.bigtester.ate.model.IATECaseExecException;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase;
+import org.bigtester.ate.model.casestep.ITestStep; 
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.elementfind.IElementFind;
+import org.bigtester.ate.systemlogger.IATEProblemCreator;
+import org.bigtester.ate.systemlogger.LogMessage;
+import org.bigtester.ate.systemlogger.problemhandler.IProblemLogMessenger;
+import org.bigtester.ate.systemlogger.problems.GenericATEProblem;
+import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -36,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peidong Hu
  *
  */
-public class PageValidationException2 extends BaseATECaseExecE {
+public class PageValidationException extends BaseATECaseExecE implements IATEProblemCreator{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -7144577815429959503L;
@@ -54,6 +62,8 @@ public class PageValidationException2 extends BaseATECaseExecE {
 
 		
 	/**
+	 * Gets the list asserters.
+	 *
 	 * @return the listAsserters
 	 */
 	@Nullable
@@ -62,8 +72,9 @@ public class PageValidationException2 extends BaseATECaseExecE {
 	}
 
 	/**
-	 * @param listAsserters
-	 *            the listAsserters to set
+	 * Sets the list asserters.
+	 *
+	 * @param listAsserters            the listAsserters to set
 	 */
 	public void setListAsserters(List<IExpectedResultAsserter> listAsserters) {
 		this.listAsserters = listAsserters;
@@ -93,9 +104,9 @@ public class PageValidationException2 extends BaseATECaseExecE {
 	 * @param currentTestCase
 	 *            the current test case
 	 */
-	public PageValidationException2(String message, String errorCode,
+	public PageValidationException(String message, String errorCode,
 			String pageProperty, IMyWebDriver myWebDriver,
-			TestCase currentTestCase) {
+			ITestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		this.pageProperty = pageProperty;
 
@@ -115,9 +126,9 @@ public class PageValidationException2 extends BaseATECaseExecE {
 	 * @param currentTestCase
 	 *            the current test case
 	 */
-	public PageValidationException2(String message, String errorCode,
+	public PageValidationException(String message, String errorCode,
 			IElementFind eFind, IMyWebDriver myWebDriver,
-			TestCase currentTestCase) {
+			ITestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		elementFind = eFind;
 
@@ -137,9 +148,9 @@ public class PageValidationException2 extends BaseATECaseExecE {
 	 * @param currentTestCase
 	 *            the current test case
 	 */
-	public PageValidationException2(String message, String errorCode,
+	public PageValidationException(String message, String errorCode,
 			List<IExpectedResultAsserter> listAsserters,
-			IMyWebDriver myWebDriver, TestCase currentTestCase) {
+			IMyWebDriver myWebDriver, ITestCase currentTestCase) {
 		super(message, errorCode, currentTestCase, myWebDriver);
 		this.listAsserters = listAsserters;
 
@@ -148,6 +159,101 @@ public class PageValidationException2 extends BaseATECaseExecE {
 	
 
 	/**
+	 * The Class PageValidationProblem.
+	 *
+	 * @author Peidong Hu
+	 */
+	public class PageValidationProblem extends GenericATEProblem implements IATECaseExecProblem, IProblemLogMessenger {
+
+		/** The test data exception. */
+		private final transient PageValidationException pageValException;
+
+		/**
+		 * Instantiates a new page validation problem.
+		 *
+		 * @param source            the source
+		 * @param pageValException the page val exception
+		 */
+		public PageValidationProblem(Object source, PageValidationException pageValException) {
+			super(source, pageValException);
+			this.pageValException = pageValException;
+		}
+
+		/**
+		 * Gets the step exec exception.
+		 * 
+		 * @return the step exec exception
+		 */
+		public PageValidationException getStepExecException() {
+			return pageValException;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public ITestCase getCurrentTestCase() {
+			return this.pageValException.getCurrentTestCase();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public ITestStep getCurrentTestStep() {
+			return this.pageValException.getCurrentTestCase().getCurrentTestStep();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String getProblemMessage() {
+			String tmpStr = getATECaseExecException().getMessage();
+			if (null == tmpStr) return "exception message is not populated."; //NOPMD
+			else return tmpStr;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public IATECaseExecException getATECaseExecException() {
+			return this.getStepExecException();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String getErrorCode() {
+			return this.getStepExecException().getErrorCode();
+		}
+
+		/**
+		* {@inheritDoc}
+		*/
+		@Override
+		public LogMessage getLogMessage() {
+			String errorMsg = "";//NOPMD
+			String warnMsg = "";//NOPMD
+			if (isFatalProblem()) {
+				errorMsg = "This throwable " + this.getClass().getCanonicalName() +"  is fatal for test case: " 
+						+ this.getCurrentTestCase().getTestCaseName() 
+						+ " in step: " + this.getCurrentTestStep().getStepName();
+				
+			} else {
+				warnMsg = "This step producing throwable  " + this.getClass().getCanonicalName() +"  is optional for test case: " 
+						+ this.getCurrentTestCase().getTestCaseName() 
+						+ " in step: " + this.getCurrentTestStep().getStepName();
+			}
+			
+			return new LogMessage(errorMsg, warnMsg);
+		}
+	}
+
+	
+	/**
 	 * Gets the element find.
 	 *
 	 * @return the elementFind
@@ -155,6 +261,19 @@ public class PageValidationException2 extends BaseATECaseExecE {
 	@Nullable
 	public IElementFind getElementFind() {
 		return elementFind;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public IATEProblem initAteProblemInstance(Object ateProblemLocatin) {
+		PageValidationProblem retVal = (PageValidationProblem) ateProblem;
+		if (null == retVal) {
+			retVal = new PageValidationProblem(ateProblemLocatin, this);
+			ateProblem = retVal;
+		}
+		return retVal;
 	}
 
 }

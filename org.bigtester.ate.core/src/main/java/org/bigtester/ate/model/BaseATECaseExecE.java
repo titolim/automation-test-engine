@@ -20,7 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model;
 
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase; 
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 
 // TODO: Auto-generated Javadoc
@@ -36,7 +36,7 @@ public class BaseATECaseExecE extends AbstractATEException implements IATECaseEx
 	private static final long serialVersionUID = 7308181663474968945L;
 
 	/** The current test case. */
-	private TestCase currentTestCase;
+	private ITestCase currentTestCase;
 	
 	/** The my web driver. */
 	private IMyWebDriver myWebDriver;
@@ -50,18 +50,34 @@ public class BaseATECaseExecE extends AbstractATEException implements IATECaseEx
 	 * @param message the message
 	 * @param errorCode the error code
 	 */
-	public BaseATECaseExecE(final String message, final String errorCode, final TestCase currentTestCase, final IMyWebDriver myWebDriver) {
+	public BaseATECaseExecE(final String message, final String errorCode, final ITestCase currentTestCase, final IMyWebDriver myWebDriver) {
 		super(message, errorCode);
 		this.currentTestCase = currentTestCase;
 		this.myWebDriver = myWebDriver;
-		// TODO Auto-generated constructor stub
+		this.setOriginalStepRaisingException(currentTestCase.getCurrentTestStep());
+	}
+	
+	/**
+	 * Instantiates a new base ate case exec e.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 * @param currentTestCase the current test case
+	 * @param myWebDriver the my web driver
+	 * @param cause the cause
+	 */
+	public BaseATECaseExecE(final String message, final String errorCode, final ITestCase currentTestCase, final IMyWebDriver myWebDriver, Throwable cause) {
+		super(message, errorCode, cause);
+		this.currentTestCase = currentTestCase;
+		this.myWebDriver = myWebDriver;
+		this.setOriginalStepRaisingException(currentTestCase.getCurrentTestStep());
 	}
 	/**
 	 * Gets the current test case.
 	 *
 	 * @return the currentTestCase
 	 */
-	public TestCase getCurrentTestCase() {
+	public ITestCase getCurrentTestCase() {
 		return currentTestCase;
 	}
 	
@@ -70,7 +86,7 @@ public class BaseATECaseExecE extends AbstractATEException implements IATECaseEx
 	 *
 	 * @param currentTestCase the currentTestCase to set
 	 */
-	public void setCurrentTestCase(TestCase currentTestCase) {
+	public void setCurrentTestCase(ITestCase currentTestCase) {
 		this.currentTestCase = currentTestCase;
 	}
 
@@ -99,7 +115,4 @@ public class BaseATECaseExecE extends AbstractATEException implements IATECaseEx
 	public void setStepIndexJumpTo(int stepIndexJumpTo) {
 		this.stepIndexJumpTo = stepIndexJumpTo;
 	}
-	
-	
-
 }

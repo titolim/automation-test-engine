@@ -34,7 +34,7 @@ import org.openqa.selenium.WebDriver;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class StepExecutionProblemHandler defines ....
+ * This handler is not used by ate because testng teardown has cover the browser quit action.
  * 
  * @author Peidong Hu
  * 
@@ -73,6 +73,4 @@ public class ProblemBrowserHandler extends AbstractProblemHandler implements
 		// TODO Auto-generated method stub
 
 	}
-
-	
 }

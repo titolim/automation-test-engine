@@ -28,6 +28,6 @@ package org.bigtester.ate.constant;
  */
 public enum StepResultStatus {
 
-		PASS, FAIL, SKIP
+		PASS, FAIL, SKIP, NEUTRAL
 	
 }

@@ -88,8 +88,9 @@ public class MySafariDriver extends AbstractWebDriverBase implements IMyWebDrive
 
 		if (null == retVal) {
 			retVal = new SafariDriver();
+			setWebDriver(retVal);
 		}
-		setWebDriver(retVal);
+		
 		return retVal;
 		/*
 		 * if ( null == retVal) { if (null == getBrowserProfile().getProfile())

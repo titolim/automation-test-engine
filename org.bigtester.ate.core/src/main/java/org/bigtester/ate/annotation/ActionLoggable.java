@@ -18,43 +18,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.systemlogger.problems;
+package org.bigtester.ate.annotation;
+
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.ElementType;
 
 
-import org.bigtester.ate.model.data.exception.TestDataException;
 
-// TODO: Auto-generated Javadoc
+
 /**
- * This class StepExecutionProblem defines ....
- * 
+ * This class StepLoggable defines ....
  * @author Peidong Hu
- * 
+ *
  */
-public class TestDataProblem extends GenericATEProblem {
-
-	/** The test data exception. */
-	private final transient TestDataException testDataException;
-
-	/**
-	 * Instantiates a new page validation problem.
-	 * 
-	 * @param source
-	 *            the source
-	 * @param tde
-	 *            the see
-	 */
-	public TestDataProblem(Object source, TestDataException tde) {
-		super(source, tde);
-		testDataException = tde;
-	}
-
-	/**
-	 * Gets the step exec exception.
-	 * 
-	 * @return the step exec exception
-	 */
-	public TestDataException getStepExecException() {
-		return testDataException;
-	}
-
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Target(
+{
+    ElementType.METHOD, ElementType.TYPE
+})
+public @interface ActionLoggable {
+	
+	ATELogLevel level();
 }

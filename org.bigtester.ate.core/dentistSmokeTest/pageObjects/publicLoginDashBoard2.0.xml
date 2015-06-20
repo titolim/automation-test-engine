@@ -24,7 +24,6 @@
 
 	<ate:pageElementExistenceAsserter id="publicLoginDashBoardElementExistenceAsserter" resultPage="publicLoginDashBoard" stepERValue="loginDashboardVID" />
 
-<!-- 	<ate:stepExpectedResultValue id="publicLoginDashBoardValidationValue" dataValueID="loginDashboardVID"   /> -->
 <!-- appontment operations -->
 	<ate:elementActionDef id="clickAppointmentTab" elementFind="appointmentTabEF" elementAction="appointmentClickEA"/>
 	<ate:elementFindByXpath id="appointmentTabEF" findByValue="//a[@href='#tab_1']" />

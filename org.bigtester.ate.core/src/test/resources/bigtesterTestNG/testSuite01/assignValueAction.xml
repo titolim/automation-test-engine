@@ -13,7 +13,6 @@
 	<!-- this registers beans annotated with @Aspect -->
 	<aop:aspectj-autoproxy />
 
-	<import resource="classpath:META-INF/logger-reporter.xml" />
 	<import resource="classpath:META-INF/page_base_bean.xml" />
 	<import resource="classpath:META-INF/case_base_bean.xml" />
 	<import resource="../pageObjects/assignValueHomePage.xml" />

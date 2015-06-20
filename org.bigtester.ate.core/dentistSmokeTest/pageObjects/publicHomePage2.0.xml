@@ -116,8 +116,6 @@
 		stepERValue="publicHomePageVID" />
 
 
-<!-- 	<ate:stepExpectedResultValue id="publicHomePageValidationValue" -->
-<!-- 		dataValueID="publicHomePageVID" /> -->
 
 
 </beans>

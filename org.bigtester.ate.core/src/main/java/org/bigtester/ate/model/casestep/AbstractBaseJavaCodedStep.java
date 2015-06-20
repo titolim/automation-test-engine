@@ -24,8 +24,8 @@ package org.bigtester.ate.model.casestep;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2; 
+import org.bigtester.ate.model.page.exception.PageValidationException;
+import org.bigtester.ate.model.page.exception.StepExecutionException; 
 import org.eclipse.jdt.annotation.Nullable; 
 import org.springframework.beans.factory.annotation.Autowired;   
 
@@ -72,8 +72,8 @@ abstract public class AbstractBaseJavaCodedStep extends BaseTestStep{
 	 * {@inheritDoc}
 	 * if user wants to use different webdriver than the default system one, please override this method.
 	 */
-	public void doStep(IMyWebDriver myWebDriver)
-			throws StepExecutionException2, PageValidationException2,
+	public void doStep(IMyWebDriver myWebDriver, IStepJumpingEnclosedContainer jumpingContainer)
+			throws StepExecutionException, PageValidationException,
 			RuntimeDataException {
 		
 		return;//NOPMD

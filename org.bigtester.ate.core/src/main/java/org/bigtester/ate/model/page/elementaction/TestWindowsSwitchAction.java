@@ -21,6 +21,8 @@
 package org.bigtester.ate.model.page.elementaction;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.eclipse.jdt.annotation.Nullable;
@@ -59,6 +61,7 @@ public class TestWindowsSwitchAction extends PageModelBase implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	@ActionLoggable (level=ATELogLevel.INFO)
 	public void doAction(String winHandle) {
 		WebDriver webD = super.getMyWd().getWebDriver();
 		if (null == webD) {
@@ -69,6 +72,12 @@ public class TestWindowsSwitchAction extends PageModelBase implements
 		
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
+	public String getActionParametersLoggingValue() {
+		return "window switch action with no parameter";
+	}
 	
 
 }

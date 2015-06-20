@@ -31,7 +31,7 @@ import org.springframework.context.ApplicationListener;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class StepInputDataValue retrieve inputdata from db.
+ * This class StepInputDataValue retrieve inputdata from db file.
  * 
  * @author Peidong Hu
  *
@@ -111,7 +111,7 @@ public class StepInputDataValue extends BaseInputDataValue implements IStepInput
 	
 		if (arg0 == null)
 			return;//NOPMD
-		if (!((RepeatStep) arg0.getSource()).getRefreshDataValues().contains(this)) return;
+		if (!((RepeatStep) arg0.getSource()).getDataValuesNeedRefresh().contains(this)) return;
 		
 		String valueTmp = this.getStrDataValue();
 		if (arg0.getIteration() == 0) {

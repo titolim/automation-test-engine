@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementfind;
 
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.TestObjectFinderLoggable;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.openqa.selenium.NoSuchElementException;
 
@@ -39,6 +41,7 @@ public class TestWindowFindByOpenSequence extends BaseTestWindowFinderImpl imple
 	 *
 	 * @param title the title
 	 */
+	
 	public TestWindowFindByOpenSequence(int openSequence) {
 		super();
 		this.openSequence = openSequence;
@@ -53,6 +56,7 @@ public class TestWindowFindByOpenSequence extends BaseTestWindowFinderImpl imple
 	 * {@inheritDoc}
 	 */
 	@Override
+	@TestObjectFinderLoggable (level=ATELogLevel.INFO)
 	public String doFind(IMyWebDriver myWebDriver) throws NoSuchElementException {
 		String retVal = myWebDriver.getMultiWindowsHandler().obtainWindowHandle(openSequence);
 		if (null == retVal) {
@@ -60,5 +64,11 @@ public class TestWindowFindByOpenSequence extends BaseTestWindowFinderImpl imple
 		}  
 		return retVal;
 	}
-
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public String getFindingParametersLoggingValue() {
+		return "openSequence=" + openSequence;
+	}
 }

@@ -63,7 +63,7 @@ public class TestParameters
 //    
     /** The parent test case data holders. */
     @Nullable
-    private List<AbstractRunTimeDataHolder> parentTestCaseDataHolders;
+    private List<AbstractRunTimeInputDataHolder> parentTestCaseDataHolders;
     /**
 	 * @return the stepThinkTime
 	 */
@@ -181,7 +181,7 @@ public class TestParameters
 	 * @return the parentTestCaseDataHolders
 	 */
 	@Nullable
-	public List<AbstractRunTimeDataHolder> getParentTestCaseDataHolders() {
+	public List<AbstractRunTimeInputDataHolder> getParentTestCaseDataHolders() {
 		return parentTestCaseDataHolders;
 	}
 
@@ -189,7 +189,7 @@ public class TestParameters
 	 * @param parentTestCaseDataHolders the parentTestCaseDataHolders to set
 	 */
 	public void setParentTestCaseDataHolders(
-			List<AbstractRunTimeDataHolder> parentTestCaseDataHolders) {
+			List<AbstractRunTimeInputDataHolder> parentTestCaseDataHolders) {
 		this.parentTestCaseDataHolders = parentTestCaseDataHolders;
 	}
 

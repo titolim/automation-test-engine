@@ -21,8 +21,11 @@
 package org.bigtester.ate.model.page.elementaction;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 
@@ -57,9 +60,11 @@ public class TestWindowsCloseAction extends PageModelBase implements
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BrowserUnexpectedException 
 	 */
 	@Override
-	public void doAction(String winHandle) {
+	@ActionLoggable (level=ATELogLevel.INFO)
+	public void doAction(String winHandle) throws BrowserUnexpectedException {
 		WebDriver webD = super.getMyWd().getWebDriver();
 		if (null == webD) {
 			throw GlobalUtils.createNotInitializedException("web driver");
@@ -68,7 +73,13 @@ public class TestWindowsCloseAction extends PageModelBase implements
 		}
 		
 	}
-
+	
+	/**
+	* {@inheritDoc}
+	*/
+	public String getActionParametersLoggingValue() {
+		return "window close action with no parameter";
+	}
 	
 
 }

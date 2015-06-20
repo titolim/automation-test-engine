@@ -21,22 +21,24 @@
 package org.bigtester.ate.test.ead;
 
 import java.io.File;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.casestep.HomeStep;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
+import org.bigtester.ate.model.page.exception.PageValidationException;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
 import org.bigtester.ate.test.BigtesterProjectTest;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
 
 
 /**
@@ -62,11 +64,13 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	 * Ead test.
 	 * 
 	 * @throws RuntimeDataException
-	 * @throws PageValidationException2
+	 * @throws PageValidationException
+	 * @throws BrowserUnexpectedException 
+	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 1)
-	public void eadSaveCookiesTest() throws PageValidationException2,
-			RuntimeDataException {
+	//@Test(priority = 1)
+	public void eadSaveCookiesTest() throws PageValidationException,
+			RuntimeDataException, NoSuchElementException, BrowserUnexpectedException {
 
 		WebDriver webDriver = getMyDriver().getWebDriverInstance();
 
@@ -77,7 +81,7 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 		HomeStep homeStep = (HomeStep) GlobalUtils
 				.getTargetObject(getApplicationContext().getBean(
 						"stepOpenBigtesterHomePage"));
-		homeStep.doStep();
+		homeStep.doStep(null);
 
 		Set<Cookie> homepageCookies = webDriver.manage().getCookies();
 		Assert.assertTrue(!homepageCookies.isEmpty());
@@ -96,12 +100,14 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	 * Ead load cookies test.
 	 * 
 	 * @throws RuntimeDataException
-	 * @throws PageValidationException2
-	 * @throws StepExecutionException2
+	 * @throws PageValidationException
+	 * @throws StepExecutionException
+	 * @throws BrowserUnexpectedException 
+	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 2)
-	public void eadLoadCookiesTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2 {
+	//@Test(priority = 2)
+	public void eadLoadCookiesTest() throws PageValidationException,
+			RuntimeDataException, StepExecutionException, NoSuchElementException, BrowserUnexpectedException {
 
 		WebDriver webDriver = getMyDriver().getWebDriverInstance();
 		webDriver.manage().deleteAllCookies();
@@ -120,13 +126,15 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	/**
 	 * Ead load cookies file not exist test.
 	 *
-	 * @throws PageValidationException2 the page validation exception2
+	 * @throws PageValidationException the page validation exception2
 	 * @throws RuntimeDataException the runtime data exception
-	 * @throws StepExecutionException2 the step execution exception2
+	 * @throws StepExecutionException the step execution exception2
+	 * @throws BrowserUnexpectedException 
+	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 3)
-	public void eadLoadCookiesFileNotExistErrorRaisedTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2 {
+	//@Test(priority = 3)
+	public void eadLoadCookiesFileNotExistErrorRaisedTest() throws PageValidationException,
+			RuntimeDataException, StepExecutionException, NoSuchElementException, BrowserUnexpectedException {
 
 		WebDriver webDriver = getMyDriver().getWebDriverInstance();
 		webDriver.manage().deleteAllCookies();
@@ -146,13 +154,15 @@ public class EadSaveLoadAllCookiesTest extends BigtesterProjectTest {
 	/**
 	 * Ead load cookies file not exist no error raise test.
 	 *
-	 * @throws PageValidationException2 the page validation exception2
+	 * @throws PageValidationException the page validation exception2
 	 * @throws RuntimeDataException the runtime data exception
-	 * @throws StepExecutionException2 the step execution exception2
+	 * @throws StepExecutionException the step execution exception2
+	 * @throws BrowserUnexpectedException 
+	 * @throws NoSuchElementException 
 	 */
-	@Test(priority = 4)
-	public void eadLoadCookiesFileNotExistNoErrorRaiseTest() throws PageValidationException2,
-			RuntimeDataException, StepExecutionException2 {
+	//@Test(priority = 4)
+	public void eadLoadCookiesFileNotExistNoErrorRaiseTest() throws PageValidationException,
+			RuntimeDataException, StepExecutionException, NoSuchElementException, BrowserUnexpectedException {
 
 		WebDriver webDriver = getMyDriver().getWebDriverInstance();
 		webDriver.manage().deleteAllCookies();

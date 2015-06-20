@@ -76,15 +76,17 @@ public class CaseDataProcessor implements BeanFactoryPostProcessor {
 		String[] homePageNames = beanFactory.getBeanNamesForType(Homepage.class, true, false);
 		String[] lastPageNames = beanFactory.getBeanNamesForType(Lastpage.class, true, false);
 		String[] regularPageNames = beanFactory.getBeanNamesForType(RegularPage.class, true, false);
+		if (allPageNames != null)
+			ArrayUtils.removeAll(allPageNames);
 		
 		allPageNames = ArrayUtils.addAll(homePageNames, lastPageNames);
 		allPageNames = ArrayUtils.addAll(allPageNames, regularPageNames);
 		
-		
+		pageBeanDefs.clear();
 		for (int i=0; i<getAllPageNames().length; i++) {
 			pageBeanDefs.add(beanFactory.getBeanDefinition(getAllPageNames()[i]));
 		}
-		
+		caseDataFiles.clear();
 		for (int j=0; j<pageBeanDefs.size(); j++) {
 			if (null != pageBeanDefs.get(j).getPropertyValues().getPropertyValue(XsdElementConstants.ATTR_BASEPAGEOBJECT_DATAFILE)) {
 				caseDataFiles.add(new FileSystemResource((String) pageBeanDefs.get(j).getPropertyValues().getPropertyValue(XsdElementConstants.ATTR_BASEPAGEOBJECT_DATAFILE).getValue()));

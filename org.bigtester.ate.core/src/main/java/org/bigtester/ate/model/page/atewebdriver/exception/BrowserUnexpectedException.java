@@ -18,35 +18,63 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.systemlogger.problems;
+package org.bigtester.ate.model.page.atewebdriver.exception;
 
 import org.bigtester.ate.model.AbstractATEException;
-import org.bigtester.problomatic2.Problem;
+import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
 /**
- * This class IPageFactory defines ....
+ * This class StepExecutionException defines ....
+ * 
  * @author Peidong Hu
- *
+ * 
  */
-public interface IATEProblemFactory {
+public class BrowserUnexpectedException extends AbstractATEException{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6192054488554647486L;
+	
+	/** The error code. */
+	public static String errorCode = "6192054488554647486L";
+	
+	/** The super cause. */
+	@Nullable
+	private Throwable superCause;
+
+	
+	/**
+	 * Instantiates a new step execution exception2.
+	 *
+	 * @param message the message
+	 * @param errorCode the error code
+	 * @param myWebElement the my web element
+	 * @param myWebDriver the my web driver
+	 * @param currentTestCase the current test case
+	 */
+	public BrowserUnexpectedException(Throwable cause, String message) {
+		super(message, errorCode);
+		setSuperCause(cause);
+	}
+	
 	
 	
 	/**
-	 * Gets the ATE problem.
-	 *
-	 * @param exceptionErrorCode the exception error code
-	 * @return the ATE problem
+	 * @return the superCause
 	 */
-	Problem getATEProblem(Object source, AbstractATEException ateException);
-	
+	@Nullable
+	public Throwable getSuperCause() {
+		return superCause;
+	}
+
 	/**
-	 * Gets the ATE case exec problem.
-	 *
-	 * @param source the source
-	 * @param ateException the ate exception
-	 * @return the ATE case exec problem
+	 * @param superCause the superCause to set
 	 */
-	IATECaseExecProblem getATECaseExecProblem(Object source, AbstractATEException ateException);
-	
+	public void setSuperCause(Throwable superCause) {
+		this.superCause = superCause;
+	}
+
+
 }

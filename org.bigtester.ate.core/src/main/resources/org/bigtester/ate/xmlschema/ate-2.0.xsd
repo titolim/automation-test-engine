@@ -156,9 +156,14 @@
 	<xsd:complexType name="BaseTestStepType" abstract="true">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
+				
 				<!-- Here we re-use Spring elements and attributes -->
-				<xsd:group ref="beans:beanElements" />
-				<xsd:attributeGroup ref="beans:beanAttributes" />
+<!-- 				<xsd:group ref="beans:beanElements" /> -->
+				
+<!-- 				<xsd:attributeGroup ref="beans:beanAttributes" /> -->
+				<xsd:choice minOccurs="0" maxOccurs="1">
+						<xsd:element ref="asserterReferences" />
+					</xsd:choice>
 				<xsd:attribute name="targetStep" type="xsd:boolean"
 					use="required" />
 				<xsd:attribute name="optionalStep" type="xsd:boolean" />
@@ -166,9 +171,22 @@
 					type="xsd:string" />
 				<xsd:attribute name="stepName" type="xsd:string" use="required" />
 				<xsd:attribute name="stepDescription" type="xsd:string" />
+				
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
+	<xsd:element name="asserterReferences">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="beans:identifiedType">
+					<xsd:choice minOccurs="1" maxOccurs="unbounded">
+						<xsd:element ref="ateXmlElementReference" />
+					</xsd:choice>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
 
 	<xsd:complexType name="ElementStepType">
 		<xsd:complexContent>
@@ -238,6 +256,27 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+
+	<xsd:complexType name="AteRefType">
+		<xsd:complexContent>
+			<xsd:extension base="beans:identifiedType">
+				<!-- <xsd:group ref="beans:beanElements"/> -->
+				<!-- <xsd:attributeGroup ref="beans:beanAttributes"/> -->
+				<xsd:attribute name="ateXmlElementID"
+					type="xsd:string" use="required">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<tool:annotation kind="ref">
+								<tool:expected-type
+									type="org.bigtester.ate.model.asserter.IExpectedResultAsserter" />
+							</tool:annotation>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
 
 	<xsd:complexType name="StepTypeServiceDefType">
 		<xsd:complexContent>
@@ -807,9 +846,6 @@
 	</xsd:complexType>
 
 
-
-
-
 	<xsd:complexType name="ElementFindByTagNameType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -1029,7 +1065,7 @@
 	<xsd:element name="stepTypeServiceReference" type="StepTypeServiceRefType" />
 
 	<xsd:element name="baseERValue" type="BaseERValueType" />
-	<xsd:element name="stepExpectedResultValue" type="StepExpectedResultValueType" />
+<!-- 	<xsd:element name="stepExpectedResultValue" type="StepExpectedResultValueType" /> -->
 
 	<xsd:element name="basePageModel" type="PageModelBaseType" />
 	<xsd:element name="basePageObject" type="BasePageObjectType" />
@@ -1040,6 +1076,8 @@
 	<xsd:element name="baseElementAction" type="BaseElementActionType" />
 	<xsd:element name="pagePropertyCorrectnessAsserter" type="PagePropertyCorrectnessAsserterType" />
 	<xsd:element name="pageElementExistenceAsserter" type="PageElementExistenceAsserterType" />
+	<xsd:element name="ateXmlElementReference" type="AteRefType" />
+
 
 	<xsd:element name="baseInputDataValue" type="BaseInputDataValueType" />
 	<xsd:element name="stepInputDataValueParent" type="InputDataValueParentType" />

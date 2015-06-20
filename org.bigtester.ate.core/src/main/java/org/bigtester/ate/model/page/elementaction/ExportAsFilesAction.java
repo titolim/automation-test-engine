@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementaction;
 
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.model.io.IDiskFileOperation;
 import org.bigtester.ate.model.page.PageModelBase;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
@@ -61,11 +63,17 @@ public class ExportAsFilesAction extends PageModelBase implements
 	 * {@inheritDoc}
 	 */
 	@Override
+	@ActionLoggable (level=ATELogLevel.INFO)
 	public void doAction(IDiskFileOperation fileOpr) {
 		fileOpr.saveToMultipleFiles();
 		
 	}
 
-	
+	/**
+	* {@inheritDoc}
+	*/
+	public String getActionParametersLoggingValue() {
+		return "this action is not implemented yet.";
+	}
 
 }

@@ -22,6 +22,7 @@ package org.bigtester.ate.model.page.atewebdriver; //NOPMD
 
 import java.util.List;
 
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 
@@ -60,13 +61,15 @@ public interface IMultiWindowsHandler {
 	 *
 	 * @param winHandle
 	 *            the win handle
+	 * @throws BrowserUnexpectedException 
 	 */
-	void closeWindow(String winHandle);
+	void closeWindow(String winHandle) throws BrowserUnexpectedException;
 	
 	/**
 	 * Close all windows except main window.
+	 * @throws BrowserUnexpectedException 
 	 */
-	void closeAllWindowsExceptMainWindow();
+	void closeAllWindowsExceptMainWindow() throws BrowserUnexpectedException;
 
 
 	/**
@@ -83,8 +86,9 @@ public interface IMultiWindowsHandler {
 	 * @param openWindowHandle
 	 *            the open window handle
 	 * @return true, if successful
+	 * @throws BrowserUnexpectedException 
 	 */
-	boolean closeAllOtherWindows(String openWindowHandle);
+	boolean closeAllOtherWindows(String openWindowHandle) throws BrowserUnexpectedException;
 		/**
 	 * Switch to window.
 	 *
@@ -155,8 +159,9 @@ public interface IMultiWindowsHandler {
 	 *
 	 * @param webD
 	 *            the web d
+	 * @throws BrowserUnexpectedException 
 	 */
-	void refreshWindowsList(@Nullable WebDriver webD, boolean refreshFrameFlag);
+	void refreshWindowsList(@Nullable WebDriver webD, boolean refreshFrameFlag) throws BrowserUnexpectedException;
 
 	/**
 	 * @return the windows

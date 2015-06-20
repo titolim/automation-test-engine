@@ -22,6 +22,7 @@ package org.bigtester.ate.model.page.elementfind;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -46,39 +47,15 @@ public class ElementFindByName extends AbstractElementFind implements IElementFi
 	
 	/**
 	 * {@inheritDoc}
+	 * @throws BrowserUnexpectedException 
 	 */
 	@Override
-	public WebElement doFind(IMyWebDriver myWebDriver, final String findByValue) {
+	public WebElement doFind(IMyWebDriver myWebDriver, final String findByValue) throws BrowserUnexpectedException {
 		final By findBy = By.name(findByValue);
 		if (null == findBy)
 			throw GlobalUtils.createInternalError("selenium By creation");
 		return findElement(findBy, myWebDriver);
-//		
-//		WebDriver webD = myWebDriver.getWebDriver();
-//		if (null == webD) {
-//			throw new IllegalStateException(
-//					"web driver is not correctly populated.");
-//		} else {
-//			createWait(webD);
-//
-//			WebElement retValWE = getWait().until( //NOPMD
-//					new Function<WebDriver, WebElement>() {
-//						public @Nullable WebElement apply( //NOPMD
-//								@Nullable WebDriver driver) {
-//							if (null == driver) {
-//								throw new IllegalStateException(
-//										"webdriver is not correctly populated.");
-//							} else {
-//								return driver.findElement(By.name(findByValue));
-//							}
-//						}
-//					});
-//			if (null == retValWE) {
-//				throw new NoSuchElementException(findByValue);
-//			} else {
-//				return retValWE;
-//			}
-//		}
+
 	}
 
 

@@ -102,6 +102,7 @@ public class TestDatabaseInitializer {
 	 *             Signals that an I/O exception has occurred.
 	 */
 	public void setInitXmlFiles(List<Resource> initXmlFile) throws IOException {
+		getInitXmlFiles().clear();
 		for (int i = 0; i < initXmlFile.size(); i++) {
 
 			this.getInitXmlFiles().add(initXmlFile.get(i).getInputStream());

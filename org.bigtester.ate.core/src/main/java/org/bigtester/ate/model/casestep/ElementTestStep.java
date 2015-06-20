@@ -25,14 +25,18 @@ import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.StepLoggable;
+import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
+import org.bigtester.ate.systemlogger.problems.IATECaseExecProblem;
+import org.bigtester.ate.systemlogger.problems.IATEProblem;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 
@@ -63,39 +67,37 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 	 * @throws RuntimeDataException
 	 * @throws PageValidationException
 	 */
-	@StepLoggable
-	public void doStep() throws StepExecutionException2,
-			PageValidationException2, RuntimeDataException {
+	@StepLoggable(level = ATELogLevel.INFO)
+	@Override
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
+			PageValidationException, RuntimeDataException {
+		//if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) getTestCase();
+
 		try {
 			getMyWebElement().doAction();
-			// if (getExpectedResultAsserter() != null) {
-			// for (int i=0; i < getExpectedResultAsserter().size(); i++) {
-			// getExpectedResultAsserter().get(i).assertER();
-			// }
-			// }
 			super.parseDataHolder();
-		} catch (NoSuchElementException e) {
-			StepExecutionException2 pve = new StepExecutionException2(
+		} catch (NoSuchElementException | TimeoutException e) {
+			StepExecutionException pve = new StepExecutionException(
 					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
 							+ ExceptionMessage.MSG_SEPERATOR + e.getMessage(),
 					ExceptionErrorCode.WEBELEMENT_NOTFOUND,
-					this.getMyWebElement(), this.getMyWebDriver(),
-					GlobalUtils.findTestCaseBean(getApplicationContext()));
-			pve.initCause(e);
+					this.getMyWebDriver(),
+					GlobalUtils.findTestCaseBean(getApplicationContext()), e);
+			IATECaseExecProblem prb =pve.initAteProblemInstance(this);
+			prb.setFatalProblem(false);
 			throw pve;
-		} catch (TimeoutException et) {
-			StepExecutionException2 pve = new StepExecutionException2(
-					ExceptionMessage.MSG_WEBELEMENT_NOTFOUND
-							+ ExceptionMessage.MSG_SEPERATOR + et.getMessage(),
-					ExceptionErrorCode.WEBELEMENT_NOTFOUND,
-					this.getMyWebElement(), this.getMyWebDriver(),
-					GlobalUtils.findTestCaseBean(getApplicationContext()));
-			pve.initCause(et);
-			throw pve;
-		} catch (Throwable otherE) {//NOPMD
+		} catch (Exception otherE) {//NOPMD
 			getApplicationContext().publishEvent(
 					new StepUnexpectedAlertEvent(this, otherE));
-			throw otherE;
+			StepExecutionException pve = new StepExecutionException(
+					StepExecutionException.MSG
+							+ ExceptionMessage.MSG_SEPERATOR + otherE.getMessage(),
+							StepExecutionException.CODE,
+					this.getMyWebDriver(),
+					GlobalUtils.findTestCaseBean(getApplicationContext()), otherE);
+			IATECaseExecProblem prb = pve.initAteProblemInstance(this);
+			prb.setFatalProblem(true);
+			throw pve;
 		}
 
 		List<IExpectedResultAsserter> asserterList = getExpectedResultAsserter();
@@ -110,11 +112,13 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 			listAsserters.add(asserterList.get(i));
 		}
 		if (flagThrowE && isTargetStep()) {
-			PageValidationException2 pve = new PageValidationException2(
+			PageValidationException pve = new PageValidationException(
 					ExceptionMessage.MSG_PAGE_VALIDATION_ERROR_HIGH,
 					ExceptionErrorCode.PAGEVALIDATION_HIGH, listAsserters,
 					asserterList.get(0).getResultPage().getMyWd(),
 					GlobalUtils.findTestCaseBean(getApplicationContext()));
+			IATEProblem prob = pve.initAteProblemInstance(this);
+			prob.setFatalProblem(true);
 			throw pve;
 		}
 
@@ -147,4 +151,6 @@ public class ElementTestStep extends BaseTestStep implements IElementStep {
 	public void setMyWebElement(final MyWebElement<?> myWebElement) {
 		this.myWebElement = myWebElement;
 	}
+
+	
 }

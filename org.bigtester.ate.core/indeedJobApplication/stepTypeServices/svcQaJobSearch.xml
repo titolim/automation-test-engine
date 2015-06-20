@@ -27,6 +27,11 @@
 			targetStep="false" elementActionDef="eadClearTextInWhere"
 			>
 		</ate:elementStep>
+
+<!-- 		<ate:elementStep id="stepTypeInMontrealQC" -->
+<!-- 			stepDescription="type in search location, Montreal QC" stepName="typeInMontrealQC" -->
+<!-- 			targetStep="false" elementActionDef="eadTypeLocationInWhere"> -->
+<!-- 		</ate:elementStep> -->
 		
 		<ate:elementStep id="stepTypeInWindsorOn"
 			stepDescription="type in search location, Windsor" stepName="stepTypeInWindsorOn"
@@ -37,6 +42,11 @@
 			stepDescription="stepClickFindJobsButton" stepName="clickFindJobsButton"
 			targetStep="false" elementActionDef="eadClickFindJobsButton"
 			pageObject="indeedCaHomepage">
+		</ate:elementStep>
+		<ate:elementStep id="stepSortResultByDate"
+			stepDescription="stepSortResultByDate" stepName="stepSortResultByDate"
+			targetStep="false" elementActionDef="eadClickSortByDate"
+			>
 		</ate:elementStep>
 		
 		

@@ -3,29 +3,18 @@
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
-				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n - %throwable{full}
+				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n -	%throwable{full}
 			</Pattern>
 		</encoder>
-		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-
-			<evaluator name="app.error">
-
-				<expression>message.contains("SYS_LOG: ")</expression>
-
-			</evaluator>
-
-			<OnMatch>ACCEPT</OnMatch>
-
-			<OnMismatch>DENY</OnMismatch>
-
-
-
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
 		</filter>
 	</appender>
-	<appender name="SystemLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="SystemLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>logs/SystemLog.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n - %throwable{full}
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n -	%throwable{full}
 			</Pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -35,20 +24,20 @@
 			</FileNamePattern>
 
 		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
 		<filter class="ch.qos.logback.core.filter.EvaluatorFilter">
 
 			<evaluator name="app.error">
 
-				<expression>message.contains("SYS_LOG: ")</expression>
+				<expression>message.contains("APP_LOG: ")</expression>
 
 			</evaluator>
 
-			<OnMatch>ACCEPT</OnMatch>
+			<OnMatch>DENY</OnMatch>
 
-			<OnMismatch>DENY</OnMismatch>
-
-
-
+			<OnMismatch>ACCEPT</OnMismatch>
 		</filter>
 	</appender>
 	<appender name="ApplicationLog"
@@ -60,14 +49,13 @@
 
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 
-			<Pattern>%-40(%d{ISO8601} [%thread]) %-5level [M: %marker]
-				%-47.47logger{45} :%X{host}%X{message}: %msg%n           </Pattern>
+			<Pattern>%-25(%d{ISO8601}) %-5level :%X{host}%X{message}: %msg%n           </Pattern>
 
 		</encoder>
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 
-			<FileNamePattern>logs/ApplicationLog.log.%d{yyyy-MM-dd-HH}
+			<FileNamePattern>logs/ApplicationLog.log.%d{yyyy-MM-dd}
 
 			</FileNamePattern>
 
@@ -90,8 +78,8 @@
 		</filter>
 	</appender>
 
-	<logger name="org.bigtester" level="ALL" >
-		
+	<logger name="org.bigtester" level="ALL">
+
 	</logger>
 	<root level="ALL">
 		<appender-ref ref="STDOUT" />

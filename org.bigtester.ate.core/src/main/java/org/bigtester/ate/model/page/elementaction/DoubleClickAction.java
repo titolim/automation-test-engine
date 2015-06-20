@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.elementaction;
 
+import org.bigtester.ate.annotation.ATELogLevel;
+import org.bigtester.ate.annotation.ActionLoggable;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -44,6 +46,7 @@ public class DoubleClickAction extends BaseElementAction implements IElementActi
      * {@inheritDoc}
      */
     @Override
+	@ActionLoggable (level=ATELogLevel.INFO)
     public void doAction(final WebElement webElm) {
     	Actions act = new Actions(getMyWd().getWebDriver());
 		act.doubleClick(webElm);

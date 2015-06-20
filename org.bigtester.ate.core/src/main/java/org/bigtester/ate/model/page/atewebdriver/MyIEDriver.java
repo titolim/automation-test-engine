@@ -94,8 +94,9 @@ public class MyIEDriver extends AbstractWebDriverBase implements IMyWebDriver {
 				throw GlobalUtils.createNotInitializedException("operating system is not supported ");
 			}
 			retVal = new InternetExplorerDriver();
+			setWebDriver(retVal);
 		}
-		setWebDriver(retVal);
+		
 		return retVal;
 	}
 

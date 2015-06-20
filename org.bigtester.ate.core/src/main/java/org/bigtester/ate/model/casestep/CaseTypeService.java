@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
+import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
 import org.bigtester.ate.model.data.ICaseServiceParsedDataParser;
@@ -31,8 +32,8 @@ import org.bigtester.ate.model.data.IDataParser;
 import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
-import org.bigtester.ate.model.page.exception.PageValidationException2;
-import org.bigtester.ate.model.page.exception.StepExecutionException2;
+import org.bigtester.ate.model.page.exception.PageValidationException;
+import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.IPageObject; 
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
@@ -59,7 +60,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	/** The parent test case. */
 	// TODO current version needs user to manually set the parentTestCase in xml
 	// file
-	final private TestCase parentTestCase;
+	final private ITestCase parentTestCase;
 
 	/** The data holders. */
 	@XStreamOmitField
@@ -72,7 +73,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 * @param testCaseName
 	 */
 	public CaseTypeService(String testCaseName, String testCaseFileName,
-			TestCase parentTestCase) {
+			ITestCase parentTestCase) {
 		super(testCaseName);
 		this.testCaseFileName = testCaseFileName;
 		this.parentTestCase = parentTestCase;
@@ -141,8 +142,10 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void doStep() throws StepExecutionException2,
-			PageValidationException2, RuntimeDataException {
+	public void doStep(@Nullable IStepJumpingEnclosedContainer jumpingContainer) throws StepExecutionException,
+			PageValidationException, RuntimeDataException {
+		//if (null == jumpingContainer) jumpingContainer = (IStepJumpingEnclosedContainer) this.getParentTestCase();
+
 		String testCaseFileName = getTestCaseFileName();
 		WebDriver mainDriver;
 		ApplicationContext context;
@@ -172,11 +175,19 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 				}
 			}
 
-		} catch (Throwable t) { // NOPMD
+		} catch (Exception t) { // NOPMD
 			//CaseTypeservice is considered as atomic step. We don't do step jump inside of the casetypeservice
 			//if error appears, directly, we exit the service and throw error.
 			mainDriver.quit();
-			throw t;
+			StepExecutionException pve = new StepExecutionException(
+					StepExecutionException.MSG
+							+ ExceptionMessage.MSG_SEPERATOR + t.getMessage(),
+							StepExecutionException.CODE,
+					this.getMyWebDriver(),
+					getParentTestCase(), t);
+			pve.initAteProblemInstance(this).setFatalProblem(true);//Any exception thrown out of testcase is fatal for this step.
+			
+			throw pve;
 		}
 
 	}
@@ -191,7 +202,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	/**
 	 * @return the parentTestCase
 	 */
-	public TestCase getParentTestCase() {
+	public ITestCase getParentTestCase() {
 		return parentTestCase;
 	}
 
@@ -291,8 +302,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getCorrelatedOptionalStepsUtilInclusiveIndex() {
-		// TODO Auto-generated method stub
+	public int getCorrelatedOptionalStepsUtilInclusiveIndex(IStepJumpingEnclosedContainer jumpingContainer) {
 		return -1;
 	}
 
@@ -310,7 +320,7 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	*/
 	@Override
 	public void setCorrectedOnTheFly(boolean correctedOnTheFly) {
-		
+		//for future.
 		
 	}
 

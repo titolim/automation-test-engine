@@ -21,8 +21,8 @@
 package org.bigtester.ate.systemlogger.problems;
 
 import org.bigtester.ate.model.IATECaseExecException;
-import org.bigtester.ate.model.casestep.ITestStep;
-import org.bigtester.ate.model.casestep.TestCase;
+import org.bigtester.ate.model.casestep.ITestCase;
+import org.bigtester.ate.model.casestep.ITestStep; 
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,14 +30,14 @@ import org.bigtester.ate.model.casestep.TestCase;
  * @author Peidong Hu
  *
  */
-public interface IATECaseExecProblem {
+public interface IATECaseExecProblem extends IATEProblem{
 	
 	/**
 	 * Gets the current test case.
 	 *
 	 * @return the current test case
 	 */
-	TestCase getCurrentTestCase();
+	ITestCase getCurrentTestCase();
 	
 	/**
 	 * Gets the current test step.
@@ -46,12 +46,6 @@ public interface IATECaseExecProblem {
 	 */
 	ITestStep getCurrentTestStep();
 	
-	/**
-	 * Gets the problem message.
-	 *
-	 * @return the problem message
-	 */
-	String getProblemMessage();
 	
 	/**
 	 * Gets the short problem message.
@@ -73,4 +67,5 @@ public interface IATECaseExecProblem {
 	 * @return the error code
 	 */
 	String getErrorCode();
+
 }

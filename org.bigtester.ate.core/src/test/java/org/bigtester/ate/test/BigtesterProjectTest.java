@@ -24,6 +24,7 @@ import java.io.File;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterClass;
@@ -103,8 +104,9 @@ public class BigtesterProjectTest extends BaseATETest {
 	 *
 	 * @param pageRelativePathName the page relative path name
 	 * @return the test page
+	 * @throws BrowserUnexpectedException 
 	 */
-	public void getTestPage(String pageRelativePathName) {
+	public void getTestPage(String pageRelativePathName) throws BrowserUnexpectedException {
 		
 		getMyDriver().getWebDriverInstance().get(
 				getTestPageAbsolutePath(pageRelativePathName));
