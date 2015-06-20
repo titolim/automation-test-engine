@@ -106,10 +106,10 @@ public final class TestStepsXMLReporterUtils {
 				
 				stepReportMSG = tsr.getThisStep().getStepDescription()
 						+ ReportMessage.MSG_SEPERATOR
-						+ myEA.getClass().getName() + " : \""
+						+ GlobalUtils.getTargetObject(myEA).getClass().getSimpleName() + " : \""
 						+ myEA.getActionParametersLoggingValue()
 						+ "\" action on test object:"
-						+ myEF.getClass().getName() + ": \""
+						+ GlobalUtils.getTargetObject(myEF).getClass().getSimpleName() + ": \""
 						+ myEF.getFindingParametersLoggingValue() + "\"";
 			}
 
