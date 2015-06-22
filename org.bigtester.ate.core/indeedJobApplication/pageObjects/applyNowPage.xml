@@ -66,7 +66,7 @@
 	<ate:elementFindById id="efApplyNowChooseFile"
 		findByValue="resume"  />
 	<ate:uploadFileAction id="eaApplyChooseFile"	
-		fileNameWithAbsolutePath="/home/peidong/Downloads/peidonghu_resume_en_Selenium.pdf" />
+		fileNameWithAbsolutePath="/home/peidong/peidonghu_resume_en_Selenium2.pdf" />
 
 	<ate:elementActionDef id="eadFilloutMessage"
 		elementFind="efMessage" elementAction="eaMessageSent">
