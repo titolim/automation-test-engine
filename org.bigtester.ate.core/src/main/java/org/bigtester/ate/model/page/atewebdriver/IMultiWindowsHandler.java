@@ -71,7 +71,13 @@ public interface IMultiWindowsHandler {
 	 */
 	void closeAllWindowsExceptMainWindow() throws BrowserUnexpectedException;
 
-
+	/**
+	 * Retry refresh windows.
+	 *
+	 * @param driver the driver
+	 * @param refreshFrames the refresh frames
+	 */
+	void retryRefreshWindows(WebDriver driver, boolean refreshFrames);
 	/**
 	 * Retrieve current window title.
 	 *

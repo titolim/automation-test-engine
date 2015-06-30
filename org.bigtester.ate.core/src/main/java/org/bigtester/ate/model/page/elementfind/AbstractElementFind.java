@@ -360,6 +360,12 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 
 			} catch (NoSuchElementException | TimeoutException error) {
 				winOnFocus.getCurrentElementFindFrameChain().clear();
+				try {
+					myWebDriver.getMultiWindowsHandler().refreshWindowsList(myWebDriver.getWebDriverInstance(), true);
+				} catch (BrowserUnexpectedException e) {
+					myWebDriver.getMultiWindowsHandler().retryRefreshWindows(myWebDriver.getWebDriverInstance(), true);
+				}
+				
 				for (WindowFrame winfr : winOnFocus.getVisibleFrames()) {
 
 					try {

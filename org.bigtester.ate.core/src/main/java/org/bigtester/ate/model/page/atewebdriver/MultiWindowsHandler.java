@@ -527,17 +527,18 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	public void afterChangeValueOf(@Nullable WebElement arg0,
 			@Nullable WebDriver arg1) {
 		try {
-			refreshWindowsList(arg1, true);
+			refreshWindowsList(arg1, false);
 		} catch (BrowserUnexpectedException e) {
-			retryRefreshWindows(getMyWd().getWebDriverInstance());
+			retryRefreshWindows(getMyWd().getWebDriverInstance(), false);
 		}
+
 
 	}
 
-	private void retryRefreshWindows(WebDriver driver) {
+	public void retryRefreshWindows(WebDriver driver, boolean refreshFrames) {
 		this.resetWindows();
 		try {
-			refreshWindowsList(driver, true);
+			refreshWindowsList(driver, refreshFrames);
 		} catch (BrowserUnexpectedException e1) {
 			throw GlobalUtils.createInternalError("browser fatal error.", e1);//NOPMD
 		}
@@ -548,9 +549,9 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Override
 	public void afterClickOn(@Nullable WebElement arg0, @Nullable WebDriver arg1) {
 		try {
-			refreshWindowsList(arg1, true);
+			refreshWindowsList(arg1, false);
 		} catch (BrowserUnexpectedException e) {
-			retryRefreshWindows(getMyWd().getWebDriverInstance());
+			retryRefreshWindows(getMyWd().getWebDriverInstance(), false);
 		}
 
 	}
@@ -571,9 +572,9 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Override
 	public void afterNavigateBack(@Nullable WebDriver arg0) {
 		try {
-			refreshWindowsList(arg0, true);
+			refreshWindowsList(arg0, false);
 		} catch (BrowserUnexpectedException e) {
-			retryRefreshWindows(getMyWd().getWebDriverInstance());
+			retryRefreshWindows(getMyWd().getWebDriverInstance(), false);
 		}
 	}
 
@@ -583,9 +584,9 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Override
 	public void afterNavigateForward(@Nullable WebDriver arg0) {
 		try {
-			refreshWindowsList(arg0, true);
+			refreshWindowsList(arg0, false);
 		} catch (BrowserUnexpectedException e) {
-			retryRefreshWindows(getMyWd().getWebDriverInstance());
+			retryRefreshWindows(getMyWd().getWebDriverInstance(), false);
 		}
 
 	}
@@ -596,10 +597,11 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Override
 	public void afterNavigateTo(@Nullable String arg0, @Nullable WebDriver arg1) {
 		try {
-			refreshWindowsList(arg1, true);
+			refreshWindowsList(arg1, false);
 		} catch (BrowserUnexpectedException e) {
-			retryRefreshWindows(getMyWd().getWebDriverInstance());
+			retryRefreshWindows(getMyWd().getWebDriverInstance(), false);
 		}
+
 
 	}
 
@@ -609,10 +611,11 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Override
 	public void afterScript(@Nullable String arg0, @Nullable WebDriver arg1) {
 		try {
-			refreshWindowsList(arg1, true);
+			refreshWindowsList(arg1, false);
 		} catch (BrowserUnexpectedException e) {
-			retryRefreshWindows(getMyWd().getWebDriverInstance());
+			retryRefreshWindows(getMyWd().getWebDriverInstance(), false);
 		}
+
 
 	}
 
@@ -642,7 +645,11 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Override
 	public void beforeFindBy(@Nullable By arg0, @Nullable WebElement arg1,
 			@Nullable WebDriver arg2) {
-		// refreshWindowsList(arg2);
+//		try {
+//			refreshWindowsList(arg2, true);
+//		} catch (BrowserUnexpectedException e) {
+//			retryRefreshWindows(getMyWd().getWebDriverInstance());
+//		}
 
 	}
 
@@ -757,7 +764,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 				try {
 					refreshWindowsList(this.getDriver(), false);
 				} catch (BrowserUnexpectedException e) {
-					retryRefreshWindows(getMyWd().getWebDriverInstance());
+					retryRefreshWindows(getMyWd().getWebDriverInstance(), false);
 				}
 			}
 		}
