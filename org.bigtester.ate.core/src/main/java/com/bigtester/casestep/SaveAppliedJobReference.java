@@ -60,6 +60,7 @@ public class SaveAppliedJobReference extends AbstractBaseJavaCodedStep
 		try {
 			File yourFile = new File(JOBREFERENCESSAVEFILE);
 			if(!yourFile.exists()) {
+				yourFile.getParentFile().mkdirs();
 			    yourFile.createNewFile();
 			}
 			
