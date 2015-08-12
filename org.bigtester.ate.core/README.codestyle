@@ -61,6 +61,9 @@ This document is built for developers to setup your code style and JAutoDoc tool
  	i) click 'enable PMD'
 	i') click Use the ruleset configured in a project file
  	j) project will be scanned and suggestion of code style will be displayed as a triangle icon on file.
+3') install eclipse-pmd plugin to enhance the PMD tool
+ 	a) click menu help->eclipse marketplace->type in eclipse-pmd and search to install it
+
  /*******************************************************************************
  * ATE, Automation Test Engine
  *
