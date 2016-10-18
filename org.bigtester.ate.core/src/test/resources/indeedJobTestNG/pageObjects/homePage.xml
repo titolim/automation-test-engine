@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:ate="http://www.bigtester.org/schema/ate" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	                       http://www.springframework.org/schema/aop 
+	                       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+	                       http://www.bigtester.org/schema/ate 
+	                       http://www.bigtester.org/schema/ate/ate-2.0.xsd">
+	                       
+	<!-- this registers beans annotated with @Aspect -->
+	<aop:aspectj-autoproxy />
+
+	<import resource="classpath:META-INF/logger-reporter.xml" />
+	<import resource="classpath:META-INF/page_base_bean.xml" />
+	<import resource="./loginForm.xml" />
+	<ate:homePage id="poHomePage" homeUrl="http://www.bigtester.com" dataFile="src/test/resources/bigtesterTestNG/pageObjects/homePage.data.xml"/>
+	
+    <!-- myWebElement definition -->
+    <ate:elementActionDef id="eadClickHomepageEnglish" elementFind="efHomePageEnglishLink" elementAction="eaHomePageEnglishLinkClick" />
+	<ate:elementFindByXpath id="efHomePageEnglishLink" findByValue="//img[@alt='English (United Kingdom)']" />
+	<ate:clickAction id="eaHomePageEnglishLinkClick" />
+	
+<ate:elementActionDef id="eadSaveCookies" elementFind="efAllCookies" elementAction="eaExportAsFile" />
+	<ate:cookiesFindAll id="efAllCookies" />
+	<ate:fileExportAction id="eaExportAsFile"
+		fileNameWithAbsolutePath="myFile" />
+<ate:elementActionDef id="eadLoadCookies" elementFind="efAllCookies" elementAction="eaImportFromFile" />
+	<ate:fileImportAction id="eaImportFromFile"
+		fileNameWithAbsolutePath="myFile" />
+		
+		<ate:elementActionDef id="eadLoadCookiesFileNotExist" elementFind="efAllCookies" elementAction="eaImportFromFileNotExist" />
+	<ate:fileImportAction id="eaImportFromFileNotExist"
+		fileNameWithAbsolutePath="myFileNotExist" />
+		
+<ate:elementActionDef id="eadLoadCookiesFileNotExistNotRaiseErro" elementFind="efAllCookies" elementAction="eaImportFromFileNotExistNotRaiseError" />
+	<ate:fileImportAction id="eaImportFromFileNotExistNotRaiseError"
+		fileNameWithAbsolutePath="myFileNotExist" fileNotFoundRaiseError="false"/>
+
+<!-- 	<ate:pagePropertyCorrectnessAsserter -->
+<!-- 	id="homePagePropertyAsserter" resultPage="homePage" stepERValue="homePageValidationValue"/> -->
+
+	<ate:pageElementExistenceAsserter 
+	 id="homeElementExistenceAsserter" resultPage="poHomePage" stepERValue="homePageVID"/>
+	
+			
+</beans>

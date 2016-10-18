@@ -20,9 +20,20 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional; 
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver; 
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Option; 
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.bigtester.ate.GlobalUtils;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -71,6 +82,76 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 		
 		super();
 		getBrowserProfile().setPreserveCookiesOnExecutions(preserveCookiesOnExecutions);
+		
+	}
+	
+	@SuppressWarnings({ "null", "unused" })
+	private CommandLine parseArgs (String argsStr){
+		// create the command line parser
+		CommandLineParser parser = new DefaultParser();
+
+		// create the Options
+		Options options = new Options();
+		options.addOption( "a", "all", false, "do not hide entries starting with ." );
+		options.addOption( "A", "almost-all", false, "do not list implied . and .." );
+		options.addOption( "b", "escape", false, "print octal escapes for nongraphic "
+		                                         + "characters" );
+		Option sizeOption = Option.builder()
+			    .longOpt( "block-size" )
+			    .desc( "use SIZE-byte blocks"  )
+			    .hasArg()
+			    .argName( "SIZE" )
+			    .build();
+		options.addOption( sizeOption );
+		options.addOption( "B", "ignore-backups", false, "do not list implied entried "
+		                                                 + "ending with ~");
+		options.addOption( "c", false, "with -lt: sort by, and show, ctime (time of last " 
+		                               + "modification of file status information) with "
+		                               + "-l:show ctime and sort by name otherwise: sort "
+		                               + "by ctime" );
+		options.addOption( "C", false, "list entries by columns" );
+
+		
+
+		
+			String[] args = argsStr.split("\\s+");
+			
+		    // parse the command line arguments
+		    Optional<CommandLine> line = Optional.empty();
+		    CommandLine retVal = line.get();
+		    try {
+				line = Optional.of(parser.parse( options, args ));
+			} catch (ParseException e) {
+				retVal = line.get();
+			}
+		    
+		    return retVal;
+		
+	
+	}
+	
+	@SuppressWarnings("null")
+	private List<String> parseArgsIntoArray(String argsStr) {
+		List<String> retVal = new ArrayList<String>();
+		String[] args = argsStr.split("\\s+");
+		retVal = Arrays.asList(args);
+		return retVal;
+		
+	}
+	
+	/**
+	 * Instantiates a new my chrome driver.
+	 *
+	 * @param preserveCookiesOnExecutions the preserve cookies on executions
+	 * @param startArguments the start arguments
+	 */
+
+	public MyChromeDriver(boolean preserveCookiesOnExecutions, String startArguments) {
+		
+		super();
+		getBrowserProfile().setPreserveCookiesOnExecutions(preserveCookiesOnExecutions);
+		
+		getBrowserProfile().setStartArguments(parseArgsIntoArray(startArguments));
 		
 	}
 	
@@ -184,14 +265,17 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 		WebDriver retVal = getWebDriver();
 		if (null == retVal) {
 			setChromeDriverSystemEnv();
+			ChromeOptions ops = new ChromeOptions();
+			ops.addArguments(getBrowserProfile().getStartArguments());
 			if (getBrowserProfile().isPreserveCookiesOnExecutions()) {
-				ChromeOptions ops = new ChromeOptions();
-				
-				ops.addArguments("--user-data-dir=" + getBrowserProfile().getTestCaseChromeUserDataDir());
-				retVal = new ChromeDriver(ops);
-			} else {
-				retVal = new ChromeDriver();
+
+				ops.addArguments("--user-data-dir="
+						+ getBrowserProfile().getTestCaseChromeUserDataDir());
+
 			}
+
+			retVal = new ChromeDriver(ops);
+
 			setWebDriver(retVal);
 		}
 		return retVal;

@@ -20,6 +20,9 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bigtester.ate.GlobalUtils;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -33,6 +36,9 @@ public class ChromeFeatureProfile extends AbstractBrowserFeatureProfile {
 
 	/** The Constant defaultUserDataDir. */
 	private static final String DEFAULTUSERDATADIR = "tmpUserDataDir";
+	
+	/** The start arguments. */
+	private List<String> startArguments = new ArrayList<String>();
 	/** The user data dir. */
 	@Nullable
 	 private String testCaseChromeUserDataDir;
@@ -76,6 +82,18 @@ public class ChromeFeatureProfile extends AbstractBrowserFeatureProfile {
 	 */
 	public static String getDefaultuserdatadir() {
 		return DEFAULTUSERDATADIR;
+	}
+	/**
+	 * @return the startArguments
+	 */
+	public List<String> getStartArguments() {
+		return startArguments;
+	}
+	/**
+	 * @param startArguments the startArguments to set
+	 */
+	public void setStartArguments(List<String> startArguments) {
+		this.startArguments = startArguments;
 	}
 
 	

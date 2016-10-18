@@ -1015,6 +1015,7 @@
 		<xsd:complexContent>
 			<xsd:extension base="AbstractWebDriverBaseType">
 				<xsd:attribute name="preserveCookies" type="xsd:boolean" />
+				<xsd:attribute name="startArguments" type="xsd:string" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>

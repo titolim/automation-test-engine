@@ -29,7 +29,7 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:chromeDriver  preserveCookies="true" />
+	<ate:chromeDriver  preserveCookies="true" startArguments="--disable-web-security --allow-file-access-from-files"/>
 
 	<ate:testCase id="testcase" testCaseName="apply easily-apply job.">
 

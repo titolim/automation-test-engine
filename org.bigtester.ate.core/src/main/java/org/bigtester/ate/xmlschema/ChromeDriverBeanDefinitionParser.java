@@ -63,6 +63,12 @@ public class ChromeDriverBeanDefinitionParser extends
 		if (!StringUtils.isEmpty(preserveCookies)) {
 			bean.addConstructorArgValue(Boolean.parseBoolean(preserveCookies));
 		}
+		String startArguments = element
+				.getAttribute(XsdElementConstants.ATTR_CHROMEDRIVER_START_ARGUMENTS);
+		if (!StringUtils.isEmpty(preserveCookies)) {
+			bean.addConstructorArgValue(startArguments);
+		}
+		
 
 	}
 
