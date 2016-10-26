@@ -50,51 +50,17 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author Peidong Hu
  *
  */
-public class MultiWindowsHandler implements IMultiWindowsHandler,
+public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandler implements IMultiWindowsHandler,
 		WebDriverEventListener, ApplicationListener<AlertDialogAcceptedEvent> {
 	
 	/** The test case. */
 	@Nullable
 	@Autowired
 	private ITestCase testCase;
-	/** The my wd. */
-	@XStreamOmitField
-	@Nullable
-	@Autowired
-	private IMyWebDriver myWd;
+	
+	
 
-	/** The windows. */
-	final private List<BrowserWindow> windows = new ArrayList<BrowserWindow>();
 
-	/** The alerts. */
-	final private List<AbstractAlertDialog> alerts = new ArrayList<AbstractAlertDialog>();
-
-	/** The main window handler. */
-	@Nullable
-	private String mainWindowHandler;
-
-	/** The main window title. */
-	@Nullable
-	private String mainWindowTitle;
-
-	private void resetWindows() {
-		windows.clear();
-		alerts.clear();
-		this.mainWindowHandler = null;//NOPMD
-		this.mainWindowTitle = null;//NOPMD
-	}
-	/**
-	 * @return the mainWindowTitle
-	 */
-	public String getMainWindowTitle() {
-		final String mainWindowTitle2 = mainWindowTitle;
-		if (mainWindowTitle2 == null) {
-			throw GlobalUtils
-					.createNotInitializedException("main window title");
-		} else {
-			return mainWindowTitle2;
-		}
-	}
 
 	/**
 	 * Gets the window on focus handle.
@@ -104,7 +70,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Nullable
 	public String getWindowOnFocusHandle() {
 		String retVal;
-		if (windows.isEmpty()) {
+		if (getWindows().isEmpty()) {
 			retVal = null; // NOPMD
 		} else {
 			retVal = getDriver().getWindowHandle();
@@ -118,7 +84,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	@Nullable
 	public BrowserWindow getWindowByHandle(String winHandle) {
 		BrowserWindow retVal = null;//NOPMD
-		for (BrowserWindow win : this.windows) {
+		for (BrowserWindow win : this.getWindows()) {
 			if (winHandle.equalsIgnoreCase(win.getWindowHandle())) {
 				retVal = win;
 				break;
@@ -161,7 +127,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 
 	private int getNumberOfOpenWindows() {
 		int retVal = 0;//NOPMD
-		for (BrowserWindow win : windows) {
+		for (BrowserWindow win : getWindows()) {
 			if (!win.isClosed())
 				retVal = retVal + 1;
 		}
@@ -226,7 +192,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 * @throws BrowserUnexpectedException 
 	 */
 	public boolean closeAllOtherWindows(String openWindowHandle) throws BrowserUnexpectedException {
-		for (BrowserWindow win : this.windows) {
+		for (BrowserWindow win : this.getWindows()) {
 			if (!openWindowHandle.equalsIgnoreCase(win.getWindowHandle())) {
 				win.close();
 				try {
@@ -322,9 +288,9 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 * Focus on latest window.
 	 */
 	public void focusOnLatestWindow() {
-		if (windows.isEmpty())
+		if (getWindows().isEmpty())
 			return;
-		windows.get(windows.size() - 1).obtainWindowFocus();
+		getWindows().get(getWindows().size() - 1).obtainWindowFocus();
 	}
 
 	/**
@@ -336,9 +302,14 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 */
 	@Nullable
 	public String obtainWindowHandle(int openSequence) {
+		try {
+			this.refreshWindowsList(getDriver(), false);
+		} catch (BrowserUnexpectedException e) {
+			this.retryRefreshWindows(getDriver(), false);
+		}
 		String retVal = null; // NOPMD
-		if (windows.size() >= openSequence + 1) {
-			retVal = windows.get(openSequence).getWindowHandle();
+		if (getWindows().size() >= openSequence + 1) {
+			retVal = getWindows().get(openSequence).getWindowHandle();
 		}
 		return retVal;
 	}
@@ -391,10 +362,10 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 *            the open sequence
 	 */
 	public void focusOnOpenSequenceNumber(int openSequence) {
-		if (windows.size() < openSequence + 1) {
+		if (getWindows().size() < openSequence + 1) {
 			return;
 		} else {
-			windows.get(openSequence).obtainWindowFocus();
+			getWindows().get(openSequence).obtainWindowFocus();
 		}
 
 	}
@@ -406,7 +377,7 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 	 */
 	public BrowserWindow getBrowserWindowOnFocus() {
 		String winHandle = this.getDriver().getWindowHandle(); // NOPMD
-		for (BrowserWindow bwd : windows) {
+		for (BrowserWindow bwd : getWindows()) {
 			if (bwd.getWindowHandle().equals(winHandle)) {
 				return bwd;
 			}
@@ -414,111 +385,9 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 		throw GlobalUtils.createInternalError("web driver wrong state");
 	}
 
-	private void refreshAlerts() {
-		for (int i = 0; i < alerts.size(); i++) {
-			if (alerts.get(i).isClosed())
-				alerts.remove(alerts.get(i));
-		}
-	}
 
-	private void removeClosedWindows() {
-		boolean winRemoved = false;// NOPMD
-		for (int i = 0; i < windows.size(); i++) {
-			if (windows.get(i).isClosed()) {
-				windows.remove(i);
-				winRemoved = true;// NOPMD
-			}
-		}
-		if (winRemoved) {
-			this.getDriver().switchTo()
-					.window(windows.get(windows.size() - 1).getWindowHandle());
-		}
-	}
 
-	/**
-	 * Refresh windows list.
-	 *
-	 * @param webD
-	 *            the web d
-	 * @throws BrowserUnexpectedException 
-	 */
-	public void refreshWindowsList(@Nullable WebDriver webD,
-			boolean refreshFrameFlag) throws BrowserUnexpectedException {
-		if (null == webD)
-			throw GlobalUtils.createNotInitializedException("Web Driver");
-		List<String> newAddedWinHandles = new ArrayList<String>();// NOPMD
-		Alert winAlert = null; // NOPMD
-		String winHandlePreserved = null;// NOPMD
-		removeClosedWindows();
-		refreshAlerts();
-		try {
-			winAlert = webD.switchTo().alert(); // NOPMD
-			if (!alerts.contains(winAlert)) {
-				if (null == winAlert)
-					throw GlobalUtils.createInternalError("java");
-				PopupPromptDialog alertNew = new PopupPromptDialog(webD,
-						winAlert, alerts.size());
-				alertNew.setClosed(false);
-				alerts.add(alertNew);
-			}
-		} catch (NoAlertPresentException noAlert) {
-			winHandlePreserved = webD.getWindowHandle(); // NOPMD
-		} catch (UnsupportedOperationException e) {
-			winHandlePreserved = webD.getWindowHandle(); // NOPMD
-		}
 
-		Set<String> allWinHandles = webD.getWindowHandles();
-		for (String winH : allWinHandles) {
-			if (null == winH)
-				throw GlobalUtils
-						.createInternalError("web driver get all windows handles error.");
-			boolean winAlreadyStored = false; // NOPMD
-			for (BrowserWindow bWin : windows) {
-				if (bWin.getWindowHandle().equals(winH)) {
-					winAlreadyStored = true;
-					break;
-				}
-			}
-			if (!winAlreadyStored) {
-				BrowserWindow temp = new BrowserWindow(winH, getMyWd());
-				windows.add(temp);
-				newAddedWinHandles.add(winH);
-			}
-		}
-		for (Iterator<BrowserWindow> iter = windows.iterator(); iter.hasNext();) {
-			BrowserWindow winH2 = iter.next();
-			if (allWinHandles.contains(winH2.getWindowHandle())) {
-				continue;
-			} else {
-				iter.remove();
-			}
-		}
-		if (refreshFrameFlag) {
-			for (Iterator<BrowserWindow> iter = windows.iterator(); iter
-					.hasNext();) {
-				BrowserWindow winH2 = iter.next();
-				winH2.refreshFrames();
-			}
-		}
-
-		if (StringUtils.isEmpty(this.mainWindowHandler)
-				|| StringUtils.isEmpty(this.mainWindowTitle)) {
-			this.mainWindowHandler = windows.get(0).getWindowHandle();
-			String currentWinHandle = webD.getWindowHandle();
-			webD.switchTo().window(this.mainWindowHandler);
-			this.mainWindowTitle = windows.get(0).getMyWd().getTitle();
-			webD.switchTo().window(currentWinHandle);
-		}
-		if (winAlert == null) {
-			if (newAddedWinHandles.isEmpty()) {
-				webD.switchTo().window(winHandlePreserved);
-			} else {
-				webD.switchTo().window(
-						newAddedWinHandles.get(newAddedWinHandles.size() - 1));
-			}
-		}
-
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -698,55 +567,13 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 
 	}
 
-	/**
-	 * @return the windows
-	 */
-	public List<BrowserWindow> getWindows() {
-		return windows;
-	}
 
-	/**
-	 * @return the myWebD
-	 */
-	public WebDriver getDriver() {
-		return getMyWd().getWebDriverInstance();
-	}
 
-	/**
-	 * @return the mainWindowHandler
-	 */
-	public String getMainWindowHandler() {
-		final String mainWindowHandler2 = mainWindowHandler;
-		if (mainWindowHandler2 == null) {
-			throw GlobalUtils
-					.createNotInitializedException("main window handle");
-		} else {
-			return mainWindowHandler2;
-		}
-	}
 
-	/**
-	 * @param mainWindowHandler
-	 *            the mainWindowHandler to set
-	 */
-	public void setMainWindowHandler(String mainWindowHandler) {
-		this.mainWindowHandler = mainWindowHandler;
-	}
 
-	/**
-	 * @param mainWindowTitle
-	 *            the mainWindowTitle to set
-	 */
-	public void setMainWindowTitle(String mainWindowTitle) {
-		this.mainWindowTitle = mainWindowTitle;
-	}
 
-	/**
-	 * @return the alerts
-	 */
-	public List<AbstractAlertDialog> getAlerts() {
-		return alerts;
-	}
+
+
 
 	/**
 	 * {@inheritDoc}
@@ -757,10 +584,10 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 		if (null == event)
 			throw GlobalUtils.createInternalError("spring event");
 		AbstractAlertDialog alertD = (AbstractAlertDialog) event.getSource();//NOPMD
-		for (int i = 0; i < windows.size(); i++) {
-			if (windows.get(i).getWindowHandle()
+		for (int i = 0; i < getWindows().size(); i++) {
+			if (getWindows().get(i).getWindowHandle()
 					.equalsIgnoreCase(alertD.getClosingWindowHandle())) {
-				windows.get(i).setClosed(true);
+				getWindows().get(i).setClosed(true);
 				try {
 					refreshWindowsList(this.getDriver(), false);
 				} catch (BrowserUnexpectedException e) {
@@ -771,25 +598,9 @@ public class MultiWindowsHandler implements IMultiWindowsHandler,
 
 	}
 
-	/**
-	 * @return the myWd
-	 */
-	public IMyWebDriver getMyWd() {
-		final IMyWebDriver myWd2 = myWd;
-		if (myWd2 == null) {
-			throw GlobalUtils.createInternalError("spring wiring");
-		} else {
-			return myWd2;
-		}
-	}
 
-	/**
-	 * @param myWd
-	 *            the myWd to set
-	 */
-	public void setMyWd(IMyWebDriver myWd) {
-		this.myWd = myWd;
-	}
+
+
 
 	/**
 	 * @return the testCase
