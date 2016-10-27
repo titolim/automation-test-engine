@@ -192,7 +192,11 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 	 * @throws BrowserUnexpectedException 
 	 */
 	public boolean closeAllOtherWindows(String openWindowHandle) throws BrowserUnexpectedException {
-		for (BrowserWindow win : this.getWindows()) {
+		Iterator<BrowserWindow> itr = this.getWindows().iterator();
+		while(itr.hasNext()) {
+			
+			BrowserWindow win = itr.next();
+		//for (BrowserWindow win : this.getWindows()) {
 			if (!openWindowHandle.equalsIgnoreCase(win.getWindowHandle())) {
 				win.close();
 				try {
@@ -200,8 +204,14 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 					checkCloseWindowAlert(win.getWindowHandle());// test if there is alert. if no, refresh windows list
 				} catch (NoAlertPresentException noAlert) {
 					refreshWindowsList(getDriver(), false);
+					if (this.getWindows().size()>1)
+						itr = this.getWindows().iterator();
+					else
+						break;
 				}
+				
 			}
+			
 		}
 		// deal with the windows not in the windows list
 		Set<String> allWindowHandles = getDriver().getWindowHandles();
