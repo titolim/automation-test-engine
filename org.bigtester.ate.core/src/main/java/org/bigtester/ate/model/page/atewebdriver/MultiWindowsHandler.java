@@ -404,7 +404,7 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 	 */
 	@Override
 	public void afterChangeValueOf(@Nullable WebElement arg0,
-			@Nullable WebDriver arg1) {
+			@Nullable WebDriver arg1, CharSequence[] arg2) {
 		try {
 			refreshWindowsList(arg1, false);
 		} catch (BrowserUnexpectedException e) {
@@ -503,7 +503,7 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 	 */
 	@Override
 	public void beforeChangeValueOf(@Nullable WebElement arg0,
-			@Nullable WebDriver arg1) {
+			@Nullable WebDriver arg1, CharSequence[] arg2) {
 		// refreshWindowsList(arg1);
 
 	}
@@ -629,6 +629,28 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 	 */
 	public void setTestCase(ITestCase testCase) {
 		this.testCase = testCase;
+	}
+
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void afterNavigateRefresh(WebDriver arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void beforeNavigateRefresh(WebDriver arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
