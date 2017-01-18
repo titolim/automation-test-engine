@@ -41,6 +41,11 @@ public class ElementFindByCss extends AbstractElementFind implements IElementFin
 		super(findByValue);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public ElementFindByCss() {
+		super("");
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * {@inheritDoc}
