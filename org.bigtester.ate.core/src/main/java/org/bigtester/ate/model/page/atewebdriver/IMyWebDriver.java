@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
+import java.util.Optional;
+
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 
@@ -51,6 +53,16 @@ public interface IMyWebDriver {
 	 * @return the browser windows monitor
 	 */
 	IMultiWindowsHandler getMultiWindowsHandler();
+	
+	/**
+	 * Save screen shot. if pathFileName supplied, 
+	 *
+	 * @param pathFileName the path file name
+	 * @return the string
+	 */
+	Optional<String> saveScreenShot(Optional<String> pathFileName);
+	
+	Optional<String> saveScreenShot();
 	
 
 }

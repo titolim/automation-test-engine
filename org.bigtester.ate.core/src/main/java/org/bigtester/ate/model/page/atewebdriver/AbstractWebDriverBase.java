@@ -20,7 +20,18 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.ProxySelector;
+import java.util.Calendar;
+import java.util.Optional;
+
+import javax.imageio.ImageIO;
 
 import org.bigtester.ate.GlobalUtils;
 import org.eclipse.jdt.annotation.Nullable;
@@ -123,6 +134,71 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 		this.multiWindowsHandler = multiWindowsHandler;
 	}
 	
+	@SuppressWarnings("null")
+	private String generateRandomFilename(String filename) {
+		Calendar cld = Calendar.getInstance();
+		filename=filename.trim();
+		int indexOfEnter = filename.indexOf('\n');
+		if (indexOfEnter>0)filename = filename.substring(0, indexOfEnter); 
+		filename = filename.replaceAll("\\s", "_")
+				.replaceAll(":", "").replaceAll("/", ".")
+				+ ".jpg";
+		filename = "logs/" + cld.get(Calendar.YEAR) + "-" + cld.get(Calendar.MONTH)
+				+ "-" + cld.get(Calendar.DAY_OF_MONTH) + "-"
+				+ cld.get(Calendar.HOUR_OF_DAY) + "-" + cld.get(Calendar.MINUTE)
+				+ "-" + cld.get(Calendar.SECOND) + "-" + filename;
+		return filename;
+	}
 
+	private boolean createScreenCaptureJPEG(String filename) {
+		boolean retVal = false;
+		try {
+			BufferedImage img = getScreenAsBufferedImage();
+			File output = new File(filename);
+			ImageIO.write(img, "jpg", output);
+			retVal = true;
+		} catch (IOException | AWTException e) {
+			e.printStackTrace();
+			retVal= false;
+		}
+		return retVal;
+	}
+
+	@SuppressWarnings("null")
+	private BufferedImage getScreenAsBufferedImage() throws AWTException {
+		BufferedImage img = null;
+
+		Robot r;
+		r = new Robot();
+		Toolkit t = Toolkit.getDefaultToolkit();
+		Rectangle rect = new Rectangle(t.getScreenSize());
+		img = r.createScreenCapture(rect);
+
+		return img;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("null")
+	public Optional<String> saveScreenShot(Optional<String> pathFileName) {
+		String filename = generateRandomFilename(pathFileName
+				.orElse(getWebDriverInstance().getCurrentUrl()));
+		if (createScreenCaptureJPEG(filename)) {
+			return Optional.of(filename);
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("null")
+	public Optional<String> saveScreenShot() {
+		return saveScreenShot(Optional.ofNullable(getWebDriverInstance().getCurrentUrl()));
+	}
+	
+	
 
 }
