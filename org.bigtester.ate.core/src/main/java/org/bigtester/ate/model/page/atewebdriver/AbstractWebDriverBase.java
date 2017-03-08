@@ -143,7 +143,7 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 		filename = filename.replaceAll("\\s", "_")
 				.replaceAll(":", "").replaceAll("/", ".")
 				+ ".jpg";
-		filename = "logs/" + cld.get(Calendar.YEAR) + "-" + cld.get(Calendar.MONTH)
+		filename = "logs/images/" + cld.get(Calendar.YEAR) + "-" + cld.get(Calendar.MONTH)
 				+ "-" + cld.get(Calendar.DAY_OF_MONTH) + "-"
 				+ cld.get(Calendar.HOUR_OF_DAY) + "-" + cld.get(Calendar.MINUTE)
 				+ "-" + cld.get(Calendar.SECOND) + "-" + filename;
