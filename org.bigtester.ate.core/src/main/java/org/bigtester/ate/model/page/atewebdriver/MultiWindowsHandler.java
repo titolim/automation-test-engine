@@ -199,7 +199,7 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 		//for (BrowserWindow win : this.getWindows()) {
 			if (!openWindowHandle.equalsIgnoreCase(win.getWindowHandle()) && !win.isClosed()) {
 				win.close();
-				refreshWindowsList(getDriver(), false);
+				//refreshWindowsList(getDriver(), false);
 				try {
 					
 					checkCloseWindowAlert(win.getWindowHandle());// test if there is alert. if no, refresh windows list
