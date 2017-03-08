@@ -30,10 +30,12 @@ import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedExce
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import com.sun.jna.platform.unix.X11.Window;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 // TODO: Auto-generated Javadoc
@@ -122,16 +124,39 @@ public class AbstractLockProtectedMultiWindowsHandler {
 		return alerts;
 	}
 	private void removeClosedWindows() {
+		
 		boolean winRemoved = false;// NOPMD
-		for (int i = 0; i < windows.size(); i++) {
-			if (windows.get(i).isClosed()) {
-				windows.remove(i);
-				winRemoved = true;// NOPMD
+		String currentWinHandle = "";
+		try {
+			currentWinHandle = this.getDriver().getWindowHandle();
+		} catch (NoSuchWindowException noWinEx) {
+			winRemoved = true;
+		}
+//		for (int i = 0; i < windows.size(); i++) {
+//			if (windows.get(i).isClosed()) {
+//				windows.remove(i);
+//				winRemoved = true;// NOPMD
+//			}
+//		}
+		for (Iterator<BrowserWindow> winItr=windows.iterator(); winItr.hasNext();) {
+			BrowserWindow bw = winItr.next();
+			if (bw.isClosed()) {
+				winItr.remove();
+				winRemoved = true;
+			} else {
+				try {
+					this.getDriver().switchTo().window(bw.getWindowHandle());
+				} catch (NoSuchWindowException noWinE) {
+					winItr.remove();
+					winRemoved = true;
+				}
 			}
 		}
 		if (winRemoved) {
 			this.getDriver().switchTo()
 					.window(windows.get(windows.size() - 1).getWindowHandle());
+		} else {
+			this.getDriver().switchTo().window(currentWinHandle);
 		}
 	}
 	private void refreshAlerts() {
