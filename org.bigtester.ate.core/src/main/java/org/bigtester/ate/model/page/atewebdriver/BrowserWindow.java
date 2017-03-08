@@ -27,6 +27,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.model.page.atewebdriver.exception.BrowserUnexpectedException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -115,9 +116,13 @@ public class BrowserWindow {
 	 * Close.
 	 */
 	public void close() {
-		obtainWindowFocus();
-		myWd.getWebDriverInstance().close();
-		this.setClosed(true);
+		try {
+			obtainWindowFocus();
+			myWd.getWebDriverInstance().close();
+			this.setClosed(true);
+		} catch (NoSuchWindowException noWinE) {
+			this.setClosed(true);
+		}
 	}
 
 	/**
