@@ -20,6 +20,8 @@ ATE's design and source code are also a perfect study material for application p
 
 Contributor of ATE project will learn the most popular automation testing tool, Selenium, which is creating jobs doubled as many as QTP.
 
+PPT of the introduction can be found here, https://github.com/bigtester/automation-test-engine/blob/master/ATE_Introduction.pdf
+
 NOTE1: Selenium and QTP job opening numbers retrieved from Indeed.com.
 
 NOTE2: Current version ATE only supports web application testing. Future version could integrate with other native application testing tools.
