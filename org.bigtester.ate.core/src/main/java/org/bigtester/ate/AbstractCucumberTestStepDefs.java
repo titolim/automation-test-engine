@@ -71,7 +71,7 @@ abstract public class AbstractCucumberTestStepDefs {
 			String testCaseId = getScenario().getId();
 			String stepTypeServiceName = lookUpStepTypeService(testCaseName, testCaseId);
 			String pageName = lookUpPageName(stepTypeServiceName,testCaseName, testCaseId);
-			runStepTypeService(stepTypeServiceName, pageName);
+			runStepTypeService(testCaseName, testCaseId, stepTypeServiceName, pageName);
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
@@ -89,7 +89,7 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws ClassNotFoundException 
 	 * @throws ParseException 
 	 */
-	private static void runStepTypeService(@Nullable final String testProjectXml, final String pageName) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
+	private static void runStepTypeService(final String testCaseName, final String testCaseId, @Nullable final String testProjectXml, final String pageName) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
 		TestProjectRunner.registerXsdNameSpaceParsers();
 		TestProjectRunner.registerProblemHandlers();
 		ApplicationContext context;
