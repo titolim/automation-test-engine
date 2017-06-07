@@ -37,6 +37,9 @@ import org.springframework.util.StringUtils;
 
 import com.github.javaparser.ParseException;
 
+import cucumber.api.Scenario;
+import cucumber.api.java.Before;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class TestProjectRunner defines ....
@@ -45,6 +48,8 @@ import com.github.javaparser.ParseException;
  */
 abstract public class AbstractCucumberTestStepDefs {
 	
+	
+	public abstract Scenario getScenario();
 	 
 	
 	/**
