@@ -1,6 +1,6 @@
 This document is built for developers to setup your code style and JAutoDoc tool.
 
-1) Code Style setup
+1) Code Style setup 
 	a) Click on menus Window->Preferences->Java->Code Style->Code Templates
 	b) Click 'Import' button and select bigtester_codetemplates.xml to import the code style. the template file could be found at the root of the project folder.
 	b') Check the option 'Automatically add comments for new methods and types' at the bottom of the dialog.
