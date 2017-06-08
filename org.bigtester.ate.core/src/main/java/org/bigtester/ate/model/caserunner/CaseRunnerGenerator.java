@@ -614,7 +614,7 @@ public class CaseRunnerGenerator {
 		List<String> optionList = new ArrayList<String>();
 		optionList.add("-classpath");
 		optionList.add(getAllJarsClassPathInMavenLocalRepo());
-		optionList.add("-verbose");
+		//optionList.add("-verbose");
 
 		File helloWorldJava = new File(classFilePathName);
 

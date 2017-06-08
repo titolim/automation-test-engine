@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+<statusListener class="ch.qos.logback.core.status.NopStatusListener" />
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
 				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n -%throwable{full}
 			</Pattern>
 		</encoder>
-<!-- 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter"> -->
-<!-- 			<level>ERROR</level> -->
-<!-- 		</filter> -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
 	</appender>
 	<appender name="SystemLog"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -82,8 +83,22 @@
 	<logger name="org.bigtester" level="ALL">
 
 	</logger>
+	<logger name="org.hibernate" additivity="false" level="ERROR">
+<!--     <appender-ref ref="HIBERNATE"/> -->
+</logger>
+
+<logger name="org.hibernate.SQL" additivity="false" level="ERROR">
+<!--     <appender-ref ref="HIBERNATE"/> -->
+</logger>
+<logger name="org.hibernate.transaction.JDBCTransaction" level="ERROR"/>
+<logger name="org.hibernate.jdbc.ConnectionManager" level="ERROR"/>
+<logger name="org.springframework.orm.jpa.JpaTransactionManager" level="ERROR"/>
+
+<logger name="org.hibernate.type.descriptor.sql" additivity="false" level="ERROR">
+<!--     <appender-ref ref="HIBERNATE"/> -->
+</logger>
 	<root level="ALL">
-		<appender-ref ref="STDOUT" />
+<!-- 		<appender-ref ref="STDOUT" /> -->
 		<appender-ref ref="SystemLog" />
 		<appender-ref ref="ApplicationLog" />
 	</root>
