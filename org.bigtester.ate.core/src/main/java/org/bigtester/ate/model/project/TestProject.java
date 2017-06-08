@@ -183,16 +183,21 @@ public class TestProject {
 	//@TestProjectLoggable (level=ATELogLevel.INFO)
 	private void runSuites(String filteringTestCaseName, String filteringStepName) throws ClassNotFoundException, ParseException,
 			IOException {
-
-		final TestProjectListener tla = new TestProjectListener(this);
-		final TestCaseResultModifier repeatStepResultModifier = new TestCaseResultModifier();
+		if (testng.getTestListeners().stream().filter(listener->listener instanceof TestProjectListener).count()==0) {
 		
-		testng.addListener(tla);
-		testng.addListener(repeatStepResultModifier);
-
-		ATEXMLReporter rng = new ATEXMLReporter();
-		rng.setStackTraceOutputMethod(XMLReporterConfig.STACKTRACE_NONE);
-		testng.addListener(rng);
+			final TestProjectListener tla = new TestProjectListener(this);
+			testng.addListener(tla);
+		}
+		if (testng.getTestListeners().stream().filter(listener->listener instanceof TestCaseResultModifier).count()==0) {
+			final TestCaseResultModifier repeatStepResultModifier = new TestCaseResultModifier();
+			testng.addListener(repeatStepResultModifier);
+		}
+		if (testng.getTestListeners().stream().filter(listener->listener instanceof ATEXMLReporter).count()==0) {
+			ATEXMLReporter rng = new ATEXMLReporter();
+			rng.setStackTraceOutputMethod(XMLReporterConfig.STACKTRACE_NONE);
+			testng.addListener(rng);
+		}
+		//TODO Can be optimaized in cucumber run, no need to delete old suite cases in each step if it is belong to current test project
 		List<TestSuite> suites = this.getSuiteList();
 		if (filteringTestCaseName!=null) {
 			suites = suites.stream().filter(suite->suite.getTestCaseList().stream().filter(tcase->tcase.getTestCaseFilePathName().contains(filteringTestCaseName)).count()>0).collect(Collectors.toList());

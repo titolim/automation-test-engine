@@ -127,10 +127,11 @@ abstract public class AbstractCucumberTestStepDefs {
 		
 		runStep(testProjectContext, testCaseName, testCaseId,stepTypeServiceName);
 		
-	  	//((ConfigurableApplicationContext)testProjectContext).close();
+
 	}
 	
 	protected static void closeAteExecutionContext() {
+		if (testProjectContext!=null)
 		((ConfigurableApplicationContext) testProjectContext).close();
 	}
 
