@@ -93,6 +93,19 @@ abstract public class AbstractCucumberTestStepDefs {
 		}
 	};
 	
+	protected void runCucumberStep(String ateStepName, String testCaseName, String testSuiteName) {
+		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
+		try {
+			String stepName = ateStepName;
+			
+			runStep(testCaseName, testSuiteName,  testProjectXml, stepName);
+		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
+				| IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	};
+	
 	/**
 	 * Run test.
 	 *
