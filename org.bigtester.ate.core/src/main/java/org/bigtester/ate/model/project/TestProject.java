@@ -234,7 +234,7 @@ public class TestProject {
 			throw new IllegalStateException("xmlsuites are not populated.");
 		} else {
 			testng.setXmlSuites(xmlSuites);
-
+			testng.setVerbose(0);
 			testng.run();
 
 		}

@@ -83,20 +83,7 @@
 	<logger name="org.bigtester" level="ALL">
 
 	</logger>
-	<logger name="org.hibernate" additivity="false" level="ERROR">
-<!--     <appender-ref ref="HIBERNATE"/> -->
-</logger>
 
-<logger name="org.hibernate.SQL" additivity="false" level="ERROR">
-<!--     <appender-ref ref="HIBERNATE"/> -->
-</logger>
-<logger name="org.hibernate.transaction.JDBCTransaction" level="ERROR"/>
-<logger name="org.hibernate.jdbc.ConnectionManager" level="ERROR"/>
-<logger name="org.springframework.orm.jpa.JpaTransactionManager" level="ERROR"/>
-
-<logger name="org.hibernate.type.descriptor.sql" additivity="false" level="ERROR">
-<!--     <appender-ref ref="HIBERNATE"/> -->
-</logger>
 	<root level="ALL">
 <!-- 		<appender-ref ref="STDOUT" /> -->
 		<appender-ref ref="SystemLog" />

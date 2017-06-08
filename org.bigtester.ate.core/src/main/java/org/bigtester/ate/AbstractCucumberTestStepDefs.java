@@ -25,9 +25,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.bigtester.ate.constant.GlobalConstants;
-import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
-import org.bigtester.ate.model.page.page.IPageObject;
 import org.bigtester.ate.model.project.TestProject;
 import org.dbunit.DatabaseUnitException;
 import org.eclipse.jdt.annotation.Nullable;
@@ -40,7 +38,6 @@ import org.springframework.util.StringUtils;
 import com.github.javaparser.ParseException;
 
 import cucumber.api.Scenario;
-import cucumber.api.java.Before;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -48,8 +45,15 @@ import cucumber.api.java.Before;
  * 
  * @author Peidong Hu 
  */
+
 abstract public class AbstractCucumberTestStepDefs {
-	
+	static { //runs when the main class is loaded.
+	    System.setProperty("logback-access.debug", "true");
+//	    System.setProperty("org.jboss.logging.provider", "slf4j");
+	    System.setProperty("org.jboss.logging.provider", "log4j");
+	    System.setProperty("hsqldb.reconfig_logging", "false");
+	    
+	}
 	
 	
 	private ApplicationContext testProjectContext;
