@@ -50,11 +50,13 @@ import cucumber.api.java.Before;
  */
 abstract public class AbstractCucumberTestStepDefs {
 	
-	protected Scenario scenario = null;
+	
 	
 	private static ApplicationContext testProjectContext;
 	
 	public abstract Scenario getScenario();
+	
+	public abstract String getAteGlueTestProjectXmlFilePath();
 	 
 	
 	/**
@@ -74,10 +76,10 @@ abstract public class AbstractCucumberTestStepDefs {
 	protected void runCucumberStep(String testProjectXml) {
 		try {
 			String testCaseName = getScenario().getName();
-			String testCaseId = getScenario().getId();
+			String testSuiteName = getScenario().getId().substring(0, getScenario().getId().indexOf(";"));
 			String stepTypeServiceName = parseStepTypeServiceName();
 			
-			runStepTypeService(testCaseName, testCaseId,  testProjectXml, stepTypeServiceName);
+			runStepTypeService(testCaseName, testSuiteName,  testProjectXml, stepTypeServiceName);
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
