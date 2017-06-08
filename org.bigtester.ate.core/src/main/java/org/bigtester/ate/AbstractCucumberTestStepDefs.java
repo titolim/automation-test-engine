@@ -52,7 +52,7 @@ abstract public class AbstractCucumberTestStepDefs {
 	
 	
 	
-	private static ApplicationContext testProjectContext;
+	private ApplicationContext testProjectContext;
 	
 	public abstract Scenario getScenario();
 	
@@ -70,7 +70,7 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
-	private static void runStep(ApplicationContext context, final String testCaseName, final String testCaseId, @Nullable final String stepTypeServiceName) throws ClassNotFoundException, ParseException, IOException {
+	private void runStep(ApplicationContext context, final String testCaseName, final String testCaseId, @Nullable final String stepTypeServiceName) throws ClassNotFoundException, ParseException, IOException {
 		TestProject testProj = GlobalUtils.findTestProjectBean(context);
 		testProj.setFilteringTestCaseName(testCaseName);
 		testProj.setFilteringStepName(stepTypeServiceName);
@@ -116,13 +116,13 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws ClassNotFoundException 
 	 * @throws ParseException 
 	 */
-	private static void runStep(final String testCaseName, final String testCaseId, final String testProjectXml, @Nullable final String stepTypeServiceName) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
+	private void runStep(final String testCaseName, final String testCaseId, final String testProjectXml, @Nullable final String stepTypeServiceName) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
 		
 		
 		if (StringUtils.isEmpty(testProjectXml) && testProjectContext == null) {
 			testProjectContext = new ClassPathXmlApplicationContext(
 					"testproject.xml");
-		} else if (testProjectContext == null){
+		} else if (testProjectContext == null ){
 			testProjectContext = new FileSystemXmlApplicationContext(testProjectXml);
 		}
 		
@@ -143,9 +143,11 @@ abstract public class AbstractCucumberTestStepDefs {
 
 	}
 	
-	protected static void closeAteExecutionContext() {
-		if (testProjectContext!=null)
-		((ConfigurableApplicationContext) testProjectContext).close();
+	protected void closeAteExecutionContext() {
+		if (testProjectContext!=null) {
+			((ConfigurableApplicationContext) testProjectContext).close();
+			testProjectContext = null;
+		}
 	}
 
 }

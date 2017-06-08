@@ -151,8 +151,7 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 	public void goSteps() throws StepExecutionException,
 			PageValidationException, IllegalStateException,
 			RuntimeDataException {
-
-		goSteps(null);
+		goSteps(getParentTestProject().getFilteringStepName());
 	}
 
 	/**
