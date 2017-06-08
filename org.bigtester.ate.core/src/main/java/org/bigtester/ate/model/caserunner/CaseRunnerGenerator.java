@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
@@ -106,6 +107,8 @@ public class CaseRunnerGenerator {
 
 	/** The suites. */
 	final private List<TestSuite> suites;
+	
+	final private String testCaseNameToGenerate;
 
 	/** The compiler. */
 	@Nullable
@@ -127,6 +130,7 @@ public class CaseRunnerGenerator {
 	 */
 	public CaseRunnerGenerator(List<TestSuite> suites) throws IOException {
 		this.suites = suites;
+		testCaseNameToGenerate = null;
 		for (TestSuite tSuite : suites) {
 			this.numberOfTestCases = this.numberOfTestCases
 					+ tSuite.getTestCaseList().size();
@@ -139,16 +143,48 @@ public class CaseRunnerGenerator {
 		}
 
 	}
+	
+	public CaseRunnerGenerator(List<TestSuite> suites, String testCaseNameToGenerate) throws IOException {
+		this.testCaseNameToGenerate = testCaseNameToGenerate;
+		
+		this.suites = suites.stream().filter(suite->suite.getTestCaseList().stream().filter(tcase->tcase.getTestCaseFilePathName().contains(testCaseNameToGenerate)).count()>0).collect(Collectors.toList());
+		
+		
+		for (TestSuite tSuite : suites) {
+			tSuite.setTestCaseList(tSuite.getTestCaseList()
+			.stream()
+			.filter(tcase -> tcase.getTestCaseFilePathName()
+					.contains(testCaseNameToGenerate))
+			.collect(Collectors.toList()));
+		}
+		
+		this.caseRunnerCacheAbsoluteFolder = System.getProperty("user.dir")
+				+ "/generated-code/caserunners/org/bigtester/ate/model/caserunner/";
+		File deleteOldCaseRunners = new File(caseRunnerCacheAbsoluteFolder);
+		if (deleteOldCaseRunners.exists()) {
+			FileUtils.deleteDirectory(deleteOldCaseRunners);
+		}
+
+	}
 
 	/**
 	 * Creates the case runners.
 	 *
-	 * @throws ParseException
-	 *             the parse exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
+	 * @throws ParseException the parse exception
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void createCaseRunners() throws ParseException, IOException {
+		createCaseRunners("runTest");
+	}
+	
+	/**
+	 * Creates the case runners.
+	 *
+	 * @param methodName the method name
+	 * @throws ParseException the parse exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private void createCaseRunners(String methodName) throws ParseException, IOException {
 		// creates an input stream for the file to be parsed
 		for (TestSuite tSuite : suites) {
 			File suiteCacheDir = new File(caseRunnerCacheAbsoluteFolder
@@ -178,7 +214,7 @@ public class CaseRunnerGenerator {
 					new PackageNameVisitor().visit(caseRunnerCU,
 							this.basePackageName + "." + tSuite.getSuiteName());
 
-					new MethodTestAnnotationVisitor().visit(caseRunnerCU,
+					new MethodTestAnnotationVisitor(methodName).visit(caseRunnerCU,
 							tSuite.getTestCaseList().get(index));
 
 					// prints the changed compilation unit
@@ -511,6 +547,11 @@ public class CaseRunnerGenerator {
 	private static class MethodTestAnnotationVisitor extends
 			VoidVisitorAdapter<XmlTestCase> {
 
+		private final String methodName;
+		
+		public MethodTestAnnotationVisitor(String methodName) {
+			this.methodName = methodName;
+		}
 		/**
 		 * {@inheritDoc}
 		 */
@@ -521,7 +562,7 @@ public class CaseRunnerGenerator {
 				throw GlobalUtils
 						.createNotInitializedException("classorinterfacedeclaration");
 			else {
-				if (methodDec.getName().equals("runTest")) {
+				if (methodDec.getName().equals(methodName)) {
 					List<Expression> groups = new ArrayList<Expression>();
 					groups.add(new StringLiteralExpr(testCase
 							.getTestCaseFilePathName()));
@@ -709,5 +750,12 @@ public class CaseRunnerGenerator {
 		} else {
 			return compiler2;
 		}
+	}
+
+	/**
+	 * @return the testCaseNameToGenerate
+	 */
+	public String getTestCaseNameToGenerate() {
+		return testCaseNameToGenerate;
 	}
 }

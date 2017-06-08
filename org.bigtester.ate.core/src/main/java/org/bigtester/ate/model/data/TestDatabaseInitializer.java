@@ -303,4 +303,25 @@ public class TestDatabaseInitializer {
 		this.singleInitXmlFile = singleInitXmlFile.getInputStream();
 	}
 
+	/**
+	 * @return the datasets
+	 */
+	public IDataSet[] getDatasets() {
+		return datasets;
+	}
+
+	/**
+	 * @param datasets the datasets to set
+	 */
+	public void setDatasets(IDataSet[] datasets) {
+		this.datasets = datasets;
+	}
+
+	/**
+	 * @param singleInitXmlFile the singleInitXmlFile to set
+	 */
+	public void setSingleInitXmlFile(InputStream singleInitXmlFile) {
+		this.singleInitXmlFile = singleInitXmlFile;
+	}
+
 }

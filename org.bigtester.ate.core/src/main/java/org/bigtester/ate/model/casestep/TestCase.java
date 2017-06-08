@@ -22,6 +22,7 @@ package org.bigtester.ate.model.casestep;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.annotation.TestCaseLoggable;
@@ -151,80 +152,7 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 			PageValidationException, IllegalStateException,
 			RuntimeDataException {
 
-		for (int i = 0; i < getTestStepList().size(); i++) {
-
-			ITestStep currentTestStepTmp = getTestStepList().get(i);
-
-			if (null == currentTestStepTmp) {
-				throw new IllegalStateException(
-						"Test Step List was not successfully initialized by ApplicationContext at list index"
-								+ i);
-			} else {
-				setCurrentTestStep(currentTestStepTmp);
-			}
-
-			try {
-				currentTestStepTmp.doStep(this);// NOPMD
-				currentTestStepTmp.setStepResultStatus(StepResultStatus.PASS);
-				setCurrentTestStep(currentTestStepTmp);
-			} catch (Exception e) { // NOPMD
-				setCurrentTestStep(currentTestStepTmp);
-				IATEProblem prob;
-				if (e instanceof IATEProblemCreator) {//NOPMD
-					prob = ((IATEProblemCreator) e).getAteProblem();
-					ITestStep exceptionRaisingStep = ((AbstractATEException) e).getOriginalStepRaisingException();
-					if (prob == null) {
-						if (null == exceptionRaisingStep)
-							prob = ((IATEProblemCreator) e)
-								.initAteProblemInstance(currentTestStepTmp);
-						else
-							prob = ((IATEProblemCreator) e)
-							.initAteProblemInstance(exceptionRaisingStep);
-					} 
-					boolean optionalStepRaisingException = false;//NOPMD
-					if (exceptionRaisingStep != null)
-						optionalStepRaisingException = exceptionRaisingStep.isOptionalStep(); //NOPMD
-					if (!prob.isFatalProblem() && prob.getStepIndexSkipTo() > -1) { // NOPMD
-						i = prob.getStepIndexSkipTo(); // NOPMD
-						if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
-							currentTestStepTmp
-									.setStepResultStatus(StepResultStatus.NEUTRAL);
-						else
-							currentTestStepTmp
-									.setStepResultStatus(StepResultStatus.SKIP);
-					} else if (!prob.isFatalProblem() && optionalStepRaisingException) {
-						int correlatedOptionalStepsUtilInclusiveIndex = -1;//NOPMD
-						if (exceptionRaisingStep != null)
-							correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex(this); //NOPMD
-						if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
-							currentTestStepTmp
-									.setStepResultStatus(StepResultStatus.NEUTRAL);
-						else
-							currentTestStepTmp
-									.setStepResultStatus(StepResultStatus.SKIP);
-						if (correlatedOptionalStepsUtilInclusiveIndex > i) {
-							i = correlatedOptionalStepsUtilInclusiveIndex;// NOPMD
-
-						}
-					} else {
-						Reporter.getCurrentTestResult().setThrowable(e);
-						throw e;
-						
-					}
-				} else {
-						Reporter.getCurrentTestResult().setThrowable(e);
-						throw e;
-				}
-				
-			}
-
-			if (stepThinkTime > 0) {
-				ThinkTime thinkTimer = new ThinkTime(stepThinkTime);
-				thinkTimer.setTimer();
-			}
-
-		}
-		Reporter.getCurrentTestResult().setThrowable(null);
+		goSteps(null);
 	}
 
 	/**
@@ -324,6 +252,92 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 	public List<ITestStep> getContainerStepList() {
 		
 		return getTestStepList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@TestCaseLoggable (level=ATELogLevel.INFO)
+	public void goSteps(String filteringStepName) throws StepExecutionException,
+			PageValidationException, IllegalStateException,
+			RuntimeDataException {
+
+		for (int i = 0; i < getTestStepList().size(); i++) {
+			
+			ITestStep currentTestStepTmp = getTestStepList().get(i);
+			if (!StringUtils.isEmpty(filteringStepName) && !currentTestStepTmp.getStepName().equalsIgnoreCase(filteringStepName))
+				continue;
+			if (null == currentTestStepTmp) {
+				throw new IllegalStateException(
+						"Test Step List was not successfully initialized by ApplicationContext at list index"
+								+ i);
+			} else {
+				setCurrentTestStep(currentTestStepTmp);
+			}
+
+			try {
+				currentTestStepTmp.doStep(this);// NOPMD
+				currentTestStepTmp.setStepResultStatus(StepResultStatus.PASS);
+				setCurrentTestStep(currentTestStepTmp);
+			} catch (Exception e) { // NOPMD
+				setCurrentTestStep(currentTestStepTmp);
+				IATEProblem prob;
+				if (e instanceof IATEProblemCreator) {//NOPMD
+					prob = ((IATEProblemCreator) e).getAteProblem();
+					ITestStep exceptionRaisingStep = ((AbstractATEException) e).getOriginalStepRaisingException();
+					if (prob == null) {
+						if (null == exceptionRaisingStep)
+							prob = ((IATEProblemCreator) e)
+								.initAteProblemInstance(currentTestStepTmp);
+						else
+							prob = ((IATEProblemCreator) e)
+							.initAteProblemInstance(exceptionRaisingStep);
+					} 
+					boolean optionalStepRaisingException = false;//NOPMD
+					if (exceptionRaisingStep != null)
+						optionalStepRaisingException = exceptionRaisingStep.isOptionalStep(); //NOPMD
+					if (!prob.isFatalProblem() && prob.getStepIndexSkipTo() > -1) { // NOPMD
+						i = prob.getStepIndexSkipTo(); // NOPMD
+						if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
+							currentTestStepTmp
+									.setStepResultStatus(StepResultStatus.NEUTRAL);
+						else
+							currentTestStepTmp
+									.setStepResultStatus(StepResultStatus.SKIP);
+					} else if (!prob.isFatalProblem() && optionalStepRaisingException) {
+						int correlatedOptionalStepsUtilInclusiveIndex = -1;//NOPMD
+						if (exceptionRaisingStep != null)
+							correlatedOptionalStepsUtilInclusiveIndex = exceptionRaisingStep.getCorrelatedOptionalStepsUtilInclusiveIndex(this); //NOPMD
+						if (AopUtils.getTargetClass(currentTestStepTmp) == RepeatStep.class)
+							currentTestStepTmp
+									.setStepResultStatus(StepResultStatus.NEUTRAL);
+						else
+							currentTestStepTmp
+									.setStepResultStatus(StepResultStatus.SKIP);
+						if (correlatedOptionalStepsUtilInclusiveIndex > i) {
+							i = correlatedOptionalStepsUtilInclusiveIndex;// NOPMD
+
+						}
+					} else {
+						Reporter.getCurrentTestResult().setThrowable(e);
+						throw e;
+						
+					}
+				} else {
+						Reporter.getCurrentTestResult().setThrowable(e);
+						throw e;
+				}
+				
+			}
+
+			if (stepThinkTime > 0) {
+				ThinkTime thinkTimer = new ThinkTime(stepThinkTime);
+				thinkTimer.setTimer();
+			}
+
+		}
+		Reporter.getCurrentTestResult().setThrowable(null);
 	}
 
 }

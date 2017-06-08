@@ -175,6 +175,8 @@ public class CaseRunner implements IRunTestCase {
 							.getAppCtx());
 					params.setTestProject(((TestProjectListener) ((TestRunner) ctx)
 							.getTestListeners().get(index)).getMytp());
+					params.setFilteringStepName(((TestProjectListener) ((TestRunner) ctx)
+							.getTestListeners().get(index)).getMytp().getFilteringStepName());
 					break;
 				}
 			}
@@ -248,7 +250,7 @@ public class CaseRunner implements IRunTestCase {
 						.findMyWebDriver(context)).getWebDriverInstance();
 				myTestCase = GlobalUtils.findTestCaseBean(getContext());
 				myTestCase.setStepThinkTime(testParams.getStepThinkTime());
-				getMyTestCase().goSteps();
+				getMyTestCase().goSteps(testParams.getFilteringStepName());
 
 			} else if (fbe instanceof BeanCreationException) { // NOPMD
 				ITestResult itr = Reporter.getCurrentTestResult();
@@ -292,6 +294,7 @@ public class CaseRunner implements IRunTestCase {
 //			throw th;
 //		}
 	}
+	
 
 	/**
 	 * Tear down.

@@ -23,6 +23,7 @@ package org.bigtester.ate.model.project; //NOPMD
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.ATELogLevel;
@@ -73,6 +74,14 @@ public class TestProject {
 	@XStreamOmitField
 	final private TestNG testng = new TestNG();
 	
+	/** The filtering test case name. */
+	@Nullable
+	private String filteringTestCaseName;
+	
+	/** The filtering step name. */
+	@Nullable
+	private String filteringStepName;
+	
 	/**
 	 * Instantiates a new test project.
 	 *
@@ -121,6 +130,59 @@ public class TestProject {
 	@TestProjectLoggable (level=ATELogLevel.INFO)
 	public void runSuites() throws ClassNotFoundException, ParseException,
 			IOException {
+		this.runSuites(this.filteringTestCaseName, this.filteringStepName);
+//
+//		final TestProjectListener tla = new TestProjectListener(this);
+//		final TestCaseResultModifier repeatStepResultModifier = new TestCaseResultModifier();
+//		
+//		testng.addListener(tla);
+//		testng.addListener(repeatStepResultModifier);
+//
+//		ATEXMLReporter rng = new ATEXMLReporter();
+//		rng.setStackTraceOutputMethod(XMLReporterConfig.STACKTRACE_NONE);
+//		testng.addListener(rng);
+//		CaseRunnerGenerator crg = new CaseRunnerGenerator(this.getSuiteList());
+//		crg.createCaseRunners();
+//		if (0 == crg.loadCaseRunnerClasses()) {
+//			throw new ParseException("case runner generator error");
+//		}
+//		final List<XmlPackage> packages = new ArrayList<XmlPackage>();
+//
+//		for (TestSuite tempSuite : getSuiteList()) {
+//
+//			XmlPackage xmlpackage = new XmlPackage();
+//			xmlpackage.setName(crg.getBasePackageName() + "." + tempSuite.getSuiteName());
+//			
+//			packages.add(xmlpackage);
+//			
+//		}
+//		List<XmlSuite> xmlSuites = new ArrayList<XmlSuite>();
+//		XmlSuite xmlProject = new XmlSuite();
+//		
+//		XmlTest test = new XmlTest(xmlProject);
+//		test.setPackages(packages);
+//		xmlSuites.add(xmlProject);
+//		if (xmlSuites.isEmpty()) {
+//			throw new IllegalStateException("xmlsuites are not populated.");
+//		} else {
+//			testng.setXmlSuites(xmlSuites);
+//
+//			testng.run();
+//
+//		}
+
+	}
+	
+	/**
+	 * Run suites.
+	 * 
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 * @throws ParseException
+	 */
+	//@TestProjectLoggable (level=ATELogLevel.INFO)
+	private void runSuites(String filteringTestCaseName, String filteringStepName) throws ClassNotFoundException, ParseException,
+			IOException {
 
 		final TestProjectListener tla = new TestProjectListener(this);
 		final TestCaseResultModifier repeatStepResultModifier = new TestCaseResultModifier();
@@ -131,14 +193,25 @@ public class TestProject {
 		ATEXMLReporter rng = new ATEXMLReporter();
 		rng.setStackTraceOutputMethod(XMLReporterConfig.STACKTRACE_NONE);
 		testng.addListener(rng);
-		CaseRunnerGenerator crg = new CaseRunnerGenerator(this.getSuiteList());
+		List<TestSuite> suites = this.getSuiteList();
+		if (filteringTestCaseName!=null) {
+			suites = suites.stream().filter(suite->suite.getTestCaseList().stream().filter(tcase->tcase.getTestCaseFilePathName().contains(filteringTestCaseName)).count()>0).collect(Collectors.toList());
+			for (TestSuite tSuite : suites) {
+				tSuite.setTestCaseList(tSuite.getTestCaseList()
+						.stream()
+						.filter(tcase -> tcase.getTestCaseFilePathName()
+								.contains(filteringTestCaseName))
+								.collect(Collectors.toList()));
+			}
+		}
+		CaseRunnerGenerator crg = new CaseRunnerGenerator(suites);
 		crg.createCaseRunners();
 		if (0 == crg.loadCaseRunnerClasses()) {
 			throw new ParseException("case runner generator error");
 		}
 		final List<XmlPackage> packages = new ArrayList<XmlPackage>();
 
-		for (TestSuite tempSuite : getSuiteList()) {
+		for (TestSuite tempSuite : suites) {
 
 			XmlPackage xmlpackage = new XmlPackage();
 			xmlpackage.setName(crg.getBasePackageName() + "." + tempSuite.getSuiteName());
@@ -259,6 +332,34 @@ public class TestProject {
 			}
 		} 
 		return retVal;
+	}
+
+	/**
+	 * @return the filteringTestCaseName
+	 */
+	public String getFilteringTestCaseName() {
+		return filteringTestCaseName;
+	}
+
+	/**
+	 * @param filteringTestCaseName the filteringTestCaseName to set
+	 */
+	public void setFilteringTestCaseName(String filteringTestCaseName) {
+		this.filteringTestCaseName = filteringTestCaseName;
+	}
+
+	/**
+	 * @return the filteringStepName
+	 */
+	public String getFilteringStepName() {
+		return filteringStepName;
+	}
+
+	/**
+	 * @param filteringStepName the filteringStepName to set
+	 */
+	public void setFilteringStepName(String filteringStepName) {
+		this.filteringStepName = filteringStepName;
 	}
 
 }

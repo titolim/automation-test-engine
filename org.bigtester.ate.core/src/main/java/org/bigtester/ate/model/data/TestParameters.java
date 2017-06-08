@@ -56,6 +56,9 @@ public class TestParameters
     @Nullable
     private TestProject testProject;
     
+    @Nullable
+    private String filteringStepName=null;
+    
 //    /** The parent app ctx. */
 //    @Nullable
 //    @XStreamOmitField
@@ -210,5 +213,19 @@ public class TestParameters
 	 */
 	public void setTestProject(TestProject testProject) {
 		this.testProject = testProject;
+	}
+
+	/**
+	 * @return the filteringStepName
+	 */
+	public String getFilteringStepName() {
+		return filteringStepName;
+	}
+
+	/**
+	 * @param filteringStepName the filteringStepName to set
+	 */
+	public void setFilteringStepName(String filteringStepName) {
+		this.filteringStepName = filteringStepName;
 	}
 }

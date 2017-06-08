@@ -25,7 +25,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.bigtester.ate.constant.GlobalConstants;
+import org.bigtester.ate.model.casestep.ITestStep;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
+import org.bigtester.ate.model.page.page.IPageObject;
 import org.bigtester.ate.model.project.TestProject;
 import org.dbunit.DatabaseUnitException;
 import org.eclipse.jdt.annotation.Nullable;
@@ -50,6 +52,8 @@ abstract public class AbstractCucumberTestStepDefs {
 	
 	protected Scenario scenario = null;
 	
+	private static ApplicationContext testProjectContext;
+	
 	public abstract Scenario getScenario();
 	 
 	
@@ -59,19 +63,21 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
-	private static void runStepTypeService(ApplicationContext context) throws ClassNotFoundException, ParseException, IOException {
+	private static void runStep(ApplicationContext context, final String testCaseName, final String testCaseId, @Nullable final String stepTypeServiceName) throws ClassNotFoundException, ParseException, IOException {
 		TestProject testProj = GlobalUtils.findTestProjectBean(context);
+		testProj.setFilteringTestCaseName(testCaseName);
+		testProj.setFilteringStepName(stepTypeServiceName);
 		testProj.runSuites();
 		
 	}
 	
-	protected void runCucumberStep() {
+	protected void runCucumberStep(String testProjectXml) {
 		try {
 			String testCaseName = getScenario().getName();
 			String testCaseId = getScenario().getId();
-			String stepTypeServiceName = lookUpStepTypeService(testCaseName, testCaseId);
-			String pageName = lookUpPageName(stepTypeServiceName,testCaseName, testCaseId);
-			runStepTypeService(testCaseName, testCaseId, stepTypeServiceName, pageName);
+			String stepTypeServiceName = parseStepTypeServiceName();
+			
+			runStepTypeService(testCaseName, testCaseId,  testProjectXml, stepTypeServiceName);
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
@@ -89,30 +95,33 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws ClassNotFoundException 
 	 * @throws ParseException 
 	 */
-	private static void runStepTypeService(final String testCaseName, final String testCaseId, @Nullable final String testProjectXml, final String pageName) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
+	private static void runStepTypeService(final String testCaseName, final String testCaseId, final String testProjectXml, @Nullable final String stepTypeServiceName) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
+		
 		TestProjectRunner.registerXsdNameSpaceParsers();
 		TestProjectRunner.registerProblemHandlers();
-		ApplicationContext context;
-		if (StringUtils.isEmpty(testProjectXml)) {
-			context = new ClassPathXmlApplicationContext(
+		
+		if (StringUtils.isEmpty(testProjectXml) && testProjectContext == null) {
+			testProjectContext = new ClassPathXmlApplicationContext(
 					"testproject.xml");
-		} else {
-			context = new FileSystemXmlApplicationContext(testProjectXml);
+		} else if (testProjectContext == null){
+			testProjectContext = new FileSystemXmlApplicationContext(testProjectXml);
 		}
 		
-		TestProject testplan = GlobalUtils.findTestProjectBean(context);
-		testplan.setAppCtx(context);
+		TestProject testplan = GlobalUtils.findTestProjectBean(testProjectContext);
+		testplan.setAppCtx(testProjectContext);
 		
-		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) context.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
+		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) testProjectContext.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
 		
-		dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
+		if (dbinit.getSingleInitXmlFile() == null)
+			dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
 		
 		//TODO add db initialization handler
-		dbinit.initializeGlobalDataFile(context);
+		if (dbinit.getDatasets()==null)
+			dbinit.initializeGlobalDataFile(testProjectContext);
 		
-		runStepTypeService(context);
+		runStep(testProjectContext, testCaseName, testCaseId,stepTypeServiceName);
 		
-	  	((ConfigurableApplicationContext)context).close();
+	  	((ConfigurableApplicationContext)testProjectContext).close();
 	}
 	
 	
