@@ -57,8 +57,13 @@ abstract public class AbstractCucumberTestStepDefs {
 	public abstract Scenario getScenario();
 	
 	public abstract String getAteGlueTestProjectXmlFilePath();
-	 
 	
+		 
+	public AbstractCucumberTestStepDefs() {
+		TestProjectRunner.registerXsdNameSpaceParsers();
+		TestProjectRunner.registerProblemHandlers();
+		
+	}
 	/**
 	 * Run test.
 	 * @throws ClassNotFoundException 
@@ -73,14 +78,14 @@ abstract public class AbstractCucumberTestStepDefs {
 		
 	}
 	
-	protected void runCucumberStep() {
+	protected void runCucumberStep(String ateStepName) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String testCaseName = getScenario().getName();
 			String testSuiteName = getScenario().getId().substring(0, getScenario().getId().indexOf(";"));
-			String stepTypeServiceName = parseStepTypeServiceName();
+			String stepName = ateStepName;
 			
-			runStepTypeService(testCaseName, testSuiteName,  testProjectXml, stepTypeServiceName);
+			runStep(testCaseName, testSuiteName,  testProjectXml, stepName);
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
@@ -98,10 +103,8 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws ClassNotFoundException 
 	 * @throws ParseException 
 	 */
-	private static void runStepTypeService(final String testCaseName, final String testCaseId, final String testProjectXml, @Nullable final String stepTypeServiceName) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
+	private static void runStep(final String testCaseName, final String testCaseId, final String testProjectXml, @Nullable final String stepTypeServiceName) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
 		
-		TestProjectRunner.registerXsdNameSpaceParsers();
-		TestProjectRunner.registerProblemHandlers();
 		
 		if (StringUtils.isEmpty(testProjectXml) && testProjectContext == null) {
 			testProjectContext = new ClassPathXmlApplicationContext(
@@ -124,9 +127,11 @@ abstract public class AbstractCucumberTestStepDefs {
 		
 		runStep(testProjectContext, testCaseName, testCaseId,stepTypeServiceName);
 		
-	  	((ConfigurableApplicationContext)testProjectContext).close();
+	  	//((ConfigurableApplicationContext)testProjectContext).close();
 	}
 	
-	
+	protected static void closeAteExecutionContext() {
+		((ConfigurableApplicationContext) testProjectContext).close();
+	}
 
 }
