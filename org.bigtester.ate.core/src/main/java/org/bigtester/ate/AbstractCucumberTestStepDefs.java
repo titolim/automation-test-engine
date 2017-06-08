@@ -73,7 +73,8 @@ abstract public class AbstractCucumberTestStepDefs {
 		
 	}
 	
-	protected void runCucumberStep(String testProjectXml) {
+	protected void runCucumberStep() {
+		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String testCaseName = getScenario().getName();
 			String testSuiteName = getScenario().getId().substring(0, getScenario().getId().indexOf(";"));
