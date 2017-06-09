@@ -55,7 +55,7 @@ abstract public class AbstractCucumberTestStepDefs {
 	    
 	}
 	
-	
+	 
 	private ApplicationContext testProjectContext;
 	
 	public abstract Scenario getScenario();

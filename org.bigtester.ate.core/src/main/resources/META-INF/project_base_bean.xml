@@ -3,15 +3,20 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xmlns:ate="http://www.bigtester.org/schema/ate"
+	   xmlns:context="http://www.springframework.org/schema/context"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		                   http://www.springframework.org/schema/aop 
 		                   http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		                   http://www.springframework.org/schema/context
+    						http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		                   http://www.bigtester.org/schema/ate 
 		                   http://www.bigtester.org/schema/ate/ate-2.0.xsd">
 	
+	
 	<import resource="classpath:META-INF/db-services.xml" />
 	<import resource="classpath:META-INF/logger-reporter.xml" />
+	<context:component-scan base-package="org.bigtester.ate.bean.config" />
 <!-- 	<ate:GenericSystemLogger id="systemlogger" /> -->
 	<ate:TestDatabaseInitializer id="dbInitializer" />
 	<bean id="globalUtilsForTestProject" class="org.bigtester.ate.GlobalUtils" />

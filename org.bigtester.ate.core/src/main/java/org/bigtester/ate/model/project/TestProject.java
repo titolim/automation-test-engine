@@ -29,8 +29,10 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.annotation.TestProjectLoggable;
 import org.bigtester.ate.model.caserunner.CaseRunnerGenerator;
+import org.bigtester.ate.model.data.CucumberFeatureDataInjector;
 import org.bigtester.ate.reporter.ATEXMLReporter;
 import org.eclipse.jdt.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.testng.TestNG;
@@ -49,7 +51,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author Peidong Hu
  */
 public class TestProject {
-
+	@Autowired
+	private CucumberFeatureDataInjector cucumberDataInjector;
 	/** The suite list. */
 	@Nullable
 	private List<TestSuite> suiteList;
@@ -130,6 +133,7 @@ public class TestProject {
 	@TestProjectLoggable (level=ATELogLevel.INFO)
 	public void runSuites() throws ClassNotFoundException, ParseException,
 			IOException {
+		cucumberDataInjector.inject("test", "test1");
 		this.runSuites(this.filteringTestCaseName, this.filteringStepName);
 //
 //		final TestProjectListener tla = new TestProjectListener(this);
