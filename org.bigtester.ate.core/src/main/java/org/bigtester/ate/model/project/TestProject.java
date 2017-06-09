@@ -371,4 +371,19 @@ public class TestProject {
 		this.filteringStepName = filteringStepName;
 	}
 
+	/**
+	 * @return the cucumberDataInjector
+	 */
+	public CucumberFeatureDataInjector getCucumberDataInjector() {
+		return cucumberDataInjector;
+	}
+
+	/**
+	 * @param cucumberDataInjector the cucumberDataInjector to set
+	 */
+	public void setCucumberDataInjector(
+			CucumberFeatureDataInjector cucumberDataInjector) {
+		this.cucumberDataInjector = cucumberDataInjector;
+	}
+
 }

@@ -38,7 +38,6 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  */
 @Entity
-@Table
 @DiscriminatorValue(value="No")  
 public class RepeatStepErPageProperty extends StepErPageProperty {
 

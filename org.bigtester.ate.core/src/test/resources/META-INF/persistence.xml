@@ -5,6 +5,7 @@
  
     <persistence-unit name="jpaData">
 		<class>org.bigtester.ate.model.data.dbtable.ElementInputData</class>
+		<class>org.bigtester.ate.model.data.dbtable.RepeatStepElementInputData</class>
 		<class>org.bigtester.ate.model.data.dbtable.StepExpectedResult</class>
 		<class>org.bigtester.ate.model.data.dbtable.StepErElementExistence</class>
 		<class>org.bigtester.ate.model.data.dbtable.StepErPageProperty</class>

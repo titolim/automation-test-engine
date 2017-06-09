@@ -20,6 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.data.dbtable;
 
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -41,6 +42,8 @@ public class BaseTestDataTable extends BaseDBTable{
 	@Nullable
 	private TestDataContext testDataContext; //NOPMD
 
+//	@Column
+//	private String firstTimeExecution;
 	/**
 	 * @return the testDataContext
 	 */
@@ -59,4 +62,20 @@ public class BaseTestDataTable extends BaseDBTable{
 	public void setTestDataContext(TestDataContext testDataContext) {
 		this.testDataContext = testDataContext;
 	}
+
+//	/**
+//	 * @return the firstTimeExecution
+//	 */
+//	
+//	public String getFirstTimeExecution() {
+//		return firstTimeExecution;
+//	}
+//
+//	/**
+//	 * @param firstTimeExecution the firstTimeExecution to set
+//	 */
+//	
+//	public void setFirstTimeExecution(String firstTimeExecution) {
+//		this.firstTimeExecution = firstTimeExecution;
+//	}
 }

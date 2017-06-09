@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Entity
 @Table
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="FirstTimeExecution",discriminatorType=DiscriminatorType.STRING)  
+@DiscriminatorColumn(name="firstTimeExecution",discriminatorType=DiscriminatorType.STRING)  
 @DiscriminatorValue(value="Yes")  
 public class StepErPageProperty extends BaseStepExpectedResult {
 

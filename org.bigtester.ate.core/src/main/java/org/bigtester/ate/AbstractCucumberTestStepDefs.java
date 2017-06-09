@@ -23,6 +23,9 @@ package org.bigtester.ate;//NOPMD
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
@@ -74,10 +77,11 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
-	private void runStep(ApplicationContext context, final String testCaseName, final String testCaseId, @Nullable final String stepTypeServiceName) throws ClassNotFoundException, ParseException, IOException {
+	private void runStep(ApplicationContext context, final String testCaseName, final String testCaseId, @Nullable final String stepTypeServiceName, List<Map<String, String>> featureDataTable) throws ClassNotFoundException, ParseException, IOException {
 		TestProject testProj = GlobalUtils.findTestProjectBean(context);
 		testProj.setFilteringTestCaseName(testCaseName);
 		testProj.setFilteringStepName(stepTypeServiceName);
+		testProj.getCucumberDataInjector().inject(featureDataTable, stepTypeServiceName);
 		testProj.runSuites();
 		
 	}
@@ -89,7 +93,7 @@ abstract public class AbstractCucumberTestStepDefs {
 			String testSuiteName = getScenario().getId().substring(0, getScenario().getId().indexOf(";"));
 			String stepName = ateStepName;
 			
-			runStep(testCaseName, testSuiteName,  testProjectXml, stepName);
+			runStep(testCaseName, testSuiteName,  testProjectXml, stepName, new ArrayList<Map<String, String>>());
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
@@ -97,12 +101,24 @@ abstract public class AbstractCucumberTestStepDefs {
 		}
 	};
 	
+	protected void runCucumberStep(String ateStepName, String testCaseName, String testSuiteName, List<Map<String, String>> featureDataTable) {
+		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
+		try {
+			String stepName = ateStepName;
+			
+			runStep(testCaseName, testSuiteName,  testProjectXml, stepName, featureDataTable);
+		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
+				| IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	};
 	protected void runCucumberStep(String ateStepName, String testCaseName, String testSuiteName) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String stepName = ateStepName;
 			
-			runStep(testCaseName, testSuiteName,  testProjectXml, stepName);
+			runStep(testCaseName, testSuiteName,  testProjectXml, stepName, new ArrayList<Map<String, String>>());
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
@@ -120,30 +136,36 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws ClassNotFoundException 
 	 * @throws ParseException 
 	 */
-	private void runStep(final String testCaseName, final String testCaseId, final String testProjectXml, @Nullable final String stepTypeServiceName) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
-		
-		
+	private void runStep(final String testCaseName, final String testCaseId,
+			final String testProjectXml,
+			@Nullable final String stepTypeServiceName, List<Map<String, String>> featureDataTable)
+			throws DatabaseUnitException, SQLException, IOException,
+			ClassNotFoundException, ParseException {
+
 		if (StringUtils.isEmpty(testProjectXml) && testProjectContext == null) {
 			testProjectContext = new ClassPathXmlApplicationContext(
 					"testproject.xml");
-		} else if (testProjectContext == null ){
-			testProjectContext = new FileSystemXmlApplicationContext(testProjectXml);
+		} else if (testProjectContext == null) {
+			testProjectContext = new FileSystemXmlApplicationContext(
+					testProjectXml);
 		}
-		
-		TestProject testplan = GlobalUtils.findTestProjectBean(testProjectContext);
+
+		TestProject testplan = GlobalUtils
+				.findTestProjectBean(testProjectContext);
 		testplan.setAppCtx(testProjectContext);
-		
-		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) testProjectContext.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
-		
+
+		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) testProjectContext
+				.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
+
 		if (dbinit.getSingleInitXmlFile() == null)
 			dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
-		
-		//TODO add db initialization handler
-		if (dbinit.getDatasets()==null)
+
+		// TODO add db initialization handler
+		if (dbinit.getDatasets() == null)
 			dbinit.initializeGlobalDataFile(testProjectContext);
-		
-		runStep(testProjectContext, testCaseName, testCaseId,stepTypeServiceName);
-		
+
+		runStep(testProjectContext, testCaseName, testCaseId,
+				stepTypeServiceName, featureDataTable);
 
 	}
 	

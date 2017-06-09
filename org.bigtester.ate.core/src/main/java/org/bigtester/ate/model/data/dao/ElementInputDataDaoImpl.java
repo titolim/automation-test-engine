@@ -58,8 +58,13 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 	}
 	
 	public List<RepeatStepElementInputData> refreshRepeatStepData(List<RepeatStepElementInputData> eids, String repeatStepName) {
-		getDbEM().remove(this.getAllRepeatStepElementInputData(repeatStepName));
-		getDbEM().persist(eids);
+		this.getAllRepeatStepElementInputData(repeatStepName).forEach(eid->{
+			getDbEM().remove(eid);	
+		});
+		eids.forEach(eid->{
+			getDbEM().persist(eid);
+		});
+		
 		return this.getAllRepeatStepElementInputData(repeatStepName);
 	}
 
@@ -79,8 +84,8 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 	 * @return the all
 	 */
 	public @Nullable List<RepeatStepElementInputData> getAllRepeatStepElementInputData(String repeatStepName) {
-		return getDbEM().createQuery("SELECT p FROM ElementInputData p where p.repeatStepName=:repeatStepName",
-				RepeatStepElementInputData.class).getResultList();
+		return getDbEM().createQuery("SELECT p FROM RepeatStepElementInputData p where p.repeatStepName=:repeatStepName",
+				RepeatStepElementInputData.class).setParameter("repeatStepName", repeatStepName).getResultList();
 	}
 
 	/**
@@ -94,7 +99,7 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 
 		List<ElementInputData> sERs = (List<ElementInputData>) getDbEM()
 				.createQuery(
-						"select p from ElementInputData p where FirstTimeExecution= 'Yes' and p.stepEIDsetID = :stepEIDsetID",
+						"select p from ElementInputData p where firstTimeExecution= 'Yes' and p.stepEIDsetID = :stepEIDsetID",
 						ElementInputData.class)
 				.setParameter("stepEIDsetID", inputDataID)// NOPMD
 				.getResultList();
@@ -125,7 +130,7 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 		if ("".equals(repeatStepExternalLoopPath))
 			return getValue(inputDataID, repeatStepName, iteration);//NOPMD
 		List<ElementInputData> retVal;
-		String sql = "select p from ElementInputData p where repeatStepExternalLoopPath=:repeatStepExternalLoopPath and FirstTimeExecution= 'No' and p.stepEIDsetID = :stepEIDsetID and p.repeatStepName=:repeatStepName and p.iteration=:iteration";
+		String sql = "select p from ElementInputData p where repeatStepExternalLoopPath=:repeatStepExternalLoopPath and firstTimeExecution= 'No' and p.stepEIDsetID = :stepEIDsetID and p.repeatStepName=:repeatStepName and p.iteration=:iteration";
 		TypedQuery<ElementInputData> query = getDbEM().createQuery(sql,
 				ElementInputData.class);
 		query.setParameter("repeatStepExternalLoopPath",
