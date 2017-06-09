@@ -20,44 +20,130 @@
  *******************************************************************************/
 package org.bigtester.ate.model.data;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import org.bigtester.ate.model.data.dao.ElementInputDataDaoImpl;
+
+import org.bigtester.ate.model.data.dbtable.RepeatStepElementInputData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 // TODO: Auto-generated Javadoc
 /**
  * This class CucumberFeatureDataInjector defines ....
+ * 
  * @author Peidong Hu
  *
  */
 @Component
 public class CucumberFeatureDataInjector {
-	
+
 	/** The element input data dao. */
 	@Autowired
 	private ElementInputDataDaoImpl elementInputDataDao;
-	
+
 	/**
 	 * Mapping feature data indexed by dataName to db dataId indexed data.
 	 *
-	 * @param featureDataTable the feature data table
+	 * @param featureDataTable
+	 *            the feature data table
 	 * @return the list of data indexed by dataId
 	 */
-	private List<Map<String,String>> mappingFeatureDataToDBIndexedData(List<Map<String,String>> featureDataTable, String repeatStepName) {
-		return featureDataTable;
+	private List<RepeatStepElementInputData> mappingFeatureDataToDBIndexedData(
+			List<Map<String, String>> featureDataTable, String repeatStepName) {
+		
+		List<RepeatStepElementInputData> eids = elementInputDataDao
+				.getAllRepeatStepElementInputData(repeatStepName);
+		Set<String> eidDataNames = eids.stream().map(eid -> eid.getDataName())
+				.collect(Collectors.toSet());
+		List<Map<String, String>> tmpFeatureDataTable = new ArrayList<Map<String, String>>();
+		for (int featureDataIndex = 0; featureDataIndex < featureDataTable
+				.size(); featureDataIndex++) {
+			tmpFeatureDataTable.set(
+					featureDataIndex,
+					featureDataTable
+							.get(featureDataIndex)
+							.entrySet()
+							.stream()
+							.filter(row -> {
+								return eidDataNames.contains(row.getKey());
+							})
+							.collect(
+									Collectors.toMap(Entry::getKey,
+											Entry::getValue)));
+		}
+		tmpFeatureDataTable.removeIf(row -> row.size() == 0);
+		Map<String, List<String>> featureTableValueSets = new ConcurrentHashMap<String, List<String>>();
+		tmpFeatureDataTable.forEach(dataMap -> {
+			dataMap.entrySet().forEach(
+					entry -> {
+						if (featureTableValueSets.keySet().contains(
+								entry.getKey())) {
+							featureTableValueSets.get(entry.getKey()).add(
+									entry.getValue());
+						} else {
+							List<String> values = new ArrayList<String>();
+							values.add(entry.getValue());
+							featureTableValueSets.put(entry.getKey(), values);
+						}
+					});
+		});
+
+		Map<String, List<RepeatStepElementInputData>> eidsMap = eids
+				.stream()
+				.collect(
+						Collectors
+								.groupingBy(RepeatStepElementInputData::getDataName));
+		featureTableValueSets
+				.entrySet()
+				.forEach(
+						entry -> {
+							RepeatStepElementInputData newData;
+							try {
+								newData = (RepeatStepElementInputData) eidsMap
+										.get(entry.getKey()).get(0).clone();
+
+								eidsMap.get(entry.getKey()).clear();
+								for (int ind = 0; ind < entry.getValue().size(); ind++) {
+									RepeatStepElementInputData tmpData;
+
+									tmpData = (RepeatStepElementInputData) newData
+											.clone();
+									tmpData.setDataValue(entry.getValue().get(
+											ind));
+									tmpData.setIteration(ind + 1);
+
+								}
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						});
+
+		return eidsMap.entrySet().stream().map(Entry::getValue)
+				.flatMap(List::stream).collect(Collectors.toList());
 	}
-	
+
 	/**
 	 * Inject the table data
 	 *
-	 * @param featureDataTable the feature data table
+	 * @param featureDataTable
+	 *            the feature data table
 	 * @return the int
 	 */
-	public int inject(List<Map<String,String>> featureDataTable, String repeatStepName) {
-		return featureDataTable.size();
+	public int inject(List<Map<String, String>> featureDataTable,
+			String repeatStepName) {
+		return this.elementInputDataDao.refreshRepeatStepData(
+				mappingFeatureDataToDBIndexedData(featureDataTable,
+						repeatStepName), repeatStepName).size();
 	}
 
 	public int inject(String stepName, String... featureValues) {

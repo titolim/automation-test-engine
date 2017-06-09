@@ -27,6 +27,7 @@ import javax.persistence.TypedQuery;
 import org.bigtester.ate.constant.ExceptionErrorCode;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.model.data.dbtable.ElementInputData;
+import org.bigtester.ate.model.data.dbtable.RepeatStepElementInputData;
 import org.bigtester.ate.model.data.exception.RepeatTestDataException;
 import org.bigtester.ate.model.data.exception.TestDataException;
 import org.eclipse.jdt.annotation.Nullable;
@@ -55,6 +56,12 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 		retVal = eid.getStepEIDsetID();
 		return retVal;
 	}
+	
+	public List<RepeatStepElementInputData> refreshRepeatStepData(List<RepeatStepElementInputData> eids, String repeatStepName) {
+		getDbEM().remove(this.getAllRepeatStepElementInputData(repeatStepName));
+		getDbEM().persist(eids);
+		return this.getAllRepeatStepElementInputData(repeatStepName);
+	}
 
 	/**
 	 * Gets the all.
@@ -64,6 +71,16 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 	public @Nullable List<ElementInputData> getAll() {
 		return getDbEM().createQuery("SELECT p FROM ElementInputData p",
 				ElementInputData.class).getResultList();
+	}
+	
+	/**
+	 * Gets the all.
+	 *
+	 * @return the all
+	 */
+	public @Nullable List<RepeatStepElementInputData> getAllRepeatStepElementInputData(String repeatStepName) {
+		return getDbEM().createQuery("SELECT p FROM ElementInputData p where p.repeatStepName=:repeatStepName",
+				RepeatStepElementInputData.class).getResultList();
 	}
 
 	/**

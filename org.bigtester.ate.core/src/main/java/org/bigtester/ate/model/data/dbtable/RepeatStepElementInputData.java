@@ -36,7 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Entity
 
 @DiscriminatorValue(value="No") 
-public class RepeatStepElementInputData extends ElementInputData {
+public class RepeatStepElementInputData extends ElementInputData implements Cloneable{
 
 	@Column
 	private int iteration; // NOPMD
@@ -103,5 +103,8 @@ public class RepeatStepElementInputData extends ElementInputData {
 	public void setRepeatStepExternalLoopPath(String repeatStepExternalLoopPath) {
 		this.repeatStepExternalLoopPath = repeatStepExternalLoopPath;
 	}
-
+	
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
