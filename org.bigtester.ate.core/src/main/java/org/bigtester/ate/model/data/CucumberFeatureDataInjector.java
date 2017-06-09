@@ -67,7 +67,7 @@ public class CucumberFeatureDataInjector {
 		List<Map<String, String>> tmpFeatureDataTable = new ArrayList<Map<String, String>>();
 		for (int featureDataIndex = 0; featureDataIndex < featureDataTable
 				.size(); featureDataIndex++) {
-			tmpFeatureDataTable.set(
+			tmpFeatureDataTable.add(
 					featureDataIndex,
 					featureDataTable
 							.get(featureDataIndex)

@@ -65,6 +65,7 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 			getDbEM().persist(eid);
 		});
 		
+		System.out.println( this.getAllRepeatStepElementInputData(repeatStepName));
 		return this.getAllRepeatStepElementInputData(repeatStepName);
 	}
 
