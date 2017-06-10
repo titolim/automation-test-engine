@@ -266,23 +266,23 @@ public class MyChromeDriver extends AbstractWebDriverBase implements IMyWebDrive
 		if (null == retVal) {
 			setChromeDriverSystemEnv();
 			ChromeOptions ops = new ChromeOptions();
-			boolean opsAdded = false;
+			
+			//ops.addArguments(Arrays.asList(new String[]{"--disable-popup-blocking", "--disable-infobars"}));//default args to avoid multiple bad tabs opens
 			if (getBrowserProfile().getStartArguments().size()>0) {
 				ops.addArguments(getBrowserProfile().getStartArguments());
-				opsAdded = true;
+			
 			}
 			if (getBrowserProfile().isPreserveCookiesOnExecutions()) {
 
 				ops.addArguments("--user-data-dir="
 						+ getBrowserProfile().getTestCaseChromeUserDataDir());
-				opsAdded = true;
+			
 
 			}
 
-			if (opsAdded)
+			
 				retVal = new ChromeDriver(ops);
-			else
-				retVal = new ChromeDriver();
+			
 			setWebDriver(retVal);
 		}
 		return retVal;
