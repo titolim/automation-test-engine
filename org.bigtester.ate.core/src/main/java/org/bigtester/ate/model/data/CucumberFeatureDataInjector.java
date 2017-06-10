@@ -22,7 +22,6 @@ package org.bigtester.ate.model.data;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,7 +30,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.bigtester.ate.model.data.dao.ElementInputDataDaoImpl;
-
 import org.bigtester.ate.model.data.dbtable.RepeatStepElementInputData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -110,6 +108,7 @@ public class CucumberFeatureDataInjector {
 							try {
 								newData = (RepeatStepElementInputData) eidsMap
 										.get(entry.getKey()).get(0).clone();
+								newData.setIdColumn(0);
 
 								eidsMap.get(entry.getKey()).clear();
 								for (int ind = 0; ind < entry.getValue().size(); ind++) {
@@ -120,6 +119,7 @@ public class CucumberFeatureDataInjector {
 									tmpData.setDataValue(entry.getValue().get(
 											ind));
 									tmpData.setIteration(ind + 1);
+									eidsMap.get(entry.getKey()).add(tmpData);
 
 								}
 							} catch (Exception e) {

@@ -77,10 +77,11 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws IOException 
 	 * @throws ParseException 
 	 */
-	private void runStep(ApplicationContext context, final String testCaseName, final String testCaseId, @Nullable final String stepTypeServiceName, List<Map<String, String>> featureDataTable) throws ClassNotFoundException, ParseException, IOException {
+	private void runStep(ApplicationContext context, final String testCaseName, final String testSuiteName, @Nullable final String stepTypeServiceName, List<Map<String, String>> featureDataTable) throws ClassNotFoundException, ParseException, IOException {
 		TestProject testProj = GlobalUtils.findTestProjectBean(context);
 		testProj.setFilteringTestCaseName(testCaseName);
 		testProj.setFilteringStepName(stepTypeServiceName);
+		testProj.setFilteringTestSuiteName(testSuiteName);
 		testProj.getCucumberDataInjector().inject(featureDataTable, stepTypeServiceName);
 		testProj.runSuites();
 		
@@ -136,7 +137,7 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws ClassNotFoundException 
 	 * @throws ParseException 
 	 */
-	private void runStep(final String testCaseName, final String testCaseId,
+	private void runStep(final String testCaseName, final String testSuiteName,
 			final String testProjectXml,
 			@Nullable final String stepTypeServiceName, List<Map<String, String>> featureDataTable)
 			throws DatabaseUnitException, SQLException, IOException,
@@ -164,7 +165,7 @@ abstract public class AbstractCucumberTestStepDefs {
 		if (dbinit.getDatasets() == null)
 			dbinit.initializeGlobalDataFile(testProjectContext);
 
-		runStep(testProjectContext, testCaseName, testCaseId,
+		runStep(testProjectContext, testCaseName, testSuiteName,
 				stepTypeServiceName, featureDataTable);
 
 	}

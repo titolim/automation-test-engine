@@ -85,6 +85,8 @@ public class TestProject {
 	@Nullable
 	private String filteringStepName;
 	
+	@Nullable
+	private String filteringTestSuiteName;
 	/**
 	 * Instantiates a new test project.
 	 *
@@ -133,8 +135,8 @@ public class TestProject {
 	@TestProjectLoggable (level=ATELogLevel.INFO)
 	public void runSuites() throws ClassNotFoundException, ParseException,
 			IOException {
-		cucumberDataInjector.inject("test", "test1");
-		this.runSuites(this.filteringTestCaseName, this.filteringStepName);
+		//cucumberDataInjector.inject("test", "test1");
+		this.runSuites(this.filteringTestSuiteName, this.filteringTestCaseName, this.filteringStepName);
 //
 //		final TestProjectListener tla = new TestProjectListener(this);
 //		final TestCaseResultModifier repeatStepResultModifier = new TestCaseResultModifier();
@@ -185,7 +187,7 @@ public class TestProject {
 	 * @throws ParseException
 	 */
 	//@TestProjectLoggable (level=ATELogLevel.INFO)
-	private void runSuites(String filteringTestCaseName, String filteringStepName) throws ClassNotFoundException, ParseException,
+	private void runSuites(String filteringSuiteName, String filteringTestCaseName, String filteringStepName) throws ClassNotFoundException, ParseException,
 			IOException {
 		if (testng.getTestListeners().stream().filter(listener->listener instanceof TestProjectListener).count()==0) {
 		
@@ -204,12 +206,12 @@ public class TestProject {
 		//TODO Can be optimaized in cucumber run, no need to delete old suite cases in each step if it is belong to current test project
 		List<TestSuite> suites = this.getSuiteList();
 		if (filteringTestCaseName!=null) {
-			suites = suites.stream().filter(suite->suite.getTestCaseList().stream().filter(tcase->tcase.getTestCaseFilePathName().contains(filteringTestCaseName)).count()>0).collect(Collectors.toList());
+			suites = suites.stream().filter(suite->suite.getSuiteName().equalsIgnoreCase(filteringSuiteName)).collect(Collectors.toList());
 			for (TestSuite tSuite : suites) {
 				tSuite.setTestCaseList(tSuite.getTestCaseList()
 						.stream()
 						.filter(tcase -> tcase.getTestCaseFilePathName()
-								.contains(filteringTestCaseName))
+								.contains("/" + filteringTestCaseName +".xml"))
 								.collect(Collectors.toList()));
 			}
 		}
@@ -384,6 +386,20 @@ public class TestProject {
 	public void setCucumberDataInjector(
 			CucumberFeatureDataInjector cucumberDataInjector) {
 		this.cucumberDataInjector = cucumberDataInjector;
+	}
+
+	/**
+	 * @return the filteringTestSuiteName
+	 */
+	public String getFilteringTestSuiteName() {
+		return filteringTestSuiteName;
+	}
+
+	/**
+	 * @param filteringTestSuiteName the filteringTestSuiteName to set
+	 */
+	public void setFilteringTestSuiteName(String filteringTestSuiteName) {
+		this.filteringTestSuiteName = filteringTestSuiteName;
 	}
 
 }
