@@ -168,10 +168,10 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer, Appli
 					if (GlobalUtils.getTargetObject(inputData) instanceof BaseInputDataValue) {
 						((BaseInputDataValue)GlobalUtils.getTargetObject(inputData)).setStrDataValue(pair.getValue());
 					} else {
-						GlobalUtils.createInternalError("can't find the value holder for: "+pair.getValue()+" in test case");
+						throw GlobalUtils.createInternalError("can't find the value holder for: "+pair.getValue()+" in test case");
 					}
 				} else {
-					GlobalUtils.createInternalError("can't find the action: "+pair.getActionName()+" in test case");
+					throw GlobalUtils.createInternalError("can't find the action: "+pair.getActionName()+" in test case");
 				}
 			});
 		}
@@ -305,13 +305,13 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer, Appli
 				}
 			} else if (filteredSteps.size()>1){
 				if ( GlobalUtils.getTargetObject(filteredSteps.get(0)) instanceof RepeatStep) {
-					GlobalUtils.createInternalError("there are more than 1 same named (repeat) steps in xml implementation.");
+					throw GlobalUtils.createInternalError("there are more than 1 same named (repeat) steps in xml implementation.");
 				} else {
-					GlobalUtils.createInternalError("there are more than 1 same named steps in xml implementation.");
+					throw GlobalUtils.createInternalError("there are more than 1 same named steps in xml implementation.");
 				}
 				
 			} else {
-				GlobalUtils.createInternalError("there are 0 step name found in xml implementation.");
+				throw GlobalUtils.createInternalError("there are 0 step name found in xml implementation.");
 			}
 		}
 		for (int i = startIndex; i <= endIndex; i++) {
