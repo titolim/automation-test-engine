@@ -23,6 +23,7 @@ package org.bigtester.ate.model.project; //NOPMD
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.bigtester.ate.GlobalUtils;
@@ -85,8 +86,13 @@ public class TestProject {
 	@Nullable
 	private String filteringStepName;
 	
+	/** The filtering test suite name. */
 	@Nullable
 	private String filteringTestSuiteName;
+	
+	@Nullable
+	/** The cucumber data table. */
+	private List<Map<String,String>> cucumberDataTable;
 	/**
 	 * Instantiates a new test project.
 	 *
@@ -95,6 +101,7 @@ public class TestProject {
 	 * @param testProjectListener
 	 *            the test project listener
 	 */
+	
 	public TestProject(Resource globalInitXmlFile) {
 		this.globalInitXmlFile = globalInitXmlFile;
 	}
@@ -400,6 +407,20 @@ public class TestProject {
 	 */
 	public void setFilteringTestSuiteName(String filteringTestSuiteName) {
 		this.filteringTestSuiteName = filteringTestSuiteName;
+	}
+
+	/**
+	 * @return the cucumberDataTable
+	 */
+	public List<Map<String,String>> getCucumberDataTable() {
+		return cucumberDataTable;
+	}
+
+	/**
+	 * @param cucumberDataTable the cucumberDataTable to set
+	 */
+	public void setCucumberDataTable(List<Map<String,String>> cucumberDataTable) {
+		this.cucumberDataTable = cucumberDataTable;
 	}
 
 }

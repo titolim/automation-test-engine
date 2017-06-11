@@ -151,6 +151,7 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 	public void goSteps() throws StepExecutionException,
 			PageValidationException, IllegalStateException,
 			RuntimeDataException {
+
 		goSteps(getParentTestProject().getFilteringStepName());
 	}
 
@@ -253,12 +254,17 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 		return getTestStepList();
 	}
 
+	
 	/**
-	 * {@inheritDoc}
+	 * Go steps.
+	 *
+	 * @param filteringStepName the filtering step name
+	 * @throws StepExecutionException the step execution exception
+	 * @throws PageValidationException the page validation exception
+	 * @throws IllegalStateException the illegal state exception
+	 * @throws RuntimeDataException the runtime data exception
 	 */
-	@Override
-	@TestCaseLoggable (level=ATELogLevel.INFO)
-	public void goSteps(String filteringStepName) throws StepExecutionException,
+	private void goSteps(String filteringStepName) throws StepExecutionException,
 			PageValidationException, IllegalStateException,
 			RuntimeDataException {
 

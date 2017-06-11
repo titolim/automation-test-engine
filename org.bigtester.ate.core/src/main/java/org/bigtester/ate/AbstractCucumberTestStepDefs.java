@@ -82,7 +82,8 @@ abstract public class AbstractCucumberTestStepDefs {
 		testProj.setFilteringTestCaseName(testCaseName);
 		testProj.setFilteringStepName(stepTypeServiceName);
 		testProj.setFilteringTestSuiteName(testSuiteName);
-		testProj.getCucumberDataInjector().inject(featureDataTable, stepTypeServiceName);
+		testProj.setCucumberDataTable(featureDataTable);
+		
 		testProj.runSuites();
 		
 	}

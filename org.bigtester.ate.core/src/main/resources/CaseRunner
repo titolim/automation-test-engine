@@ -175,6 +175,7 @@ public class CaseRunner implements IRunTestCase {
 							.getAppCtx());
 					params.setTestProject(((TestProjectListener) ((TestRunner) ctx)
 							.getTestListeners().get(index)).getMytp());
+					
 					break;
 				}
 			}
@@ -231,7 +232,8 @@ public class CaseRunner implements IRunTestCase {
 
 		// ApplicationContext context;
 		try {
-			context = new FileSystemXmlApplicationContext(testname);
+			String[] configFiles = {testname};
+			context = new FileSystemXmlApplicationContext(configFiles, testParams.getTestProject().getAppCtx());
 			IMyWebDriver myWebD = (IMyWebDriver) GlobalUtils
 					.findMyWebDriver(context);
 			mainDriver = myWebD.getWebDriverInstance();
@@ -239,6 +241,7 @@ public class CaseRunner implements IRunTestCase {
 			getMyTestCase().setStepThinkTime(testParams.getStepThinkTime());
 			getMyTestCase().setCurrentWebDriver(myWebD);
 			getMyTestCase().setParentTestProject(testParams.getTestProject());
+			
 			getMyTestCase().goSteps();
 
 		} catch (FatalBeanException fbe) {
@@ -292,6 +295,7 @@ public class CaseRunner implements IRunTestCase {
 //			throw th;
 //		}
 	}
+	
 
 	/**
 	 * Tear down.

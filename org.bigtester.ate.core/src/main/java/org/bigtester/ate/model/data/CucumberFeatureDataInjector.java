@@ -33,6 +33,7 @@ import org.bigtester.ate.model.data.dao.ElementInputDataDaoImpl;
 import org.bigtester.ate.model.data.dbtable.RepeatStepElementInputData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -118,7 +119,7 @@ public class CucumberFeatureDataInjector {
 											.clone();
 									tmpData.setDataValue(entry.getValue().get(
 											ind));
-									tmpData.setIteration(ind + 1);
+									tmpData.setIteration(ind);
 									eidsMap.get(entry.getKey()).add(tmpData);
 
 								}
@@ -139,6 +140,7 @@ public class CucumberFeatureDataInjector {
 	 *            the feature data table
 	 * @return the int
 	 */
+	
 	public int inject(List<Map<String, String>> featureDataTable,
 			String repeatStepName) {
 		return this.elementInputDataDao.refreshRepeatStepData(

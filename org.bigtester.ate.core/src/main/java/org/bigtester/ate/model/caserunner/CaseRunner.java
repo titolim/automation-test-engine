@@ -175,8 +175,7 @@ public class CaseRunner implements IRunTestCase {
 							.getAppCtx());
 					params.setTestProject(((TestProjectListener) ((TestRunner) ctx)
 							.getTestListeners().get(index)).getMytp());
-					params.setFilteringStepName(((TestProjectListener) ((TestRunner) ctx)
-							.getTestListeners().get(index)).getMytp().getFilteringStepName());
+					
 					break;
 				}
 			}
@@ -233,7 +232,8 @@ public class CaseRunner implements IRunTestCase {
 
 		// ApplicationContext context;
 		try {
-			context = new FileSystemXmlApplicationContext(testname);
+			String[] configFiles = {testname};
+			context = new FileSystemXmlApplicationContext(configFiles, testParams.getTestProject().getAppCtx());
 			IMyWebDriver myWebD = (IMyWebDriver) GlobalUtils
 					.findMyWebDriver(context);
 			mainDriver = myWebD.getWebDriverInstance();
@@ -241,6 +241,7 @@ public class CaseRunner implements IRunTestCase {
 			getMyTestCase().setStepThinkTime(testParams.getStepThinkTime());
 			getMyTestCase().setCurrentWebDriver(myWebD);
 			getMyTestCase().setParentTestProject(testParams.getTestProject());
+			
 			getMyTestCase().goSteps();
 
 		} catch (FatalBeanException fbe) {
@@ -250,7 +251,7 @@ public class CaseRunner implements IRunTestCase {
 						.findMyWebDriver(context)).getWebDriverInstance();
 				myTestCase = GlobalUtils.findTestCaseBean(getContext());
 				myTestCase.setStepThinkTime(testParams.getStepThinkTime());
-				getMyTestCase().goSteps(testParams.getFilteringStepName());
+				getMyTestCase().goSteps();
 
 			} else if (fbe instanceof BeanCreationException) { // NOPMD
 				ITestResult itr = Reporter.getCurrentTestResult();

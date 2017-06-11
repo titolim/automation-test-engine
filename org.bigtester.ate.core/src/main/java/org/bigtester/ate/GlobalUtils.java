@@ -498,6 +498,23 @@ public class GlobalUtils implements ApplicationContextAware {
 		}
 
 	}
+	
+	/**
+	 * Find test project bean.
+	 *
+	 * @param beanFac the bean fac
+	 * @return the test project
+	 */
+	public static TestProject findTestProjectBean(BeanFactory beanFac) {
+		TestProject dataSrc = beanFac.getBean(TestProject.class);
+
+		if (null == dataSrc) {
+			throw new NoSuchBeanDefinitionException(DataSource.class);
+		} else {
+			return dataSrc;
+		}
+
+	}
 
 	/**
 	 * Throw not initialized exception.

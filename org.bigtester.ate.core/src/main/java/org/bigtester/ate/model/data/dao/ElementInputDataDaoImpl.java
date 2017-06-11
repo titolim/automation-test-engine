@@ -31,6 +31,7 @@ import org.bigtester.ate.model.data.dbtable.RepeatStepElementInputData;
 import org.bigtester.ate.model.data.exception.RepeatTestDataException;
 import org.bigtester.ate.model.data.exception.TestDataException;
 import org.eclipse.jdt.annotation.Nullable;
+import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 // TODO: Auto-generated Javadoc
@@ -62,10 +63,23 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 			getDbEM().remove(eid);	
 		});
 		eids.forEach(eid->{
-			getDbEM().persist(eid);
+			if (eids.indexOf(eid)==0) {
+				try {
+					ElementInputData existingEid = this.getEid(eid.getStepEIDsetID());
+					getDbEM().remove(existingEid);
+					ElementInputData newEid = new ElementInputData();
+					BeanUtils.copyProperties(eid, newEid);
+					getDbEM().persist(newEid);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				getDbEM().persist(eid);
+			}
 		});
 		
-		System.out.println( this.getAllRepeatStepElementInputData(repeatStepName));
+		//System.out.println( this.getAll());
 		return this.getAllRepeatStepElementInputData(repeatStepName);
 	}
 
@@ -113,6 +127,27 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 					ExceptionErrorCode.TESTDATA_NOTFOUND);
 		} else {
 			return sERs.get(0).getDataValue();
+		}
+
+	}
+	
+	public ElementInputData getEid(String inputDataID) throws TestDataException {
+
+		List<ElementInputData> sERs = (List<ElementInputData>) getDbEM()
+				.createQuery(
+						"select p from ElementInputData p where firstTimeExecution= 'Yes' and p.stepEIDsetID = :stepEIDsetID",
+						ElementInputData.class)
+				.setParameter("stepEIDsetID", inputDataID)// NOPMD
+				.getResultList();
+		if (sERs.isEmpty()) {
+			throw new TestDataException(ExceptionMessage.MSG_TESTDATA_NOTFOUND,
+					ExceptionErrorCode.TESTDATA_NOTFOUND);
+		} else if (sERs.size() > 1) { // NOPMD
+			throw new TestDataException(
+					ExceptionMessage.MSG_TESTDATA_DUPLICATED,
+					ExceptionErrorCode.TESTDATA_NOTFOUND);
+		} else {
+			return sERs.get(0);
 		}
 
 	}
