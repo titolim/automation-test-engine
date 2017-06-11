@@ -129,6 +129,22 @@ abstract public class AbstractCucumberTestStepDefs {
 			e.printStackTrace();
 		}
 	};
+	
+	protected void runCucumberStep(String ateStepName, String testCaseName,
+			String testSuiteName,
+			ActionNameValuePair... actionNameValuePairs) {
+		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
+		try {
+			String stepName = ateStepName;
+
+			runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+					null, actionNameValuePairs);
+		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
+				| IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	};
 
 	protected void runCucumberStep(String ateStepName, String testCaseName,
 			String testSuiteName) {
@@ -137,7 +153,7 @@ abstract public class AbstractCucumberTestStepDefs {
 			String stepName = ateStepName;
 
 			runStep(testCaseName, testSuiteName, testProjectXml, stepName,
-					new ArrayList<Map<String, String>>());
+					null);
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
