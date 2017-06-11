@@ -21,6 +21,7 @@
 package org.bigtester.ate.model.casestep;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bigtester.ate.GlobalUtils;
@@ -267,12 +268,35 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 	private void goSteps(String filteringStepName) throws StepExecutionException,
 			PageValidationException, IllegalStateException,
 			RuntimeDataException {
-
-		for (int i = 0; i < getTestStepList().size(); i++) {
+		int startIndex=0;
+		int endIndex = getTestStepList().size()-1;
+		if (filteringStepName!=null ) {
+			List<ITestStep> filteredSteps = getTestStepList().stream().filter(tStep->tStep.getStepName().equalsIgnoreCase(filteringStepName) ).collect(Collectors.toList());
+			if (filteredSteps.size()==1) {
+				if ( GlobalUtils.getTargetObject(filteredSteps.get(0)) instanceof RepeatStep) {
+					RepeatStep rStep = (RepeatStep) GlobalUtils.getTargetObject(filteredSteps.get(0));
+					startIndex = RepeatStep.getStepIndex(getTestStepList(), rStep.getStartStepName());
+					endIndex = getTestStepList().indexOf(filteredSteps.get(0));
+				} else {
+					startIndex = getTestStepList().indexOf(filteredSteps.get(0));
+					endIndex = getTestStepList().indexOf(filteredSteps.get(0));
+				}
+			} else if (filteredSteps.size()>1){
+				if ( GlobalUtils.getTargetObject(filteredSteps.get(0)) instanceof RepeatStep) {
+					GlobalUtils.createInternalError("there are more than 1 same named (repeat) steps in xml implementation.");
+				} else {
+					GlobalUtils.createInternalError("there are more than 1 same named steps in xml implementation.");
+				}
+				
+			} else {
+				GlobalUtils.createInternalError("there are 0 step name found in xml implementation.");
+			}
+		}
+		for (int i = startIndex; i <= endIndex; i++) {
 			
 			ITestStep currentTestStepTmp = getTestStepList().get(i);
-			if (!StringUtils.isEmpty(filteringStepName) && !currentTestStepTmp.getStepName().equalsIgnoreCase(filteringStepName))
-				continue;
+//			if (!StringUtils.isEmpty(filteringStepName) && !currentTestStepTmp.getStepName().equalsIgnoreCase(filteringStepName))
+//				continue;
 			if (null == currentTestStepTmp) {
 				throw new IllegalStateException(
 						"Test Step List was not successfully initialized by ApplicationContext at list index"

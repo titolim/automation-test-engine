@@ -21,7 +21,6 @@
 package org.bigtester.ate.model.casestep;//NOPMD
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.bigtester.ate.GlobalUtils;
@@ -37,6 +36,7 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
+import org.bigtester.ate.model.project.TestSuite;
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.LogbackWriter;
@@ -116,26 +116,29 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 		this.asserterValuesRemainSame = true;
 
 	}
-
+	public static int getStepIndex(List<ITestStep> stepList, String stepName) {
+		int retVal = -1;
+		for (int i = 0; i < stepList.size(); i++) {
+			if (stepList.get(i).getStepName()
+					.equals(stepName)) {
+				retVal = i;// NOPMD
+				break;
+			}
+		}
+		return retVal;
+	}
+	
+	
 	private void buildRepeatStepContext() {
 		repeatingStepIndexesInTestCase.clear();
 		repeatingSteps.clear();
 		erValuesNeedRefresh.clear();
 		dataValuesNeedRefresh.clear();
 
-		int startIndex = -1; // NOPMD
-		int endIndex = -1; // NOPMD
+		int startIndex = getStepIndex(getTestCase().getTestStepList(), this.startStepName); // NOPMD
+		int endIndex = getStepIndex(getTestCase().getTestStepList(), this.endStepName); // NOPMD
 
-		for (int i = 0; i < getTestCase().getTestStepList().size(); i++) {
-			if (getTestCase().getTestStepList().get(i).getStepName()
-					.equals(this.startStepName)) {
-				startIndex = i;// NOPMD
-			}
-			if (getTestCase().getTestStepList().get(i).getStepName()
-					.equals(this.endStepName)) {
-				endIndex = i;// NOPMD
-			}
-		}
+		
 		if (startIndex == -1 || endIndex == -1)
 			throw GlobalUtils
 					.createNotInitializedException("startStepName or endStepName");
