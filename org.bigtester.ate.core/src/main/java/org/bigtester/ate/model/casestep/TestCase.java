@@ -23,14 +23,16 @@ package org.bigtester.ate.model.casestep;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.annotation.TestCaseLoggable;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.AbstractATEException;
+import org.bigtester.ate.model.data.BaseInputDataValue;
+import org.bigtester.ate.model.data.IStepInputData;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
+import org.bigtester.ate.model.page.elementaction.BaseElementAction;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.project.TestProject;
@@ -39,6 +41,9 @@ import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.problems.IATEProblem;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.aop.support.AopUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.testng.Reporter;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -49,7 +54,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * 
  * @author Peidong Hu
  */
-public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
+public class TestCase implements ITestCase, IStepJumpingEnclosedContainer, ApplicationContextAware{
 
 	/** The current web driver. */
 	@Nullable
@@ -74,6 +79,9 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 	@XStreamOmitField
 	private TestProject parentTestProject;
 
+	@Nullable
+	@XStreamOmitField
+	private ApplicationContext testCaseContext;
 	/**
 	 * Instantiates a new test case.
 	 *
@@ -152,7 +160,21 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 	public void goSteps() throws StepExecutionException,
 			PageValidationException, IllegalStateException,
 			RuntimeDataException {
-
+		if (getParentTestProject().getCucumberActionNameValuePairs()!=null) {
+			getParentTestProject().getCucumberActionNameValuePairs().forEach(pair->{
+				Object bea = this.testCaseContext.getBean(pair.getActionName());
+				if (GlobalUtils.getTargetObject(bea) instanceof BaseElementAction) {
+					IStepInputData inputData = ((BaseElementAction)GlobalUtils.getTargetObject(bea)).getDataValue();
+					if (GlobalUtils.getTargetObject(inputData) instanceof BaseInputDataValue) {
+						((BaseInputDataValue)GlobalUtils.getTargetObject(inputData)).setStrDataValue(pair.getValue());
+					} else {
+						GlobalUtils.createInternalError("can't find the value holder for: "+pair.getValue()+" in test case");
+					}
+				} else {
+					GlobalUtils.createInternalError("can't find the action: "+pair.getActionName()+" in test case");
+				}
+			});
+		}
 		goSteps(getParentTestProject().getFilteringStepName());
 	}
 
@@ -295,8 +317,7 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 		for (int i = startIndex; i <= endIndex; i++) {
 			
 			ITestStep currentTestStepTmp = getTestStepList().get(i);
-//			if (!StringUtils.isEmpty(filteringStepName) && !currentTestStepTmp.getStepName().equalsIgnoreCase(filteringStepName))
-//				continue;
+
 			if (null == currentTestStepTmp) {
 				throw new IllegalStateException(
 						"Test Step List was not successfully initialized by ApplicationContext at list index"
@@ -367,6 +388,17 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer{
 
 		}
 		Reporter.getCurrentTestResult().setThrowable(null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext)
+			throws BeansException {
+		// TODO Auto-generated method stub
+		this.testCaseContext = applicationContext;
+		
 	}
 
 }

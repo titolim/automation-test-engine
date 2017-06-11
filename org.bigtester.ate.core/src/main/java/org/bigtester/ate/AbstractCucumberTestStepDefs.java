@@ -24,10 +24,12 @@ package org.bigtester.ate;//NOPMD
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.bigtester.ate.constant.GlobalConstants;
+import org.bigtester.ate.model.cucumber.ActionNameValuePair;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.project.TestProject;
 import org.dbunit.DatabaseUnitException;
@@ -46,101 +48,121 @@ import cucumber.api.Scenario;
 /**
  * The Class TestProjectRunner defines ....
  * 
- * @author Peidong Hu 
+ * @author Peidong Hu
  */
 
 abstract public class AbstractCucumberTestStepDefs {
-	static { //runs when the main class is loaded.
-	    System.setProperty("logback-access.debug", "true");
-//	    System.setProperty("org.jboss.logging.provider", "slf4j");
-	    System.setProperty("org.jboss.logging.provider", "log4j");
-	    System.setProperty("hsqldb.reconfig_logging", "false");
-	    
+	static { // runs when the main class is loaded.
+		System.setProperty("logback-access.debug", "true");
+		// System.setProperty("org.jboss.logging.provider", "slf4j");
+		System.setProperty("org.jboss.logging.provider", "log4j");
+		System.setProperty("hsqldb.reconfig_logging", "false");
+
 	}
-	
-	 
+
 	private ApplicationContext testProjectContext;
-	
+
 	public abstract Scenario getScenario();
-	
+
 	public abstract String getAteGlueTestProjectXmlFilePath();
-	
-		 
+
 	public AbstractCucumberTestStepDefs() {
 		TestProjectRunner.registerXsdNameSpaceParsers();
 		TestProjectRunner.registerProblemHandlers();
-		
+
 	}
+
 	/**
 	 * Run test.
-	 * @throws ClassNotFoundException 
-	 * @throws IOException 
-	 * @throws ParseException 
+	 * 
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 * @throws ParseException
 	 */
-	private void runStep(ApplicationContext context, final String testCaseName, final String testSuiteName, @Nullable final String stepTypeServiceName, List<Map<String, String>> featureDataTable) throws ClassNotFoundException, ParseException, IOException {
+	private void runStep(ApplicationContext context, final String testCaseName,
+			final String testSuiteName,
+			@Nullable final String stepTypeServiceName,
+			List<Map<String, String>> featureDataTable,
+			ActionNameValuePair... actionNameValuePairs)
+			throws ClassNotFoundException, ParseException, IOException {
 		TestProject testProj = GlobalUtils.findTestProjectBean(context);
 		testProj.setFilteringTestCaseName(testCaseName);
 		testProj.setFilteringStepName(stepTypeServiceName);
 		testProj.setFilteringTestSuiteName(testSuiteName);
 		testProj.setCucumberDataTable(featureDataTable);
-		
+		if (actionNameValuePairs.length > 0)
+			testProj.setCucumberActionNameValuePairs(new ArrayList<ActionNameValuePair>(
+					Arrays.asList(actionNameValuePairs)));
 		testProj.runSuites();
-		
+
 	}
-	
+
 	protected void runCucumberStep(String ateStepName) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String testCaseName = getScenario().getName();
-			String testSuiteName = getScenario().getId().substring(0, getScenario().getId().indexOf(";"));
+			String testSuiteName = getScenario().getId().substring(0,
+					getScenario().getId().indexOf(";"));
 			String stepName = ateStepName;
-			
-			runStep(testCaseName, testSuiteName,  testProjectXml, stepName, new ArrayList<Map<String, String>>());
+
+			runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+					new ArrayList<Map<String, String>>());
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	};
-	
-	protected void runCucumberStep(String ateStepName, String testCaseName, String testSuiteName, List<Map<String, String>> featureDataTable) {
+
+	protected void runCucumberStep(String ateStepName, String testCaseName,
+			String testSuiteName, List<Map<String, String>> featureDataTable,
+			ActionNameValuePair... actionNameValuePairs) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String stepName = ateStepName;
-			
-			runStep(testCaseName, testSuiteName,  testProjectXml, stepName, featureDataTable);
+
+			runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+					featureDataTable, actionNameValuePairs);
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	};
-	protected void runCucumberStep(String ateStepName, String testCaseName, String testSuiteName) {
+
+	protected void runCucumberStep(String ateStepName, String testCaseName,
+			String testSuiteName) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String stepName = ateStepName;
-			
-			runStep(testCaseName, testSuiteName,  testProjectXml, stepName, new ArrayList<Map<String, String>>());
+
+			runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+					new ArrayList<Map<String, String>>());
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	};
-	
+
 	/**
 	 * Run test.
 	 *
-	 * @param testProjectXml the test project xml
-	 * @throws DatabaseUnitException the database unit exception
-	 * @throws SQLException the SQL exception
-	 * @throws IOException 
-	 * @throws ClassNotFoundException 
-	 * @throws ParseException 
+	 * @param testProjectXml
+	 *            the test project xml
+	 * @throws DatabaseUnitException
+	 *             the database unit exception
+	 * @throws SQLException
+	 *             the SQL exception
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 * @throws ParseException
 	 */
 	private void runStep(final String testCaseName, final String testSuiteName,
 			final String testProjectXml,
-			@Nullable final String stepTypeServiceName, List<Map<String, String>> featureDataTable)
+			@Nullable final String stepTypeServiceName,
+			List<Map<String, String>> featureDataTable,
+			ActionNameValuePair... actionNameValuePairs)
 			throws DatabaseUnitException, SQLException, IOException,
 			ClassNotFoundException, ParseException {
 
@@ -167,12 +189,12 @@ abstract public class AbstractCucumberTestStepDefs {
 			dbinit.initializeGlobalDataFile(testProjectContext);
 
 		runStep(testProjectContext, testCaseName, testSuiteName,
-				stepTypeServiceName, featureDataTable);
+				stepTypeServiceName, featureDataTable, actionNameValuePairs);
 
 	}
-	
+
 	protected void closeAteExecutionContext() {
-		if (testProjectContext!=null) {
+		if (testProjectContext != null) {
 			((ConfigurableApplicationContext) testProjectContext).close();
 			testProjectContext = null;
 		}

@@ -30,6 +30,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.annotation.ATELogLevel;
 import org.bigtester.ate.annotation.TestProjectLoggable;
 import org.bigtester.ate.model.caserunner.CaseRunnerGenerator;
+import org.bigtester.ate.model.cucumber.ActionNameValuePair;
 import org.bigtester.ate.model.data.CucumberFeatureDataInjector;
 import org.bigtester.ate.reporter.ATEXMLReporter;
 import org.eclipse.jdt.annotation.Nullable;
@@ -93,6 +94,9 @@ public class TestProject {
 	@Nullable
 	/** The cucumber data table. */
 	private List<Map<String,String>> cucumberDataTable;
+	
+	/** The action name value pairs. */
+	private List<ActionNameValuePair> cucumberActionNameValuePairs;
 	/**
 	 * Instantiates a new test project.
 	 *
@@ -421,6 +425,21 @@ public class TestProject {
 	 */
 	public void setCucumberDataTable(List<Map<String,String>> cucumberDataTable) {
 		this.cucumberDataTable = cucumberDataTable;
+	}
+
+	/**
+	 * @return the cucumberActionNameValuePairs
+	 */
+	public List<ActionNameValuePair> getCucumberActionNameValuePairs() {
+		return cucumberActionNameValuePairs;
+	}
+
+	/**
+	 * @param cucumberActionNameValuePairs the cucumberActionNameValuePairs to set
+	 */
+	public void setCucumberActionNameValuePairs(
+			List<ActionNameValuePair> cucumberActionNameValuePairs) {
+		this.cucumberActionNameValuePairs = cucumberActionNameValuePairs;
 	}
 
 }
