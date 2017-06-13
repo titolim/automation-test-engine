@@ -27,11 +27,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.testng.ITestResult;
+import org.testng.Reporter;
+import org.testng.TestListenerAdapter;
+import org.testng.reporters.jq.Main;
 import org.bigtester.ate.constant.GlobalConstants;
 import org.bigtester.ate.model.cucumber.ActionNameValuePair;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.project.TestProject;
+import org.bigtester.ate.model.project.TestProjectListener;
+import org.bigtester.ate.model.testresult.TestStepResult;
+import org.bigtester.ate.reporter.ATEXMLReporter;
+import org.bigtester.ate.reporter.ATEXMLSuiteResultWriter;
 import org.dbunit.DatabaseUnitException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.context.ApplicationContext;
@@ -79,7 +90,7 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	private void runStep(ApplicationContext context, final String testCaseName,
+	private String runStep(ApplicationContext context, final String testCaseName,
 			final String testSuiteName,
 			@Nullable final String stepTypeServiceName,
 			List<Map<String, String>> featureDataTable,
@@ -94,10 +105,30 @@ abstract public class AbstractCucumberTestStepDefs {
 			testProj.setCucumberActionNameValuePairs(new ArrayList<ActionNameValuePair>(
 					Arrays.asList(actionNameValuePairs)));
 		testProj.runSuites();
+		ATEXMLReporter ateReporter = (ATEXMLReporter) testProj.getTestng()
+				.getReporters().stream()
+				.filter(reporter -> (reporter instanceof ATEXMLReporter))
+				.collect(Collectors.toList()).get(0);
+		Set<ITestResult> testResults = ateReporter
+				.getSuiteResults()
+				.values()
+				.stream()
+				.map(tmp -> tmp.entrySet())
+				.flatMap(l -> l.stream())
+				.map(entry -> entry.getValue())
+				.map(suiteResult -> ATEXMLSuiteResultWriter
+						.convertSuiteResultToTestResults(suiteResult))
+				.flatMap(m -> m.stream()).collect(Collectors.toSet());
+//		ATEXMLSuiteResultWriter
+//				.convertSuiteResultToTestResults(ateReporter.getSuiteResults()
+//						.values().iterator().next().values().iterator().next());
+		List<TestStepResult> stepResults = testResults.stream().map(testR->ATEXMLSuiteResultWriter.retrieveTestStepResults(testR)).flatMap(m->m.stream()).collect(Collectors.toList());
+		
+		return stepResults.iterator().next().getThisStep().getStepResultStatus().toString();
 
 	}
 
-	protected void runCucumberStep(String ateStepName) {
+	protected String runCucumberStep(String ateStepName) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String testCaseName = getScenario().getName();
@@ -105,59 +136,63 @@ abstract public class AbstractCucumberTestStepDefs {
 					getScenario().getId().indexOf(";"));
 			String stepName = ateStepName;
 
-			runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+			return runStep(testCaseName, testSuiteName, testProjectXml, stepName,
 					new ArrayList<Map<String, String>>());
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Failed";
 		}
 	};
 
-	protected void runCucumberStep(String ateStepName, String testCaseName,
+	protected String runCucumberStep(String ateStepName, String testCaseName,
 			String testSuiteName, List<Map<String, String>> featureDataTable,
 			ActionNameValuePair... actionNameValuePairs) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String stepName = ateStepName;
 
-			runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+			return runStep(testCaseName, testSuiteName, testProjectXml, stepName,
 					featureDataTable, actionNameValuePairs);
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Failed";
 		}
 	};
 	
-	protected void runCucumberStep(String ateStepName, String testCaseName,
+	protected String runCucumberStep(String ateStepName, String testCaseName,
 			String testSuiteName,
 			ActionNameValuePair... actionNameValuePairs) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String stepName = ateStepName;
 
-			runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+			return runStep(testCaseName, testSuiteName, testProjectXml, stepName,
 					null, actionNameValuePairs);
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Failed";
 		}
 	};
 
-	protected void runCucumberStep(String ateStepName, String testCaseName,
+	protected String runCucumberStep(String ateStepName, String testCaseName,
 			String testSuiteName) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
 		try {
 			String stepName = ateStepName;
 
-			runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+			return runStep(testCaseName, testSuiteName, testProjectXml, stepName,
 					null);
 		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
 				| IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "Failed";
 		}
 	};
 
@@ -174,7 +209,7 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws ClassNotFoundException
 	 * @throws ParseException
 	 */
-	private void runStep(final String testCaseName, final String testSuiteName,
+	private String runStep(final String testCaseName, final String testSuiteName,
 			final String testProjectXml,
 			@Nullable final String stepTypeServiceName,
 			List<Map<String, String>> featureDataTable,
@@ -204,7 +239,7 @@ abstract public class AbstractCucumberTestStepDefs {
 		if (dbinit.getDatasets() == null)
 			dbinit.initializeGlobalDataFile(testProjectContext);
 
-		runStep(testProjectContext, testCaseName, testSuiteName,
+		return runStep(testProjectContext, testCaseName, testSuiteName,
 				stepTypeServiceName, featureDataTable, actionNameValuePairs);
 
 	}

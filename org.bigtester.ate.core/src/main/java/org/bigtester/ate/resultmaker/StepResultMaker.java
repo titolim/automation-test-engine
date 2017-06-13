@@ -64,11 +64,13 @@ public class StepResultMaker {
 	@After("@annotation(org.bigtester.ate.annotation.StepLoggable)")
 	public void reportStepResult(final JoinPoint joinPoint_p) {
 		
-		XStream xstream = new XStream();
-		xstream.autodetectAnnotations(true);
-		String xml = xstream.toXML((BaseTestStep) joinPoint_p
-				.getTarget());
-		Object bts = xstream.fromXML(xml);
+//		XStream xstream = new XStream();
+//		xstream.autodetectAnnotations(true);
+//		String xml = xstream.toXML((BaseTestStep) joinPoint_p
+//				.getTarget());
+//		Object bts = xstream.fromXML(xml);
+		Object bts = joinPoint_p
+				.getTarget();
 		 if (bts == null) throw
 				 GlobalUtils.createInternalError("stepresultmaker log function.");
 		TestStepResult tsr = new TestStepResult(

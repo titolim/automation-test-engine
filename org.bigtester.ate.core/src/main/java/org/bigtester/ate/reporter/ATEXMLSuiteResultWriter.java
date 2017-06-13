@@ -1,5 +1,6 @@
 package org.bigtester.ate.reporter;
 
+import org.bigtester.ate.model.testresult.TestStepResult;
 import org.testng.IResultMap;
 import org.testng.ISuiteResult;
 import org.testng.ITestContext;
@@ -63,6 +64,29 @@ public class ATEXMLSuiteResultWriter {
     }
   }
 
+  public static Set<ITestResult> convertSuiteResultToTestResults(ISuiteResult suiteResult) {
+	  Set<ITestResult> testResults = Sets.newHashSet();
+	    ITestContext testContext = suiteResult.getTestContext();
+	    addAllTestResults(testResults, testContext.getPassedTests());
+	    addAllTestResults(testResults, testContext.getFailedTests());
+	    addAllTestResults(testResults, testContext.getSkippedTests());
+	    addAllTestResults(testResults, testContext.getPassedConfigurations());
+	    addAllTestResults(testResults, testContext.getSkippedConfigurations());
+	    addAllTestResults(testResults, testContext.getFailedConfigurations());
+	    addAllTestResults(testResults, testContext.getFailedButWithinSuccessPercentageTests());
+	    return testResults;
+  }
+  
+  public static List<TestStepResult> retrieveTestStepResults(ITestResult testResult) {
+	  if (testResult.getAttribute(TestStepResult.STEPRESULTLIST) instanceof List<?>) {
+			@SuppressWarnings("unchecked")
+			List<TestStepResult> stepResults = (List<TestStepResult>) testResult
+					.getAttribute(TestStepResult.STEPRESULTLIST);
+			return stepResults;
+	 } else {
+		 return new ArrayList<TestStepResult>();
+	 }
+  }
   private void writeAllToBuffer(XMLStringBuffer xmlBuffer, ISuiteResult suiteResult) {
     xmlBuffer.push(XMLReporterConfig.TAG_TEST, getSuiteResultAttributes(suiteResult));
     Set<ITestResult> testResults = Sets.newHashSet();
@@ -78,7 +102,7 @@ public class ATEXMLSuiteResultWriter {
     xmlBuffer.pop();
   }
 
-  private void addAllTestResults(Set<ITestResult> testResults, IResultMap resultMap) {
+  private static void addAllTestResults(Set<ITestResult> testResults, IResultMap resultMap) {
     if (resultMap != null) {
       // Sort the results chronologically before adding them
       List<ITestResult> allResults = new ArrayList<ITestResult>();

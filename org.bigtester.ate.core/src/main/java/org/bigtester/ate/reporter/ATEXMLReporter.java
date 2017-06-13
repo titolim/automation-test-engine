@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * The main entry for the XML generation operation
@@ -30,6 +32,7 @@ import java.util.TimeZone;
  */
 @SuppressWarnings("PMD")
 public class ATEXMLReporter implements IReporter {
+	private Map<String, Map<String, ISuiteResult>> suiteResults = new ConcurrentHashMap<String, Map<String, ISuiteResult>>();
 	public static final String FILE_NAME = "testng-results2.xml";
 
 	private final XMLReporterConfig config = new XMLReporterConfig();
@@ -38,6 +41,9 @@ public class ATEXMLReporter implements IReporter {
 	@Override
 	public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites,
 			String outputDirectory) {
+		suites.forEach(suite->{
+			suiteResults.put(suite.getName(), suite.getResults());
+		});
 		if (Utils.isStringEmpty(config.getOutputDirectory())) {
 			config.setOutputDirectory(outputDirectory);
 		}
@@ -289,4 +295,19 @@ public class ATEXMLReporter implements IReporter {
 		return config.isGenerateTestResultAttributes();
 	}
 
+	/**
+	 * @return the suiteResults
+	 */
+	public Map<String, Map<String, ISuiteResult>> getSuiteResults() {
+		return suiteResults;
+	}
+
+	/**
+	 * @param suiteResults the suiteResults to set
+	 */
+	public void setSuiteResults(Map<String, Map<String, ISuiteResult>> suiteResults) {
+		this.suiteResults = suiteResults;
+	}
+
+	
 }
