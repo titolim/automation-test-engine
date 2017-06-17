@@ -22,29 +22,25 @@
 package org.bigtester.ate;//NOPMD
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.testng.ITestResult;
-import org.testng.Reporter;
-import org.testng.TestListenerAdapter;
-import org.testng.reporters.jq.Main;
 import org.bigtester.ate.constant.GlobalConstants;
+import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.cucumber.ActionNameValuePair;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.project.TestProject;
-import org.bigtester.ate.model.project.TestProjectListener;
 import org.bigtester.ate.model.testresult.TestStepResult;
 import org.bigtester.ate.reporter.ATEXMLReporter;
 import org.bigtester.ate.reporter.ATEXMLSuiteResultWriter;
 import org.dbunit.DatabaseUnitException;
-import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -63,6 +59,58 @@ import cucumber.api.Scenario;
  */
 
 abstract public class AbstractCucumberTestStepDefs {
+	/** The test project context. */
+	private ApplicationContext testProjectContext;
+	/**
+	 * The Class AteProjectFilter.
+	 *
+	 * @author Peidong Hu
+	 */
+	public class AteProjectFilter{
+		
+		/** The suite name. */
+		final private String suiteName;
+		
+		/** The case name. */
+		final private String caseName;
+		
+		/** The step name. */
+		final private String stepName;
+		
+		/**
+		 * Instantiates a new ate project filter.
+		 *
+		 * @param suiteName the suite name
+		 * @param caseName the case name
+		 * @param stepName the step name
+		 */
+		public AteProjectFilter(String suiteName, String caseName, String stepName) {
+			this.suiteName = suiteName;
+			this.caseName = caseName;
+			this.stepName = stepName;
+		}
+		/**
+		 * @return the suiteName
+		 */
+		public String getSuiteName() {
+			return suiteName;
+		}
+		/**
+		 * @return the caseName
+		 */
+		public String getCaseName() {
+			return caseName;
+		}
+		/**
+		 * @return the stepName
+		 */
+		public String getStepName() {
+			return stepName;
+		}
+	}
+	
+
+	
 	static { // runs when the main class is loaded.
 		System.setProperty("logback-access.debug", "true");
 		// System.setProperty("org.jboss.logging.provider", "slf4j");
@@ -70,13 +118,23 @@ abstract public class AbstractCucumberTestStepDefs {
 		System.setProperty("hsqldb.reconfig_logging", "false");
 
 	}
-
-	private ApplicationContext testProjectContext;
-
+	/**
+	 * Gets the scenario.
+	 *
+	 * @return the scenario
+	 */
 	public abstract Scenario getScenario();
 
+	/**
+	 * Gets the ate glue test project xml file path.
+	 *
+	 * @return the ate glue test project xml file path
+	 */
 	public abstract String getAteGlueTestProjectXmlFilePath();
 
+	/**
+	 * Instantiates a new abstract cucumber test step defs.
+	 */
 	public AbstractCucumberTestStepDefs() {
 		TestProjectRunner.registerXsdNameSpaceParsers();
 		TestProjectRunner.registerProblemHandlers();
@@ -90,110 +148,121 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	private String runStep(ApplicationContext context, final String testCaseName,
-			final String testSuiteName,
-			@Nullable final String stepTypeServiceName,
+	private StepResultStatus runStep(ApplicationContext context, AteProjectFilter executionFilter, 
 			List<Map<String, String>> featureDataTable,
 			ActionNameValuePair... actionNameValuePairs)
-			throws ClassNotFoundException, ParseException, IOException {
+			 {
+		StepResultStatus retVal = StepResultStatus.FAIL;
 		TestProject testProj = GlobalUtils.findTestProjectBean(context);
-		testProj.setFilteringTestCaseName(testCaseName);
-		testProj.setFilteringStepName(stepTypeServiceName);
-		testProj.setFilteringTestSuiteName(testSuiteName);
+		testProj.setFilteringTestCaseName(executionFilter.getCaseName());
+		testProj.setFilteringStepName(executionFilter.stepName);
+		testProj.setFilteringTestSuiteName(executionFilter.suiteName);
 		testProj.setCucumberDataTable(featureDataTable);
 		if (actionNameValuePairs.length > 0)
 			testProj.setCucumberActionNameValuePairs(new ArrayList<ActionNameValuePair>(
 					Arrays.asList(actionNameValuePairs)));
-		testProj.runSuites();
+		try {
+			testProj.runSuites();
+		} catch (ClassNotFoundException | ParseException | IOException e) {
+			retVal = StepResultStatus.FAIL;
+		}
 		ATEXMLReporter ateReporter = (ATEXMLReporter) testProj.getTestng()
 				.getReporters().stream()
-				.filter(reporter -> (reporter instanceof ATEXMLReporter))
+				.filter(reporter -> reporter instanceof ATEXMLReporter)
 				.collect(Collectors.toList()).get(0);
 		Set<ITestResult> testResults = ateReporter
 				.getSuiteResults()
 				.values()
 				.stream()
 				.map(tmp -> tmp.entrySet())
-				.flatMap(l -> l.stream())
+				.flatMap(lem -> lem.stream())
 				.map(entry -> entry.getValue())
 				.map(suiteResult -> ATEXMLSuiteResultWriter
 						.convertSuiteResultToTestResults(suiteResult))
-				.flatMap(m -> m.stream()).collect(Collectors.toSet());
-//		ATEXMLSuiteResultWriter
-//				.convertSuiteResultToTestResults(ateReporter.getSuiteResults()
-//						.values().iterator().next().values().iterator().next());
-		List<TestStepResult> stepResults = testResults.stream().map(testR->ATEXMLSuiteResultWriter.retrieveTestStepResults(testR)).flatMap(m->m.stream()).collect(Collectors.toList());
+				.flatMap(mem -> mem.stream()).collect(Collectors.toSet());
+
+		List<TestStepResult> stepResults = testResults
+				.stream()
+				.map(testR -> ATEXMLSuiteResultWriter
+						.retrieveTestStepResults(testR))
+				.flatMap(mem -> mem.stream()).collect(Collectors.toList());
 		
-		return stepResults.iterator().next().getThisStep().getStepResultStatus().toString();
+		retVal = stepResults.iterator().next().getThisStep().getStepResultStatus();
+		return retVal;
 
 	}
 
-	protected String runCucumberStep(String ateStepName) {
+	/**
+	 * Run cucumber step.
+	 *
+	 * @param ateStepName the ate step name
+	 * @return the string
+	 */
+	protected StepResultStatus runCucumberStep(String ateStepName) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
-		try {
+		StepResultStatus retVal = StepResultStatus.FAIL;
+		
 			String testCaseName = getScenario().getName();
 			String testSuiteName = getScenario().getId().substring(0,
 					getScenario().getId().indexOf(";"));
-			String stepName = ateStepName;
+			
 
-			return runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+			retVal = runStep(new AteProjectFilter(testSuiteName, testCaseName, ateStepName), testProjectXml, 
 					new ArrayList<Map<String, String>>());
-		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
-				| IOException | ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "Failed";
-		}
+		
+		return retVal;
 	};
 
-	protected String runCucumberStep(String ateStepName, String testCaseName,
-			String testSuiteName, List<Map<String, String>> featureDataTable,
+	/**
+	 * Run cucumber step.
+	 *
+	 * @param executionFilter the execution filter
+	 * @param featureDataTable the feature data table
+	 * @param actionNameValuePairs the action name value pairs
+	 * @return the step result status
+	 */
+	protected StepResultStatus runCucumberStep(AteProjectFilter executionFilter, List<Map<String, String>> featureDataTable,
 			ActionNameValuePair... actionNameValuePairs) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
-		try {
-			String stepName = ateStepName;
+		
+		
 
-			return runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+		return runStep(executionFilter, testProjectXml, 
 					featureDataTable, actionNameValuePairs);
-		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
-				| IOException | ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "Failed";
-		}
+		
 	};
 	
-	protected String runCucumberStep(String ateStepName, String testCaseName,
-			String testSuiteName,
+	/**
+	 * Run cucumber step.
+	 *
+	 * @param executionFilter the execution filter
+	 * @param actionNameValuePairs the action name value pairs
+	 * @return the step result status
+	 */
+	protected StepResultStatus runCucumberStep(AteProjectFilter executionFilter,
 			ActionNameValuePair... actionNameValuePairs) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
-		try {
-			String stepName = ateStepName;
-
-			return runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+		
+			
+		return runStep(executionFilter, testProjectXml, 
 					null, actionNameValuePairs);
-		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
-				| IOException | ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "Failed";
-		}
+		
 	};
 
-	protected String runCucumberStep(String ateStepName, String testCaseName,
-			String testSuiteName) {
+	/**
+	 * Run cucumber step.
+	 *
+	 * @param executionFilter the execution filter
+	 * @return the step result status
+	 */
+	protected StepResultStatus runCucumberStep(AteProjectFilter executionFilter) {
 		String testProjectXml = this.getAteGlueTestProjectXmlFilePath();
-		try {
-			String stepName = ateStepName;
+	
 
-			return runStep(testCaseName, testSuiteName, testProjectXml, stepName,
+		return runStep(executionFilter, testProjectXml, 
 					null);
-		} catch (ClassNotFoundException | DatabaseUnitException | SQLException
-				| IOException | ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "Failed";
-		}
+		
+		
 	};
 
 	/**
@@ -209,14 +278,12 @@ abstract public class AbstractCucumberTestStepDefs {
 	 * @throws ClassNotFoundException
 	 * @throws ParseException
 	 */
-	private String runStep(final String testCaseName, final String testSuiteName,
+	private StepResultStatus runStep(AteProjectFilter executionFilter,
 			final String testProjectXml,
-			@Nullable final String stepTypeServiceName,
 			List<Map<String, String>> featureDataTable,
 			ActionNameValuePair... actionNameValuePairs)
-			throws DatabaseUnitException, SQLException, IOException,
-			ClassNotFoundException, ParseException {
-
+			 {
+		StepResultStatus retVal = StepResultStatus.FAIL;
 		if (StringUtils.isEmpty(testProjectXml) && testProjectContext == null) {
 			testProjectContext = new ClassPathXmlApplicationContext(
 					"testproject.xml");
@@ -231,24 +298,58 @@ abstract public class AbstractCucumberTestStepDefs {
 
 		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) testProjectContext
 				.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
-
+		try {
 		if (dbinit.getSingleInitXmlFile() == null)
-			dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
+			
+				dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
+			
 
 		// TODO add db initialization handler
 		if (dbinit.getDatasets() == null)
-			dbinit.initializeGlobalDataFile(testProjectContext);
+			
+				dbinit.initializeGlobalDataFile(testProjectContext);
+			
 
-		return runStep(testProjectContext, testCaseName, testSuiteName,
-				stepTypeServiceName, featureDataTable, actionNameValuePairs);
+		retVal = runStep(testProjectContext, executionFilter, featureDataTable, actionNameValuePairs);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			retVal = StepResultStatus.FAIL;
+		} catch (DatabaseUnitException e) {
+			// TODO Auto-generated catch block
+			retVal = StepResultStatus.FAIL;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			retVal = StepResultStatus.FAIL;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			retVal = StepResultStatus.FAIL;
+		}
+		return retVal;
 
 	}
 
+	/**
+	 * Close ate execution context.
+	 */
 	protected void closeAteExecutionContext() {
 		if (testProjectContext != null) {
 			((ConfigurableApplicationContext) testProjectContext).close();
-			testProjectContext = null;
+			testProjectContext = null;//NOPMD
 		}
+	}
+
+	/**
+	 * @return the testProjectContext
+	 */
+	public ApplicationContext getTestProjectContext() {
+		return testProjectContext;
+	}
+
+	/**
+	 * @param testProjectContext the testProjectContext to set
+	 */
+	public void setTestProjectContext(ApplicationContext testProjectContext) {
+		this.testProjectContext = testProjectContext;
 	}
 
 }
