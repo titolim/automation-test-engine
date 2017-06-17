@@ -23,7 +23,6 @@ package org.bigtester.ate.model.data.dbtable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import org.bigtester.ate.GlobalUtils;
 import org.eclipse.jdt.annotation.Nullable;

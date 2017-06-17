@@ -134,7 +134,7 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 		this.multiWindowsHandler = multiWindowsHandler;
 	}
 	
-	@SuppressWarnings("null")
+	@SuppressWarnings("null")//NOPMD
 	private String generateRandomFilename(String filename) {
 		Calendar cld = Calendar.getInstance();
 		filename=filename.trim();
@@ -158,7 +158,7 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 			ImageIO.write(img, "jpg", output);
 			retVal = true;
 		} catch (IOException | AWTException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			retVal= false;
 		}
 		return retVal;
@@ -168,11 +168,11 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 	private BufferedImage getScreenAsBufferedImage() throws AWTException {
 		BufferedImage img = null;
 
-		Robot r;
-		r = new Robot();
-		Toolkit t = Toolkit.getDefaultToolkit();
-		Rectangle rect = new Rectangle(t.getScreenSize());
-		img = r.createScreenCapture(rect);
+		Robot rob;
+		rob = new Robot();
+		Toolkit tlk = Toolkit.getDefaultToolkit();
+		Rectangle rect = new Rectangle(tlk.getScreenSize());
+		img = rob.createScreenCapture(rect);
 
 		return img;
 	}
@@ -184,11 +184,11 @@ abstract public class AbstractWebDriverBase implements IMyWebDriver{
 	public Optional<String> saveScreenShot(Optional<String> pathFileName) {
 		String filename = generateRandomFilename(pathFileName
 				.orElse(getWebDriverInstance().getCurrentUrl()));
+		Optional<String> retVal = Optional.empty();
 		if (createScreenCaptureJPEG(filename)) {
-			return Optional.of(filename);
-		} else {
-			return Optional.empty();
+			retVal =  Optional.of(filename);
 		}
+		return retVal;
 	}
 	
 	/**

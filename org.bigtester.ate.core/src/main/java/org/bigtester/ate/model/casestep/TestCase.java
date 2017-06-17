@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.bigtester.ate.model.casestep;
+package org.bigtester.ate.model.casestep;//NOPMD
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,6 +79,7 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer, Appli
 	@XStreamOmitField
 	private TestProject parentTestProject;
 
+	/** The test case context. */
 	@Nullable
 	@XStreamOmitField
 	private ApplicationContext testCaseContext;
@@ -162,7 +163,7 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer, Appli
 			RuntimeDataException {
 		if (getParentTestProject().getCucumberActionNameValuePairs()!=null) {
 			getParentTestProject().getCucumberActionNameValuePairs().forEach(pair->{
-				Object bea = this.testCaseContext.getBean(pair.getActionName());
+				Object bea = this.getTestCaseContext().getBean(pair.getActionName());
 				if (GlobalUtils.getTargetObject(bea) instanceof BaseElementAction) {
 					IStepInputData inputData = ((BaseElementAction)GlobalUtils.getTargetObject(bea)).getDataValue();
 					if (GlobalUtils.getTargetObject(inputData) instanceof BaseInputDataValue) {
@@ -294,7 +295,7 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer, Appli
 		int endIndex = getTestStepList().size()-1;
 		if (filteringStepName!=null ) {
 			List<ITestStep> filteredSteps = getTestStepList().stream().filter(tStep->tStep.getStepName().equalsIgnoreCase(filteringStepName) ).collect(Collectors.toList());
-			if (filteredSteps.size()==1) {
+			if (filteredSteps.size()==1) {//NOPMD
 				if ( GlobalUtils.getTargetObject(filteredSteps.get(0)) instanceof RepeatStep) {
 					RepeatStep rStep = (RepeatStep) GlobalUtils.getTargetObject(filteredSteps.get(0));
 					startIndex = RepeatStep.getStepIndex(getTestStepList(), rStep.getStartStepName());
@@ -303,7 +304,7 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer, Appli
 					startIndex = getTestStepList().indexOf(filteredSteps.get(0));
 					endIndex = getTestStepList().indexOf(filteredSteps.get(0));
 				}
-			} else if (filteredSteps.size()>1){
+			} else if (filteredSteps.size()>1){//NOPMD
 				if ( GlobalUtils.getTargetObject(filteredSteps.get(0)) instanceof RepeatStep) {
 					throw GlobalUtils.createInternalError("there are more than 1 same named (repeat) steps in xml implementation.");
 				} else {
@@ -399,6 +400,20 @@ public class TestCase implements ITestCase, IStepJumpingEnclosedContainer, Appli
 		// TODO Auto-generated method stub
 		this.testCaseContext = applicationContext;
 		
+	}
+
+	/**
+	 * @return the testCaseContext
+	 */
+	public ApplicationContext getTestCaseContext() {
+		return testCaseContext;
+	}
+
+	/**
+	 * @param testCaseContext the testCaseContext to set
+	 */
+	public void setTestCaseContext(ApplicationContext testCaseContext) {
+		this.testCaseContext = testCaseContext;
 	}
 
 }

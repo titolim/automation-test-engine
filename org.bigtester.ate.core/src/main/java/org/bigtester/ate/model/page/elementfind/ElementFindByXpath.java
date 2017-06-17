@@ -43,6 +43,9 @@ public class ElementFindByXpath extends AbstractElementFind implements IElementF
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Instantiates a new element find by xpath.
+	 */
 	public ElementFindByXpath() {
 		super("");
 		// TODO Auto-generated constructor stub

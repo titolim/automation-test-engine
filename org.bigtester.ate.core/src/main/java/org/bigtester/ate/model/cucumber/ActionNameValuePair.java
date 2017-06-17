@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.cucumber;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 // TODO: Auto-generated Javadoc
 /**
  * This class ActionNameValuePair defines ....
@@ -47,12 +49,14 @@ public class ActionNameValuePair {
 	/**
 	 * @return the actionName
 	 */
+	@NonNull
 	public String getActionName() {
 		return actionName;
 	}
 	/**
 	 * @return the value
 	 */
+	@NonNull
 	public String getValue() {
 		return value;
 	}

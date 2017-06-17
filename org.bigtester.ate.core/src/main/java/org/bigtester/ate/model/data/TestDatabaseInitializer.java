@@ -40,7 +40,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.bigtester.ate.GlobalUtils;
-import org.bigtester.ate.model.project.TestProject;
+
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
@@ -263,7 +263,7 @@ public class TestDatabaseInitializer {
 			SQLException, MalformedURLException {
 		if (!getInitXmlFiles().isEmpty()) {
 			DataSource datas = GlobalUtils.findDataSourceBean(beanFac);
-			TestProject tpj = GlobalUtils.findTestProjectBean(beanFac);
+			
 			IDatabaseConnection con = new DatabaseConnection(
 					datas.getConnection()); // Create
 											// DBUnit
@@ -310,13 +310,13 @@ public class TestDatabaseInitializer {
 	 * @return the datasets
 	 */
 	public IDataSet[] getDatasets() {
-		return datasets;
+		return datasets;//NOPMD
 	}
 
 	/**
 	 * @param datasets the datasets to set
 	 */
-	public void setDatasets(IDataSet[] datasets) {
+	public void setDatasets(IDataSet[] datasets) {//NOPMD
 		this.datasets = datasets;
 	}
 

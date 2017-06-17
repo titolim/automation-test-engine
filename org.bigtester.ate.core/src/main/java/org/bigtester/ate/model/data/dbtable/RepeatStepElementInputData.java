@@ -104,6 +104,9 @@ public class RepeatStepElementInputData extends ElementInputData implements Clon
 		this.repeatStepExternalLoopPath = repeatStepExternalLoopPath;
 	}
 	
+    /**
+     * {@inheritDoc}
+     */
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

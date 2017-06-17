@@ -20,7 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.data.dbtable;
 
-import javax.persistence.Column;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;

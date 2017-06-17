@@ -20,7 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.asserter;
 
-import org.bigtester.ate.annotation.RepeatStepRefreshable;
+
 import org.bigtester.ate.constant.AssertType;
 import org.bigtester.ate.constant.EnumAssertPriority;
 import org.bigtester.ate.constant.EnumAssertResult;

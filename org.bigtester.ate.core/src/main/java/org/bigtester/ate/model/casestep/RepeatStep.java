@@ -36,7 +36,7 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.atewebdriver.IMyWebDriver;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
-import org.bigtester.ate.model.project.TestSuite;
+
 import org.bigtester.ate.model.utils.ThinkTime;
 import org.bigtester.ate.systemlogger.IATEProblemCreator;
 import org.bigtester.ate.systemlogger.LogbackWriter;
@@ -116,6 +116,14 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 		this.asserterValuesRemainSame = true;
 
 	}
+	
+	/**
+	 * Gets the step index.
+	 *
+	 * @param stepList the step list
+	 * @param stepName the step name
+	 * @return the step index
+	 */
 	public static int getStepIndex(List<ITestStep> stepList, String stepName) {
 		int retVal = -1;
 		for (int i = 0; i < stepList.size(); i++) {
@@ -308,7 +316,7 @@ public class RepeatStep extends BaseTestStep implements ITestStep, Cloneable {
 			for (int i = 0; i < repeatingStepIndexesInTestCase.size(); i++) {
 				LogbackWriter.writeDebugInfo(
 						"run step (index:" + i + "), in iteration:" + iteration
-								+ " of step:" + this.getStepName(),
+								+ " of step:" + this.getStepName(),//NOPMD
 						this.getClass());// NOPMD
 				ITestStep currentTestStepTmp = getTestCase().getTestStepList()
 						.get(repeatingStepIndexesInTestCase.get(i));

@@ -34,6 +34,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan({ "org.bigtester.ate" })
 public class BeanConfig {
+	
+	/**
+	 * Cucumber data injector.
+	 *
+	 * @return the cucumber feature data injector
+	 */
 	@Bean
 	public CucumberFeatureDataInjector cucumberDataInjector() {
 		

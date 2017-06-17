@@ -34,7 +34,6 @@ import org.bigtester.ate.model.testresult.TestStepResult;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 
-import com.thoughtworks.xstream.XStream;
 //import com.rits.cloning.Cloner;
 
 // TODO: Auto-generated Javadoc

@@ -32,6 +32,7 @@ import org.bigtester.ate.model.data.exception.RepeatTestDataException;
 import org.bigtester.ate.model.data.exception.TestDataException;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.transaction.annotation.Transactional;
 
 // TODO: Auto-generated Javadoc
@@ -58,6 +59,13 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 		return retVal;
 	}
 	
+	/**
+	 * Refresh repeat step data.
+	 *
+	 * @param eids the eids
+	 * @param repeatStepName the repeat step name
+	 * @return the list
+	 */
 	public List<RepeatStepElementInputData> refreshRepeatStepData(List<RepeatStepElementInputData> eids, String repeatStepName) {
 		this.getAllRepeatStepElementInputData(repeatStepName).forEach(eid->{
 			getDbEM().remove(eid);	
@@ -65,14 +73,17 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 		eids.forEach(eid->{
 			if (eids.indexOf(eid)==0) {
 				try {
-					ElementInputData existingEid = this.getEid(eid.getStepEIDsetID());
+					ElementInputData existingEid;
+					
+					existingEid = this.getEid(eid.getStepEIDsetID());
+					
 					getDbEM().remove(existingEid);
 					ElementInputData newEid = new ElementInputData();
 					BeanUtils.copyProperties(eid, newEid);
 					getDbEM().persist(newEid);
-				} catch (Exception e) {
+				} catch (BeansException |TestDataException e) {//NOPMD
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
 				}
 			} else {
 				getDbEM().persist(eid);
@@ -131,6 +142,13 @@ public class ElementInputDataDaoImpl extends BaseDaoImpl {
 
 	}
 	
+	/**
+	 * Gets the eid.
+	 *
+	 * @param inputDataID the input data id
+	 * @return the eid
+	 * @throws TestDataException the test data exception
+	 */
 	public ElementInputData getEid(String inputDataID) throws TestDataException {
 
 		List<ElementInputData> sERs = (List<ElementInputData>) getDbEM()

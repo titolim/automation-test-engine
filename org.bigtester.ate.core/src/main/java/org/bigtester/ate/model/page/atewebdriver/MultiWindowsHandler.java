@@ -20,9 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver; //NOPMD
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+
 import java.util.Set;
 
 import org.bigtester.ate.GlobalUtils;
@@ -39,9 +38,6 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.util.StringUtils;
-
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -205,7 +201,7 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 					checkCloseWindowAlert(win.getWindowHandle());// test if there is alert. if no, refresh windows list
 				} catch (NoAlertPresentException noAlert) {
 					refreshWindowsList(getDriver(), false);
-					if (this.getWindows().size()>1)
+					if (this.getWindows().size()>1)//NOPMD
 						itr = this.getWindows().iterator();
 					else
 						break;
@@ -405,7 +401,7 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 	 */
 	@Override
 	public void afterChangeValueOf(@Nullable WebElement arg0,
-			@Nullable WebDriver arg1, CharSequence[] arg2) {
+			@Nullable WebDriver arg1, CharSequence[] arg2) {//NOPMD
 		try {
 			refreshWindowsList(arg1, false);
 		} catch (BrowserUnexpectedException e) {
@@ -415,6 +411,9 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void retryRefreshWindows(WebDriver driver, boolean refreshFrames) {
 		this.resetWindows();
 		try {
@@ -504,7 +503,7 @@ public class MultiWindowsHandler extends AbstractLockProtectedMultiWindowsHandle
 	 */
 	@Override
 	public void beforeChangeValueOf(@Nullable WebElement arg0,
-			@Nullable WebDriver arg1, CharSequence[] arg2) {
+			@Nullable WebDriver arg1, CharSequence[] arg2) {//NOPMD
 		// refreshWindowsList(arg1);
 
 	}

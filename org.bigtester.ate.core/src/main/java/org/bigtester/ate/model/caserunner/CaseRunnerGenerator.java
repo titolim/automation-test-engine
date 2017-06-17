@@ -89,6 +89,8 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
  */
 public class CaseRunnerGenerator {
 
+	/** The user dir. */
+	final public static String USER_DIR = "user.dir";
 	/** The number of test cases. */
 	transient private long numberOfTestCases;
 
@@ -108,6 +110,7 @@ public class CaseRunnerGenerator {
 	/** The suites. */
 	final private List<TestSuite> suites;
 	
+	/** The test case name to generate. */
 	final private String testCaseNameToGenerate;
 
 	/** The compiler. */
@@ -135,7 +138,7 @@ public class CaseRunnerGenerator {
 			this.numberOfTestCases = this.numberOfTestCases
 					+ tSuite.getTestCaseList().size();
 		}
-		this.caseRunnerCacheAbsoluteFolder = System.getProperty("user.dir")
+		this.caseRunnerCacheAbsoluteFolder = System.getProperty(USER_DIR)
 				+ "/generated-code/caserunners/org/bigtester/ate/model/caserunner/";
 		File deleteOldCaseRunners = new File(caseRunnerCacheAbsoluteFolder);
 		if (deleteOldCaseRunners.exists()) {
@@ -144,6 +147,13 @@ public class CaseRunnerGenerator {
 
 	}
 	
+	/**
+	 * Instantiates a new case runner generator.
+	 *
+	 * @param suites the suites
+	 * @param testCaseNameToGenerate the test case name to generate
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public CaseRunnerGenerator(List<TestSuite> suites, String testCaseNameToGenerate) throws IOException {
 		this.testCaseNameToGenerate = testCaseNameToGenerate;
 		
@@ -158,7 +168,7 @@ public class CaseRunnerGenerator {
 			.collect(Collectors.toList()));
 		}
 		
-		this.caseRunnerCacheAbsoluteFolder = System.getProperty("user.dir")
+		this.caseRunnerCacheAbsoluteFolder = System.getProperty(USER_DIR)
 				+ "/generated-code/caserunners/org/bigtester/ate/model/caserunner/";
 		File deleteOldCaseRunners = new File(caseRunnerCacheAbsoluteFolder);
 		if (deleteOldCaseRunners.exists()) {
@@ -547,9 +557,16 @@ public class CaseRunnerGenerator {
 	private static class MethodTestAnnotationVisitor extends
 			VoidVisitorAdapter<XmlTestCase> {
 
+		/** The method name. */
 		private final String methodName;
 		
+		/**
+		 * Instantiates a new method test annotation visitor.
+		 *
+		 * @param methodName the method name
+		 */
 		public MethodTestAnnotationVisitor(String methodName) {
+			super();
 			this.methodName = methodName;
 		}
 		/**
@@ -599,6 +616,12 @@ public class CaseRunnerGenerator {
 				}
 			}
 		}
+		/**
+		 * @return the methodName
+		 */
+		public String getMethodName() {
+			return methodName;
+		}
 	}
 
 	private void loadClass(String classFilePathName, String className)
@@ -631,10 +654,10 @@ public class CaseRunnerGenerator {
 			// classes, this should point to the top of the package structure!
 			// TODO the / separator needs to be revised to platform awared
 			URLClassLoader classLoader = new URLClassLoader(
-					new URL[] { new File(System.getProperty("user.dir")
+					new URL[] { new File(System.getProperty(USER_DIR)
 							+ "/generated-code/caserunners/").toURI().toURL() },
 					Thread.currentThread().getContextClassLoader());
-			String addonClasspath = System.getProperty("user.dir")
+			String addonClasspath = System.getProperty(USER_DIR)
 					+ "/generated-code/caserunners/";
 			ClassLoaderUtil.addFileToClassPath(addonClasspath,
 					classLoader.getParent());

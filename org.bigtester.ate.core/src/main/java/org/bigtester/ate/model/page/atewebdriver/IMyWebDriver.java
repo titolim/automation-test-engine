@@ -62,6 +62,11 @@ public interface IMyWebDriver {
 	 */
 	Optional<String> saveScreenShot(Optional<String> pathFileName);
 	
+	/**
+	 * Save screen shot.
+	 *
+	 * @return the optional
+	 */
 	Optional<String> saveScreenShot();
 	
 

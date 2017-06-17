@@ -53,6 +53,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author Peidong Hu
  */
 public class TestProject {
+	
+	/** The cucumber data injector. */
 	@Autowired
 	private CucumberFeatureDataInjector cucumberDataInjector;
 	/** The suite list. */
@@ -147,7 +149,7 @@ public class TestProject {
 	public void runSuites() throws ClassNotFoundException, ParseException,
 			IOException {
 		//cucumberDataInjector.inject("test", "test1");
-		this.runSuites(this.filteringTestSuiteName, this.filteringTestCaseName, this.filteringStepName);
+		this.runSuites(this.filteringTestSuiteName, this.filteringTestCaseName);
 //
 //		final TestProjectListener tla = new TestProjectListener(this);
 //		final TestCaseResultModifier repeatStepResultModifier = new TestCaseResultModifier();
@@ -198,7 +200,7 @@ public class TestProject {
 	 * @throws ParseException
 	 */
 	//@TestProjectLoggable (level=ATELogLevel.INFO)
-	private void runSuites(String filteringSuiteName, String filteringTestCaseName, String filteringStepName) throws ClassNotFoundException, ParseException,
+	private void runSuites(String filteringSuiteName, String filteringTestCaseName) throws ClassNotFoundException, ParseException,
 			IOException {
 		if (testng.getTestListeners().stream().filter(listener->listener instanceof TestProjectListener).count()==0) {
 		

@@ -21,7 +21,6 @@
 package org.bigtester.ate.model.data;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,7 +32,6 @@ import org.bigtester.ate.model.data.dao.ElementInputDataDaoImpl;
 import org.bigtester.ate.model.data.dbtable.RepeatStepElementInputData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -72,15 +70,15 @@ public class CucumberFeatureDataInjector {
 							.get(featureDataIndex)
 							.entrySet()
 							.stream()
-							.filter(row -> {
-								return eidDataNames.contains(row.getKey());
-							})
+							.filter(row -> 
+								eidDataNames.contains(row.getKey())
+							)
 							.collect(
 									Collectors.toMap(Entry::getKey,
 											Entry::getValue)));
 		}
 		tmpFeatureDataTable.removeIf(row -> row.size() == 0);
-		Map<String, List<String>> featureTableValueSets = new ConcurrentHashMap<String, List<String>>();
+		Map<String, List<String>> featureTableValueSets = new ConcurrentHashMap<String, List<String>>();//NOPMD
 		tmpFeatureDataTable.forEach(dataMap -> {
 			dataMap.entrySet().forEach(
 					entry -> {
@@ -107,8 +105,10 @@ public class CucumberFeatureDataInjector {
 						entry -> {
 							RepeatStepElementInputData newData;
 							try {
-								newData = (RepeatStepElementInputData) eidsMap
-										.get(entry.getKey()).get(0).clone();
+								
+									newData = (RepeatStepElementInputData) eidsMap
+											.get(entry.getKey()).get(0).clone();
+								
 								newData.setIdColumn(0);
 
 								eidsMap.get(entry.getKey()).clear();
@@ -123,9 +123,9 @@ public class CucumberFeatureDataInjector {
 									eidsMap.get(entry.getKey()).add(tmpData);
 
 								}
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+							} catch (CloneNotSupportedException e) {
+
+								//e.printStackTrace();
 							}
 						});
 
@@ -148,8 +148,29 @@ public class CucumberFeatureDataInjector {
 						repeatStepName), repeatStepName).size();
 	}
 
+	/**
+	 * Inject.
+	 *
+	 * @param stepName the step name
+	 * @param featureValues the feature values
+	 * @return the int
+	 */
 	public int inject(String stepName, String... featureValues) {
-		System.out.println("test injector");
+//		/System.out.println("test injector");
 		return featureValues.length;
+	}
+
+	/**
+	 * @return the elementInputDataDao
+	 */
+	public ElementInputDataDaoImpl getElementInputDataDao() {
+		return elementInputDataDao;
+	}
+
+	/**
+	 * @param elementInputDataDao the elementInputDataDao to set
+	 */
+	public void setElementInputDataDao(ElementInputDataDaoImpl elementInputDataDao) {
+		this.elementInputDataDao = elementInputDataDao;
 	}
 }
