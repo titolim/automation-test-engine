@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -163,31 +164,32 @@ abstract public class AbstractCucumberTestStepDefs {
 					Arrays.asList(actionNameValuePairs)));
 		try {
 			testProj.runSuites();
-		} catch (ClassNotFoundException | ParseException | IOException e) {
+			ATEXMLReporter ateReporter = (ATEXMLReporter) testProj.getTestng()
+					.getReporters().stream()
+					.filter(reporter -> reporter instanceof ATEXMLReporter)
+					.collect(Collectors.toList()).get(0);
+			Set<ITestResult> testResults = ateReporter
+					.getSuiteResults()
+					.values()
+					.stream()
+					.map(tmp -> tmp.entrySet())
+					.flatMap(lem -> lem.stream())
+					.map(entry -> entry.getValue())
+					.map(suiteResult -> ATEXMLSuiteResultWriter
+							.convertSuiteResultToTestResults(suiteResult))
+					.flatMap(mem -> mem.stream()).collect(Collectors.toSet());
+
+			List<TestStepResult> stepResults = testResults
+					.stream()
+					.map(testR -> ATEXMLSuiteResultWriter
+							.retrieveTestStepResults(testR))
+					.flatMap(mem -> mem.stream()).collect(Collectors.toList());
+			
+			retVal = stepResults.iterator().next().getThisStep().getStepResultStatus();
+		} catch (ClassNotFoundException | ParseException | IOException | NoSuchElementException e ) {
 			retVal = StepResultStatus.FAIL;
 		}
-		ATEXMLReporter ateReporter = (ATEXMLReporter) testProj.getTestng()
-				.getReporters().stream()
-				.filter(reporter -> reporter instanceof ATEXMLReporter)
-				.collect(Collectors.toList()).get(0);
-		Set<ITestResult> testResults = ateReporter
-				.getSuiteResults()
-				.values()
-				.stream()
-				.map(tmp -> tmp.entrySet())
-				.flatMap(lem -> lem.stream())
-				.map(entry -> entry.getValue())
-				.map(suiteResult -> ATEXMLSuiteResultWriter
-						.convertSuiteResultToTestResults(suiteResult))
-				.flatMap(mem -> mem.stream()).collect(Collectors.toSet());
-
-		List<TestStepResult> stepResults = testResults
-				.stream()
-				.map(testR -> ATEXMLSuiteResultWriter
-						.retrieveTestStepResults(testR))
-				.flatMap(mem -> mem.stream()).collect(Collectors.toList());
 		
-		retVal = stepResults.iterator().next().getThisStep().getStepResultStatus();
 		return retVal;
 
 	}
