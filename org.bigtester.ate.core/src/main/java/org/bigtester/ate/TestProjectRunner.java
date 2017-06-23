@@ -24,11 +24,13 @@ package org.bigtester.ate;//NOPMD
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 
 import org.bigtester.ate.constant.GlobalConstants;
+import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.data.TestDatabaseInitializer;
 import org.bigtester.ate.model.project.TestProject;
@@ -176,29 +178,67 @@ public final class TestProjectRunner {
 	public static void runTest(@Nullable final String testProjectXml) throws DatabaseUnitException, SQLException, IOException, ClassNotFoundException, ParseException  {
 		registerXsdNameSpaceParsers();
 		registerProblemHandlers();
-		ApplicationContext context;
-		if (StringUtils.isEmpty(testProjectXml)) {
-			context = new ClassPathXmlApplicationContext(
-					"testproject.xml");
-		} else {
-			context = new FileSystemXmlApplicationContext(testProjectXml);
-		}
-		
-		TestProject testplan = GlobalUtils.findTestProjectBean(context);
-		testplan.setAppCtx(context);
-		
-		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) context.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
-		
-		dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
-		
-		//TODO add db initialization handler
-		dbinit.initializeGlobalDataFile(context);
+		ApplicationContext context = loadTestProjectContext(testProjectXml);
+
+		initDB(context);
+//		TestProject testplan = GlobalUtils.findTestProjectBean(context);
+//
+//		
+//		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) context.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
+//		
+//		dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
+//		
+//		//TODO add db initialization handler
+//		dbinit.initializeGlobalDataFile(context);
 		
 		runTest(context);
 		
 	  	((ConfigurableApplicationContext)context).close();
 	}
 	
+	public static void initDB(ApplicationContext testProjectContext) throws IOException, DatabaseUnitException, SQLException {
+		TestProject testplan = GlobalUtils
+				.findTestProjectBean(testProjectContext);
+		//testplan.setAppCtx(testProjectContext);
+
+		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) testProjectContext
+				.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
+		
+		if (dbinit.getSingleInitXmlFile() == null)
+			
+				dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
+			
+
+		// TODO add db initialization handler
+		if (dbinit.getDatasets() == null)
+			
+				dbinit.initializeGlobalDataFile(testProjectContext);
+			
+	}
+	
+	/**
+	 * Load test project context.
+	 *
+	 * @param testProjectXml the test project xml
+	 * @return the application context
+	 */
+	public static ApplicationContext loadTestProjectContext(final String testProjectXml) {
+		ApplicationContext testProjectContext;
+		if (StringUtils.isEmpty(testProjectXml) ) {
+			testProjectContext = new ClassPathXmlApplicationContext(
+					"testproject.xml");
+		} else {
+			testProjectContext = new FileSystemXmlApplicationContext(
+					testProjectXml);
+		}
+
+		TestProject testplan = GlobalUtils
+				.findTestProjectBean(testProjectContext);
+		testplan.setAppCtx(testProjectContext);
+
+		return testProjectContext;
+
+	}
 	private static void registerLegacyXsdNameSpaceParsers() {
 		/******************************* following for Test Project ******************************/
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_TESTPROJECT, new TestProjectBeanDefinitionParser());

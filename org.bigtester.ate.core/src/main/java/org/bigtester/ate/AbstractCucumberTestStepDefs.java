@@ -286,31 +286,15 @@ abstract public class AbstractCucumberTestStepDefs {
 			ActionNameValuePair... actionNameValuePairs)
 			 {
 		StepResultStatus retVal = StepResultStatus.FAIL;
-		if (StringUtils.isEmpty(testProjectXml) && testProjectContext == null) {
-			testProjectContext = new ClassPathXmlApplicationContext(
-					"testproject.xml");
-		} else if (testProjectContext == null) {
-			testProjectContext = new FileSystemXmlApplicationContext(
-					testProjectXml);
-		}
+		testProjectContext = TestProjectRunner.loadTestProjectContext(testProjectXml);
 
-		TestProject testplan = GlobalUtils
-				.findTestProjectBean(testProjectContext);
-		testplan.setAppCtx(testProjectContext);
-
-		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) testProjectContext
-				.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
+//		TestProject testplan = GlobalUtils
+//				.findTestProjectBean(testProjectContext);
+//
+//		TestDatabaseInitializer dbinit = (TestDatabaseInitializer) testProjectContext
+//				.getBean(GlobalConstants.BEAN_ID_GLOBAL_DBINITIALIZER);
 		try {
-		if (dbinit.getSingleInitXmlFile() == null)
-			
-				dbinit.setSingleInitXmlFile(testplan.getGlobalInitXmlFile());
-			
-
-		// TODO add db initialization handler
-		if (dbinit.getDatasets() == null)
-			
-				dbinit.initializeGlobalDataFile(testProjectContext);
-			
+			TestProjectRunner.initDB(testProjectContext);
 
 		retVal = runStep(testProjectContext, executionFilter, featureDataTable, actionNameValuePairs);
 		} catch (MalformedURLException e) {
