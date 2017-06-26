@@ -90,6 +90,13 @@ public class TestParameters
         this.testName = name;
         this.testFileName = filename;
     }
+    public TestParameters( String name, String filename, int stepThinkTime, ApplicationContext globalCtx, TestProject testProj ) {
+        this.testName = name;
+        this.testFileName = filename;
+        this.stepThinkTime = stepThinkTime;
+        this.globalAppCtx = globalCtx;
+        this.testProject = testProj;
+    }
 
     /**
      * Gets the test name.

@@ -228,7 +228,23 @@ public class CaseRunner implements IRunTestCase {
 		return this.getCurrentExecutingTCName();
 	}
 
-	
+	/**
+	 * Initialize test case.
+	 *
+	 * @param testParams the test params
+	 */
+	public void initializeTestCase(TestParameters testParams) {
+		String[] configFiles = {testParams.getTestFilename()};
+		context = new FileSystemXmlApplicationContext(configFiles, testParams.getTestProject().getAppCtx());
+		IMyWebDriver myWebD = (IMyWebDriver) GlobalUtils
+				.findMyWebDriver(context);
+		mainDriver = myWebD.getWebDriverInstance();
+		myTestCase = GlobalUtils.findTestCaseBean(getContext());
+		getMyTestCase().setStepThinkTime(testParams.getStepThinkTime());
+		getMyTestCase().setCurrentWebDriver(myWebD);
+		getMyTestCase().setParentTestProject(testParams.getTestProject());
+
+	}
 	/**
 	 * Test runner1.
 	 * 
@@ -242,16 +258,7 @@ public class CaseRunner implements IRunTestCase {
 
 		// ApplicationContext context;
 		try {
-			String[] configFiles = {testname};
-			context = new FileSystemXmlApplicationContext(configFiles, testParams.getTestProject().getAppCtx());
-			IMyWebDriver myWebD = (IMyWebDriver) GlobalUtils
-					.findMyWebDriver(context);
-			mainDriver = myWebD.getWebDriverInstance();
-			myTestCase = GlobalUtils.findTestCaseBean(getContext());
-			getMyTestCase().setStepThinkTime(testParams.getStepThinkTime());
-			getMyTestCase().setCurrentWebDriver(myWebD);
-			getMyTestCase().setParentTestProject(testParams.getTestProject());
-			
+			this.initializeTestCase(testParams);
 			getMyTestCase().goSteps();
 
 		} catch (FatalBeanException fbe) {
