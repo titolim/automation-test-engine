@@ -89,6 +89,8 @@ public final class XsdElementConstants {
 	/** The Constant ATTR_XMLTESTCASE_TESTCASENAME. */
     public static final String ATTR_XMLTESTCASE_TESTCASEFILEPATHNAME = "testCaseFilePathName";//NOPMD
 
+    
+    
     /** The Constant ATTR_TESTCASE_TESTCASENAME. */
     public static final String ATTR_TESTCASE_TESTCASENAME = "testCaseName";
 
@@ -105,6 +107,8 @@ public final class XsdElementConstants {
 	public static final String PROP_TESTCASE_TESTSTEPLIST = "testStepList";
 	
     /** ***************************** following for Test Step *****************************. */
+	
+	
 	
 	/** The Constant ELEMENT_MYWEBELEMENT. */
 	public static final String ELEMENT_MYWEBELEMENT = "myWebElement";
@@ -147,6 +151,8 @@ public final class XsdElementConstants {
 	
 	/** The Constant ELEMENT_STEPTYPESERVICEREFERENCE. */
 	public static final String ELEMENT_STEPTYPESERVICEREFERENCE = "stepTypeServiceReference";
+	
+	public static final String ATTR_CUCUMBER_STEP_TYPE = "cucumberStepType";
 	
 	/** The Constant ATTR_STEPTYPESERVICEREFERENCE_STEPTYPESERVICEDEFINITIONID. */
 	public static final String ATTR_STEPTYPESERVICEREFERENCE_STEPTYPESERVICEDEFINITIONID = "stepTypeServiceDefinitionID";//NOPMD

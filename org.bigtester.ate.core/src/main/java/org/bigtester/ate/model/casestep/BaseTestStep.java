@@ -26,6 +26,7 @@ import java.util.List;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
+import org.bigtester.ate.model.casestep.ICucumberTestStep.CucumberStepType;
 import org.bigtester.ate.model.data.IDataParser;
 import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.page.IPageObject;
@@ -119,7 +120,8 @@ abstract public class BaseTestStep implements ApplicationContextAware {// NOPMD
 	/** The corrected on the fly. */
 	private boolean correctedOnTheFly;
 	
-	
+	/** The cucumber step type. */
+	private CucumberStepType cucumberStepType;
 	/**
 	 * Gets the test case.
 	 *
@@ -574,6 +576,21 @@ abstract public class BaseTestStep implements ApplicationContextAware {// NOPMD
 //			IStepJumpingEnclosedContainer stepJumpingEnclosedContainer) {
 //		this.stepJumpingEnclosedContainer = stepJumpingEnclosedContainer;
 //	}
+	/**
+	 * {@inheritDoc}
+	 */
+
+	public CucumberStepType getCucumberStepType() {
+		
+		return this.cucumberStepType;
+	}
+
+	/**
+	 * @param cucumberStepType the cucumberStepType to set
+	 */
+	public void setCucumberStepType(CucumberStepType cucumberStepType) {
+		this.cucumberStepType = cucumberStepType;
+	}
 
 	
 }

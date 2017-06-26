@@ -25,12 +25,14 @@ import java.util.List;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.casestep.StepTypeService;
+import org.bigtester.ate.model.casestep.ICucumberTestStep.CucumberStepType;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.util.StringUtils;
 import org.springframework.util.xml.DomUtils;
 import org.w3c.dom.Element;
 
@@ -57,7 +59,11 @@ BaseTestStepBeanDefinitionParser {
 		
 				BeanDefinition bDef = super.parseInternal(element, parserContext);
 				bDef.setBeanClassName(StepTypeService.class.getName());
+				String cucumberStepType = element.getAttribute(XsdElementConstants.ATTR_CUCUMBER_STEP_TYPE);
 		        
+		        if (StringUtils.hasText(cucumberStepType)) {
+		        	bDef.getPropertyValues().addPropertyValue(XsdElementConstants.ATTR_CUCUMBER_STEP_TYPE, CucumberStepType.valueOf(cucumberStepType));
+				}	
 
 				List<Element> testStepElements = (List<Element>) DomUtils
 						.getChildElements(element);
@@ -112,5 +118,6 @@ BaseTestStepBeanDefinitionParser {
 		}
 		beanDef.getPropertyValues().addPropertyValue(
 				XsdElementConstants.MEMBER_STEPTYPESERVICE_STEPSET, children);
+		
 	}
 }

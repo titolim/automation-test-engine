@@ -23,6 +23,7 @@ package org.bigtester.ate.xmlschema;
 import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.XsdElementConstants;
 import org.bigtester.ate.model.casestep.CaseTypeService;
+import org.bigtester.ate.model.casestep.ICucumberTestStep.CucumberStepType;
 import org.eclipse.jdt.annotation.Nullable;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -57,7 +58,11 @@ public class CaseTypeServiceBeanDefinitionParser extends
 		        BeanDefinitionHolder holder = parserContext.getDelegate().parseBeanDefinitionElement(element);
 		        BeanDefinition bDef = holder.getBeanDefinition();
 		        bDef.setBeanClassName(CaseTypeService.class.getName());
-		        		
+		        String cucumberStepType = element.getAttribute(XsdElementConstants.ATTR_CUCUMBER_STEP_TYPE);
+		        
+		        if (StringUtils.hasText(cucumberStepType)) {
+		        	bDef.getConstructorArgumentValues().addGenericArgumentValue(CucumberStepType.valueOf(cucumberStepType));
+				}		
 		        String testCaseName = element.getAttribute(XsdElementConstants.ATTR_TESTCASE_TESTCASENAME);
 		        if (StringUtils.hasText(testCaseName)) {
 		        	bDef.getConstructorArgumentValues().addGenericArgumentValue(testCaseName);

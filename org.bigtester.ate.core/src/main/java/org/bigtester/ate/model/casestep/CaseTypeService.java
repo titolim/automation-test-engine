@@ -27,6 +27,7 @@ import org.bigtester.ate.GlobalUtils;
 import org.bigtester.ate.constant.ExceptionMessage;
 import org.bigtester.ate.constant.StepResultStatus;
 import org.bigtester.ate.model.asserter.IExpectedResultAsserter;
+import org.bigtester.ate.model.casestep.ICucumberTestStep.CucumberStepType;
 import org.bigtester.ate.model.data.ICaseServiceParsedDataParser;
 import org.bigtester.ate.model.data.IDataParser; 
 import org.bigtester.ate.model.data.IStepInputData;
@@ -49,8 +50,9 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * @author Peidong Hu
  *
  */
-public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
-
+public class CaseTypeService extends TestCase implements ITestStep, ICucumberTestStep { // NOPMD
+	/** The cucumber step type. */
+	final private CucumberStepType cucumberStepType;
 	/** The step result status. */
 	private StepResultStatus stepResultStatus = StepResultStatus.FAIL;
 	
@@ -75,6 +77,23 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 	public CaseTypeService(String testCaseName, String testCaseFileName,
 			ITestCase parentTestCase) {
 		super(testCaseName);
+		this.cucumberStepType = null;//NOPMD
+		this.testCaseFileName = testCaseFileName;
+		this.parentTestCase = parentTestCase;
+	}
+	
+	/**
+	 * Instantiates a new case type service.
+	 *
+	 * @param cucumberStepType the cucumber step type
+	 * @param testCaseName the test case name
+	 * @param testCaseFileName the test case file name
+	 * @param parentTestCase the parent test case
+	 */
+	public CaseTypeService(CucumberStepType cucumberStepType, String testCaseName, String testCaseFileName,
+			ITestCase parentTestCase) {
+		super(testCaseName);
+		this.cucumberStepType = cucumberStepType;
 		this.testCaseFileName = testCaseFileName;
 		this.parentTestCase = parentTestCase;
 	}
@@ -323,5 +342,15 @@ public class CaseTypeService extends TestCase implements ITestStep { // NOPMD
 		//for future.
 		
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CucumberStepType getCucumberStepType() {
+		return this.cucumberStepType;
+	}
+
+	
 
 }

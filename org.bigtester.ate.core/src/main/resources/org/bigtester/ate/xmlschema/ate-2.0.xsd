@@ -126,7 +126,15 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-
+<xsd:simpleType name="CucumberStepType">
+						<xsd:restriction base="xsd:string">
+							<xsd:enumeration value="GIVEN" />
+							<xsd:enumeration value="WHEN" />
+							<xsd:enumeration value="THEN" />
+							<xsd:enumeration value="HOOK" />
+							<xsd:enumeration value="BACKGROUND" />
+						</xsd:restriction>
+					</xsd:simpleType>
 	<xsd:complexType name="CaseTypeServiceType">
 		<xsd:complexContent>
 			<xsd:extension base="beans:identifiedType">
@@ -137,6 +145,10 @@
 					use="required" />
 				<xsd:attribute name="testCaseFileName" type="xsd:string"
 					use="required" />
+				<xsd:attribute name="cucumberStepType" type="CucumberStepType">
+					
+				</xsd:attribute>
+				
 				<xsd:attribute name="parentTestCase" type="xsd:string"
 					use="required">
 					<xsd:annotation>
@@ -295,6 +307,7 @@
 					type="xsd:string" />
 				<xsd:attribute name="stepName" type="xsd:string" use="required" />
 				<xsd:attribute name="stepDescription" type="xsd:string" />
+				<xsd:attribute name="cucumberStepType" type="CucumberStepType"/>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
