@@ -43,4 +43,6 @@ public interface ICucumberTestStep extends ITestStep {
 	 * @return the cucumber step type
 	 */
 	CucumberStepType getCucumberStepType();
+	
+	public Long getTimeOutMillis();
 }

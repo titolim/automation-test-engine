@@ -183,6 +183,14 @@ public class StepTypeService extends BaseTestStep implements ITestStep, IStepJum
 		return getStepSet();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long getTimeOutMillis() {
+		return 10000l;
+	}
+
 	
 	
 

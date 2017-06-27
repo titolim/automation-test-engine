@@ -351,6 +351,14 @@ public class CaseTypeService extends TestCase implements ITestStep, ICucumberTes
 		return this.cucumberStepType;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Long getTimeOutMillis() {
+		return 10000l;
+	}
+
 	
 
 }
