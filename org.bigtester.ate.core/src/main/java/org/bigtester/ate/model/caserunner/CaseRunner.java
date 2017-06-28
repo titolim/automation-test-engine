@@ -85,7 +85,7 @@ public class CaseRunner implements IRunTestCase {
 
 	/** The main driver. */
 	@Nullable
-	private WebDriver mainDriver;
+	private IMyWebDriver mainDriver;
 
 	/** The my tc. */
 	@Nullable
@@ -238,7 +238,7 @@ public class CaseRunner implements IRunTestCase {
 		context = new FileSystemXmlApplicationContext(configFiles, testParams.getTestProject().getAppCtx());
 		IMyWebDriver myWebD = (IMyWebDriver) GlobalUtils
 				.findMyWebDriver(context);
-		mainDriver = myWebD.getWebDriverInstance();
+		mainDriver = myWebD;
 		myTestCase = GlobalUtils.findTestCaseBean(getContext());
 		getMyTestCase().setStepThinkTime(testParams.getStepThinkTime());
 		getMyTestCase().setCurrentWebDriver(myWebD);
@@ -265,7 +265,7 @@ public class CaseRunner implements IRunTestCase {
 			if (fbe.getCause() instanceof FileNotFoundException) {
 				context = new ClassPathXmlApplicationContext(testname);
 				mainDriver = ((IMyWebDriver) GlobalUtils
-						.findMyWebDriver(context)).getWebDriverInstance();
+						.findMyWebDriver(context));
 				myTestCase = GlobalUtils.findTestCaseBean(getContext());
 				myTestCase.setStepThinkTime(testParams.getStepThinkTime());
 				getMyTestCase().goSteps();
@@ -320,8 +320,8 @@ public class CaseRunner implements IRunTestCase {
 	@AfterMethod(alwaysRun = true)
 	public void tearDown() {
 		try {
-			if (null != mainDriver) {
-				mainDriver.quit();
+			if (null != mainDriver.getWebDriver()) {
+				mainDriver.getWebDriver().quit();
 			}
 			if (null != context) {
 
@@ -368,7 +368,7 @@ public class CaseRunner implements IRunTestCase {
 	 * @return the mainDriver
 	 */
 	public WebDriver getMainDriver() {
-		final WebDriver retVal = mainDriver;
+		final WebDriver retVal = mainDriver.getWebDriverInstance();
 		if (null == retVal) {
 			throw new IllegalStateException(
 					"mainDriver is not correctly populated");
@@ -382,7 +382,7 @@ public class CaseRunner implements IRunTestCase {
 	 * @param mainDriver
 	 *            the mainDriver to set
 	 */
-	public void setMainDriver(WebDriver mainDriver) {
+	public void setMainDriver(IMyWebDriver mainDriver) {
 		this.mainDriver = mainDriver;
 	}
 
