@@ -20,9 +20,7 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver; //NOPMD
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.bigtester.ate.GlobalUtils;
@@ -39,9 +37,6 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.util.StringUtils;
-
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 // TODO: Auto-generated Javadoc
 /**

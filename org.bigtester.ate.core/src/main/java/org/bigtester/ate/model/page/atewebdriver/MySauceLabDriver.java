@@ -20,54 +20,72 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
-import java.util.Optional;
-
-import org.eclipse.jdt.annotation.Nullable;
-import org.openqa.selenium.WebDriver;
-
 // TODO: Auto-generated Javadoc
 /**
- * The Interface IMyWebDriver defines ....
+ * The Class MyChromeDriver defines ....
  * 
- * @author Peidong Hu
+ * @author Jun Yang
  */
-public interface IMyWebDriver {
+public class MySauceLabDriver extends MyRemoteDriver implements IMyWebDriver {
+
+	/** The caps. */
+	private String userName;
 	
+	/** The url. */
+	private String accesskey;
 	/**
-	 * Creates the driver.
-	 *
-	 * @return the web driver
+	 * Instantiates a new my Chrome driver.
 	 */
-	WebDriver getWebDriverInstance();
+	public MySauceLabDriver(String userName, String accesskey) {
+		
+		super("chrome", "", "LINUX", "https://" + userName + ":" + accesskey + "@ondemand.saucelabs.com:443/wd/hub");
+		this.setUserName(userName);
+		this.setAccesskey(accesskey);
+	}
+		
+	/**
+	 * Instantiates a new my Chrome driver.
+	 */
+	public MySauceLabDriver() {
+		
+		super();
+		 
+		 
+	}
+
 	
-	/**
-	 * Gets the webdriver.
-	 * 
-	 * @return the webdriver
-	 */
-	@Nullable WebDriver getWebDriver();
-	
-	/**
-	 * Gets the browser windows monitor.
-	 *
-	 * @return the browser windows monitor
-	 */
-	IMultiWindowsHandler getMultiWindowsHandler();
-	
-	/**
-	 * Save screen shot. if pathFileName supplied, 
-	 *
-	 * @param pathFileName the path file name
-	 * @return the string
-	 */
-	Optional<String> saveScreenShot(Optional<String> pathFileName);
-	
-	/**
-	 * Save screen shot.
-	 *
-	 * @return the optional
-	 */
-	Optional<String> saveScreenShot();
+		
 	
 
+	
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	 * @return the accesskey
+	 */
+	public String getAccesskey() {
+		return accesskey;
+	}
+
+	/**
+	 * @param accesskey the accesskey to set
+	 */
+	public void setAccesskey(String accesskey) {
+		this.accesskey = accesskey;
+	}
+
+	
 }

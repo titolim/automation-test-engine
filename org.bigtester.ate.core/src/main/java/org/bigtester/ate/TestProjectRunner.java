@@ -82,9 +82,11 @@ import org.bigtester.ate.xmlschema.OperaDriverBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.PageElementExistBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.PagePropertyCorrectBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.RegularPageBeanDefinitionParser;
+import org.bigtester.ate.xmlschema.RemoteDriverBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.RepeatStepBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.RunTimeDataHolderBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.SafariDriverBeanDefinitionParser;
+import org.bigtester.ate.xmlschema.SauceLabDriverBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.SendKeysActionBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.StepERValueBeanDefinitionParser;
 import org.bigtester.ate.xmlschema.StepInputDataValueBeanDefinitionParser;
@@ -288,6 +290,8 @@ public final class TestProjectRunner {
 		/******************************* following for Webdriver ******************************/
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_FIREFOXDRIVER, new FirefoxDriverBeanDefinitionParser());
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_CHROMEDRIVER, new ChromeDriverBeanDefinitionParser());
+		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_REMOTEDRIVER, new RemoteDriverBeanDefinitionParser());
+		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_SAUCELABDRIVER, new SauceLabDriverBeanDefinitionParser());
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_IEDRIVER, new IEDriverBeanDefinitionParser());
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_SAFARIDRIVER, new SafariDriverBeanDefinitionParser());
 		XsdNameSpaceParserRegistry.registerNameSpaceHandler(XsdElementConstants.ELEMENT_OPERADRIVER, new OperaDriverBeanDefinitionParser());
