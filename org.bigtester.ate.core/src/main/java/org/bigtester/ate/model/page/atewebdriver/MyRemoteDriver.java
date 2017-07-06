@@ -24,6 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Optional; 
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -49,23 +50,30 @@ public class MyRemoteDriver extends AbstractWebDriverBase implements IMyWebDrive
 	public MyRemoteDriver(String browserName, String version, String platform, String url) {
 		
 		super();
-		if (StringUtils.isEmpty(browserName))
+		if (StringUtils.isEmpty(browserName)){
 			caps = Optional.of(DesiredCapabilities.chrome());
+			caps.get().setBrowserName("chrome");
+		}
 		else {
 			switch (browserName) {
 			case "chrome":
 				caps = Optional.of(DesiredCapabilities.chrome());
+				caps.get().setBrowserName("chrome");
 				break;
 			case "firefox":
 				caps = Optional.of(DesiredCapabilities.firefox());
+				caps.get().setBrowserName("firefox");
 				break;
 			default:
 				break;
 			}
 				
 		}
-		caps.get().setCapability("version", version);
-		caps.get().setCapability("platform", platform);
+		if (!StringUtils.isEmpty(version))
+			caps.get().setVersion(version);
+		if (!StringUtils.isEmpty(platform))
+			caps.get().setPlatform(Platform.valueOf(platform));
+		
 		this.setUrl(url);
 	}
 		

@@ -61,7 +61,7 @@ public class SauceLabDriverBeanDefinitionParser extends
 		String userName = element
 				.getAttribute(XsdElementConstants.ATTR_SAUCELABDRIVER_USERNAME);
 		if (!StringUtils.isEmpty(userName)) {
-			bean.addConstructorArgValue(Boolean.parseBoolean(userName));
+			bean.addConstructorArgValue(userName);
 		}
 		String version = element
 				.getAttribute(XsdElementConstants.ATTR_SAUCELABDRIVER_ACCESSKEY);

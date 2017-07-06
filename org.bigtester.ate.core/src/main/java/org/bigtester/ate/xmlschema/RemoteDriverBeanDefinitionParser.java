@@ -61,7 +61,7 @@ public class RemoteDriverBeanDefinitionParser extends
 		String browserName = element
 				.getAttribute(XsdElementConstants.ATTR_REMOTEDRIVER_BROWSER_NAME);
 		if (!StringUtils.isEmpty(browserName)) {
-			bean.addConstructorArgValue(Boolean.parseBoolean(browserName));
+			bean.addConstructorArgValue(browserName);
 		}
 		String version = element
 				.getAttribute(XsdElementConstants.ATTR_REMOTEDRIVER_VERSION);

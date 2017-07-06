@@ -20,6 +20,8 @@
  *******************************************************************************/
 package org.bigtester.ate.model.page.atewebdriver;
 
+import org.openqa.selenium.Platform;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class MyChromeDriver defines ....
@@ -38,7 +40,7 @@ public class MySauceLabDriver extends MyRemoteDriver implements IMyWebDriver {
 	 */
 	public MySauceLabDriver(String userName, String accesskey) {
 		
-		super("chrome", "", "LINUX", "https://" + userName + ":" + accesskey + "@ondemand.saucelabs.com:443/wd/hub");
+		super("chrome", "43.0", Platform.ANY.toString(), "https://" + userName + ":" + accesskey + "@ondemand.saucelabs.com:443/wd/hub");
 		this.setUserName(userName);
 		this.setAccesskey(accesskey);
 	}
