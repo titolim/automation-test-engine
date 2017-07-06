@@ -29,7 +29,7 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:chromeDriver  preserveCookies="true" startArguments="--disable-web-security --allow-file-access-from-files"/>
+	<ate:sauceLabDriver  userName="zhouyibhic" accessKey="5b66a725-2fd8-4d53-9328-d8c988ac58c6"/>
 
 	<ate:testCase id="testcase" testCaseName="apply easily-apply job.">
 

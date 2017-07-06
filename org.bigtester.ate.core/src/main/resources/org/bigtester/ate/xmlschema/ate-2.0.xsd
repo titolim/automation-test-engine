@@ -1019,6 +1019,25 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
+	<xsd:complexType name="MyRemoteDriverType">
+		<xsd:complexContent>
+			<xsd:extension base="AbstractWebDriverBaseType">
+				<xsd:attribute name="browserName" type="xsd:string" />
+				<xsd:attribute name="version" type="xsd:string" />
+				<xsd:attribute name="platform" type="xsd:string" />
+				<xsd:attribute name="url" type="xsd:string" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="MySauceLabDriverType">
+		<xsd:complexContent>
+			<xsd:extension base="MyRemoteDriverType">
+				<xsd:attribute name="userName" type="xsd:string" />
+				<xsd:attribute name="accessKey" type="xsd:string" />
+				
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
 
 	<xsd:complexType name="MyIEDriverType">
 		<xsd:complexContent>
@@ -1122,6 +1141,8 @@
 
 	<xsd:element name="firefoxDriver" type="MyFirefoxDriverType" />
 	<xsd:element name="chromeDriver" type="MyChromeDriverType" />
+	<xsd:element name="remoteDriver" type="MyRemoteDriverType" />
+	<xsd:element name="sauceLabDriver" type="MySauceLabDriverType" />
 	<xsd:element name="IEDriver" type="MyIEDriverType" />
 	<xsd:element name="safariDriver" type="MySafariDriverType" />
 	<xsd:element name="operaDriver" type="MyOperaDriverType" />
