@@ -29,7 +29,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.apache.commons.lang3.StringUtils;
+import org.bigtester.ate.GlobalUtils;
 import org.eclipse.jdt.annotation.Nullable;
 
 // TODO: Auto-generated Javadoc
@@ -105,7 +107,7 @@ public class MyRemoteDriver extends AbstractWebDriverBase implements IMyWebDrive
 	@Override
 	public WebDriver getWebDriverInstance() {
 		WebDriver retVal = getWebDriver();
-		if (null == retVal || !(retVal instanceof RemoteWebDriver)) {
+		if (null == retVal || !(((EventFiringWebDriver)retVal).getWrappedDriver() instanceof RemoteWebDriver)) {
 			
 			try {
 				RemoteWebDriver remoteVal = new RemoteWebDriver(new URL(url), caps.get());
