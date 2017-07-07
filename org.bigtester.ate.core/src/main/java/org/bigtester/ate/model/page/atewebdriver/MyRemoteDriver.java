@@ -107,7 +107,7 @@ public class MyRemoteDriver extends AbstractWebDriverBase implements IMyWebDrive
 	@Override
 	public WebDriver getWebDriverInstance() {
 		WebDriver retVal = getWebDriver();
-		if (!(((EventFiringWebDriver)retVal).getWrappedDriver() instanceof RemoteWebDriver)) {
+		if (null == retVal || !(((EventFiringWebDriver)retVal).getWrappedDriver() instanceof RemoteWebDriver)) {
 			
 			try {
 				RemoteWebDriver remoteVal = new RemoteWebDriver(new URL(url), caps.get());
