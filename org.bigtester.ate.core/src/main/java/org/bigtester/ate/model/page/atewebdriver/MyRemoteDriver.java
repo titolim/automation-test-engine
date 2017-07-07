@@ -27,6 +27,7 @@ import java.util.Optional;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
@@ -104,15 +105,17 @@ public class MyRemoteDriver extends AbstractWebDriverBase implements IMyWebDrive
 	@Override
 	public WebDriver getWebDriverInstance() {
 		WebDriver retVal = getWebDriver();
-		if (null == retVal) {
+		if (null == retVal || !(retVal instanceof RemoteWebDriver)) {
 			
 			try {
-				retVal = new RemoteWebDriver(new URL(url), caps.get());
+				RemoteWebDriver remoteVal = new RemoteWebDriver(new URL(url), caps.get());
+				remoteVal.setFileDetector(new LocalFileDetector());
+				retVal = remoteVal;
 			} catch (MalformedURLException e) {
 				//TODO add handling for bad url
 				e.printStackTrace();
 			}
-
+			
 			setWebDriver(retVal);
 		}
 		return retVal;
