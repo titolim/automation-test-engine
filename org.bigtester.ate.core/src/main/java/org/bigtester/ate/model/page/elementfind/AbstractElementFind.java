@@ -261,8 +261,10 @@ public abstract class AbstractElementFind extends AbstractTestObjectFinderImpl {
 									retVal = allElements.get(0);
 								} else if (intIndex == -1) {
 									retVal = allElements.get(allElements.size() - 1);
-								} else {
+								} else if (intIndex < allElements.size()){
 									retVal = allElements.get(intIndex);
+								} else {
+									throw new NoSuchElementException(findByValue.toString()); 
 								}
 								return retVal;
 								// return driver.findElement(findByValue);
