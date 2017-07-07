@@ -76,7 +76,7 @@ public class MyRemoteDriver extends AbstractWebDriverBase implements IMyWebDrive
 			caps.get().setVersion(version);
 		if (!StringUtils.isEmpty(platform))
 			caps.get().setPlatform(Platform.valueOf(platform));
-		
+		caps.get().setCapability("maxDuration", 10800);
 		this.setUrl(url);
 	}
 		
@@ -107,7 +107,7 @@ public class MyRemoteDriver extends AbstractWebDriverBase implements IMyWebDrive
 	@Override
 	public WebDriver getWebDriverInstance() {
 		WebDriver retVal = getWebDriver();
-		if (null == retVal || !(((EventFiringWebDriver)retVal).getWrappedDriver() instanceof RemoteWebDriver)) {
+		if (!(((EventFiringWebDriver)retVal).getWrappedDriver() instanceof RemoteWebDriver)) {
 			
 			try {
 				RemoteWebDriver remoteVal = new RemoteWebDriver(new URL(url), caps.get());
