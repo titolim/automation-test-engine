@@ -19,15 +19,18 @@
 	<import resource="../pageObjects/applyNowPage.xml" />
 	<import resource="../pageObjects/lastPage.xml" />
 	
-	<!-- 
-	<ate:firefoxDriver  />  
+	<!--
+	<ate:firefoxDriver  /> 
+	<ate:chromeDriver  preserveCookies="true" />  
 	<ate:chromeDriver   />
 	<ate:IEDriver       />
 	<ate:safariDriver   />
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:chromeDriver  preserveCookies="true" />
+    <ate:firefoxDriver  />
+      
+	
 
 	<ate:testCase id="testcase" testCaseName="apply easily-apply job.">
 

@@ -29,7 +29,7 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:sauceLabDriver  userName="zhouyibhic" accessKey="5b66a725-2fd8-4d53-9328-d8c988ac58c6"/>
+	<ate:sauceLabDriver  userName="wpbx" accessKey="9aeb4feb-8dce-4a44-aeed-1cda938e5d8a"/>
 
 	<ate:testCase id="testcase" testCaseName="apply easily-apply job.">
 

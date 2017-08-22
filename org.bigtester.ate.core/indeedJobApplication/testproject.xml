@@ -21,7 +21,7 @@
 		
 		<ate:TestSuite id="easyApply" suiteName="easyApply">
 		<ate:XmlTestCase
-				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJobDemoService.xml" />
+				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJob.xml" />
 <!-- 			<ate:XmlTestCase -->
 <!-- 				testCaseFilePathName="indeedJobApplication/easyApply/applyQAJob.xml" /> -->
  		</ate:TestSuite>

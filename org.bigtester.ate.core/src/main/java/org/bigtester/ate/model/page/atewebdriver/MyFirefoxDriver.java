@@ -21,9 +21,11 @@
 package org.bigtester.ate.model.page.atewebdriver;
 
 import org.eclipse.jdt.annotation.Nullable;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -57,7 +59,7 @@ public class MyFirefoxDriver extends AbstractWebDriverBase implements
 	 */
 	public MyFirefoxDriver(String profileName) {
 		super();
-		browserProfile = new FirefoxFeatureProfile(  profileName);
+		browserProfile = new FirefoxFeatureProfile(profileName);
 	}
 
 	/**
@@ -85,8 +87,18 @@ public class MyFirefoxDriver extends AbstractWebDriverBase implements
 		WebDriver retVal = super.getWebDriver();
 		if (null == retVal) {
 			FirefoxFeatureProfile bPro = getBrowserProfile();
+			System.setProperty("webdriver.gecko.driver", "E:\\geckodriver.exe");			 
+
+			//Now you can Initialize marionette driver to launch firefox
+			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+			capabilities.setCapability("marionette", true);
+			capabilities.setBrowserName("firefox");
+			capabilities.setVersion("");
+			capabilities.setPlatform(Platform.ANY);
+			// WebDriver driver = new MarionetteDriver(capabilities); 
+
 			if (null == bPro) {
-				retVal = new FirefoxDriver();
+				retVal = new FirefoxDriver(capabilities);
 			} else {
 				FirefoxBinary binary = new FirefoxBinary();
 				binary.addCommandLineOptions("-no-remote");
