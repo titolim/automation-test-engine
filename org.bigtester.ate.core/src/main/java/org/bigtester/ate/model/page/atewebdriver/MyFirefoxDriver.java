@@ -121,8 +121,7 @@ public class MyFirefoxDriver extends AbstractWebDriverBase implements
 						           + BROWSERWIN32PATH + BROWSERWINFILENAME);
 			else
 				System.setProperty(BROWSERDRVNAME, driverPath + GlobalUtils.PATH_DELIMITER 
-						           + BROWSERWIN32PATH + BROWSERWINFILENAME);
-				System.setProperty(BROWSERDRVNAME, "E:\\geckodriver.exe");
+						           + BROWSERWIN32PATH + BROWSERWINFILENAME);				
 			break;
 		case Windows_64:
 			/*versionNum = ReadXmlFile.parserXml(ReadXmlFile.REPOFILENAME, "windows", BROWSERNAME, ReadXmlFile.VERSION);*/

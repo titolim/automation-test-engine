@@ -23,7 +23,7 @@
 			<!-- Local Browser TestCase -->
 			<ate:XmlTestCase testCaseFilePathName="indeedJobApplication/easyApply/applyQAJob.xml" />
 			<!-- Sauce Lab TestCase -->
-			<ate:XmlTestCase testCaseFilePathName="indeedJobApplication/easyApply/applyQAJobDemoService.xml" />					
+			<!-- <ate:XmlTestCase testCaseFilePathName="indeedJobApplication/easyApply/applyQAJobDemoService.xml" /> -->					
  		</ate:TestSuite>
  		
 	</ate:TestProject>
