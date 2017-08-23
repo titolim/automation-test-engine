@@ -28,7 +28,7 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-    <ate:firefoxDriver  />
+    <ate:chromeDriver   />
     
 	<ate:testCase id="testcase" testCaseName="apply easily-apply job.">
 
