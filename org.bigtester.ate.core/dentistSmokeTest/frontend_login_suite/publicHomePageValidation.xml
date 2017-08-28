@@ -32,13 +32,11 @@
 	<ate:testCase id="testcase" testCaseName="Validate public home page">
 		<ate:homeStep id="openPublicHomePage" stepName="openPublicHomePage"
 			stepDescription="open my public home page" targetStep="true"
-			pageObject="publicHomePage">
-			<property name="expectedResultAsserter">
-				<list>
-					<ref bean="publicHomePageElementExistenceAsserter" />
-					<ref bean="publicHomePagePropertyAsserter" />
-				</list>
-			</property>
+			pageObject="publicHomePage">			
+			<ate:asserterReferences>
+				<ate:ateXmlElementReference id="assert1" ateXmlElementID="publicHomePageElementExistenceAsserter" />
+				<ate:ateXmlElementReference id="assert2" ateXmlElementID="publicHomePagePropertyAsserter" />
+			</ate:asserterReferences>
 		</ate:homeStep>
 		<ate:repeatStep id="repeatHomeStep" stepName="repeatHomeStep"
 			stepDescription="first repeat step" targetStep="true" startStepName="openPublicHomePage"
@@ -46,13 +44,11 @@
 			numberOfIterations="1" />
 		<ate:homeStep id="openPublicHomePage2" stepName="openPublicHomePage2"
 			stepDescription="open my public home page2" targetStep="true"
-			pageObject="publicHomePage">
-			<property name="expectedResultAsserter">
-				<list>
-					<ref bean="publicHomePageElementExistenceAsserter" />
-					<ref bean="publicHomePagePropertyAsserter" />
-				</list>
-			</property>
+			pageObject="publicHomePage">			
+			<ate:asserterReferences>
+				<ate:ateXmlElementReference id="assert3" ateXmlElementID="publicHomePageElementExistenceAsserter" />
+				<ate:ateXmlElementReference id="assert4" ateXmlElementID="publicHomePagePropertyAsserter" />
+			</ate:asserterReferences>
 		</ate:homeStep>
 		<ate:repeatStep id="repeatHomeStep2" stepName="repeatHomeStep2"
 			stepDescription="first repeat step" targetStep="true" startStepName="openPublicHomePage"

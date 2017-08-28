@@ -33,13 +33,10 @@
 	<ate:testCase id="testcase" testCaseName="Bigtester home page test case">
 	
 		<ate:homeStep id="stepOpenBigtesterHomePage" stepName="stepOpenBigtesterHomePage"
-			stepDescription="open bigtester.com home step" targetStep="true" pageObject="poHomePage">
-			<property name="expectedResultAsserter">
-				<list>
-					<ref bean="homeElementExistenceAsserter" />
-<!-- 					<ref bean="homePagePropertyAsserter" /> -->
-				</list>
-			</property>
+			stepDescription="open bigtester.com home step" targetStep="true" pageObject="poHomePage">			
+			<ate:asserterReferences>
+				<ate:ateXmlElementReference id="assert2" ateXmlElementID="homeElementExistenceAsserter" />
+			</ate:asserterReferences>
 		</ate:homeStep>
 		<ate:lastStep id="stepLastStep" stepName="stepLastStep"
 			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">

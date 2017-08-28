@@ -31,11 +31,16 @@
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="assignValue">
-		<ate:elementStep id="testStepException" stepName="testStepException" targetStep="false" elementActionDef="eadAssignValue" optionalStep="true"></ate:elementStep>
+		<ate:elementStep id="testStepException" stepName="testStepException" targetStep="false" elementActionDef="eadAssignValue" optionalStep="true"></ate:elementStep>		
 		<ate:lastStep id="stepLastStep" stepName="stepLastStep"
 			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
 		</ate:lastStep>
-
 	</ate:testCase>
 	
+	<ate:testCase id="testcase" testCaseName="cursorMove">		
+		<ate:elementStep id="testStepException" stepName="testStepException" targetStep="false" elementActionDef="eadCursorMove" optionalStep="true"></ate:elementStep>
+		<ate:lastStep id="stepLastStep" stepName="stepLastStep"
+			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
+		</ate:lastStep>
+	</ate:testCase>
 </beans>

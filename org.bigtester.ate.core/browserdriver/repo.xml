@@ -28,7 +28,7 @@
             <version id="2.31">
                 <bitrate thirtytwobit="true" sixtyfourbit="true">
                     <filelocation>https://chromedriver.storage.googleapis.com/2.31/chromedriver_win32.zip</filelocation>
-                    <hash>ecefd1c5830457cfc4b94908b5465b456abaa2f3</hash>
+                    <hash>2f02f28d3ff1b8f2a63cb3bc32c26ade60ac4737</hash>
                     <hashtype>sha1</hashtype>
                 </bitrate>
             </version>

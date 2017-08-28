@@ -622,9 +622,7 @@
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
-
-
-
+	
 	<xsd:element name="elementFindById" type="ElementFindByIdType" />
 	<xsd:element name="elementFindByXpath" type="ElementFindByXpathType" />
 	<xsd:element name="clickAction" type="ClickActionType"/>
@@ -663,6 +661,6 @@
 	<xsd:element name="regularPage" type="RegularPageType" />
 
 	<xsd:element name="caseTypeService" type="CaseTypeServiceType" />
-	<xsd:element name="runTimeDataHolder" type="RunTimeDataHolderType" />
+	<xsd:element name="runTimeDataHolder" type="RunTimeDataHolderType" />	
 
 </xsd:schema>

@@ -12,6 +12,7 @@
 	
 	<import resource="classpath:META-INF/db-services.xml" />
 	<import resource="classpath:META-INF/logger-reporter.xml" />
+	
 	<bean class="org.bigtester.ate.model.data.CaseDataProcessor" />
 	<bean class="org.bigtester.ate.model.casestep.JavaCodedStepBeanPostProcessor" />
 	<bean class="org.bigtester.ate.model.page.elementaction.SendKeysActionPostBeanProcessor" />

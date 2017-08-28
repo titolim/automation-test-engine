@@ -51,12 +51,16 @@
 		<ate:elementStep id="publicLogin_clickLoginButton"
 			stepDescription="click Login button to log in" stepName="clickLoginButton"
 			targetStep="true" elementActionDef="clickLoginButtonWE" pageObject="publicLoginDashBoard">
-			<property name="expectedResultAsserter">
+			<!-- <property name="expectedResultAsserter">
 				<list>
-<!-- 					<ref bean="publicLoginDashBoardPropertyAsserter" /> -->
+					<ref bean="publicLoginDashBoardPropertyAsserter" />
 					<ref bean="publicLoginDashBoardElementExistenceAsserter" />
 				</list>
-			</property>
+			</property> -->
+			<ate:asserterReferences>
+				<ate:ateXmlElementReference id="assert1" ateXmlElementID="publicLoginDashBoardPropertyAsserter" />
+				<ate:ateXmlElementReference id="assert2" ateXmlElementID="publicLoginDashBoardElementExistenceAsserter" />
+			</ate:asserterReferences>
 		</ate:elementStep>
 		
 		<ate:elementStep id="moveMouseToPersonalInformationTab"
@@ -79,11 +83,14 @@
 		<ate:elementStep id="clickSavePersonalInfoButton"
 			stepDescription="clickSavePersonalInfoButton" stepName="clickSavePersonalInfoButton"
 			targetStep="true" elementActionDef="clickSavePersonalInfoButtonDef">
-			<property name="expectedResultAsserter">
+			<!-- <property name="expectedResultAsserter">
 			<list>
 				<ref bean="savePersonalInfoElementExistenceAsserter"/>
 			</list>
-			</property>
+			</property> -->
+			<ate:asserterReferences>
+				<ate:ateXmlElementReference id="assert3" ateXmlElementID="savePersonalInfoElementExistenceAsserter" />
+			</ate:asserterReferences>
 		</ate:elementStep>
 		
 		<ate:elementStep id="publicLogin_clickLogoutLink"

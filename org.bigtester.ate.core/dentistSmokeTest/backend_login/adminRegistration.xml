@@ -83,11 +83,14 @@
 		<ate:elementStep id="stepClickPracticeSignUp"
 			stepDescription="click Sign Up" stepName="clickPracticeSignUp"
 			targetStep="true" elementActionDef="clickPracticeSignUp" pageObject="adminHomePage">
-			<property name="expectedResultAsserter">
+			<!-- <property name="expectedResultAsserter">
 				<list>
 					<ref bean="adminRegisterSuccessAsserter" />
 				</list>
-			</property>
+			</property> -->
+			<ate:asserterReferences>
+				<ate:ateXmlElementReference id="assert1" ateXmlElementID="adminRegisterSuccessAsserter" />
+			</ate:asserterReferences>
 			
 		</ate:elementStep>
 		<ate:lastStep id="mylaststep" stepName="mylaststep"

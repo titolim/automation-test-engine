@@ -64,11 +64,14 @@
 		<ate:elementStep id="stepMoveCursorToProfileLink2"
 			stepDescription="move mouse to profile" stepName="moveCursortoProfile"
 			targetStep="true" elementActionDef="moveCursorToProfile">
-			<property name="expectedResultAsserter">
+			<!-- <property name="expectedResultAsserter">
 				<list>
 					<ref bean="adminLoginDashBoardElementExistenceAsserter" />
 				</list>
-			</property>
+			</property> -->
+			<ate:asserterReferences>
+				<ate:ateXmlElementReference id="assert1" ateXmlElementID="adminLoginDashBoardElementExistenceAsserter" />
+			</ate:asserterReferences>
 		</ate:elementStep>
 		
 		<ate:elementStep id="stepClickLogoutLink"

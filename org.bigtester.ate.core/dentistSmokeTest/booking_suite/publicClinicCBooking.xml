@@ -75,11 +75,14 @@
 			stepDescription="click Book_Button" stepName="Book_Button"
 			targetStep="true" elementActionDef="Book_Button" pageObject="publicPracticeProfileClinicC">
 
-			<property name="expectedResultAsserter">
+			<!-- <property name="expectedResultAsserter">
 				<list>
 					<ref bean="publicPracticeProfileClinicCElementExistenceAsserter" />
 				</list>
-			</property>
+			</property> -->
+			<ate:asserterReferences>
+				<ate:ateXmlElementReference id="assert1" ateXmlElementID="publicPracticeProfileClinicCElementExistenceAsserter" />
+			</ate:asserterReferences>
 		</ate:elementStep>
 		<ate:elementStep id="clickAvailableBooking"
 			stepDescription="cclickAvailableBookingWE" stepName="clickAvailableBooking"
@@ -149,12 +152,10 @@
 		</ate:elementStep>
 		<ate:elementStep id="clickVerifySms"
 			stepDescription="clickVerifySms" stepName="clickVerifySms"
-			targetStep="true" elementActionDef="clickVerifyWE" pageObject="publicSmsAuthentication">
-			<property name="expectedResultAsserter">
-				<list>
-					<ref bean="publicBookingConfirmElementExistenceAsserter" />
-				</list>
-			</property>
+			targetStep="true" elementActionDef="clickVerifyWE" pageObject="publicSmsAuthentication">			
+			<ate:asserterReferences>
+				<ate:ateXmlElementReference id="assert2" ateXmlElementID="publicBookingConfirmElementExistenceAsserter" />
+			</ate:asserterReferences>
 		</ate:elementStep>
 		
 		<ate:lastStep id="mylaststep" stepName="mylaststep"

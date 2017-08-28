@@ -10,7 +10,7 @@
 		                   http://www.bigtester.org/schema/ate 
 		                   http://www.bigtester.org/schema/ate/ate.xsd">
 	
-	<import resource="db-services.xml" />
+	<import resource="classpath:META-INF/db-services.xml" />
 	
 	<ate:baseERValue id="baseERValue" stepERDao="StepERDao" abstract="true"/>
 	<ate:basePageModel id = "myBasePageModel" myWebDriver="MyWebDriver2" abstract="true"/>

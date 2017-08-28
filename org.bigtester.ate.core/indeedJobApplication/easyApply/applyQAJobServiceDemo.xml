@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:ate="http://www.bigtester.org/schema/ate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   xmlns:ate="http://www.bigtester.org/schema/ate" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
                            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
                            http://www.springframework.org/schema/aop 
                            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
@@ -46,6 +47,7 @@
 			correlatedOptionalStepsUtilInclusive="stepRepeatApplyOtherPageJobs"
 			pageObject="jobSearchResult">
 		</ate:elementStep>
+		
 		<ate:elementStep id="stepSwitchToApplyWindow"
 			stepDescription="stepSwitchToApplyWindow" stepName="stepSwitchToApplyWindow"
 			targetStep="false" elementActionDef="eadSwitchToApplyWindow">
@@ -79,8 +81,7 @@
 			correlatedOptionalStepsUtilInclusive="stepRepeatApplyOtherPageJobs">
 		</ate:elementStep>
 		
-		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="5" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>
-		
+		<ate:repeatStep id="stepRepeatApplyOtherPageJobs" startStepName="stepClickJobLink" numberOfIterations="5" endStepName="stepClickPagingNumber" stepName="stepRepeatApplyOtherPageJobs" targetStep="false"/>		
 
 		<ate:lastStep id="mylaststep" stepName="mylaststep"
 			stepDescription="last step close browser" targetStep="false"

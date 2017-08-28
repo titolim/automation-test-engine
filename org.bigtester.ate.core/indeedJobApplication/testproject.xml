@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:ate="http://www.bigtester.org/schema/ate"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:ate="http://www.bigtester.org/schema/ate"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
 	                       http://www.springframework.org/schema/aop 
 	                       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
@@ -14,7 +15,6 @@
 
 	<import resource="classpath:META-INF/db-services.xml" />
 	<import resource="classpath:META-INF/project_base_bean.xml" />
-
 
 	<ate:TestProject id="testproject" stepThinkTime="6"
 		globalInitXmlFile="indeedJobApplication/data.xml">
