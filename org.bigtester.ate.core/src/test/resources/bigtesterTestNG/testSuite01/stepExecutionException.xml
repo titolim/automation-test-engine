@@ -43,4 +43,10 @@
 			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
 		</ate:lastStep>
 	</ate:testCase>
+	<ate:testCase id="testcase" testCaseName="cursorMove">		
+		<ate:elementStep id="testStepException" stepName="testStepException" targetStep="false" elementActionDef="eadTestButtonClick" optionalStep="true"></ate:elementStep>
+		<ate:lastStep id="stepLastStep" stepName="stepLastStep"
+			stepDescription="last step close browser" targetStep="false" pageObject="poLastPage">
+		</ate:lastStep>
+	</ate:testCase>
 </beans>
