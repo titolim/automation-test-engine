@@ -5,34 +5,44 @@
 	   xmlns:ate="http://www.bigtester.org/schema/ate"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	                       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		                   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-		                   http://www.bigtester.org/schema/ate http://www.bigtester.org/schema/ate/ate.xsd">
+		                   http://www.springframework.org/schema/aop 
+		                   http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		                   http://www.bigtester.org/schema/ate 
+		                   http://www.bigtester.org/schema/ate/ate-2.0.xsd">
 
 	<import resource="mywebdriver.xml" />
 	<import resource="db-services.xml" />
+	
 	<bean id="_pageObjModel" name="_pageObjModel" abstract="true"
 		class="org.bigtester.ate.model.page.PageModelBase">
+		<constructor-arg ref = "MyWebDriver"/>
 		<property name="myWd">
 			<ref bean="MyWebDriver"></ref>
 		</property>
 	</bean>
+	
 	<bean id="_pageObj" name="_pageObj" abstract="true" parent="_pageObjModel"
 		class="org.bigtester.ate.model.page.page.BasePageObject">
 	</bean>
+	
 	<bean id="_inputDataValueAbstract" name="_inputDataValueAbstract"
 		abstract="true" class="org.bigtester.ate.model.data.BaseInputDataValue">
-		<property name="elementDataDao" ref="elementInputDataDao" />
+		<!-- <property name="elementDataDao" ref="elementInputDataDao" /> -->
+		<constructor-arg ref = "MyWebDriver"/>
 	</bean>
 
 	<!-- abstract beans, won't be initialized by Spring -->
 	<bean id="_elementFindAbstract" name="_elementFindAbstract"
 		abstract="true"
 		class="org.bigtester.ate.model.page.elementfind.AbstractElementFind">
+		<constructor-arg ref = "MyWebDriver"/>
 	</bean>
+	
 	<bean id="_elementActionAbstract" name="_elementActionAbstract"
 		abstract="true" parent="_pageObjModel"
 		class="org.bigtester.ate.model.page.elementaction.BaseElementAction">
 	</bean>
+	
 	<bean id="_abstractERAsserter" name="_abstractERAsserter"
 		abstract="true"
 		class="org.bigtester.ate.model.asserter.AbstractExpectedResultAsserter">
@@ -40,6 +50,7 @@
 
 	<bean id="_abstractERValue" name="_abstractERValue" abstract="true"
 		class="org.bigtester.ate.model.data.BaseERValue">
+		<constructor-arg ref = "MyWebDriver"/>
 		<property name="stepERDao" ref="StepERDao" />
 	</bean>
 

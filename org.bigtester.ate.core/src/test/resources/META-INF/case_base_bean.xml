@@ -21,8 +21,7 @@
 	<bean id="repeatStepExecutionLogger" class="org.bigtester.ate.model.casestep.RepeatStepExecutionLogger" />
 	<bean id="globalUtilsForTestCase" class="org.bigtester.ate.GlobalUtils" />
 	<bean id="stepUnexpectedAlertHandler" class="org.bigtester.ate.model.casestep.StepUnexpectedAlertHandler" />
-	<bean id="multiWindowsHandler" class="org.bigtester.ate.model.page.atewebdriver.MultiWindowsHandler" >
-	</bean>
+	<bean id="multiWindowsHandler" class="org.bigtester.ate.model.page.atewebdriver.MultiWindowsHandler" />
 	
 <!-- 	<ate:TestDatabaseInitializer id="dbInitializer"/> -->
 	

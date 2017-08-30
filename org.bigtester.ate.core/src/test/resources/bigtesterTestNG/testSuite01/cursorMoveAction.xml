@@ -26,7 +26,7 @@
 	<ate:operaDriver    />
 	<ate:htmlUnitDriver />
       -->
-	<ate:firefoxDriver  />
+	<ate:htmlUnitDriver />
 	
 	<!-- here test case id has to be "testcase" -->
 	<ate:testCase id="testcase" testCaseName="cursorMove">
