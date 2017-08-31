@@ -30,6 +30,7 @@ import org.bigtester.ate.model.data.exception.RuntimeDataException;
 import org.bigtester.ate.model.page.exception.PageValidationException;
 import org.bigtester.ate.model.page.exception.StepExecutionException;
 import org.bigtester.ate.model.page.page.MyWebElement;
+import org.bigtester.ate.model.page.elementaction.ClickAction;
 import org.bigtester.ate.test.AbstractBigtesterStepTest;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openqa.selenium.By;
@@ -64,7 +65,7 @@ public class ClickActionTest extends AbstractBigtesterStepTest {
 
 		MyWebElement<?> buttonC = (MyWebElement<?>) getApplicationContext()
 				.getBean("eadTestButtonClick");
-		//buttonClick.doAction();
+		buttonC.doAction();
 		this.runElementTestStep(buttonC);		
 				
 		ITestObjectAction<?> moveActObj = (ITestObjectAction<?>) buttonC.getTestObjectAction();
