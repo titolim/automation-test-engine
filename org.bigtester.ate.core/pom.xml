@@ -319,7 +319,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>3.5.2</version>
+			<version>3.5.3</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.reflections</groupId>
@@ -475,7 +475,7 @@
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
-			<version>4.0</version>
+			<version>4.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>net.jodah</groupId>
